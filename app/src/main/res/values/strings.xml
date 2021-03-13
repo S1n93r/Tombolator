@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Tombolator</string>
+    <string name="button_back">Zurück</string>
+    <string name="button_save">Speichern</string>
+    <string name="button_tombolas">Tombolas</string>
+    <string name="button_media">Medien</string>
+    <string name="button_new_media">Neues Medium</string>
+    <string name="title_tombolas">Deine Tombolas</string>
+    <string name="title_media">Deine Medien</string>
+    <string name="title_new_media">Neues Medium</string>
+    <string name="hint_name">Name</string>
+</resources>
