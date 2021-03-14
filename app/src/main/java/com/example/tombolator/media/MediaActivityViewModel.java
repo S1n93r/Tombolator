@@ -19,7 +19,6 @@ public class MediaActivityViewModel extends ViewModel {
 
     public void addMedia(Media media) {
 
-        mediaDatabaseLiveData.setValue(null);
         mediaDatabase.add(media);
         mediaDatabaseLiveData.setValue(mediaDatabase);
     }

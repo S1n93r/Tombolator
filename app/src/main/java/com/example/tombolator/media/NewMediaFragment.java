@@ -60,6 +60,8 @@ public class NewMediaFragment extends Fragment {
                 if(nameText.getText().length() > 0){
 
                     mediaViewModel.addMedia(new Media(1, nameText.getText().toString()));
+                    nameText.setText("");
+                    parent.switchToStartView();
                 }
             }
         });

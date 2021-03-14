@@ -1,2 +1,3 @@
 Intent & Bundles to pass data during runtime: https://guides.codepath.com/android/Using-Intents-to-Create-Flows
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
+Passing data between activities and fragments: https://stackoverflow.com/questions/16036572/how-to-pass-values-between-fragments

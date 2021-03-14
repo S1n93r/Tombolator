@@ -18,7 +18,6 @@
         </activity>
         <activity android:name=".TombolasActivity"/>
         <activity android:name=".media.MediaActivity"/>
-        <activity android:name=".media.NewMediaFragment"/>
     </application>
 
 </manifest>

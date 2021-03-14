@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 
+import java.util.ArrayList;
+
 public class MediaActivity extends AppCompatActivity {
 
     private MediaActivityViewModel mediaActivityViewModel;
@@ -15,28 +17,36 @@ public class MediaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        super.onCreate(savedInstanceState);
+
+        mediaActivityViewModel = new ViewModelProvider(this).get(MediaActivityViewModel.class);
+
         startMediaFragment = StartMediaFragment.newInstance(this);
         newMediaFragment = NewMediaFragment.newInstance(this);
 
-        super.onCreate(savedInstanceState);
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(
+                "mediaDatabase", (ArrayList) mediaActivityViewModel.getMediaDatabase().getValue());
+
+        startMediaFragment.setArguments(bundle);
         setContentView(R.layout.activity_media);
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, startMediaFragment)
-                    .commitNow();
+            switchToStartView();
         }
-
-        mediaActivityViewModel = new ViewModelProvider(this).get(MediaActivityViewModel.class);
     }
 
     protected void switchToStartView() {
 
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, startMediaFragment)
-                    .commitNow();
+        startMediaFragment.setArguments(newMediaFragment.getArguments());
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, startMediaFragment)
+                .commitNow();
     }
 
     protected void switchToNewMediaView() {
+
+        newMediaFragment.setArguments(startMediaFragment.getArguments());
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, newMediaFragment)

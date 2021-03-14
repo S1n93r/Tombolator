@@ -75,19 +75,23 @@ public class StartMediaFragment extends Fragment {
         });
     }
 
+    protected void refresh() {
+
+        linearLayoutMedia.removeAllViews();
+
+        for(Media media : mediaViewModel.getMediaDatabase().getValue()){
+
+            TextView textView = new TextView(parent.getApplicationContext());
+            textView.setText(media.toString());
+            linearLayoutMedia.addView(textView);
+        }
+    }
+
     private class MediaListObserver implements Observer<List<Media>> {
 
         @Override
         public void onChanged(List<Media> mediaList) {
-
-            linearLayoutMedia.removeAllViews();
-
-            for(Media media : mediaList){
-
-                TextView textView = new TextView(parent.getApplicationContext());
-                textView.setText(media.toString());
-                linearLayoutMedia.addView(textView);
-            }
+            refresh();
         }
     }
 }
