@@ -25,7 +25,7 @@ public class NewMediaFragment extends Fragment {
     }
 
     private View layout;
-    private MediaActivityModel mediaViewModel;
+    private MediaActivityViewModel mediaViewModel;
 
     private TextView nameText;
 
@@ -37,7 +37,7 @@ public class NewMediaFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
 
-        mediaViewModel = new ViewModelProvider(this).get(MediaActivityModel.class);
+        mediaViewModel = new ViewModelProvider(this).get(MediaActivityViewModel.class);
 
         layout = inflater.inflate(R.layout.fragment_new_media, container, false);
 
@@ -57,6 +57,10 @@ public class NewMediaFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                if(nameText.getText().length() > 0){
+
+                    mediaViewModel.addMedia(new Media(1, nameText.getText().toString()));
+                }
             }
         });
 

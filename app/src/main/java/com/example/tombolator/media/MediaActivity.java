@@ -7,7 +7,7 @@ import com.example.tombolator.R;
 
 public class MediaActivity extends AppCompatActivity {
 
-    private MediaActivityModel mediaViewModel;
+    private MediaActivityViewModel mediaActivityViewModel;
 
     private StartMediaFragment startMediaFragment;
     private NewMediaFragment newMediaFragment;
@@ -26,7 +26,7 @@ public class MediaActivity extends AppCompatActivity {
                     .commitNow();
         }
 
-        mediaViewModel = new ViewModelProvider(this).get(MediaActivityModel.class);
+        mediaActivityViewModel = new ViewModelProvider(this).get(MediaActivityViewModel.class);
     }
 
     protected void switchToStartView() {

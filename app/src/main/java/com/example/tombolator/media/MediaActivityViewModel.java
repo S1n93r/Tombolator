@@ -7,18 +7,19 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MediaActivityModel extends ViewModel {
+public class MediaActivityViewModel extends ViewModel {
 
     private List<Media> mediaDatabase = new ArrayList<>();
     private MutableLiveData<List<Media>> mediaDatabaseLiveData = new MutableLiveData<>();
 
-    public MediaActivityModel() {
+    public MediaActivityViewModel() {
 
         mediaDatabaseLiveData.setValue(mediaDatabase);
     }
 
     public void addMedia(Media media) {
 
+        mediaDatabaseLiveData.setValue(null);
         mediaDatabase.add(media);
         mediaDatabaseLiveData.setValue(mediaDatabase);
     }

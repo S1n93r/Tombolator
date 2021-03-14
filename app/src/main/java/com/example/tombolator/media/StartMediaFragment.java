@@ -27,7 +27,7 @@ public class StartMediaFragment extends Fragment {
         this.parent = parent;
     };
 
-    private MediaActivityModel mediaViewModel;
+    private MediaActivityViewModel mediaViewModel;
 
     private LinearLayout linearLayoutMedia;
 
@@ -38,7 +38,7 @@ public class StartMediaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
-        mediaViewModel = new ViewModelProvider(this).get(MediaActivityModel.class);
+        mediaViewModel = new ViewModelProvider(this).get(MediaActivityViewModel.class);
 
         layout = inflater.inflate(R.layout.fragment_start_media, container, false);
 
@@ -79,8 +79,6 @@ public class StartMediaFragment extends Fragment {
 
         @Override
         public void onChanged(List<Media> mediaList) {
-
-            System.out.println("Observer triggered...");
 
             linearLayoutMedia.removeAllViews();
 
