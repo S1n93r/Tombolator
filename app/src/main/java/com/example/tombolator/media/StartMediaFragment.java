@@ -38,7 +38,7 @@ public class StartMediaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
-        mediaViewModel = new ViewModelProvider(this).get(MediaActivityViewModel.class);
+        mediaViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
 
         layout = inflater.inflate(R.layout.fragment_start_media, container, false);
 

@@ -1,20 +1,17 @@
 package com.example.tombolator.media;
 
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
+import androidx.room.*;
 
 @Dao
 public interface MediaDao {
 
-    @Query("SELECT * FROM Media WHERE id := :id")
-    public Media getById(int id);
+    @Query("SELECT * FROM Media WHERE id = :mediaId")
+    Media getById(int mediaId);
 
-    @Insert
-    public int insertMedia(Media media);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long insertMedia(Media media);
 
     @Delete
-    public void deleteMedia(Media media);
+    void deleteMedia(Media media);
 
 }

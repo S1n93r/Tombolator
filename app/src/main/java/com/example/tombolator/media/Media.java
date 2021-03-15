@@ -7,19 +7,27 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.Date;
-
 @Entity
 public class Media implements Parcelable {
 
     @ColumnInfo
     @PrimaryKey(autoGenerate = true)
-    private final int id;
+    private int id;
 
     @ColumnInfo
-    private final Date creationDate = new Date(System.currentTimeMillis());
+    private long creationTimestamp = System.currentTimeMillis();
 
+    @ColumnInfo
     private String name;
+
+    @ColumnInfo
+    private String title;
+
+    @ColumnInfo
+    private int number;
+
+    @ColumnInfo
+    private String type;
 
     protected Media(int id, String name) {
 
@@ -59,5 +67,53 @@ public class Media implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
         dest.writeString(name);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public long getCreationTimestamp() {
+        return creationTimestamp;
+    }
+
+    public void setCreationTimestamp(long creationTimestamp) {
+        this.creationTimestamp = creationTimestamp;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

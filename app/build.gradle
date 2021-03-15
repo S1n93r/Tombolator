@@ -45,5 +45,10 @@ dependencies {
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.8.0'
 
     // https://mvnrepository.com/artifact/androidx.room/room-runtime
-    implementation group: 'androidx.room', name: 'room-runtime', version: '2.2.6'
+    //implementation group: 'androidx.room', name: 'room-runtime', version: '2.2.6'
+
+    def room_version = "2.2.6"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 }

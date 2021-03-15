@@ -5,9 +5,9 @@ import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaDao;
 
 @androidx.room.Database(entities={Media.class}, version = 1)
-public abstract class Database extends RoomDatabase {
+abstract class MediaDatabase extends RoomDatabase {
 
     public abstract MediaDao MediaDao();
 
-    public static final String NAME = "Database";
+    public static final String NAME = "MediaDatabase";
 }
