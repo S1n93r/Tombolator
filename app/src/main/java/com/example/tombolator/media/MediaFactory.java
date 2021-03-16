@@ -19,11 +19,11 @@ public class MediaFactory {
 
     Map<Integer, Media> mediaDatabase = new HashMap<>();
 
-    public Media getOrCreateMedia(String name) {
+    public Media getOrCreateMedia(String name, String title, int number, String type) {
 
         int id = mediaDatabase.size() + 1;
 
-        Media media = new Media(id, name);
+        Media media = new Media(id, name, title, number, type);
         mediaDatabase.put(id, media);
 
         return media;

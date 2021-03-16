@@ -13,11 +13,12 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 
 import java.util.List;
+import java.util.Objects;
 
 public class StartMediaFragment extends Fragment {
 
     private View layout;
-    private MediaActivity parent;
+    private final MediaActivity parent;
 
     public static StartMediaFragment newInstance(MediaActivity parent) {
         return new StartMediaFragment(parent);
@@ -25,7 +26,7 @@ public class StartMediaFragment extends Fragment {
 
     private StartMediaFragment(MediaActivity parent) {
         this.parent = parent;
-    };
+    }
 
     private MediaActivityViewModel mediaViewModel;
 
@@ -44,7 +45,7 @@ public class StartMediaFragment extends Fragment {
 
         linearLayoutMedia = layout.findViewById(R.id.linear_layout_media);
 
-        backButton = layout.findViewById(R.id.button_back);
+        backButton = layout.findViewById(R.id.buttonBack);
         newMediaButton = layout.findViewById(R.id.button_new_media);
 
         dataBind();
@@ -75,23 +76,26 @@ public class StartMediaFragment extends Fragment {
         });
     }
 
-    protected void refresh() {
-
-        linearLayoutMedia.removeAllViews();
-
-        for(Media media : mediaViewModel.getMediaDatabase().getValue()){
-
-            TextView textView = new TextView(parent.getApplicationContext());
-            textView.setText(media.toString());
-            linearLayoutMedia.addView(textView);
-        }
-    }
-
     private class MediaListObserver implements Observer<List<Media>> {
 
         @Override
         public void onChanged(List<Media> mediaList) {
-            refresh();
+
+            for(Media media : Objects.requireNonNull(mediaViewModel.getMediaDatabase().getValue())){
+
+                int id = media.getId();
+                String name = media.getName();
+                String title = media.getTitle();
+                int number = media.getNumber();
+                String type = media.getType();
+
+                String mediaString = "[" + id + "] " + type + ": " + name + " - " + title + " (" + number + ")";
+
+                TextView textView = new TextView(parent.getApplicationContext());
+                textView.setText(mediaString);
+
+                linearLayoutMedia.addView(textView);
+            }
         }
     }
 }

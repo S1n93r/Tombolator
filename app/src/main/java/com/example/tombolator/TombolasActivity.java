@@ -15,7 +15,7 @@ public class TombolasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tombolas);
 
-        back = findViewById(R.id.button_back);
+        back = findViewById(R.id.buttonBack);
 
         registerOnClickListener();
     }

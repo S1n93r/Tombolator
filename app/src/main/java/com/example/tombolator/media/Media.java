@@ -29,15 +29,22 @@ public class Media implements Parcelable {
     @ColumnInfo
     private String type;
 
-    protected Media(int id, String name) {
+    protected Media(int id, String name, String title, int number, String type) {
 
         this.id = id;
         this.name = name;
+        this.title = title;
+        this.number = number;
+        this.type = type;
     }
 
     protected Media(Parcel in) {
+
         id = in.readInt();
         name = in.readString();
+        title = in.readString();
+        number = in.readInt();
+        type = in.readString();
     }
 
     public static final Creator<Media> CREATOR = new Creator<Media>() {

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,7 +28,10 @@ public class NewMediaFragment extends Fragment {
     private View layout;
     private MediaActivityViewModel mediaViewModel;
 
-    private TextView nameText;
+    private TextView editTextName;
+    private TextView editTextTitle;
+    private TextView editTextNumber;
+    private Spinner spinnerType;
 
     private Button saveButton;
     private Button backButton;
@@ -41,10 +45,13 @@ public class NewMediaFragment extends Fragment {
 
         layout = inflater.inflate(R.layout.fragment_new_media, container, false);
 
-        nameText = layout.findViewById(R.id.text_name);
+        editTextName = layout.findViewById(R.id.editTextName);
+        editTextTitle = layout.findViewById(R.id.editTextTitle);
+        editTextNumber = layout.findViewById(R.id.editTextNumber);
+        spinnerType = layout.findViewById(R.id.spinnerType);
 
-        saveButton = layout.findViewById(R.id.button_save);
-        backButton = layout.findViewById(R.id.button_back);
+        saveButton = layout.findViewById(R.id.buttonSave);
+        backButton = layout.findViewById(R.id.buttonBack);
 
         registerOnClickListener();
 
@@ -57,10 +64,19 @@ public class NewMediaFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if(nameText.getText().length() > 0){
+                if(editTextName.getText().length() > 0){
 
-                    mediaViewModel.addMedia(new Media(1, nameText.getText().toString()));
-                    nameText.setText("");
+                    String name = editTextName.getText() != null ? editTextName.getText().toString() : "";
+                    String title = editTextTitle.getText() != null ? editTextTitle.getText().toString() : "";
+                    String numberAsString = editTextNumber.getText() != null ? editTextNumber.getText().toString() : "";
+                    String type = spinnerType.getSelectedItem() != null ? spinnerType.getSelectedItem().toString() : "";
+
+                    int number = numberAsString.length() > 0 ? Integer.parseInt(numberAsString) : -1;
+
+                    mediaViewModel.addMedia(new Media(1, name, title, number, type));
+
+                    resetForm();
+
                     parent.switchToStartView();
                 }
             }
@@ -72,5 +88,13 @@ public class NewMediaFragment extends Fragment {
                 parent.switchToStartView();
             }
         });
+    }
+
+    private void resetForm() {
+
+        editTextName.setText("");
+        editTextTitle.setText("");
+        editTextNumber.setText("");
+        spinnerType.setSelection(0);
     }
 }
