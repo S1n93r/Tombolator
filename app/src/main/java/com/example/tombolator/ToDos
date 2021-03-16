@@ -2,6 +2,7 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
+[ ] button in new media should not block form
 [ ] colors: blue / violet / pink (pastel)
 [ ] persist media
 
