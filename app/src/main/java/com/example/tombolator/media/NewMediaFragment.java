@@ -1,5 +1,6 @@
 package com.example.tombolator.media;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import com.example.tombolator.DatabaseApplication;
 import com.example.tombolator.R;
 
 import java.util.ArrayList;
@@ -94,9 +96,19 @@ public class NewMediaFragment extends Fragment {
 
                     int number = numberAsString.length() > 0 ? Integer.parseInt(numberAsString) : -1;
 
-                    Media media = new Media(name, title, number, type);
+                    final Media media = new Media(name, title, number, type);
 
                     mediaViewModel.addMedia(media);
+
+                    AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            DatabaseApplication context = ((DatabaseApplication) getActivity().getApplicationContext());
+                            final MediaDao mediaDao = context.getMediaDatabase().mediaDao();
+                            mediaDao.insertMedia(media);
+                        }
+                    });
 
                     resetForm();
 

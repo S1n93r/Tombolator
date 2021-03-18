@@ -3,7 +3,9 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [ ] persist media
-    [ ] where to fire insert/update without using main thread
+    [x] implement insertMedia with AsyncTask
+    [ ] implement getAllMedia...
+[ ] implement deleteMedia
 [ ] button in new media should not block form
 [ ] colors: blue / violet / pink (pastel)
 [ ] persist media
