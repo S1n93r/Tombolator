@@ -1,5 +1,6 @@
 package com.example.tombolator.media;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import com.example.tombolator.DatabaseApplication;
 import com.example.tombolator.R;
 
 import java.util.List;
@@ -48,15 +50,10 @@ public class StartMediaFragment extends Fragment {
         backButton = layout.findViewById(R.id.buttonBack);
         newMediaButton = layout.findViewById(R.id.button_new_media);
 
-        dataBind();
         registerOnClickListener();
+        refreshView();
 
         return layout;
-    }
-
-    private void dataBind() {
-
-        mediaViewModel.getMediaDatabase().observe(getViewLifecycleOwner(), new MediaListObserver());
     }
 
     private void registerOnClickListener() {
@@ -72,6 +69,40 @@ public class StartMediaFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 parent.switchToNewMediaView();
+            }
+        });
+    }
+
+    public void refreshView() {
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+
+                DatabaseApplication context = ((DatabaseApplication) getActivity().getApplicationContext());
+                final MediaDao mediaDao = context.getMediaDatabase().mediaDao();
+                List<Integer> mediaIds = mediaDao.getAllIds();
+
+                linearLayoutMedia.removeAllViews();
+
+                for(int id : mediaIds) {
+
+                    Media media = mediaDao.getById(id);
+
+                    String name = media.getName();
+                    String title = media.getTitle();
+                    int number = media.getNumber();
+                    String type = media.getType();
+
+                    String mediaString = "[" + id + "] " + type + ": " + name + " - " + title + " (" + number + ")";
+
+                    TextView textView = new TextView(parent.getApplicationContext());
+                    textView.setTypeface(backButton.getTypeface());
+                    textView.setTextSize(16);
+                    textView.setText(mediaString);
+
+                    linearLayoutMedia.addView(textView);
+                }
             }
         });
     }
