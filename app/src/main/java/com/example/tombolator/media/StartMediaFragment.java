@@ -92,6 +92,8 @@ public class StartMediaFragment extends Fragment {
                 String mediaString = "[" + id + "] " + type + ": " + name + " - " + title + " (" + number + ")";
 
                 TextView textView = new TextView(parent.getApplicationContext());
+                textView.setTypeface(backButton.getTypeface());
+                textView.setTextSize(16);
                 textView.setText(mediaString);
 
                 linearLayoutMedia.addView(textView);

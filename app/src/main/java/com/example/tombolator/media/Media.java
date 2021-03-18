@@ -29,9 +29,8 @@ public class Media implements Parcelable {
     @ColumnInfo
     private String type;
 
-    protected Media(int id, String name, String title, int number, String type) {
+    protected Media(String name, String title, int number, String type) {
 
-        this.id = id;
         this.name = name;
         this.title = title;
         this.number = number;

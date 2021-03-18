@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -12,6 +13,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NewMediaFragment extends Fragment {
 
@@ -53,9 +57,26 @@ public class NewMediaFragment extends Fragment {
         saveButton = layout.findViewById(R.id.buttonSave);
         backButton = layout.findViewById(R.id.buttonBack);
 
+        setUpMediaTypeSpinner();
         registerOnClickListener();
 
         return layout;
+    }
+
+    private void setUpMediaTypeSpinner() {
+
+        List<String> mediaTypesForSpinner = new ArrayList<>();
+        mediaTypesForSpinner.add("Hörspiel");
+        mediaTypesForSpinner.add("Hörbuch");
+        mediaTypesForSpinner.add("Film");
+        mediaTypesForSpinner.add("Serien");
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
+                this.getActivity(), android.R.layout.simple_spinner_item, mediaTypesForSpinner);
+
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerType.setAdapter(arrayAdapter);
     }
 
     private void registerOnClickListener() {
@@ -73,7 +94,9 @@ public class NewMediaFragment extends Fragment {
 
                     int number = numberAsString.length() > 0 ? Integer.parseInt(numberAsString) : -1;
 
-                    mediaViewModel.addMedia(new Media(1, name, title, number, type));
+                    Media media = new Media(name, title, number, type);
+
+                    mediaViewModel.addMedia(media);
 
                     resetForm();
 

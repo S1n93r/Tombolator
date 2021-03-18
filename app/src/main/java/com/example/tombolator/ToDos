@@ -2,14 +2,16 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
+[ ] persist media
+    [ ] where to fire insert/update without using main thread
 [ ] button in new media should not block form
 [ ] colors: blue / violet / pink (pastel)
 [ ] persist media
 
 Done:
+[x] add options to media type combobox
 [x] font: comic sans
 [x] bigger buttons
 [x] round / oval buttons
-
 [x] Extend new media view to input more information
 [x] Extend media class to hold more information

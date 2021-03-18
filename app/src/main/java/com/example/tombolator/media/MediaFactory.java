@@ -23,7 +23,7 @@ public class MediaFactory {
 
         int id = mediaDatabase.size() + 1;
 
-        Media media = new Media(id, name, title, number, type);
+        Media media = new Media(name, title, number, type);
         mediaDatabase.put(id, media);
 
         return media;

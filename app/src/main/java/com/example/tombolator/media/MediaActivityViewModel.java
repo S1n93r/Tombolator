@@ -15,7 +15,6 @@ public class MediaActivityViewModel extends ViewModel {
     private MutableLiveData<List<Media>> mediaDatabaseLiveData = new MutableLiveData<>();
 
     public MediaActivityViewModel() {
-
         mediaDatabaseLiveData.setValue(mediaDatabase);
     }
 
@@ -29,7 +28,7 @@ public class MediaActivityViewModel extends ViewModel {
 
         Media media = mediaFactory.getOrCreateMedia(name, title, number, type);
 
-        mediaDatabase.add(media);
+        addMedia(media);
         mediaDatabaseLiveData.setValue(mediaDatabase);
     }
 
