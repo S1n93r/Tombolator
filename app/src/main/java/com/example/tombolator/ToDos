@@ -3,7 +3,6 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [.] implementing tombola
-    [x] create Tombola class
     [ ] create Tombola database
 [ ] colors: blue / violet / pink (pastel)
 [ ] implement unit tests
@@ -12,13 +11,15 @@ ToDos:
 [ ] Write java doc
 
 Done:
+[x] implemented auto-increment for app version by number of github commits
+[x] create Tombola class
+
 [x] button in new media should not block form
 [x] fix bug where list is shown twice + the new entry
-
 [x] implement deleteMedia helper
 [x] persist media
-    [x] implement insertMedia with AsyncTask
-    [x] implement getAllMedia
+[x] implement insertMedia with AsyncTask
+[x] implement getAllMedia
 [x] add options to media type combobox
 [x] font: comic sans
 [x] bigger buttons
