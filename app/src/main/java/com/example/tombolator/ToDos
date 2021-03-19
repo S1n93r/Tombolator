@@ -2,9 +2,9 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[ ] fix bug where list is shown twice + the new entry
-    [ ] on reload of activity everything snaps back to normal
-[ ] button in new media should not block form
+[.] implementing tombola
+    [x] create Tombola class
+    [ ] create Tombola database
 [ ] colors: blue / violet / pink (pastel)
 [ ] implement unit tests
 [ ] fix linter
@@ -12,8 +12,10 @@ ToDos:
 [ ] Write java doc
 
 Done:
-[x] implement deleteMedia helper
+[x] button in new media should not block form
+[x] fix bug where list is shown twice + the new entry
 
+[x] implement deleteMedia helper
 [x] persist media
     [x] implement insertMedia with AsyncTask
     [x] implement getAllMedia

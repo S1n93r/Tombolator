@@ -9,8 +9,6 @@ import java.util.List;
 
 public class MediaActivityViewModel extends ViewModel {
 
-    private final MediaFactory mediaFactory = MediaFactory.getInstance();
-
     private List<Media> mediaDatabase = new ArrayList<>();
     private MutableLiveData<List<Media>> mediaDatabaseLiveData = new MutableLiveData<>();
 
@@ -19,6 +17,8 @@ public class MediaActivityViewModel extends ViewModel {
     }
 
     public void addMedia(List<Media> mediaList) {
+
+        mediaDatabase.clear();
 
         for(Media media : mediaList)
             mediaDatabase.add(media);

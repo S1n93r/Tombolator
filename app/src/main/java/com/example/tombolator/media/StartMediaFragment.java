@@ -131,7 +131,7 @@ public class StartMediaFragment extends Fragment {
 
             for(Media media : mediaListInserted) {
 
-                int id = media.getId();
+                long id = media.getId();
                 String name = media.getName();
                 String title = media.getTitle();
                 int number = media.getNumber();
