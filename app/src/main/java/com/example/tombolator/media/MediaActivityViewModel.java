@@ -21,7 +21,6 @@ public class MediaActivityViewModel extends ViewModel {
     public void addMedia(Media media) {
 
         mediaDatabase.add(media);
-        mediaDatabaseLiveData.setValue(mediaDatabase);
     }
 
     public void addMedia(String name, String title, int number, String type) {
@@ -29,7 +28,6 @@ public class MediaActivityViewModel extends ViewModel {
         Media media = mediaFactory.getOrCreateMedia(name, title, number, type);
 
         addMedia(media);
-        mediaDatabaseLiveData.setValue(mediaDatabase);
     }
 
     public LiveData<List<Media>> getMediaDatabase() {

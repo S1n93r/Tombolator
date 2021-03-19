@@ -50,10 +50,17 @@ public class StartMediaFragment extends Fragment {
         backButton = layout.findViewById(R.id.buttonBack);
         newMediaButton = layout.findViewById(R.id.button_new_media);
 
+        registerObserver();
         registerOnClickListener();
-        refreshView();
+
+        initializeView();
 
         return layout;
+    }
+
+    private void registerObserver() {
+
+        mediaViewModel.getMediaDatabase().observe(this.getActivity(), new MediaListObserver());
     }
 
     private void registerOnClickListener() {
@@ -73,7 +80,7 @@ public class StartMediaFragment extends Fragment {
         });
     }
 
-    public void refreshView() {
+    private void initializeView() {
 
         AsyncTask.execute(new Runnable() {
             @Override
@@ -83,25 +90,10 @@ public class StartMediaFragment extends Fragment {
                 final MediaDao mediaDao = context.getMediaDatabase().mediaDao();
                 List<Integer> mediaIds = mediaDao.getAllIds();
 
-                linearLayoutMedia.removeAllViews();
+                for (int id : mediaIds) {
 
-                for(int id : mediaIds) {
-
-                    Media media = mediaDao.getById(id);
-
-                    String name = media.getName();
-                    String title = media.getTitle();
-                    int number = media.getNumber();
-                    String type = media.getType();
-
-                    String mediaString = "[" + id + "] " + type + ": " + name + " - " + title + " (" + number + ")";
-
-                    TextView textView = new TextView(parent.getApplicationContext());
-                    textView.setTypeface(backButton.getTypeface());
-                    textView.setTextSize(16);
-                    textView.setText(mediaString);
-
-                    linearLayoutMedia.addView(textView);
+                    System.out.println(mediaDao.getById(id));
+                    mediaViewModel.addMedia(mediaDao.getById(id));
                 }
             }
         });

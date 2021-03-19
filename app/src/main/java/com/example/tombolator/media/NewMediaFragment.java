@@ -98,8 +98,6 @@ public class NewMediaFragment extends Fragment {
 
                     final Media media = new Media(name, title, number, type);
 
-                    mediaViewModel.addMedia(media);
-
                     AsyncTask.execute(new Runnable() {
                         @Override
                         public void run() {
