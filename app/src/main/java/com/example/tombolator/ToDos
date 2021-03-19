@@ -3,6 +3,7 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [ ] implement deleteMedia
+[ ] database in model obsolete?
 [ ] button in new media should not block form
 [ ] colors: blue / violet / pink (pastel)
 [ ] implement unit tests
