@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 
-import java.util.ArrayList;
-
 public class MediaActivity extends AppCompatActivity {
 
     private MediaActivityViewModel mediaActivityViewModel;
@@ -24,11 +22,6 @@ public class MediaActivity extends AppCompatActivity {
         startMediaFragment = StartMediaFragment.newInstance(this);
         newMediaFragment = NewMediaFragment.newInstance(this);
 
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(
-                "mediaDatabase", (ArrayList) mediaActivityViewModel.getMediaDatabase().getValue());
-
-        startMediaFragment.setArguments(bundle);
         setContentView(R.layout.activity_media);
         if (savedInstanceState == null) {
             switchToStartView();

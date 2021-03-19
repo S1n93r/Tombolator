@@ -19,4 +19,7 @@ public interface MediaDao {
     @Delete
     void deleteMedia(Media media);
 
+    @Query("DELETE FROM Media")
+    void nukeTable();
+
 }

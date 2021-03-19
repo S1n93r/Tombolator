@@ -14,8 +14,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.DatabaseApplication;
 import com.example.tombolator.R;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class StartMediaFragment extends Fragment {
 
@@ -37,6 +37,9 @@ public class StartMediaFragment extends Fragment {
     private Button backButton;
     private Button newMediaButton;
 
+    /* TODO: Helper for development. Will be replaced later. */
+    private Button deleteAllButton;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -49,18 +52,18 @@ public class StartMediaFragment extends Fragment {
 
         backButton = layout.findViewById(R.id.buttonBack);
         newMediaButton = layout.findViewById(R.id.button_new_media);
+        deleteAllButton = layout.findViewById(R.id.buttonDeleteAll);
 
         registerObserver();
         registerOnClickListener();
 
-        initializeView();
+        refreshView();
 
         return layout;
     }
 
     private void registerObserver() {
-
-        mediaViewModel.getMediaDatabase().observe(this.getActivity(), new MediaListObserver());
+        mediaViewModel.getMediaDatabase().observe(this.getActivity(), new MediaInsertedObserver());
     }
 
     private void registerOnClickListener() {
@@ -78,9 +81,28 @@ public class StartMediaFragment extends Fragment {
                 parent.switchToNewMediaView();
             }
         });
+
+        deleteAllButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        DatabaseApplication context = ((DatabaseApplication) getActivity().getApplicationContext());
+                        final MediaDao mediaDao = context.getMediaDatabase().mediaDao();
+                        mediaDao.nukeTable();
+
+                        mediaViewModel.removeAllMedia();
+                    }
+                });
+            }
+        });
     }
 
-    private void initializeView() {
+    public void refreshView() {
 
         AsyncTask.execute(new Runnable() {
             @Override
@@ -89,22 +111,25 @@ public class StartMediaFragment extends Fragment {
                 DatabaseApplication context = ((DatabaseApplication) getActivity().getApplicationContext());
                 final MediaDao mediaDao = context.getMediaDatabase().mediaDao();
                 List<Integer> mediaIds = mediaDao.getAllIds();
+                List<Media> mediaList = new ArrayList<>();
 
                 for (int id : mediaIds) {
-
-                    System.out.println(mediaDao.getById(id));
-                    mediaViewModel.addMedia(mediaDao.getById(id));
+                    mediaList.add(mediaDao.getById(id));
                 }
+
+                mediaViewModel.addMedia(mediaList);
             }
         });
     }
 
-    private class MediaListObserver implements Observer<List<Media>> {
+    private class MediaInsertedObserver implements Observer<List<Media>> {
 
         @Override
-        public void onChanged(List<Media> mediaList) {
+        public void onChanged(List<Media> mediaListInserted) {
 
-            for(Media media : Objects.requireNonNull(mediaViewModel.getMediaDatabase().getValue())){
+            linearLayoutMedia.removeAllViews();
+
+            for(Media media : mediaListInserted) {
 
                 int id = media.getId();
                 String name = media.getName();

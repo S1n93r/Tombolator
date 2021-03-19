@@ -18,16 +18,17 @@ public class MediaActivityViewModel extends ViewModel {
         mediaDatabaseLiveData.setValue(mediaDatabase);
     }
 
-    public void addMedia(Media media) {
+    public void addMedia(List<Media> mediaList) {
 
-        mediaDatabase.add(media);
+        for(Media media : mediaList)
+            mediaDatabase.add(media);
+
+        mediaDatabaseLiveData.postValue(mediaDatabase);
     }
 
-    public void addMedia(String name, String title, int number, String type) {
-
-        Media media = mediaFactory.getOrCreateMedia(name, title, number, type);
-
-        addMedia(media);
+    public void removeAllMedia() {
+        mediaDatabase.clear();
+        mediaDatabaseLiveData.postValue(mediaDatabase);
     }
 
     public LiveData<List<Media>> getMediaDatabase() {

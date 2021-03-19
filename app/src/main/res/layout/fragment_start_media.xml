@@ -7,6 +7,19 @@
         android:layout_height="match_parent"
              tools:context=".media.StartMediaFragment">
 
+    <Button
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:id="@+id/buttonDeleteAll"
+            android:background="@drawable/ovalbutton"
+            android:fontFamily="@font/comic_sans_ms"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintVertical_bias="0.99"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
             android:layout_width="wrap_content"
