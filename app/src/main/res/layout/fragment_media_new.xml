@@ -9,21 +9,21 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/titleNewMedia"
+            android:text="@string/title_new_media"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="36sp"
-            android:id="@+id/textviewTitle"
+            android:id="@+id/text_view_title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintVertical_bias="0.05"/>
     <Button
-            android:text="@string/buttonBack"
+            android:text="@string/button_back"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:id="@+id/buttonBack"
+            android:id="@+id/button_back"
             android:background="@drawable/ovalbutton"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="20sp"
@@ -34,10 +34,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.1"/>
     <Button
-            android:text="@string/buttonSave"
+            android:text="@string/button_save"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:id="@+id/buttonSave"
+            android:id="@+id/button_save"
             android:background="@drawable/ovalbutton"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="20sp"
@@ -54,13 +54,13 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editTextName"
+            android:id="@+id/edit_text_name"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="200dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:autofillHints="@string/hintName"
-            android:hint="@string/hintName"/>
+            android:autofillHints="@string/hint_name"
+            android:hint="@string/hint_name"/>
     <EditText
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="20sp"
@@ -71,9 +71,9 @@
             android:id="@+id/editTextTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:autofillHints="@string/hintName"
-            android:hint="@string/hintTitle"
-            app:layout_constraintTop_toBottomOf="@+id/editTextName" android:layout_marginTop="16dp"/>
+            android:autofillHints="@string/hint_name"
+            android:hint="@string/hint_title"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_name" android:layout_marginTop="16dp"/>
     <EditText
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="20sp"
@@ -85,8 +85,8 @@
             app:layout_constraintTop_toBottomOf="@+id/editTextTitle" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp"
-            android:autofillHints="@string/hintNumber"
-            android:hint="@string/hintNumber"/>
+            android:autofillHints="@string/hint_number"
+            android:hint="@string/hint_number"/>
     <Spinner
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="20sp"

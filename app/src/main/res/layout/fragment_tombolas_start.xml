@@ -24,23 +24,23 @@
             android:fontFamily="@font/comic_sans_ms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/titleTombolas"
+            android:text="@string/title_tombolas"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:textSize="36sp"
-            android:id="@+id/textViewTitle"
+            android:id="@+id/text_view_title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintVertical_bias="0.05"/>
     <Button
+            android:id="@+id/button_back"
             android:background="@drawable/ovalbutton"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="20sp"
-            android:text="@string/buttonBack"
+            android:text="@string/button_back"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:id="@+id/buttonBack"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,13 +48,13 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.95"/>
     <Button
+            android:id="@+id/button_new_tombola"
             android:background="@drawable/ovalbutton"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="20sp"
-            android:text="@string/buttonNewTombola"
+            android:text="@string/button_new_tombola"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:id="@+id/buttonNewTombola"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -74,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:id="@+id/linearLayoutTombolas"/>
+                android:id="@+id/linear_layout_Tombolas"/>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

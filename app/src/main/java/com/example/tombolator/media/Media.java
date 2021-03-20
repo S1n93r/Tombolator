@@ -122,10 +122,6 @@ public class Media implements Parcelable {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public int getNumber() {
         return number;
     }

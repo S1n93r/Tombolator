@@ -12,12 +12,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 import com.example.tombolator.TomboDbApplication;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class NewMediaFragment extends Fragment {
 
@@ -30,9 +30,6 @@ public class NewMediaFragment extends Fragment {
     private NewMediaFragment(MediaActivity parent) {
         this.parent = parent;
     }
-
-    private View layout;
-    private MediaActivityViewModel mediaViewModel;
 
     private TextView editTextName;
     private TextView editTextTitle;
@@ -47,17 +44,15 @@ public class NewMediaFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
 
-        mediaViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
+        View layout = inflater.inflate(R.layout.fragment_media_new, container, false);
 
-        layout = inflater.inflate(R.layout.fragment_media_new, container, false);
-
-        editTextName = layout.findViewById(R.id.editTextName);
+        editTextName = layout.findViewById(R.id.edit_text_name);
         editTextTitle = layout.findViewById(R.id.editTextTitle);
         editTextNumber = layout.findViewById(R.id.editTextNumber);
         spinnerType = layout.findViewById(R.id.spinnerType);
 
-        saveButton = layout.findViewById(R.id.buttonSave);
-        backButton = layout.findViewById(R.id.buttonBack);
+        saveButton = layout.findViewById(R.id.button_save);
+        backButton = layout.findViewById(R.id.button_back);
 
         setUpMediaTypeSpinner();
         registerOnClickListener();
@@ -102,7 +97,9 @@ public class NewMediaFragment extends Fragment {
                         @Override
                         public void run() {
 
-                            TomboDbApplication context = ((TomboDbApplication) getActivity().getApplicationContext());
+                            TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+                                    .getApplicationContext());
+
                             final MediaDao mediaDao = context.getTomboDb().mediaDao();
                             mediaDao.insertMedia(media);
                         }

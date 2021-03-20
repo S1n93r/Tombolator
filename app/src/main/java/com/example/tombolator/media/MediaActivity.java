@@ -2,12 +2,9 @@ package com.example.tombolator.media;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 
 public class MediaActivity extends AppCompatActivity {
-
-    private MediaActivityViewModel mediaActivityViewModel;
 
     private StartMediaFragment startMediaFragment;
     private NewMediaFragment newMediaFragment;
@@ -16,8 +13,6 @@ public class MediaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
-        mediaActivityViewModel = new ViewModelProvider(this).get(MediaActivityViewModel.class);
 
         startMediaFragment = StartMediaFragment.newInstance(this);
         newMediaFragment = NewMediaFragment.newInstance(this);

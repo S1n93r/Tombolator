@@ -16,10 +16,10 @@ import com.example.tombolator.TomboDbApplication;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class StartTombolaFragment extends Fragment {
 
-    private View layout;
     private final TombolasActivity parent;
 
     public static StartTombolaFragment newInstance(TombolasActivity parent) {
@@ -46,12 +46,12 @@ public class StartTombolaFragment extends Fragment {
 
         tombolasActivityViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
 
-        layout = inflater.inflate(R.layout.fragment_tombolas_start, container, false);
+        View layout = inflater.inflate(R.layout.fragment_tombolas_start, container, false);
 
-        linearLayoutTombolas = layout.findViewById(R.id.linearLayoutTombolas);
+        linearLayoutTombolas = layout.findViewById(R.id.linear_layout_Tombolas);
 
-        backButton = layout.findViewById(R.id.buttonBack);
-        newTombolaButton = layout.findViewById(R.id.buttonNewTombola);
+        backButton = layout.findViewById(R.id.button_back);
+        newTombolaButton = layout.findViewById(R.id.button_new_tombola);
         deleteAllButton = layout.findViewById(R.id.buttonDeleteAll);
 
         registerObserver();
@@ -63,7 +63,8 @@ public class StartTombolaFragment extends Fragment {
     }
 
     private void registerObserver() {
-        tombolasActivityViewModel.getTombolaDatabase().observe(this.getActivity(), new TombolaInsertedObserver());
+        tombolasActivityViewModel.getTombolaDatabase()
+                .observe(Objects.requireNonNull(this.getActivity()), new TombolaInsertedObserver());
     }
 
     private void registerOnClickListener() {
@@ -91,7 +92,9 @@ public class StartTombolaFragment extends Fragment {
                     @Override
                     public void run() {
 
-                        TomboDbApplication context = ((TomboDbApplication) getActivity().getApplicationContext());
+                        TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+                                .getApplicationContext());
+
                         final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
                         tombolaDao.nukeTable();
 
@@ -109,7 +112,9 @@ public class StartTombolaFragment extends Fragment {
             @Override
             public void run() {
 
-                TomboDbApplication context = ((TomboDbApplication) getActivity().getApplicationContext());
+                TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+                        .getApplicationContext());
+
                 final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
                 List<Long> tombolaIds = tombolaDao.getAllIds();
                 List<Tombola> tombolaList = new ArrayList<>();

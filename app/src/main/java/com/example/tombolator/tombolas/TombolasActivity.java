@@ -2,12 +2,9 @@ package com.example.tombolator.tombolas;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 
 public class TombolasActivity extends AppCompatActivity {
-
-    private TombolasActivityViewModel tombolasActivityViewModel;
 
     private StartTombolaFragment startTombolaFragment;
     private NewTombolaFragment newTombolaFragment;
@@ -16,8 +13,6 @@ public class TombolasActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
-        tombolasActivityViewModel = new ViewModelProvider(this).get(TombolasActivityViewModel.class);
 
         startTombolaFragment = StartTombolaFragment.newInstance(this);
         newTombolaFragment = NewTombolaFragment.newInstance(this);

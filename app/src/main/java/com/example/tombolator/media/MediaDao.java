@@ -14,8 +14,9 @@ public interface MediaDao {
     Media getById(long mediaId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long insertMedia(Media media);
+    void insertMedia(Media media);
 
+    /* Linter can be ignored. Will be used as soon as media details view is implemented. */
     @Delete
     void deleteMedia(Media media);
 

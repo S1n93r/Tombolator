@@ -14,7 +14,7 @@ public interface TombolaDao {
     Tombola getById(long tombolaId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long insertTombola(Tombola tombola);
+    void insertTombola(Tombola tombola);
 
     @Delete
     void deleteMedia(Tombola tombola);

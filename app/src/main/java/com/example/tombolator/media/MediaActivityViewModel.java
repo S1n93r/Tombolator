@@ -9,8 +9,8 @@ import java.util.List;
 
 public class MediaActivityViewModel extends ViewModel {
 
-    private List<Media> mediaDatabase = new ArrayList<>();
-    private MutableLiveData<List<Media>> mediaDatabaseLiveData = new MutableLiveData<>();
+    final private List<Media> mediaDatabase = new ArrayList<>();
+    final private MutableLiveData<List<Media>> mediaDatabaseLiveData = new MutableLiveData<>();
 
     public MediaActivityViewModel() {
         mediaDatabaseLiveData.setValue(mediaDatabase);
@@ -19,15 +19,15 @@ public class MediaActivityViewModel extends ViewModel {
     public void addMedia(List<Media> mediaList) {
 
         mediaDatabase.clear();
-
-        for(Media media : mediaList)
-            mediaDatabase.add(media);
+        mediaDatabase.addAll(mediaList);
 
         mediaDatabaseLiveData.postValue(mediaDatabase);
     }
 
     public void removeAllMedia() {
+
         mediaDatabase.clear();
+        
         mediaDatabaseLiveData.postValue(mediaDatabase);
     }
 

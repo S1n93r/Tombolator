@@ -16,10 +16,10 @@ import com.example.tombolator.TomboDbApplication;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class StartMediaFragment extends Fragment {
 
-    private View layout;
     private final MediaActivity parent;
 
     public static StartMediaFragment newInstance(MediaActivity parent) {
@@ -46,11 +46,11 @@ public class StartMediaFragment extends Fragment {
 
         mediaViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
 
-        layout = inflater.inflate(R.layout.fragment_media_start, container, false);
+        View layout = inflater.inflate(R.layout.fragment_media_start, container, false);
 
         linearLayoutMedia = layout.findViewById(R.id.linear_layout_media);
 
-        backButton = layout.findViewById(R.id.buttonBack);
+        backButton = layout.findViewById(R.id.button_back);
         newMediaButton = layout.findViewById(R.id.button_new_media);
         deleteAllButton = layout.findViewById(R.id.buttonDeleteAll);
 
@@ -63,7 +63,8 @@ public class StartMediaFragment extends Fragment {
     }
 
     private void registerObserver() {
-        mediaViewModel.getMediaDatabase().observe(this.getActivity(), new MediaInsertedObserver());
+        mediaViewModel.getMediaDatabase()
+                .observe(Objects.requireNonNull(this.getActivity()), new MediaInsertedObserver());
     }
 
     private void registerOnClickListener() {
@@ -91,7 +92,9 @@ public class StartMediaFragment extends Fragment {
                     @Override
                     public void run() {
 
-                        TomboDbApplication context = ((TomboDbApplication) getActivity().getApplicationContext());
+                        TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+                                .getApplicationContext());
+
                         final MediaDao mediaDao = context.getTomboDb().mediaDao();
                         mediaDao.nukeTable();
 
@@ -109,7 +112,9 @@ public class StartMediaFragment extends Fragment {
             @Override
             public void run() {
 
-                TomboDbApplication context = ((TomboDbApplication) getActivity().getApplicationContext());
+                TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+                        .getApplicationContext());
+
                 final MediaDao mediaDao = context.getTomboDb().mediaDao();
                 List<Long> mediaIds = mediaDao.getAllIds();
                 List<Media> mediaList = new ArrayList<>();

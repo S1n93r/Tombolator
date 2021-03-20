@@ -10,9 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 import com.example.tombolator.TomboDbApplication;
+
+import java.util.Objects;
 
 public class NewTombolaFragment extends Fragment {
 
@@ -26,9 +27,6 @@ public class NewTombolaFragment extends Fragment {
         this.parent = parent;
     }
 
-    private View layout;
-    private TombolasActivityViewModel tombolasActivityViewModel;
-
     private TextView editTextName;
 
     private Button saveButton;
@@ -39,14 +37,12 @@ public class NewTombolaFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        tombolasActivityViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
+        View layout = inflater.inflate(R.layout.fragment_tombolas_new, container, false);
 
-        layout = inflater.inflate(R.layout.fragment_tombolas_new, container, false);
+        editTextName = layout.findViewById(R.id.edit_text_name);
 
-        editTextName = layout.findViewById(R.id.editTextName);
-
-        saveButton = layout.findViewById(R.id.buttonSave);
-        backButton = layout.findViewById(R.id.buttonBack);
+        saveButton = layout.findViewById(R.id.button_save);
+        backButton = layout.findViewById(R.id.button_back);
 
         registerOnClickListener();
 
@@ -69,7 +65,9 @@ public class NewTombolaFragment extends Fragment {
                         @Override
                         public void run() {
 
-                            TomboDbApplication context = ((TomboDbApplication) getActivity().getApplicationContext());
+                            TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+                                    .getApplicationContext());
+
                             final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
                             tombolaDao.insertTombola(tombola);
                         }
