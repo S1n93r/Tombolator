@@ -15,7 +15,7 @@ public class Media implements Parcelable {
     private Long id;
 
     @ColumnInfo
-    private long creationTimestamp = System.currentTimeMillis();
+    private long creationTimestamp;
 
     @ColumnInfo
     private String name;
@@ -31,6 +31,7 @@ public class Media implements Parcelable {
 
     protected Media(String name, String title, int number, String type) {
 
+        creationTimestamp = System.currentTimeMillis();
         this.name = name;
         this.title = title;
         this.number = number;

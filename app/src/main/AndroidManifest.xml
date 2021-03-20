@@ -5,7 +5,7 @@
     <application android:name=".TomboDbApplication"
             android:allowBackup="true"
             android:icon="@drawable/ic_cassette"
-            android:label="@string/app_name"
+            android:label="@string/AppName"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".TombolasActivity"/>
+        <activity android:name=".tombolas.TombolasActivity"/>
         <activity android:name=".media.MediaActivity"
                   android:windowSoftInputMode="adjustPan"/>
     </application>

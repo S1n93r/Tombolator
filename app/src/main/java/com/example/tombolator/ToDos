@@ -3,7 +3,9 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [.] implementing tombola
-    [ ] create Tombola view
+    [ ] add flag to Media / MediaDao "wasAlreadyDrawn"
+    [ ] add mediaLists to tombola
+    [ ] implement functionality to draw a random media from tombola
 [ ] colors: blue / violet / pink (pastel)
 [ ] implement unit tests
 [ ] fix linter
@@ -11,10 +13,14 @@ ToDos:
 [ ] Write java doc
 
 Done:
+[x] bug: deleteAll button is not working properly
+[x] bug: tombola list is shown above the title
+[x] wire up model and views for tombola
+[x] create Tombola views
+
 [x] rename database to TomboDb
 [x] create Tombola table in db
 [x] create Tombola dao
-
 [x] implemented auto-increment for app version by number of github commits
 [x] create Tombola class
 [x] button in new media should not block form

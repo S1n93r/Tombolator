@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.tombolator.media.MediaActivity;
+import com.example.tombolator.tombolas.TombolasActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,8 +19,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tombolasButton = findViewById(R.id.button_tombolas);
-        mediaButton = findViewById(R.id.button_media);
+        tombolasButton = findViewById(R.id.buttonTombolas);
+        mediaButton = findViewById(R.id.buttonMedia);
 
         registerOnClickListener();
     }

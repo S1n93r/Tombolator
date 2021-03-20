@@ -1,14 +1,16 @@
 <resources>
-    <string name="app_name">Tombolator</string>
-    <string name="button_back">Zurück</string>
-    <string name="button_save">Speichern</string>
-    <string name="button_tombolas">Tombolas</string>
-    <string name="button_media">Medien</string>
-    <string name="button_new_media">Neues Medium</string>
-    <string name="title_tombolas">Deine Tombolas</string>
-    <string name="title_media">Deine Medien</string>
-    <string name="title_new_media">Neues Medium</string>
-    <string name="hint_name">Name</string>
-    <string name="hint_title">Titel</string>
-    <string name="hint_number">Nummer</string>
+    <string name="AppName">Tombolator</string>
+    <string name="buttonBack">Zurück</string>
+    <string name="buttonSave">Speichern</string>
+    <string name="buttonTombolas">Tombolas</string>
+    <string name="buttonMedia">Medien</string>
+    <string name="buttonNewMedia">Neues Medium</string>
+    <string name="buttonNewTombola">Neue Tombola</string>
+    <string name="titleTombolas">Deine Tombolas</string>
+    <string name="titleMedia">Deine Medien</string>
+    <string name="titleNewMedia">Neues Medium</string>
+    <string name="titleNewTombola">Neue Tombola</string>
+    <string name="hintName">Name</string>
+    <string name="hintTitle">Titel</string>
+    <string name="hintNumber">Nummer</string>
 </resources>

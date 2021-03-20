@@ -1,4 +1,4 @@
-package com.example.tombolator.media;
+package com.example.tombolator.tombolas;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,25 +17,25 @@ import com.example.tombolator.TomboDbApplication;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StartMediaFragment extends Fragment {
+public class StartTombolaFragment extends Fragment {
 
     private View layout;
-    private final MediaActivity parent;
+    private final TombolasActivity parent;
 
-    public static StartMediaFragment newInstance(MediaActivity parent) {
-        return new StartMediaFragment(parent);
+    public static StartTombolaFragment newInstance(TombolasActivity parent) {
+        return new StartTombolaFragment(parent);
     }
 
-    private StartMediaFragment(MediaActivity parent) {
+    private StartTombolaFragment(TombolasActivity parent) {
         this.parent = parent;
     }
 
-    private MediaActivityViewModel mediaViewModel;
+    private TombolasActivityViewModel tombolasActivityViewModel;
 
-    private LinearLayout linearLayoutMedia;
+    private LinearLayout linearLayoutTombolas;
 
     private Button backButton;
-    private Button newMediaButton;
+    private Button newTombolaButton;
 
     /* TODO: Helper for development. Will be replaced later. */
     private Button deleteAllButton;
@@ -44,14 +44,14 @@ public class StartMediaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
-        mediaViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
+        tombolasActivityViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
 
-        layout = inflater.inflate(R.layout.fragment_media_start, container, false);
+        layout = inflater.inflate(R.layout.fragment_tombolas_start, container, false);
 
-        linearLayoutMedia = layout.findViewById(R.id.linear_layout_media);
+        linearLayoutTombolas = layout.findViewById(R.id.linearLayoutTombolas);
 
         backButton = layout.findViewById(R.id.buttonBack);
-        newMediaButton = layout.findViewById(R.id.button_new_media);
+        newTombolaButton = layout.findViewById(R.id.buttonNewTombola);
         deleteAllButton = layout.findViewById(R.id.buttonDeleteAll);
 
         registerObserver();
@@ -63,7 +63,7 @@ public class StartMediaFragment extends Fragment {
     }
 
     private void registerObserver() {
-        mediaViewModel.getMediaDatabase().observe(this.getActivity(), new MediaInsertedObserver());
+        tombolasActivityViewModel.getTombolaDatabase().observe(this.getActivity(), new TombolaInsertedObserver());
     }
 
     private void registerOnClickListener() {
@@ -75,10 +75,10 @@ public class StartMediaFragment extends Fragment {
             }
         });
 
-        newMediaButton.setOnClickListener(new View.OnClickListener() {
+        newTombolaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                parent.switchToNewMediaView();
+                parent.switchToNewTombolaView();
             }
         });
 
@@ -92,11 +92,11 @@ public class StartMediaFragment extends Fragment {
                     public void run() {
 
                         TomboDbApplication context = ((TomboDbApplication) getActivity().getApplicationContext());
-                        final MediaDao mediaDao = context.getTomboDb().mediaDao();
-                        mediaDao.nukeTable();
+                        final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
+                        tombolaDao.nukeTable();
 
                         /* TODO: Check if obsolete. */
-                        mediaViewModel.removeAllMedia();
+                        tombolasActivityViewModel.removeAllTombolas();
                     }
                 });
             }
@@ -110,42 +110,39 @@ public class StartMediaFragment extends Fragment {
             public void run() {
 
                 TomboDbApplication context = ((TomboDbApplication) getActivity().getApplicationContext());
-                final MediaDao mediaDao = context.getTomboDb().mediaDao();
-                List<Long> mediaIds = mediaDao.getAllIds();
-                List<Media> mediaList = new ArrayList<>();
+                final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
+                List<Long> tombolaIds = tombolaDao.getAllIds();
+                List<Tombola> tombolaList = new ArrayList<>();
 
-                for (long id : mediaIds) {
-                    mediaList.add(mediaDao.getById(id));
+                for (long id : tombolaIds) {
+                    tombolaList.add(tombolaDao.getById(id));
                 }
 
-                mediaViewModel.addMedia(mediaList);
+                tombolasActivityViewModel.addTombola(tombolaList);
             }
         });
     }
 
-    private class MediaInsertedObserver implements Observer<List<Media>> {
+    private class TombolaInsertedObserver implements Observer<List<Tombola>> {
 
         @Override
-        public void onChanged(List<Media> mediaListInserted) {
+        public void onChanged(List<Tombola> tombolaListInserted) {
 
-            linearLayoutMedia.removeAllViews();
+            linearLayoutTombolas.removeAllViews();
 
-            for(Media media : mediaListInserted) {
+            for(Tombola tombola : tombolaListInserted) {
 
-                long id = media.getId();
-                String name = media.getName();
-                String title = media.getTitle();
-                int number = media.getNumber();
-                String type = media.getType();
+                long id = tombola.getId();
+                String name = tombola.getName();
 
-                String mediaString = "[" + id + "] " + type + ": " + name + " - " + title + " (" + number + ")";
+                String mediaString = "[" + id + "] " + name;
 
                 TextView textView = new TextView(parent.getApplicationContext());
                 textView.setTypeface(backButton.getTypeface());
                 textView.setTextSize(16);
                 textView.setText(mediaString);
 
-                linearLayoutMedia.addView(textView);
+                linearLayoutTombolas.addView(textView);
             }
         }
     }

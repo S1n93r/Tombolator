@@ -14,15 +14,15 @@ public class Tombola implements Parcelable {
     private Long id;
 
     @ColumnInfo
-    private long creationTimestamp = System.currentTimeMillis();
+    private long creationTimestamp;
 
     @ColumnInfo
     private String name;
 
-    protected Tombola(Long creationTimestamp, String name) {
+    protected Tombola(String name) {
 
         this.name = name;
-        this.creationTimestamp = creationTimestamp;
+        this.creationTimestamp = System.currentTimeMillis();
     }
 
     protected Tombola(Parcel in) {

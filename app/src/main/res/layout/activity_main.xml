@@ -10,7 +10,7 @@
             android:fontFamily="@font/comic_sans_ms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"
+            android:text="@string/AppName"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -20,10 +20,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.05"/>
     <Button
-            android:text="@string/button_media"
+            android:text="@string/buttonMedia"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:id="@+id/button_media"
+            android:id="@+id/buttonMedia"
             android:background="@drawable/ovalbutton"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="20sp"
@@ -34,10 +34,10 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintVertical_bias="0.75"/>
     <Button
-            android:text="@string/button_tombolas"
+            android:text="@string/buttonTombolas"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:id="@+id/button_tombolas"
+            android:id="@+id/buttonTombolas"
             android:background="@drawable/ovalbutton"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="20sp"

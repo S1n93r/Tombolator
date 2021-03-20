@@ -49,7 +49,7 @@ public class NewMediaFragment extends Fragment {
 
         mediaViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
 
-        layout = inflater.inflate(R.layout.fragment_new_media, container, false);
+        layout = inflater.inflate(R.layout.fragment_media_new, container, false);
 
         editTextName = layout.findViewById(R.id.editTextName);
         editTextTitle = layout.findViewById(R.id.editTextTitle);
