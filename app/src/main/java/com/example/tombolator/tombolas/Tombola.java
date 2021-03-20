@@ -19,6 +19,12 @@ public class Tombola implements Parcelable {
     @ColumnInfo
     private String name;
 
+    protected Tombola(Long creationTimestamp, String name) {
+
+        this.name = name;
+        this.creationTimestamp = creationTimestamp;
+    }
+
     protected Tombola(Parcel in) {
 
         if (in.readByte() == 0) {

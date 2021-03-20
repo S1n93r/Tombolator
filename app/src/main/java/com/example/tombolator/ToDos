@@ -3,7 +3,7 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [.] implementing tombola
-    [ ] create Tombola database
+    [ ] create Tombola view
 [ ] colors: blue / violet / pink (pastel)
 [ ] implement unit tests
 [ ] fix linter
@@ -11,9 +11,12 @@ ToDos:
 [ ] Write java doc
 
 Done:
+[x] rename database to TomboDb
+[x] create Tombola table in db
+[x] create Tombola dao
+
 [x] implemented auto-increment for app version by number of github commits
 [x] create Tombola class
-
 [x] button in new media should not block form
 [x] fix bug where list is shown twice + the new entry
 [x] implement deleteMedia helper

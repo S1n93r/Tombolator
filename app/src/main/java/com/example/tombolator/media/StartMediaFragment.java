@@ -11,8 +11,8 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import com.example.tombolator.DatabaseApplication;
 import com.example.tombolator.R;
+import com.example.tombolator.TomboDbApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,8 +91,8 @@ public class StartMediaFragment extends Fragment {
                     @Override
                     public void run() {
 
-                        DatabaseApplication context = ((DatabaseApplication) getActivity().getApplicationContext());
-                        final MediaDao mediaDao = context.getMediaDatabase().mediaDao();
+                        TomboDbApplication context = ((TomboDbApplication) getActivity().getApplicationContext());
+                        final MediaDao mediaDao = context.getTomboDb().mediaDao();
                         mediaDao.nukeTable();
 
                         mediaViewModel.removeAllMedia();
@@ -108,12 +108,12 @@ public class StartMediaFragment extends Fragment {
             @Override
             public void run() {
 
-                DatabaseApplication context = ((DatabaseApplication) getActivity().getApplicationContext());
-                final MediaDao mediaDao = context.getMediaDatabase().mediaDao();
-                List<Integer> mediaIds = mediaDao.getAllIds();
+                TomboDbApplication context = ((TomboDbApplication) getActivity().getApplicationContext());
+                final MediaDao mediaDao = context.getTomboDb().mediaDao();
+                List<Long> mediaIds = mediaDao.getAllIds();
                 List<Media> mediaList = new ArrayList<>();
 
-                for (int id : mediaIds) {
+                for (long id : mediaIds) {
                     mediaList.add(mediaDao.getById(id));
                 }
 

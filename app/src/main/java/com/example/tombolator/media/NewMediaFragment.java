@@ -13,8 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import com.example.tombolator.DatabaseApplication;
 import com.example.tombolator.R;
+import com.example.tombolator.TomboDbApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,8 +102,8 @@ public class NewMediaFragment extends Fragment {
                         @Override
                         public void run() {
 
-                            DatabaseApplication context = ((DatabaseApplication) getActivity().getApplicationContext());
-                            final MediaDao mediaDao = context.getMediaDatabase().mediaDao();
+                            TomboDbApplication context = ((TomboDbApplication) getActivity().getApplicationContext());
+                            final MediaDao mediaDao = context.getTomboDb().mediaDao();
                             mediaDao.insertMedia(media);
                         }
                     });

@@ -8,10 +8,10 @@ import java.util.List;
 public interface MediaDao {
 
     @Query("SELECT id FROM Media")
-    List<Integer> getAllIds();
+    List<Long> getAllIds();
 
     @Query("SELECT * FROM Media WHERE id = :mediaId")
-    Media getById(int mediaId);
+    Media getById(long mediaId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insertMedia(Media media);
@@ -21,5 +21,5 @@ public interface MediaDao {
 
     @Query("DELETE FROM Media")
     void nukeTable();
-
+    
 }
