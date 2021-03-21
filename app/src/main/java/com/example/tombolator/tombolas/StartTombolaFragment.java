@@ -142,7 +142,7 @@ public class StartTombolaFragment extends Fragment {
                 String mediaString = "[" + id + "] " + name;
 
                 TextView textView = new TextView(parent.getApplicationContext());
-                textView.setTypeface(backButton.getTypeface());
+                textView.setTypeface(getResources().getFont(R.font.comic_sans_ms));
                 textView.setTextSize(16);
                 textView.setText(mediaString);
 

@@ -1,11 +1,11 @@
 <resources>
     <string name="app_mame">Tombolator</string>
     <string name="button_back">Zurück</string>
-    <string name="button_save">Speichern</string>
+    <string name="button_save">Sichern</string>
     <string name="button_tombolas">Tombolas</string>
     <string name="button_media">Medien</string>
-    <string name="button_new_media">Neues Medium</string>
-    <string name="button_new_tombola">Neue Tombola</string>
+    <string name="button_new">Neu</string>
+    <string name="button_nuke">Nuke</string>
     <string name="title_tombolas">Deine Tombolas</string>
     <string name="title_media">Deine Medien</string>
     <string name="title_new_media">Neues Medium</string>

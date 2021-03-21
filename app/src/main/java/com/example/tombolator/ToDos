@@ -18,10 +18,11 @@ ToDos:
 [ ] Write java doc
 
 Done:
+[x] compliment button texts with icons
+
 [x] add mediaLists to tombola
 [x] make mediaLists serializable and deserializable
 [x] implement functionality to draw a random media from tombola
-
 [x] fix TODOs
 [x] fix linters
 [x] bug: deleteAll button is not working properly

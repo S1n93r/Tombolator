@@ -21,12 +21,14 @@
             app:layout_constraintVertical_bias="0.05"/>
     <Button
             android:text="@string/button_media"
+            android:drawableBottom="@drawable/ic_cassette"
+            android:padding="25dp"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:id="@+id/buttonMedia"
             android:background="@drawable/ovalbutton"
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="20sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -35,12 +37,14 @@
             app:layout_constraintVertical_bias="0.75"/>
     <Button
             android:text="@string/button_tombolas"
+            android:drawableBottom="@drawable/ic_wheel"
+            android:padding="25dp"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:id="@+id/buttonTombolas"
             android:background="@drawable/ovalbutton"
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="20sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
