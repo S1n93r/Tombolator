@@ -4,6 +4,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#d79cff"
         tools:context=".tombolas.NewTombolaFragment">
 
     <TextView
@@ -26,7 +27,7 @@
             android:layout_width="125dp"
             android:layout_height="125dp"
             android:id="@+id/button_back"
-            android:background="@drawable/ovalbutton"
+            android:background="@drawable/oval_button_blue"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +43,7 @@
             android:layout_width="125dp"
             android:layout_height="125dp"
             android:id="@+id/button_save"
-            android:background="@drawable/ovalbutton"
+            android:background="@drawable/oval_button_blue"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -60,9 +61,55 @@
             android:ems="10"
             android:id="@+id/edit_text_name"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="110dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:autofillHints="@string/hint_name"
             android:hint="@string/hint_name"/>
+    <ScrollView
+            android:layout_width="380dp"
+            android:layout_height="160dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintVertical_bias="0.35" android:id="@+id/scrollView2">
+        <LinearLayout
+                android:id="@+id/linear_layout_available_media"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+    </ScrollView>
+    <ScrollView
+            android:layout_width="380dp"
+            android:layout_height="160dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintVertical_bias="0.7" android:id="@+id/scrollView3">
+        <LinearLayout
+                android:id="@+id/linear_layout_added_media"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+    </ScrollView>
+    <TextView
+            android:text="@string/title_media_available"
+            android:textSize="20sp"
+            android:fontFamily="@font/comic_sans_ms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/scrollView2"/>
+    <TextView
+            android:text="@string/title_media_added"
+            android:textSize="20sp"
+            android:fontFamily="@font/comic_sans_ms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView2"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/scrollView3"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -48,7 +48,7 @@ public class StartTombolaFragment extends Fragment {
 
         View layout = inflater.inflate(R.layout.fragment_tombolas_start, container, false);
 
-        linearLayoutTombolas = layout.findViewById(R.id.linear_layout_Tombolas);
+        linearLayoutTombolas = layout.findViewById(R.id.linear_layout_tombolas);
 
         backButton = layout.findViewById(R.id.button_back);
         newTombolaButton = layout.findViewById(R.id.button_new_tombola);

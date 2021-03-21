@@ -5,6 +5,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#d79cff"
              tools:context=".media.StartMediaFragment">
 
     <TextView
@@ -21,7 +22,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintVertical_bias="0.05"/>
     <Button
-            android:background="@drawable/ovalbutton"
+            android:background="@drawable/oval_button_blue"
             android:text="@string/button_back"
             android:textSize="14sp"
             android:fontFamily="@font/comic_sans_ms"
@@ -41,7 +42,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:id="@+id/buttonDeleteAll"
-            android:background="@drawable/ovalbutton"
+            android:background="@drawable/oval_button_blue"
             android:padding="20dp"
             android:scaleType="fitCenter"
             android:text="@string/button_nuke"
@@ -55,7 +56,7 @@
             app:layout_constraintVertical_bias="0.975"/>
     <Button
             android:id="@+id/button_new_media"
-            android:background="@drawable/ovalbutton"
+            android:background="@drawable/oval_button_blue"
             android:drawableBottom="@drawable/ic_add"
             android:text="@string/button_new"
             android:textSize="14sp"

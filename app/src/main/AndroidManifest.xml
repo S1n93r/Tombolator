@@ -4,7 +4,7 @@
 
     <application android:name=".TomboDbApplication"
             android:allowBackup="true"
-            android:icon="@drawable/ic_cassette"
+            android:icon="@mipmap/ic_launcher_bingo"
             android:label="@string/app_mame"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
