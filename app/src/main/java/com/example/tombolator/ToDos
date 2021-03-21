@@ -2,10 +2,15 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[.] implementing tombola
-    [ ] add flag to Media / MediaDao "wasAlreadyDrawn"
-    [ ] add mediaLists to tombola
-    [ ] implement functionality to draw a random media from tombola
+[ ] make media addable in newTombola view
+[ ] implement tombola details view
+    [ ] see details
+    [ ] delete tombola
+    [ ] draw next media
+[ ] implement media details view
+    [ ] see details
+    [ ] delete media
+
 [ ] check fields on creating new media and inform user if missing
 [ ] check fields on creating new tombola and inform user if missing
 [ ] colors: blue / violet / pink (pastel)
@@ -13,8 +18,11 @@ ToDos:
 [ ] Write java doc
 
 Done:
-[x] fix TODOs
+[x] add mediaLists to tombola
+[x] make mediaLists serializable and deserializable
+[x] implement functionality to draw a random media from tombola
 
+[x] fix TODOs
 [x] fix linters
 [x] bug: deleteAll button is not working properly
 [x] bug: tombola list is shown above the title

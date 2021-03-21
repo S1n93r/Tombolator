@@ -5,6 +5,13 @@ import android.os.Parcelable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+import com.example.tombolator.Converters;
+import com.example.tombolator.media.Media;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 public class Tombola implements Parcelable {
@@ -18,6 +25,14 @@ public class Tombola implements Parcelable {
 
     @ColumnInfo
     private String name;
+
+    @TypeConverters({Converters.class})
+    @ColumnInfo
+    private List<Media> mediaAvailable;
+
+    @TypeConverters({Converters.class})
+    @ColumnInfo
+    private List<Media> mediaDrawn;
 
     protected Tombola(String name) {
 
@@ -68,6 +83,22 @@ public class Tombola implements Parcelable {
         parcel.writeString(name);
     }
 
+    public void addMedia(Media media) {
+        mediaAvailable.add(media);
+    }
+
+    public void removeMedia(Media media) {
+        mediaAvailable.remove(media);
+    }
+
+    public Media drawRandomMedia() {
+
+        List<Media> mediaAvailableShuffled = new ArrayList<>(mediaAvailable);
+        Collections.shuffle(mediaAvailableShuffled);
+
+        return mediaAvailableShuffled.get(0);
+    }
+
     public Long getId() {
         return id;
     }
@@ -90,5 +121,21 @@ public class Tombola implements Parcelable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Media> getMediaAvailable() {
+        return mediaAvailable;
+    }
+
+    public void setMediaAvailable(List<Media> mediaAvailable) {
+        this.mediaAvailable = mediaAvailable;
+    }
+
+    public List<Media> getMediaDrawn() {
+        return mediaDrawn;
+    }
+
+    public void setMediaDrawn(List<Media> mediaDrawn) {
+        this.mediaDrawn = mediaDrawn;
     }
 }
