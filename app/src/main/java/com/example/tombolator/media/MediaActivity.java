@@ -25,16 +25,12 @@ public class MediaActivity extends AppCompatActivity {
 
     protected void switchToStartView() {
 
-        startMediaFragment.setArguments(newMediaFragment.getArguments());
-
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, startMediaFragment)
                 .commitNow();
     }
 
     protected void switchToNewMediaView() {
-
-        newMediaFragment.setArguments(startMediaFragment.getArguments());
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, newMediaFragment)

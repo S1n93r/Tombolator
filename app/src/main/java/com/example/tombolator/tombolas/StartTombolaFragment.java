@@ -98,7 +98,6 @@ public class StartTombolaFragment extends Fragment {
                         final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
                         tombolaDao.nukeTable();
 
-                        /* TODO: Check if obsolete. */
                         tombolasActivityViewModel.removeAllTombolas();
                     }
                 });

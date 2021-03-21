@@ -98,7 +98,6 @@ public class StartMediaFragment extends Fragment {
                         final MediaDao mediaDao = context.getTomboDb().mediaDao();
                         mediaDao.nukeTable();
 
-                        /* TODO: Check if obsolete. */
                         mediaViewModel.removeAllMedia();
                     }
                 });
