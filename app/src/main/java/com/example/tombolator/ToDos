@@ -2,14 +2,14 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[ ] make media addable in newTombola view
+[.] implement media details view
+    [.] see details
+    [ ] delete media
 [ ] implement tombola details view
     [ ] see details
     [ ] delete tombola
     [ ] draw next media
-[ ] implement media details view
-    [ ] see details
-    [ ] delete media
+[ ] make media addable in newTombola view
 
 [ ] check fields on creating new media and inform user if missing
 [ ] check fields on creating new tombola and inform user if missing

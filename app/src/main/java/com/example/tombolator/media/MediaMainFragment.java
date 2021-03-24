@@ -18,17 +18,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class StartMediaFragment extends Fragment {
+public class MediaMainFragment extends Fragment {
 
     private final MediaActivity parent;
 
-    public static StartMediaFragment newInstance(MediaActivity parent) {
-        return new StartMediaFragment(parent);
+    public static MediaMainFragment newInstance(MediaActivity parent) {
+        return new MediaMainFragment(parent);
     }
 
-    private StartMediaFragment(MediaActivity parent) {
+    private MediaMainFragment(MediaActivity parent) {
         this.parent = parent;
     }
+
+    private final View.OnClickListener showDetailsListener = new ShowDetailsListener();
 
     private MediaActivityViewModel mediaViewModel;
 
@@ -79,7 +81,7 @@ public class StartMediaFragment extends Fragment {
         newMediaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                parent.switchToNewMediaView();
+                parent.switchToCreateMediaView();
             }
         });
 
@@ -146,11 +148,22 @@ public class StartMediaFragment extends Fragment {
 
                 TextView textView = new TextView(parent.getApplicationContext());
                 textView.setTypeface(getResources().getFont(R.font.comic_sans_ms));
-                textView.setTextSize(16);
+                textView.setTextSize(20);
                 textView.setText(mediaString);
+                textView.setOnClickListener(showDetailsListener);
 
                 linearLayoutMedia.addView(textView);
             }
+        }
+    }
+
+    private class ShowDetailsListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+
+            TextView textView = (TextView) view;
+            parent.switchToMediaDetailsView();
         }
     }
 }

@@ -15,15 +15,15 @@ import com.example.tombolator.TomboDbApplication;
 
 import java.util.Objects;
 
-public class NewTombolaFragment extends Fragment {
+public class TombolaCreateNewFragment extends Fragment {
 
     TombolasActivity parent;
 
-    public static NewTombolaFragment newInstance(TombolasActivity parent) {
-        return new NewTombolaFragment(parent);
+    public static TombolaCreateNewFragment newInstance(TombolasActivity parent) {
+        return new TombolaCreateNewFragment(parent);
     }
 
-    private NewTombolaFragment(TombolasActivity parent) {
+    private TombolaCreateNewFragment(TombolasActivity parent) {
         this.parent = parent;
     }
 

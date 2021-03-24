@@ -18,15 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class StartTombolaFragment extends Fragment {
+public class TombolaMainFragment extends Fragment {
 
     private final TombolasActivity parent;
 
-    public static StartTombolaFragment newInstance(TombolasActivity parent) {
-        return new StartTombolaFragment(parent);
+    public static TombolaMainFragment newInstance(TombolasActivity parent) {
+        return new TombolaMainFragment(parent);
     }
 
-    private StartTombolaFragment(TombolasActivity parent) {
+    private TombolaMainFragment(TombolasActivity parent) {
         this.parent = parent;
     }
 

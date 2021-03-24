@@ -6,34 +6,43 @@ import com.example.tombolator.R;
 
 public class MediaActivity extends AppCompatActivity {
 
-    private StartMediaFragment startMediaFragment;
-    private NewMediaFragment newMediaFragment;
+    private MediaMainFragment mediaMainFragment;
+    private MediaCreateNewFragment mediaCreateNewFragment;
+    private MediaDetailsFragment mediaDetailsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
-        startMediaFragment = StartMediaFragment.newInstance(this);
-        newMediaFragment = NewMediaFragment.newInstance(this);
+        mediaMainFragment = MediaMainFragment.newInstance(this);
+        mediaCreateNewFragment = MediaCreateNewFragment.newInstance(this);
+        mediaDetailsFragment = MediaDetailsFragment.newInstance(this);
 
         setContentView(R.layout.activity_media);
         if (savedInstanceState == null) {
-            switchToStartView();
+            switchToMainView();
         }
     }
 
-    protected void switchToStartView() {
+    protected void switchToMainView() {
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, startMediaFragment)
+                .replace(R.id.container, mediaMainFragment)
                 .commitNow();
     }
 
-    protected void switchToNewMediaView() {
+    protected void switchToCreateMediaView() {
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, newMediaFragment)
+                .replace(R.id.container, mediaCreateNewFragment)
+                .commitNow();
+    }
+
+    protected void switchToMediaDetailsView() {
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, mediaDetailsFragment)
                 .commitNow();
     }
 }

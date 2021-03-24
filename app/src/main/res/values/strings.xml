@@ -10,9 +10,13 @@
     <string name="title_media">Deine Medien</string>
     <string name="title_new_media">Neues Medium</string>
     <string name="title_new_Tombola">Neue Tombola</string>
+    <string name="title_media_details">Medium Details</string>
+    <string name="title_tombola_details">Tombola Details</string>
     <string name="title_media_available">Verfügbare Medien</string>
     <string name="title_media_added">Ausgewählte Medien</string>
-    <string name="hint_name">Name</string>
-    <string name="hint_title">Titel</string>
-    <string name="hint_number">Nummer</string>
+    <string name="label_name">Name</string>
+    <string name="label_title">Titel</string>
+    <string name="label_number">Nummer</string>
+    <string name="label_type">Typ</string>
+    <string name="label_created_at">Angelegt am</string>
 </resources>

@@ -6,7 +6,7 @@
         android:background="#d79cff"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".media.NewMediaFragment">
+        tools:context=".media.MediaCreateNewFragment">
 
     <TextView
             android:layout_width="wrap_content"
@@ -28,7 +28,7 @@
             android:layout_width="125dp"
             android:layout_height="125dp"
             android:id="@+id/button_back"
-            android:background="@drawable/oval_button_blue"
+            android:background="@drawable/oval_button_purple"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
             android:layout_width="125dp"
             android:layout_height="125dp"
             android:id="@+id/button_save"
-            android:background="@drawable/oval_button_blue"
+            android:background="@drawable/oval_button_purple"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -65,8 +65,8 @@
             android:layout_marginTop="200dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:autofillHints="@string/hint_name"
-            android:hint="@string/hint_name"/>
+            android:autofillHints="@string/label_name"
+            android:hint="@string/label_name"/>
     <EditText
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="20sp"
@@ -77,8 +77,8 @@
             android:id="@+id/editTextTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:autofillHints="@string/hint_name"
-            android:hint="@string/hint_title"
+            android:autofillHints="@string/label_name"
+            android:hint="@string/label_title"
             app:layout_constraintTop_toBottomOf="@+id/edit_text_name" android:layout_marginTop="16dp"/>
     <EditText
             android:fontFamily="@font/comic_sans_ms"
@@ -87,20 +87,20 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:ems="10"
-            android:id="@+id/editTextNumber"
+            android:id="@+id/number_label"
             app:layout_constraintTop_toBottomOf="@+id/editTextTitle" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp"
-            android:autofillHints="@string/hint_number"
-            android:hint="@string/hint_number"/>
+            android:autofillHints="@string/label_number"
+            android:hint="@string/label_number"/>
     <Spinner
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="20sp"
             android:layout_width="250dp"
             android:layout_height="50dp"
-            android:id="@+id/spinnerType"
+            android:id="@+id/type_label"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextNumber"
+            app:layout_constraintTop_toBottomOf="@+id/number_label"
             android:layout_marginTop="16dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

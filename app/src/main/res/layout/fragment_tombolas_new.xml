@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#d79cff"
-        tools:context=".tombolas.NewTombolaFragment">
+        tools:context=".tombolas.TombolaCreateNewFragment">
 
     <TextView
             android:layout_width="wrap_content"
@@ -27,7 +27,7 @@
             android:layout_width="125dp"
             android:layout_height="125dp"
             android:id="@+id/button_back"
-            android:background="@drawable/oval_button_blue"
+            android:background="@drawable/oval_button_purple"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
             android:layout_width="125dp"
             android:layout_height="125dp"
             android:id="@+id/button_save"
-            android:background="@drawable/oval_button_blue"
+            android:background="@drawable/oval_button_purple"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -64,8 +64,8 @@
             android:layout_marginTop="110dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:autofillHints="@string/hint_name"
-            android:hint="@string/hint_name"/>
+            android:autofillHints="@string/label_name"
+            android:hint="@string/label_name"/>
     <ScrollView
             android:layout_width="380dp"
             android:layout_height="160dp"

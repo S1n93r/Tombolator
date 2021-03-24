@@ -19,15 +19,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class NewMediaFragment extends Fragment {
+public class MediaCreateNewFragment extends Fragment {
 
     MediaActivity parent;
 
-    public static NewMediaFragment newInstance(MediaActivity parent) {
-        return new NewMediaFragment(parent);
+    public static MediaCreateNewFragment newInstance(MediaActivity parent) {
+        return new MediaCreateNewFragment(parent);
     }
 
-    private NewMediaFragment(MediaActivity parent) {
+    private MediaCreateNewFragment(MediaActivity parent) {
         this.parent = parent;
     }
 
@@ -48,8 +48,8 @@ public class NewMediaFragment extends Fragment {
 
         editTextName = layout.findViewById(R.id.edit_text_name);
         editTextTitle = layout.findViewById(R.id.editTextTitle);
-        editTextNumber = layout.findViewById(R.id.editTextNumber);
-        spinnerType = layout.findViewById(R.id.spinnerType);
+        editTextNumber = layout.findViewById(R.id.number_label);
+        spinnerType = layout.findViewById(R.id.type_label);
 
         saveButton = layout.findViewById(R.id.button_save);
         backButton = layout.findViewById(R.id.button_back);
@@ -107,7 +107,7 @@ public class NewMediaFragment extends Fragment {
 
                     resetForm();
 
-                    parent.switchToStartView();
+                    parent.switchToMainView();
                 }
             }
         });
@@ -115,7 +115,7 @@ public class NewMediaFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                parent.switchToStartView();
+                parent.switchToMainView();
             }
         });
     }
