@@ -33,7 +33,7 @@ public class MediaMainFragment extends Fragment {
 
     private final View.OnClickListener showDetailsListener = new ShowDetailsListener();
 
-    private MediaActivityViewModel mediaViewModel;
+    private MediaActivityViewModel mediaActivityViewModel;
 
     private LinearLayout linearLayoutMedia;
 
@@ -47,7 +47,7 @@ public class MediaMainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
-        mediaViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
+        mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
 
         View layout = inflater.inflate(R.layout.fragment_media_start, container, false);
 
@@ -66,7 +66,7 @@ public class MediaMainFragment extends Fragment {
     }
 
     private void registerObserver() {
-        mediaViewModel.getMediaDatabase()
+        mediaActivityViewModel.getMediaDatabase()
                 .observe(Objects.requireNonNull(this.getActivity()), new MediaInsertedObserver());
     }
 
@@ -101,7 +101,7 @@ public class MediaMainFragment extends Fragment {
                         final MediaDao mediaDao = context.getTomboDb().mediaDao();
                         mediaDao.nukeTable();
 
-                        mediaViewModel.removeAllMedia();
+                        mediaActivityViewModel.removeAllMedia();
                     }
                 });
             }
@@ -125,7 +125,7 @@ public class MediaMainFragment extends Fragment {
                     mediaList.add(mediaDao.getById(id));
                 }
 
-                mediaViewModel.addMedia(mediaList);
+                mediaActivityViewModel.addMedia(mediaList);
             }
         });
     }
@@ -133,11 +133,11 @@ public class MediaMainFragment extends Fragment {
     private class MediaInsertedObserver implements Observer<Map<Long, Media>> {
 
         @Override
-        public void onChanged(Map<Long, Media> mediaListInserted) {
+        public void onChanged(Map<Long, Media> mediaMapInserted) {
 
             linearLayoutMedia.removeAllViews();
 
-            for (Map.Entry<Long, Media> pair : mediaListInserted.entrySet()) {
+            for (Map.Entry<Long, Media> pair : mediaMapInserted.entrySet()) {
 
                 Media media = pair.getValue();
 
@@ -168,7 +168,7 @@ public class MediaMainFragment extends Fragment {
 
             TextView textView = (TextView) view;
             long mediaId = textView.getId();
-            mediaViewModel.selectMedia(mediaId);
+            mediaActivityViewModel.selectMedia(mediaId);
 
             parent.switchToMediaDetailsView();
         }

@@ -7,7 +7,6 @@ ToDos:
     [ ] implement in model
     [ ] connect with view
 [ ] change focus color to light blue
-[ ] map instead of list for tombola database
 
 [ ] check fields on creating new media and inform user if missing
 [ ] check fields on creating new tombola and inform user if missing
@@ -16,11 +15,12 @@ ToDos:
 [ ] Write java doc
 
 Done:
+[x] map instead of list for tombola database
+
 [x] implement tombola details view
     [x] see tombola details
     [x] delete tombola
 [x] increase text size to 20sp in tombola main
-
 [x] use map instead of list as media database
 [x] implement media details view
     [x] see media details

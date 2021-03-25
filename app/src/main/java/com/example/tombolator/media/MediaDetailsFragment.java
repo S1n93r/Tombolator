@@ -29,7 +29,7 @@ public class MediaDetailsFragment extends Fragment {
         this.parent = parent;
     }
 
-    private MediaActivityViewModel mediaViewModel;
+    private MediaActivityViewModel mediaActivityViewModel;
 
     private TextView nameValue;
     private TextView numberValue;
@@ -45,7 +45,7 @@ public class MediaDetailsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
 
-        mediaViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
+        mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
 
         View layout = inflater.inflate(R.layout.fragment_media_details, container, false);
 
@@ -65,7 +65,7 @@ public class MediaDetailsFragment extends Fragment {
     }
 
     private void registerObserver() {
-        mediaViewModel.getSelectedMedia().observe(Objects.requireNonNull(this.getActivity()), new SelectedMediaObserver());
+        mediaActivityViewModel.getSelectedMedia().observe(Objects.requireNonNull(this.getActivity()), new SelectedMediaObserver());
     }
 
     private void registerOnClickListener() {
@@ -82,7 +82,7 @@ public class MediaDetailsFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                final Media media = mediaViewModel.getSelectedMedia().getValue();
+                final Media media = mediaActivityViewModel.getSelectedMedia().getValue();
 
                 AsyncTask.execute(new Runnable() {
                     @Override
@@ -96,7 +96,7 @@ public class MediaDetailsFragment extends Fragment {
                     }
                 });
 
-                mediaViewModel.removeMedia(Objects.requireNonNull(media).getId());
+                mediaActivityViewModel.removeMedia(Objects.requireNonNull(media).getId());
 
                 parent.switchToMainView();
             }

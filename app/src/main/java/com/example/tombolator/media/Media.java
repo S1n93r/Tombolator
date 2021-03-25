@@ -137,4 +137,8 @@ public class Media implements Parcelable {
     public void setType(String type) {
         this.type = type;
     }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

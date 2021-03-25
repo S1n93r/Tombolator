@@ -16,6 +16,7 @@ import com.example.tombolator.TomboDbApplication;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class TombolaMainFragment extends Fragment {
@@ -127,14 +128,16 @@ public class TombolaMainFragment extends Fragment {
         });
     }
 
-    private class TombolaInsertedObserver implements Observer<List<Tombola>> {
+    private class TombolaInsertedObserver implements Observer<Map<Long, Tombola>> {
 
         @Override
-        public void onChanged(List<Tombola> tombolaListInserted) {
+        public void onChanged(Map<Long, Tombola> tombolaMap) {
 
             linearLayoutTombolas.removeAllViews();
 
-            for(Tombola tombola : tombolaListInserted) {
+            for(Map.Entry<Long, Tombola> pair : tombolaMap.entrySet()) {
+
+                Tombola tombola = pair.getValue();
 
                 long id = tombola.getId();
                 String name = tombola.getName();

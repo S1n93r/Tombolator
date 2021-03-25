@@ -4,14 +4,15 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TombolasActivityViewModel extends ViewModel {
 
     private final MutableLiveData<Tombola> selectedTombola = new MutableLiveData<>();
-    private final List<Tombola> tombolaDatabase = new ArrayList<>();
-    private final MutableLiveData<List<Tombola>> tombolaDatabaseLiveData = new MutableLiveData<>();
+    private final Map<Long, Tombola> tombolaDatabase = new HashMap<>();
+    private final MutableLiveData<Map<Long, Tombola>> tombolaDatabaseLiveData = new MutableLiveData<>();
 
     public TombolasActivityViewModel() {
         tombolaDatabaseLiveData.setValue(tombolaDatabase);
@@ -20,7 +21,9 @@ public class TombolasActivityViewModel extends ViewModel {
     public void addTombola(List<Tombola> tombolaList) {
 
         tombolaDatabase.clear();
-        tombolaDatabase.addAll(tombolaList);
+
+        for(Tombola tombola : tombolaList)
+            tombolaDatabase.put(tombola.getId(), tombola);
 
         tombolaDatabaseLiveData.postValue(tombolaDatabase);
     }
@@ -37,14 +40,10 @@ public class TombolasActivityViewModel extends ViewModel {
     }
 
     public void selectTombola(long tombolaId) {
-
-        for(Tombola tombola : tombolaDatabase) {
-            if(tombola.getId() == tombolaId)
-                selectedTombola.postValue(tombola);
-        }
+        selectedTombola.postValue(tombolaDatabase.get(tombolaId));
     }
 
-    public LiveData<List<Tombola>> getTombolaDatabase() {
+    public LiveData<Map<Long, Tombola>> getTombolaDatabase() {
         return tombolaDatabaseLiveData;
     }
 
