@@ -4,15 +4,16 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MediaActivityViewModel extends ViewModel {
 
     final private MutableLiveData<Media> selectedMedia = new MutableLiveData<>();
 
-    final private List<Media> mediaDatabase = new ArrayList<>();
-    final private MutableLiveData<List<Media>> mediaDatabaseLiveData = new MutableLiveData<>();
+    final private Map<Long, Media> mediaDatabase = new HashMap<>();
+    final private MutableLiveData<Map<Long, Media>> mediaDatabaseLiveData = new MutableLiveData<>();
 
     public MediaActivityViewModel() {
         mediaDatabaseLiveData.setValue(mediaDatabase);
@@ -21,15 +22,16 @@ public class MediaActivityViewModel extends ViewModel {
     public void addMedia(List<Media> mediaList) {
 
         mediaDatabase.clear();
-        mediaDatabase.addAll(mediaList);
+
+        for(Media media : mediaList)
+            mediaDatabase.put(media.getId(), media);
 
         mediaDatabaseLiveData.postValue(mediaDatabase);
     }
 
-    public void removeMedia(Media media) {
+    public void removeMedia(long mediaId) {
 
-        mediaDatabase.clear();
-        mediaDatabase.remove(media);
+        mediaDatabase.remove(mediaId);
 
         mediaDatabaseLiveData.postValue(mediaDatabase);
     }
@@ -43,21 +45,17 @@ public class MediaActivityViewModel extends ViewModel {
 
     public void selectMedia(long mediaId) {
 
-        boolean success = false;
+        Media media = mediaDatabase.get(mediaId);
 
-        for(Media media : mediaDatabase) {
-            if(media.getId() == mediaId) {
-
-                selectedMedia.postValue(media);
-                success = true;
-            }
+        if(media == null) {
+            System.err.println("Medium not found. Selected media remains null.");
+            return;
         }
 
-        if(success == false)
-            System.err.println("Medium not found. Selected media remains null.");
+        selectedMedia.postValue(media);
     }
 
-    public LiveData<List<Media>> getMediaDatabase() {
+    public LiveData<Map<Long, Media>> getMediaDatabase() {
         return mediaDatabaseLiveData;
     }
 

@@ -16,6 +16,7 @@ import com.example.tombolator.TomboDbApplication;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class MediaMainFragment extends Fragment {
@@ -129,14 +130,16 @@ public class MediaMainFragment extends Fragment {
         });
     }
 
-    private class MediaInsertedObserver implements Observer<List<Media>> {
+    private class MediaInsertedObserver implements Observer<Map<Long, Media>> {
 
         @Override
-        public void onChanged(List<Media> mediaListInserted) {
+        public void onChanged(Map<Long, Media> mediaListInserted) {
 
             linearLayoutMedia.removeAllViews();
 
-            for(Media media : mediaListInserted) {
+            for (Map.Entry<Long, Media> pair : mediaListInserted.entrySet()) {
+
+                Media media = pair.getValue();
 
                 long id = media.getId();
                 String name = media.getName();

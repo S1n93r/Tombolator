@@ -65,7 +65,7 @@ public class MediaDetailsFragment extends Fragment {
     }
 
     private void registerObserver() {
-        mediaViewModel.getSelectedMedia().observe(this.getActivity(), new SelectedMediaObserver());
+        mediaViewModel.getSelectedMedia().observe(Objects.requireNonNull(this.getActivity()), new SelectedMediaObserver());
     }
 
     private void registerOnClickListener() {
@@ -96,7 +96,7 @@ public class MediaDetailsFragment extends Fragment {
                     }
                 });
 
-                mediaViewModel.removeMedia(media);
+                mediaViewModel.removeMedia(Objects.requireNonNull(media).getId());
 
                 parent.switchToMainView();
             }

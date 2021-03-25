@@ -2,7 +2,6 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[ ] use map instead of list as media database
 [ ] implement tombola details view
     [ ] see details
     [ ] delete tombola
@@ -16,10 +15,11 @@ ToDos:
 [ ] Write java doc
 
 Done:
+[x] use map instead of list as media database
+
 [x] implement media details view
     [x] see details
     [x] delete media
-
 [x] compliment button texts with icons
 [x] add mediaLists to tombola
 [x] make mediaLists serializable and deserializable
