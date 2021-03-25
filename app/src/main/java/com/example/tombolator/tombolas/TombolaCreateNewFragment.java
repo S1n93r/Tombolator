@@ -75,7 +75,7 @@ public class TombolaCreateNewFragment extends Fragment {
 
                     resetForm();
 
-                    parent.switchToStartView();
+                    parent.switchToMainView();
                 }
             }
         });
@@ -83,7 +83,7 @@ public class TombolaCreateNewFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                parent.switchToStartView();
+                parent.switchToMainView();
             }
         });
     }

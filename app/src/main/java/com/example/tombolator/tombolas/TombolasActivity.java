@@ -8,6 +8,7 @@ public class TombolasActivity extends AppCompatActivity {
 
     private TombolaMainFragment tombolaMainFragment;
     private TombolaCreateNewFragment tombolaCreateNewFragment;
+    private TombolaDetailsFragment tombolaDetailsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,14 +17,15 @@ public class TombolasActivity extends AppCompatActivity {
 
         tombolaMainFragment = TombolaMainFragment.newInstance(this);
         tombolaCreateNewFragment = TombolaCreateNewFragment.newInstance(this);
+        tombolaDetailsFragment = TombolaDetailsFragment.newInstance(this);
 
         setContentView(R.layout.activity_tombolas);
         if (savedInstanceState == null) {
-            switchToStartView();
+            switchToMainView();
         }
     }
 
-    protected void switchToStartView() {
+    protected void switchToMainView() {
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, tombolaMainFragment)
@@ -34,6 +36,13 @@ public class TombolasActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, tombolaCreateNewFragment)
+                .commitNow();
+    }
+
+    protected void switchToTombolaDetailsView() {
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, tombolaDetailsFragment)
                 .commitNow();
     }
 }

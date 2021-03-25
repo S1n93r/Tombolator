@@ -143,11 +143,26 @@ public class TombolaMainFragment extends Fragment {
 
                 TextView textView = new TextView(parent.getApplicationContext());
                 textView.setTypeface(getResources().getFont(R.font.comic_sans_ms));
-                textView.setTextSize(16);
+                textView.setTextSize(20);
                 textView.setText(mediaString);
+                textView.setOnClickListener(new ShowDetailsListener());
+                textView.setId((int) id);
 
                 linearLayoutTombolas.addView(textView);
             }
+        }
+    }
+
+    private class ShowDetailsListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+
+            TextView textView = (TextView) view;
+            long tombolaId = textView.getId();
+            tombolasActivityViewModel.selectTombola(tombolaId);
+
+            parent.switchToTombolaDetailsView();
         }
     }
 }

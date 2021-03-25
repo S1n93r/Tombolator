@@ -2,11 +2,12 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[ ] implement tombola details view
-    [ ] see details
-    [ ] delete tombola
-    [ ] draw next media
 [ ] make media addable in newTombola view
+[ ] make media drawable from tombola ar random
+    [ ] implement in model
+    [ ] connect with view
+[ ] change focus color to light blue
+[ ] map instead of list for tombola database
 
 [ ] check fields on creating new media and inform user if missing
 [ ] check fields on creating new tombola and inform user if missing
@@ -15,10 +16,14 @@ ToDos:
 [ ] Write java doc
 
 Done:
-[x] use map instead of list as media database
+[x] implement tombola details view
+    [x] see tombola details
+    [x] delete tombola
+[x] increase text size to 20sp in tombola main
 
+[x] use map instead of list as media database
 [x] implement media details view
-    [x] see details
+    [x] see media details
     [x] delete media
 [x] compliment button texts with icons
 [x] add mediaLists to tombola

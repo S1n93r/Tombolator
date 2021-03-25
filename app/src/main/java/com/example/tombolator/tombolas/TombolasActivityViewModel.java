@@ -9,6 +9,7 @@ import java.util.List;
 
 public class TombolasActivityViewModel extends ViewModel {
 
+    private final MutableLiveData<Tombola> selectedTombola = new MutableLiveData<>();
     private final List<Tombola> tombolaDatabase = new ArrayList<>();
     private final MutableLiveData<List<Tombola>> tombolaDatabaseLiveData = new MutableLiveData<>();
 
@@ -31,7 +32,23 @@ public class TombolasActivityViewModel extends ViewModel {
         tombolaDatabaseLiveData.postValue(tombolaDatabase);
     }
 
+    public void removeTombola(long tombolaId) {
+        tombolaDatabase.remove(tombolaId);
+    }
+
+    public void selectTombola(long tombolaId) {
+
+        for(Tombola tombola : tombolaDatabase) {
+            if(tombola.getId() == tombolaId)
+                selectedTombola.postValue(tombola);
+        }
+    }
+
     public LiveData<List<Tombola>> getTombolaDatabase() {
         return tombolaDatabaseLiveData;
+    }
+
+    public MutableLiveData<Tombola> getSelectedTombola() {
+        return selectedTombola;
     }
 }
