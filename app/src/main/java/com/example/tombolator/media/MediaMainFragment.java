@@ -151,6 +151,7 @@ public class MediaMainFragment extends Fragment {
                 textView.setTextSize(20);
                 textView.setText(mediaString);
                 textView.setOnClickListener(showDetailsListener);
+                textView.setId((int) id);
 
                 linearLayoutMedia.addView(textView);
             }
@@ -163,6 +164,9 @@ public class MediaMainFragment extends Fragment {
         public void onClick(View view) {
 
             TextView textView = (TextView) view;
+            long mediaId = textView.getId();
+            mediaViewModel.selectMedia(mediaId);
+
             parent.switchToMediaDetailsView();
         }
     }

@@ -36,6 +36,22 @@
             app:layout_constraintVertical_bias="0.95"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.1"/>
+    <Button
+            android:text="@string/button_delete"
+            android:drawableBottom="@drawable/ic_delete"
+            android:padding="25dp"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:id="@+id/button_delete"
+            android:background="@drawable/oval_button_purple"
+            android:fontFamily="@font/comic_sans_ms"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.95"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.9"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="20sp"
