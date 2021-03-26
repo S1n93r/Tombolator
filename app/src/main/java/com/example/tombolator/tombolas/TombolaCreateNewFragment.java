@@ -11,12 +11,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 import com.example.tombolator.TomboDbApplication;
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaActivityViewModel;
+import com.example.tombolator.media.MediaDao;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class TombolaCreateNewFragment extends Fragment {
@@ -58,9 +63,39 @@ public class TombolaCreateNewFragment extends Fragment {
         saveButton = layout.findViewById(R.id.button_save);
         backButton = layout.findViewById(R.id.button_back);
 
+        registerObserver();
         registerOnClickListener();
 
+        refreshViewModel();
+
         return layout;
+    }
+
+    private void registerObserver() {
+        mediaActivityViewModel.getMediaDatabase()
+                .observe(Objects.requireNonNull(this.getActivity()), new MediaInsertedObserver());
+    }
+
+    public void refreshViewModel() {
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+
+                TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+                        .getApplicationContext());
+
+                final MediaDao mediaDao = context.getTomboDb().mediaDao();
+                List<Long> mediaIds = mediaDao.getAllIds();
+                List<Media> mediaList = new ArrayList<>();
+
+                for (long id : mediaIds) {
+                    mediaList.add(mediaDao.getById(id));
+                }
+
+                mediaActivityViewModel.addMedia(mediaList);
+            }
+        });
     }
 
     private void registerOnClickListener() {
@@ -104,8 +139,7 @@ public class TombolaCreateNewFragment extends Fragment {
                     });
 
                     resetForm();
-
-                    parent.switchToMainView();
+                    parent.switchToTombolasMainView();
                 }
             }
         });
@@ -113,14 +147,57 @@ public class TombolaCreateNewFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                parent.switchToMainView();
+
+                resetForm();
+                parent.switchToTombolasMainView();
             }
         });
     }
 
+    private class MediaInsertedObserver implements Observer<Map<Long, Media>> {
+
+        @Override
+        public void onChanged(Map<Long, Media> mediaMapInserted) {
+
+            availableMedia.removeAllViews();
+            addedMedia.removeAllViews();
+
+            for (Map.Entry<Long, Media> pair : mediaMapInserted.entrySet()) {
+
+                Media media = pair.getValue();
+
+                long id = media.getId();
+                String name = media.getName();
+                String title = media.getTitle();
+                int number = media.getNumber();
+                String type = media.getType();
+
+                String mediaString = "[" + id + "] " + type + ": " + name + " - " + title + " (" + number + ")";
+
+                TextView textView = new TextView(parent.getApplicationContext());
+                textView.setTypeface(getResources().getFont(R.font.comic_sans_ms));
+                textView.setTextSize(20);
+                textView.setText(mediaString);
+                textView.setOnClickListener(new AddMedia());
+                textView.setId((int) id);
+
+                availableMedia.addView(textView);
+            }
+        }
+    }
+
+    private class AddMedia implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+
+            TextView textView = (TextView) view;
+            availableMedia.removeView(textView);
+            addedMedia.addView(textView);
+        }
+    }
+
     private void resetForm() {
         editTextName.setText("");
-        availableMedia.removeAllViews();
-        addedMedia.removeAllViews();
     }
 }

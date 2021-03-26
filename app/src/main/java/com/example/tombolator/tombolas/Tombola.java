@@ -28,11 +28,11 @@ public class Tombola implements Parcelable {
 
     @TypeConverters({Converters.class})
     @ColumnInfo
-    private List<Media> mediaAvailable;
+    private List<Media> mediaAvailable = new ArrayList<>();
 
     @TypeConverters({Converters.class})
     @ColumnInfo
-    private List<Media> mediaDrawn;
+    private List<Media> mediaDrawn = new ArrayList<>();
 
     protected Tombola(String name) {
 
@@ -137,5 +137,14 @@ public class Tombola implements Parcelable {
 
     public void setMediaDrawn(List<Media> mediaDrawn) {
         this.mediaDrawn = mediaDrawn;
+    }
+
+    public List<Media> getAllMedia() {
+
+        List<Media> allMedia = new ArrayList<>();
+        allMedia.addAll(mediaAvailable);
+        allMedia.addAll(mediaDrawn);
+
+        return allMedia;
     }
 }

@@ -106,7 +106,6 @@ public class MediaCreateNewFragment extends Fragment {
                     });
 
                     resetForm();
-
                     parent.switchToMainView();
                 }
             }
@@ -115,6 +114,7 @@ public class MediaCreateNewFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                resetForm();
                 parent.switchToMainView();
             }
         });

@@ -21,11 +21,11 @@ public class TombolasActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_tombolas);
         if (savedInstanceState == null) {
-            switchToMainView();
+            switchToTombolasMainView();
         }
     }
 
-    protected void switchToMainView() {
+    protected void switchToTombolasMainView() {
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, tombolaMainFragment)
