@@ -27,7 +27,7 @@
             android:layout_width="125dp"
             android:layout_height="125dp"
             android:id="@+id/button_back"
-            android:background="@drawable/oval_button_purple"
+            android:background="@drawable/oval_button_design_purple"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
             android:layout_width="125dp"
             android:layout_height="125dp"
             android:id="@+id/button_save"
-            android:background="@drawable/oval_button_purple"
+            android:background="@drawable/oval_button_design_purple"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -74,7 +74,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_bias="0.35" android:id="@+id/scrollView2">
+            app:layout_constraintVertical_bias="0.35"
+            android:id="@+id/scrollView2">
         <LinearLayout
                 android:id="@+id/linear_layout_available_media"
                 android:layout_width="match_parent"
@@ -89,7 +90,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_bias="0.7" android:id="@+id/scrollView3">
+            app:layout_constraintVertical_bias="0.7"
+            android:id="@+id/scrollView3">
         <LinearLayout
                 android:id="@+id/linear_layout_added_media"
                 android:layout_width="match_parent"

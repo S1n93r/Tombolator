@@ -49,7 +49,7 @@ public class MediaMainFragment extends Fragment {
 
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
 
-        View layout = inflater.inflate(R.layout.fragment_media_start, container, false);
+        View layout = inflater.inflate(R.layout.fragment_media_main, container, false);
 
         linearLayoutMedia = layout.findViewById(R.id.linear_layout_media);
 
@@ -60,7 +60,7 @@ public class MediaMainFragment extends Fragment {
         registerObserver();
         registerOnClickListener();
 
-        refreshView();
+        refreshViewModel();
 
         return layout;
     }
@@ -108,7 +108,7 @@ public class MediaMainFragment extends Fragment {
         });
     }
 
-    public void refreshView() {
+    public void refreshViewModel() {
 
         AsyncTask.execute(new Runnable() {
             @Override

@@ -47,7 +47,7 @@ public class TombolaMainFragment extends Fragment {
 
         tombolasActivityViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
 
-        View layout = inflater.inflate(R.layout.fragment_tombolas_start, container, false);
+        View layout = inflater.inflate(R.layout.fragment_tombolas_main, container, false);
 
         linearLayoutTombolas = layout.findViewById(R.id.linear_layout_tombolas);
 
@@ -58,14 +58,14 @@ public class TombolaMainFragment extends Fragment {
         registerObserver();
         registerOnClickListener();
 
-        refreshView();
+        refreshViewModel();
 
         return layout;
     }
 
     private void registerObserver() {
         tombolasActivityViewModel.getTombolaDatabase()
-                .observe(Objects.requireNonNull(this.getActivity()), new TombolaInsertedObserver());
+                .observe(Objects.requireNonNull(this.getActivity()), new TombolasInsertedObserver());
     }
 
     private void registerOnClickListener() {
@@ -106,7 +106,7 @@ public class TombolaMainFragment extends Fragment {
         });
     }
 
-    public void refreshView() {
+    private void refreshViewModel() {
 
         AsyncTask.execute(new Runnable() {
             @Override
@@ -128,7 +128,7 @@ public class TombolaMainFragment extends Fragment {
         });
     }
 
-    private class TombolaInsertedObserver implements Observer<Map<Long, Tombola>> {
+    private class TombolasInsertedObserver implements Observer<Map<Long, Tombola>> {
 
         @Override
         public void onChanged(Map<Long, Tombola> tombolaMap) {

@@ -2,20 +2,26 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[ ] extract widths, heights, margins and text size to xml
-[ ] make media addable in newTombola view
+[.] make media addable in newTombola view
 [ ] make media drawable from tombola ar random
     [ ] implement in model
     [ ] connect with view
-[ ] change focus color to light blue
+[ ] clean up app icon xmls because they seem off
 [ ] check fields on creating new media and inform user if missing
 [ ] check fields on creating new tombola and inform user if missing
-[ ] colors: blue / violet / pink (pastel)
 [ ] implement unit tests
 [ ] Write java doc
+[ ] extract widths, heights, margins and font size to xml
+    [ ] find out how...
+[ ] add state effects to buttons
+[ ] change focus color to light blue
+[ ] make sure only activity ready from database, not every fragment
 
 Done:
-[x] extract colors to xml
+[x] extract all used colors to colors.xml
+    [x] buttons
+    [x] activities
+    [x] fragments
 
 [x] map instead of list for tombola database
 [x] implement tombola details view

@@ -6,48 +6,57 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TombolasActivityViewModel extends ViewModel {
 
     private final MutableLiveData<Tombola> selectedTombola = new MutableLiveData<>();
-    private final Map<Long, Tombola> tombolaDatabase = new HashMap<>();
-    private final MutableLiveData<Map<Long, Tombola>> tombolaDatabaseLiveData = new MutableLiveData<>();
 
-    public TombolasActivityViewModel() {
-        tombolaDatabaseLiveData.setValue(tombolaDatabase);
-    }
+    private final MutableLiveData<HashMap<Long, Tombola>> tombolaDatabase = new MutableLiveData<>(new HashMap<Long, Tombola>());
 
     public void addTombola(List<Tombola> tombolaList) {
 
-        tombolaDatabase.clear();
+        if(tombolaDatabase.getValue() == null)
+            throw new NullPointerException();
+
+        tombolaDatabase.getValue().clear();
 
         for(Tombola tombola : tombolaList)
-            tombolaDatabase.put(tombola.getId(), tombola);
+            tombolaDatabase.getValue().put(tombola.getId(), tombola);
 
-        tombolaDatabaseLiveData.postValue(tombolaDatabase);
+        tombolaDatabase.postValue(tombolaDatabase.getValue());
     }
 
     public void removeAllTombolas() {
 
-        tombolaDatabase.clear();
+        if(tombolaDatabase.getValue() == null)
+            throw new NullPointerException();
 
-        tombolaDatabaseLiveData.postValue(tombolaDatabase);
+        tombolaDatabase.getValue().clear();
+
+        tombolaDatabase.postValue(tombolaDatabase.getValue());
     }
 
     public void removeTombola(long tombolaId) {
-        tombolaDatabase.remove(tombolaId);
+
+        if(tombolaDatabase.getValue() == null)
+            throw new NullPointerException();
+
+        tombolaDatabase.getValue().remove(tombolaId);
     }
 
     public void selectTombola(long tombolaId) {
-        selectedTombola.postValue(tombolaDatabase.get(tombolaId));
-    }
 
-    public LiveData<Map<Long, Tombola>> getTombolaDatabase() {
-        return tombolaDatabaseLiveData;
+        if(tombolaDatabase.getValue() == null)
+            throw new NullPointerException();
+
+        selectedTombola.postValue(tombolaDatabase.getValue().get(tombolaId));
     }
 
     public MutableLiveData<Tombola> getSelectedTombola() {
         return selectedTombola;
+    }
+
+    public LiveData<HashMap<Long, Tombola>> getTombolaDatabase() {
+        return tombolaDatabase;
     }
 }

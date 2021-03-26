@@ -2,33 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
-        android:background="@color/color_background"
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-             tools:context=".tombolas.TombolaMainFragment">
+        android:background="@color/color_background"
+             tools:context=".media.MediaMainFragment">
 
-    <Button
-            android:drawableBottom="@drawable/ic_bombe"
-            android:padding="20dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:id="@+id/buttonDeleteAll"
-            android:background="@drawable/oval_button_purple"
-            android:fontFamily="@font/comic_sans_ms"
-            android:text="@string/button_nuke"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_bias="0.974"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_tombolas"
+            android:text="@string/title_media"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -38,15 +22,15 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintVertical_bias="0.05"/>
     <Button
-            android:id="@+id/button_back"
-            android:background="@drawable/oval_button_purple"
-            android:drawableBottom="@drawable/ic_arrow"
-            android:fontFamily="@font/comic_sans_ms"
-            android:textSize="14sp"
-            android:padding="25dp"
+            android:background="@drawable/oval_button_design_purple"
             android:text="@string/button_back"
+            android:textSize="14sp"
+            android:fontFamily="@font/comic_sans_ms"
+            android:drawableBottom="@drawable/ic_arrow"
             android:layout_width="125dp"
             android:layout_height="125dp"
+            android:id="@+id/button_back"
+            android:padding="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -54,20 +38,37 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.95"/>
     <Button
-            android:id="@+id/button_new_tombola"
-            android:background="@drawable/oval_button_purple"
+            android:drawableBottom="@drawable/ic_bombe"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/buttonDeleteAll"
+            android:background="@drawable/oval_button_design_purple"
+            android:padding="20dp"
+            android:scaleType="fitCenter"
+            android:text="@string/button_nuke"
+            android:textSize="12sp"
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="14sp"
-            android:padding="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintVertical_bias="0.975"/>
+    <Button
+            android:id="@+id/button_new_media"
+            android:background="@drawable/oval_button_design_purple"
+            android:drawableBottom="@drawable/ic_add"
             android:text="@string/button_new"
+            android:textSize="14sp"
+            android:fontFamily="@font/comic_sans_ms"
             android:layout_width="125dp"
             android:layout_height="125dp"
-            android:drawableBottom="@drawable/ic_add"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="25dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.90"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.9"
             app:layout_constraintVertical_bias="0.95"/>
     <ScrollView
             android:layout_width="330dp"
@@ -82,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:id="@+id/linear_layout_tombolas"/>
+                android:id="@+id/linear_layout_media"/>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

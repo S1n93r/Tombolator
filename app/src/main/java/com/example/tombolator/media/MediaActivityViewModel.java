@@ -6,46 +6,52 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MediaActivityViewModel extends ViewModel {
 
     final private MutableLiveData<Media> selectedMedia = new MutableLiveData<>();
 
-    final private Map<Long, Media> mediaDatabase = new HashMap<>();
-    final private MutableLiveData<Map<Long, Media>> mediaDatabaseLiveData = new MutableLiveData<>();
-
-    public MediaActivityViewModel() {
-        mediaDatabaseLiveData.setValue(mediaDatabase);
-    }
+    final private MutableLiveData<HashMap<Long, Media>> mediaDatabaseLiveData = new MutableLiveData<>(new HashMap<Long, Media>());
 
     public void addMedia(List<Media> mediaList) {
 
-        mediaDatabase.clear();
+        if(mediaDatabaseLiveData.getValue() == null)
+            throw new NullPointerException();
+
+        mediaDatabaseLiveData.getValue().clear();
 
         for(Media media : mediaList)
-            mediaDatabase.put(media.getId(), media);
+            mediaDatabaseLiveData.getValue().put(media.getId(), media);
 
-        mediaDatabaseLiveData.postValue(mediaDatabase);
+        mediaDatabaseLiveData.postValue(mediaDatabaseLiveData.getValue());
     }
 
     public void removeMedia(long mediaId) {
 
-        mediaDatabase.remove(mediaId);
+        if(mediaDatabaseLiveData.getValue() == null)
+            throw new NullPointerException();
 
-        mediaDatabaseLiveData.postValue(mediaDatabase);
+        mediaDatabaseLiveData.getValue().remove(mediaId);
+
+        mediaDatabaseLiveData.postValue(mediaDatabaseLiveData.getValue());
     }
 
     public void removeAllMedia() {
 
-        mediaDatabase.clear();
+        if(mediaDatabaseLiveData.getValue() == null)
+            throw new NullPointerException();
+
+        mediaDatabaseLiveData.getValue().clear();
         
-        mediaDatabaseLiveData.postValue(mediaDatabase);
+        mediaDatabaseLiveData.postValue(mediaDatabaseLiveData.getValue());
     }
 
     public void selectMedia(long mediaId) {
 
-        Media media = mediaDatabase.get(mediaId);
+        if(mediaDatabaseLiveData.getValue() == null)
+            throw new NullPointerException();
+
+        Media media = mediaDatabaseLiveData.getValue().get(mediaId);
 
         if(media == null) {
             System.err.println("Medium not found. Selected media remains null.");
@@ -55,7 +61,7 @@ public class MediaActivityViewModel extends ViewModel {
         selectedMedia.postValue(media);
     }
 
-    public LiveData<Map<Long, Media>> getMediaDatabase() {
+    public LiveData<HashMap<Long, Media>> getMediaDatabase() {
         return mediaDatabaseLiveData;
     }
 
