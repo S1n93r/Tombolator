@@ -6,12 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 import com.example.tombolator.TomboDbApplication;
+import com.example.tombolator.media.Media;
+import com.example.tombolator.media.MediaActivityViewModel;
 
 import java.util.Objects;
 
@@ -27,7 +31,12 @@ public class TombolaCreateNewFragment extends Fragment {
         this.parent = parent;
     }
 
+    private MediaActivityViewModel mediaActivityViewModel;
+
     private TextView editTextName;
+
+    private LinearLayout availableMedia;
+    private LinearLayout addedMedia;
 
     private Button saveButton;
     private Button backButton;
@@ -37,9 +46,14 @@ public class TombolaCreateNewFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
+        mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
+
         View layout = inflater.inflate(R.layout.fragment_tombolas_new, container, false);
 
         editTextName = layout.findViewById(R.id.edit_text_name);
+
+        availableMedia = layout.findViewById(R.id.linear_layout_available_media);
+        addedMedia = layout.findViewById(R.id.linear_layout_added_media);
 
         saveButton = layout.findViewById(R.id.button_save);
         backButton = layout.findViewById(R.id.button_back);
@@ -60,6 +74,22 @@ public class TombolaCreateNewFragment extends Fragment {
                     String name = editTextName.getText() != null ? editTextName.getText().toString() : "";
 
                     final Tombola tombola = new Tombola(name);
+
+                    if(addedMedia.getChildCount() > 0) {
+
+                        for(int i=0; i<addedMedia.getChildCount(); i++) {
+
+                            TextView textView = (TextView) addedMedia.getChildAt(i);
+                            long mediaId = textView.getId();
+
+                            if(mediaActivityViewModel.getMediaDatabase().getValue() == null)
+                                throw new NullPointerException();
+
+                            Media media = mediaActivityViewModel.getMediaDatabase().getValue().get(mediaId);
+
+                            tombola.addMedia(media);
+                        }
+                    }
 
                     AsyncTask.execute(new Runnable() {
                         @Override
@@ -90,5 +120,7 @@ public class TombolaCreateNewFragment extends Fragment {
 
     private void resetForm() {
         editTextName.setText("");
+        availableMedia.removeAllViews();
+        addedMedia.removeAllViews();
     }
 }
