@@ -2,13 +2,15 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[ ] check if onChanged events are fired more often then necessary
-[ ] make media drawable from tombola ar random
-    [ ] implement in model
-    [ ] connect with view
+[.] make media drawable from tombola at random
+    [x] implement in model
+    [x] connect with view
+    [x] create prompt with details of drawn media
+    [.] test
 [ ] clean up app icon xmls because they seem off
 [ ] check fields on creating new media and inform user if missing
 [ ] check fields on creating new tombola and inform user if missing
+[ ] check if onChanged events are fired more often then necessary
 [ ] implement unit tests
 [ ] Write java doc
 [ ] extract widths, heights, margins and font size to xml

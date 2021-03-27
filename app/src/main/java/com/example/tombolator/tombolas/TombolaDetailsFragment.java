@@ -1,5 +1,6 @@
 package com.example.tombolator.tombolas;
 
+import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -41,6 +42,7 @@ public class TombolaDetailsFragment extends Fragment {
     private LinearLayout availableMedia;
 
     private Button backButton;
+    private Button drawButton;
     private Button deleteButton;
 
     @Nullable
@@ -59,6 +61,7 @@ public class TombolaDetailsFragment extends Fragment {
         availableMedia = layout.findViewById(R.id.linear_layout_available_media);
 
         backButton = layout.findViewById(R.id.button_back);
+        drawButton = layout.findViewById(R.id.button_draw);
         deleteButton = layout.findViewById(R.id.button_delete);
 
         registerObserver();
@@ -77,6 +80,21 @@ public class TombolaDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 parent.switchToTombolasMainView();
+            }
+        });
+
+        drawButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Tombola selectedTombola = tombolaViewModel.getSelectedTombola().getValue();
+
+                Media drawnMedia = selectedTombola.drawRandomMedia();
+
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Und...")
+                        .setMessage("Du hast " + drawnMedia.getName() + " - " + drawnMedia.getTitle() + " gezogen!")
+                .show();
             }
         });
 

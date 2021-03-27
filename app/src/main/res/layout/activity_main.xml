@@ -38,7 +38,7 @@
             app:layout_constraintVertical_bias="0.75"/>
     <Button
             android:text="@string/button_tombolas"
-            android:drawableBottom="@drawable/ic_bingo"
+            android:drawableBottom="@drawable/ic_bingo_50"
             android:padding="25dp"
             android:layout_width="150dp"
             android:layout_height="150dp"

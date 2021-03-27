@@ -7,6 +7,7 @@
     <string name="button_media">Medien</string>
     <string name="button_new">Neu</string>
     <string name="button_nuke">Nuke</string>
+    <string name="button_draw">Ziehen</string>
     <string name="button_delete">Löschen</string>
     <string name="title_tombolas">Deine Tombolas</string>
     <string name="title_media">Deine Medien</string>
@@ -16,6 +17,7 @@
     <string name="title_tombola_details">Tombola Details</string>
     <string name="title_media_available">Verfügbare Medien</string>
     <string name="title_media_added">Ausgewählte Medien</string>
+    <string name="title_media_all">Alle Medien</string>
     <string name="label_name">Name</string>
     <string name="label_title">Titel</string>
     <string name="label_number">Nummer</string>

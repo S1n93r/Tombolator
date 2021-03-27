@@ -6,7 +6,23 @@
         android:background="@color/color_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".media.MediaDetailsFragment">
+        tools:context=".tombolas.TombolaDetailsFragment">
+    <Button
+            android:drawableBottom="@drawable/ic_bingo_35"
+            android:padding="20dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/button_draw"
+            android:background="@drawable/oval_button_design_purple"
+            android:fontFamily="@font/comic_sans_ms"
+            android:text="@string/button_draw"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintVertical_bias="0.974"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -105,7 +121,7 @@
             app:layout_constraintTop_toBottomOf="@+id/name_value"
             android:layout_marginTop="32dp"/>
     <TextView
-            android:text="@string/title_media_available"
+            android:text="@string/title_media_all"
             android:textSize="20sp"
             android:fontFamily="@font/comic_sans_ms"
             android:layout_width="wrap_content"

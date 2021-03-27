@@ -93,10 +93,23 @@ public class Tombola implements Parcelable {
 
     public Media drawRandomMedia() {
 
+        if(mediaAvailable.isEmpty())
+            resetMediaDrawnToMediaAvailable();
+
         List<Media> mediaAvailableShuffled = new ArrayList<>(mediaAvailable);
+
         Collections.shuffle(mediaAvailableShuffled);
 
-        return mediaAvailableShuffled.get(0);
+        Media media = mediaAvailableShuffled.get(0);
+
+        mediaAvailable.remove(media);
+        mediaDrawn.add(media);
+
+        return media;
+    }
+
+    private void resetMediaDrawnToMediaAvailable() {
+
     }
 
     public Long getId() {
