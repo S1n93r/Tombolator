@@ -68,7 +68,7 @@ public class TombolaDetailsFragment extends Fragment {
     }
 
     private void registerObserver() {
-        tombolaViewModel.getSelectedTombola().observe(Objects.requireNonNull(this.getActivity()), new SelectedMediaObserver());
+        tombolaViewModel.getSelectedTombola().observe(Objects.requireNonNull(this.getActivity()), new SelectedTombolaObserver());
     }
 
     private void registerOnClickListener() {
@@ -76,7 +76,6 @@ public class TombolaDetailsFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resetForm();
                 parent.switchToTombolasMainView();
             }
         });
@@ -102,19 +101,20 @@ public class TombolaDetailsFragment extends Fragment {
 
                 tombolaViewModel.removeTombola(Objects.requireNonNull(tombola).getId());
 
-                resetForm();
                 parent.switchToTombolasMainView();
             }
         });
     }
 
-    private class SelectedMediaObserver implements Observer<Tombola> {
+    private class SelectedTombolaObserver implements Observer<Tombola> {
 
         @Override
         public void onChanged(Tombola tombola) {
 
             nameValue.setText(tombola.getName());
             createdAt.setText(String.valueOf(tombola.getCreationTimestamp()));
+
+            availableMedia.removeAllViews();
 
             for(Media media : tombola.getAllMedia()) {
 
@@ -135,9 +135,5 @@ public class TombolaDetailsFragment extends Fragment {
                 availableMedia.addView(textView);
             }
         }
-    }
-
-    private void resetForm() {
-        availableMedia.removeAllViews();
     }
 }

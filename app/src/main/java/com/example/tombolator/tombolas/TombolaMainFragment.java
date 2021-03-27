@@ -33,7 +33,7 @@ public class TombolaMainFragment extends Fragment {
 
     private TombolasActivityViewModel tombolasActivityViewModel;
 
-    private LinearLayout linearLayoutTombolas;
+    private LinearLayout availableTombolas;
 
     private Button backButton;
     private Button newTombolaButton;
@@ -49,7 +49,7 @@ public class TombolaMainFragment extends Fragment {
 
         View layout = inflater.inflate(R.layout.fragment_tombolas_main, container, false);
 
-        linearLayoutTombolas = layout.findViewById(R.id.linear_layout_tombolas);
+        availableTombolas = layout.findViewById(R.id.linear_layout_tombolas);
 
         backButton = layout.findViewById(R.id.button_back);
         newTombolaButton = layout.findViewById(R.id.button_new_tombola);
@@ -133,7 +133,7 @@ public class TombolaMainFragment extends Fragment {
         @Override
         public void onChanged(Map<Long, Tombola> tombolaMap) {
 
-            linearLayoutTombolas.removeAllViews();
+            availableTombolas.removeAllViews();
 
             for(Map.Entry<Long, Tombola> pair : tombolaMap.entrySet()) {
 
@@ -151,7 +151,7 @@ public class TombolaMainFragment extends Fragment {
                 textView.setOnClickListener(new ShowDetailsListener());
                 textView.setId((int) id);
 
-                linearLayoutTombolas.addView(textView);
+                availableTombolas.addView(textView);
             }
         }
     }

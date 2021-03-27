@@ -2,9 +2,7 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[ ] bug: after adding tombola it sometimes has more media then added
-    [ ] suggest 1: maybe media list of model needs to be flushed
-    [ ] suggest 2: maye separate media list from the one media view is using
+[ ] check if onChanged events are fired more often then necessary
 [ ] make media drawable from tombola ar random
     [ ] implement in model
     [ ] connect with view
@@ -20,8 +18,9 @@ ToDos:
 [ ] make sure only activity ready from database, not every fragment
 
 Done:
-[x] make media addable in newTombola view
+[x] bug: after reopening tombola details, view show 4 times the media what the tombola object actually has
 
+[x] make media addable in newTombola view
 [x] extract all used colors to colors.xml
     [x] buttons
     [x] activities
