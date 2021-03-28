@@ -63,10 +63,12 @@ public class MediaCreateNewFragment extends Fragment {
     private void setUpMediaTypeSpinner() {
 
         List<String> mediaTypesForSpinner = new ArrayList<>();
-        mediaTypesForSpinner.add("Hörspiel");
-        mediaTypesForSpinner.add("Hörbuch");
-        mediaTypesForSpinner.add("Film");
-        mediaTypesForSpinner.add("Serien");
+        mediaTypesForSpinner.add(Media.Type.CASSETTE);
+        mediaTypesForSpinner.add(Media.Type.CD);
+        mediaTypesForSpinner.add(Media.Type.BOOK);
+        mediaTypesForSpinner.add(Media.Type.E_BOOK);
+        mediaTypesForSpinner.add(Media.Type.DVD);
+        mediaTypesForSpinner.add(Media.Type.BLU_RAY);
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                 this.getActivity(), android.R.layout.simple_spinner_item, mediaTypesForSpinner);

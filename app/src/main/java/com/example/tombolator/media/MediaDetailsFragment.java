@@ -31,6 +31,7 @@ public class MediaDetailsFragment extends Fragment {
 
     private MediaActivityViewModel mediaActivityViewModel;
 
+    private TextView idValue;
     private TextView nameValue;
     private TextView numberValue;
     private TextView titleValue;
@@ -49,6 +50,7 @@ public class MediaDetailsFragment extends Fragment {
 
         View layout = inflater.inflate(R.layout.fragment_media_details, container, false);
 
+        idValue = layout.findViewById(R.id.id_value);
         nameValue = layout.findViewById(R.id.name_value);
         numberValue = layout.findViewById(R.id.number_value);
         titleValue = layout.findViewById(R.id.title_value);
@@ -108,6 +110,7 @@ public class MediaDetailsFragment extends Fragment {
         @Override
         public void onChanged(Media media) {
 
+            idValue.setText(String.valueOf(media.getId()));
             nameValue.setText(media.getName());
             numberValue.setText(String.valueOf(media.getNumber()));
             titleValue.setText(media.getTitle());

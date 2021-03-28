@@ -172,12 +172,10 @@ public class TombolaCreateNewFragment extends Fragment {
                 int number = media.getNumber();
                 String type = media.getType();
 
-                String mediaString = "[" + id + "] " + type + ": " + name + " - " + title + " (" + number + ")";
-
                 TextView textView = new TextView(parent.getApplicationContext());
                 textView.setTypeface(getResources().getFont(R.font.comic_sans_ms));
                 textView.setTextSize(20);
-                textView.setText(mediaString);
+                textView.setText(media.toLabel());
                 textView.setOnClickListener(new AddMedia());
                 textView.setId((int) id);
 

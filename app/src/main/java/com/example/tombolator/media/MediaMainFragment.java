@@ -147,14 +147,39 @@ public class MediaMainFragment extends Fragment {
                 int number = media.getNumber();
                 String type = media.getType();
 
-                String mediaString = "[" + id + "] " + type + ": " + name + " - " + title + " (" + number + ")";
+                TextView textView = (TextView) View.inflate(
+                        parent.getApplicationContext(), R.layout.text_view_media_element, null);
 
-                TextView textView = new TextView(parent.getApplicationContext());
-                textView.setTypeface(getResources().getFont(R.font.comic_sans_ms));
-                textView.setTextSize(20);
-                textView.setText(mediaString);
+                textView.setText(" " + media.toLabel());
                 textView.setOnClickListener(showDetailsListener);
                 textView.setId((int) id);
+
+                switch(type) {
+
+                    case Media.Type.CASSETTE:
+                        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                                R.drawable.ic_cassette_25, 0, 0, 0);
+                        break;
+
+                    case Media.Type.CD:
+                    case Media.Type.DVD:
+                    case Media.Type.BLU_RAY:
+                        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                                R.drawable.ic_cd_25, 0, 0, 0);
+                        break;
+
+                    case Media.Type.BOOK:
+                        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                                R.drawable.ic_book_25, 0, 0, 0);
+                        break;
+
+                    case Media.Type.E_BOOK:
+                        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                                R.drawable.ic_ebook_25, 0, 0, 0);
+                        break;
+
+                    default: //No icon added
+                }
 
                 linearLayoutMedia.addView(textView);
             }

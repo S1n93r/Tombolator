@@ -26,7 +26,7 @@
             android:text="@string/button_back"
             android:textSize="14sp"
             android:fontFamily="@font/comic_sans_ms"
-            android:drawableBottom="@drawable/ic_arrow"
+            android:drawableBottom="@drawable/ic_arrow_35"
             android:layout_width="125dp"
             android:layout_height="125dp"
             android:id="@+id/button_back"
@@ -38,7 +38,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.95"/>
     <Button
-            android:drawableBottom="@drawable/ic_bombe"
+            android:drawableBottom="@drawable/ic_bombe_25"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:id="@+id/buttonDeleteAll"
@@ -57,7 +57,7 @@
     <Button
             android:id="@+id/button_new_media"
             android:background="@drawable/oval_button_design_purple"
-            android:drawableBottom="@drawable/ic_add"
+            android:drawableBottom="@drawable/ic_add_35"
             android:text="@string/button_new"
             android:textSize="14sp"
             android:fontFamily="@font/comic_sans_ms"

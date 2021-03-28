@@ -94,6 +94,10 @@ public class Media implements Parcelable {
         parcel.writeString(type);
     }
 
+    public String toLabel() {
+        return "(" + number + ") "+ name + " - " + title;
+    }
+
     public Long getId() {
         return id;
     }
@@ -140,5 +144,25 @@ public class Media implements Parcelable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public static final class Type {
+
+        public static final String CASSETTE = "Kassette";
+        public static final String CD = "CD";
+        public static final String DVD = "DVD";
+        public static final String BLU_RAY = "Blu-ray";
+        public static final String E_BOOK = "E-Book";
+        public static final String BOOK = "Buch";
+    }
+
+    public static final class ContentType {
+
+        public static final String AUDIO_PLAY = "Hörspiel";
+        public static final String AUDIO_BOOK = "Hörbuch";
+        public static final String MOVIE = "Film";
+        public static final String SERIES = "Serie";
+        public static final String BOOK = Type.BOOK;
+        public static final String E_BOOK = Type.E_BOOK;
     }
 }

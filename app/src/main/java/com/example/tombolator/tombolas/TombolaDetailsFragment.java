@@ -136,19 +136,11 @@ public class TombolaDetailsFragment extends Fragment {
 
             for(Media media : tombola.getAllMedia()) {
 
-                long id = media.getId();
-                String name = media.getName();
-                String title = media.getTitle();
-                int number = media.getNumber();
-                String type = media.getType();
-
-                String mediaString = "[" + id + "] " + type + ": " + name + " - " + title + " (" + number + ")";
-
                 TextView textView = new TextView(parent.getApplicationContext());
                 textView.setTypeface(getResources().getFont(R.font.comic_sans_ms));
                 textView.setTextSize(20);
-                textView.setText(mediaString);
-                textView.setId((int) id);
+                textView.setText(media.toLabel());
+                textView.setId(media.getId().intValue());
 
                 availableMedia.addView(textView);
             }
