@@ -19,7 +19,7 @@ public class MediaActivity extends AppCompatActivity {
         mediaCreateNewFragment = MediaCreateNewFragment.newInstance(this);
         mediaDetailsFragment = MediaDetailsFragment.newInstance(this);
 
-        setContentView(R.layout.activity_media);
+        setContentView(R.layout.media_activity);
         if (savedInstanceState == null) {
             switchToMainView();
         }

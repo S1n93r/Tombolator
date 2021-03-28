@@ -19,7 +19,7 @@ public class TombolasActivity extends AppCompatActivity {
         tombolaCreateNewFragment = TombolaCreateNewFragment.newInstance(this);
         tombolaDetailsFragment = TombolaDetailsFragment.newInstance(this);
 
-        setContentView(R.layout.activity_tombolas);
+        setContentView(R.layout.tombolas_activity);
         if (savedInstanceState == null) {
             switchToTombolasMainView();
         }

@@ -46,7 +46,7 @@ public class MediaMainFragment extends Fragment {
 
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
 
-        View layout = inflater.inflate(R.layout.fragment_media_main, container, false);
+        View layout = inflater.inflate(R.layout.media_main_fragment, container, false);
 
         linearLayoutMedia = layout.findViewById(R.id.linear_layout_media);
 
@@ -69,6 +69,7 @@ public class MediaMainFragment extends Fragment {
     private void registerOnClickListener() {
 
         backButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 parent.finish();
@@ -86,6 +87,7 @@ public class MediaMainFragment extends Fragment {
     public void refreshViewModel() {
 
         AsyncTask.execute(new Runnable() {
+
             @Override
             public void run() {
 
@@ -123,7 +125,7 @@ public class MediaMainFragment extends Fragment {
                 String type = media.getType();
 
                 TextView textView = (TextView) View.inflate(
-                        parent.getApplicationContext(), R.layout.text_view_media_element, null);
+                        parent.getApplicationContext(), R.layout.media_list_element_textview, null);
 
                 textView.setText(" " + media.toLabel());
                 textView.setOnClickListener(showDetailsListener);

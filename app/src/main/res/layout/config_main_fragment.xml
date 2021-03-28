@@ -6,12 +6,28 @@
         android:background="@color/color_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".config.ConfigActivity">
+    <Button
+            android:background="@drawable/oval_button_design_purple"
+            android:text="@string/button_back"
+            android:textSize="14sp"
+            android:fontFamily="@font/comic_sans_ms"
+            android:drawableBottom="@drawable/ic_arrow_35"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:id="@+id/button_back"
+            android:padding="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.95"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/app_mame"
+            android:text="@string/title_config"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -21,36 +37,21 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.05"/>
     <Button
-            android:text="@string/button_media"
-            android:drawableBottom="@drawable/ic_cassette_50"
+            android:text="@string/button_reset_media_database"
+            android:drawableBottom="@drawable/ic_datenbank"
             android:padding="25dp"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:id="@+id/buttonMedia"
+            android:id="@+id/button_reset_media"
             android:background="@drawable/oval_button_design_purple"
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="14sp"
+            android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_bias="0.75"/>
-    <Button
-            android:text="@string/button_tombolas"
-            android:drawableBottom="@drawable/ic_bingo_50"
-            android:padding="25dp"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:id="@+id/buttonTombolas"
-            android:background="@drawable/oval_button_design_purple"
-            android:fontFamily="@font/comic_sans_ms"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_bias="0.45"/>
+            app:layout_constraintVertical_bias="0.25"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

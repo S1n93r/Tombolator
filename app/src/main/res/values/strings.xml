@@ -4,11 +4,14 @@
     <string name="button_back">Zurück</string>
     <string name="button_save">Sichern</string>
     <string name="button_tombolas">Tombolas</string>
+    <string name="button_reset_media_database">Medien Zurücksetzen</string>
     <string name="button_media">Medien</string>
+    <string name="button_config">Optionen</string>
     <string name="button_new">Neu</string>
     <string name="button_nuke">Nuke</string>
     <string name="button_draw">Ziehen</string>
     <string name="button_delete">Löschen</string>
+    <string name="title_config">Optionen</string>
     <string name="title_tombolas">Deine Tombolas</string>
     <string name="title_media">Deine Medien</string>
     <string name="title_new_media">Neues Medium</string>

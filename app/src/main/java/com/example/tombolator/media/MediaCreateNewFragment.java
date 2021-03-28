@@ -44,7 +44,7 @@ public class MediaCreateNewFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
 
-        View layout = inflater.inflate(R.layout.fragment_media_new, container, false);
+        View layout = inflater.inflate(R.layout.media_creation_fragment, container, false);
 
         editTextName = layout.findViewById(R.id.edit_text_name);
         editTextTitle = layout.findViewById(R.id.editTextTitle);

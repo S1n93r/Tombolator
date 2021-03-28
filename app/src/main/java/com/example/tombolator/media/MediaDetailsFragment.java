@@ -49,7 +49,7 @@ public class MediaDetailsFragment extends Fragment {
 
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
 
-        View layout = inflater.inflate(R.layout.fragment_media_details, container, false);
+        View layout = inflater.inflate(R.layout.media_details_fragment, container, false);
 
         idValue = layout.findViewById(R.id.id_value);
         nameValue = layout.findViewById(R.id.name_value);

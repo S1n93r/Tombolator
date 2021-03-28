@@ -53,7 +53,7 @@ public class TombolaCreateNewFragment extends Fragment {
 
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
 
-        View layout = inflater.inflate(R.layout.fragment_tombolas_new, container, false);
+        View layout = inflater.inflate(R.layout.tombola_creation_fragment, container, false);
 
         editTextName = layout.findViewById(R.id.edit_text_name);
 

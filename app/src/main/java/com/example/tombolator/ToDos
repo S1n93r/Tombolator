@@ -2,6 +2,9 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
+[.] implement susis stash script
+    [.] bug: file wont open even though path is correct
+    [ ] test
 [ ] change font of spinner to Comic Sans
 [ ] add initial media
 [ ] --- Milestone I: Ready for usage ---
@@ -10,6 +13,7 @@ ToDos:
 [ ] check fields on creating new media and inform user if missing
 [ ] check fields on creating new tombola and inform user if missing
 [ ] check if onChanged events are fired more often then necessary
+[ ] catch all exceptions with a logger and add informative descriptions
 [ ] implement unit tests
 [ ] Write java doc
 [ ] extract widths, heights, margins and font size to xml
@@ -19,8 +23,10 @@ ToDos:
 [ ] make sure only activity ready from database, not every fragment
 
 Done:
-[x] remove nuke buttons and function
+[x] build configuration view
+    [x] add button to reset database
 
+[x] remove nuke buttons and function
 [x] format dates on view
 [x] refactor media element in media view
     [x] move id to details

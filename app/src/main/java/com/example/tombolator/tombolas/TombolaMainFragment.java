@@ -44,7 +44,7 @@ public class TombolaMainFragment extends Fragment {
 
         tombolasActivityViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
 
-        View layout = inflater.inflate(R.layout.fragment_tombolas_main, container, false);
+        View layout = inflater.inflate(R.layout.tombola_main_fragment, container, false);
 
         availableTombolas = layout.findViewById(R.id.linear_layout_tombolas);
 
