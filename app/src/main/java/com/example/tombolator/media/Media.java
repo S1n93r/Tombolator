@@ -29,7 +29,7 @@ public class Media implements Parcelable {
     @ColumnInfo
     private String type;
 
-    protected Media(String name, String title, int number, String type) {
+    public Media(String name, String title, int number, String type) {
 
         creationTimestamp = System.currentTimeMillis();
         this.name = name;
@@ -38,7 +38,7 @@ public class Media implements Parcelable {
         this.type = type;
     }
 
-    protected Media(Parcel in) {
+    public Media(Parcel in) {
 
         if (in.readByte() == 0) {
             id = null;

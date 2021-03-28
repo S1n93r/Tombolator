@@ -40,9 +40,6 @@ public class MediaMainFragment extends Fragment {
     private Button backButton;
     private Button newMediaButton;
 
-    /* TODO: Helper for development. Will be replaced later. */
-    private Button deleteAllButton;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -55,7 +52,6 @@ public class MediaMainFragment extends Fragment {
 
         backButton = layout.findViewById(R.id.button_back);
         newMediaButton = layout.findViewById(R.id.button_new_media);
-        deleteAllButton = layout.findViewById(R.id.buttonDeleteAll);
 
         registerObserver();
         registerOnClickListener();
@@ -83,27 +79,6 @@ public class MediaMainFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 parent.switchToCreateMediaView();
-            }
-        });
-
-        deleteAllButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                AsyncTask.execute(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
-                                .getApplicationContext());
-
-                        final MediaDao mediaDao = context.getTomboDb().mediaDao();
-                        mediaDao.nukeTable();
-
-                        mediaActivityViewModel.removeAllMedia();
-                    }
-                });
             }
         });
     }

@@ -38,9 +38,6 @@ public class TombolaMainFragment extends Fragment {
     private Button backButton;
     private Button newTombolaButton;
 
-    /* TODO: Helper for development. Will be replaced later. */
-    private Button deleteAllButton;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -53,7 +50,6 @@ public class TombolaMainFragment extends Fragment {
 
         backButton = layout.findViewById(R.id.button_back);
         newTombolaButton = layout.findViewById(R.id.button_new_tombola);
-        deleteAllButton = layout.findViewById(R.id.buttonDeleteAll);
 
         registerObserver();
         registerOnClickListener();
@@ -69,39 +65,16 @@ public class TombolaMainFragment extends Fragment {
     }
 
     private void registerOnClickListener() {
-
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 parent.finish();
             }
         });
-
         newTombolaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 parent.switchToNewTombolaView();
-            }
-        });
-
-        deleteAllButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                AsyncTask.execute(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
-                                .getApplicationContext());
-
-                        final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
-                        tombolaDao.nukeTable();
-
-                        tombolasActivityViewModel.removeAllTombolas();
-                    }
-                });
             }
         });
     }

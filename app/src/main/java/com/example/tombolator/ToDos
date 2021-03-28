@@ -2,8 +2,9 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[ ] add initial media
 [ ] change font of spinner to Comic Sans
+[ ] add initial media
+[ ] --- Milestone I: Ready for usage ---
 [ ] centralize media and tombola element labels
 [ ] clean up app icon xmls because they seem off
 [ ] check fields on creating new media and inform user if missing
@@ -18,8 +19,9 @@ ToDos:
 [ ] make sure only activity ready from database, not every fragment
 
 Done:
-[x] format dates on view
+[x] remove nuke buttons and function
 
+[x] format dates on view
 [x] refactor media element in media view
     [x] move id to details
     [x] replace type string with icon
