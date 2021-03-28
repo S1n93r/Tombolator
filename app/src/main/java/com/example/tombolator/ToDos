@@ -2,11 +2,7 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[.] make media drawable from tombola at random
-    [x] implement in model
-    [x] connect with view
-    [x] create prompt with details of drawn media
-    [.] test
+[ ] add initial media
 [ ] clean up app icon xmls because they seem off
 [ ] check fields on creating new media and inform user if missing
 [ ] check fields on creating new tombola and inform user if missing
@@ -20,8 +16,12 @@ ToDos:
 [ ] make sure only activity ready from database, not every fragment
 
 Done:
-[x] bug: after reopening tombola details, view show 4 times the media what the tombola object actually has
+[x] make media drawable from tombola at random
+    [x] implement in model
+    [x] connect with view
+    [x] create prompt with details of drawn media
 
+[x] bug: after reopening tombola details, view show 4 times the media what the tombola object actually has
 [x] make media addable in newTombola view
 [x] extract all used colors to colors.xml
     [x] buttons

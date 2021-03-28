@@ -109,7 +109,8 @@ public class Tombola implements Parcelable {
     }
 
     private void resetMediaDrawnToMediaAvailable() {
-
+        mediaAvailable.addAll(mediaDrawn);
+        mediaDrawn.clear();
     }
 
     public Long getId() {
