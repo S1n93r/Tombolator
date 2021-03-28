@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import com.example.tombolator.DateUtil;
 import com.example.tombolator.R;
 import com.example.tombolator.TomboDbApplication;
 import com.example.tombolator.media.Media;
@@ -130,7 +131,7 @@ public class TombolaDetailsFragment extends Fragment {
         public void onChanged(Tombola tombola) {
 
             nameValue.setText(tombola.getName());
-            createdAt.setText(String.valueOf(tombola.getCreationTimestamp()));
+            createdAt.setText(DateUtil.formatDate(tombola.getCreationTimestamp()));
 
             availableMedia.removeAllViews();
 

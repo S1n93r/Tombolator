@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import com.example.tombolator.DateUtil;
 import com.example.tombolator.R;
 import com.example.tombolator.TomboDbApplication;
 
@@ -115,7 +116,7 @@ public class MediaDetailsFragment extends Fragment {
             numberValue.setText(String.valueOf(media.getNumber()));
             titleValue.setText(media.getTitle());
             typeValue.setText(media.getType());
-            createdAt.setText(String.valueOf(media.getCreationTimestamp()));
+            createdAt.setText(DateUtil.formatDate(media.getCreationTimestamp()));
         }
     }
 }
