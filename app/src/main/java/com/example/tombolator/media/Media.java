@@ -95,6 +95,10 @@ public class Media implements Parcelable {
     }
 
     public String toLabel() {
+
+        if(number == -1)
+            return name + "\n" + title;
+
         return "(" + number + ") "+ name + "\n" + title;
     }
 
