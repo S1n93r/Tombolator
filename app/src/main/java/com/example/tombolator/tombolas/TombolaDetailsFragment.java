@@ -137,9 +137,9 @@ public class TombolaDetailsFragment extends Fragment {
 
             for(Media media : tombola.getAllMedia()) {
 
-                TextView textView = new TextView(parent.getApplicationContext());
-                textView.setTypeface(getResources().getFont(R.font.comic_sans_ms));
-                textView.setTextSize(20);
+                TextView textView = (TextView) View.inflate(
+                        parent.getApplicationContext(), R.layout.list_element, null);
+
                 textView.setText(media.toLabel());
                 textView.setId(media.getId().intValue());
 

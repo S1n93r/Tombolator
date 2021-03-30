@@ -2,13 +2,8 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[.] implement susis stash script
-    [.] bug: file wont open even though path is correct
-    [ ] test
 [ ] change font of spinner to Comic Sans
-[ ] add initial media
 [ ] --- Milestone I: Ready for usage ---
-[ ] centralize media and tombola element labels
 [ ] clean up app icon xmls because they seem off
 [ ] check fields on creating new media and inform user if missing
 [ ] check fields on creating new tombola and inform user if missing
@@ -23,9 +18,16 @@ ToDos:
 [ ] make sure only activity ready from database, not every fragment
 
 Done:
+[x] extract tombola element textview to xml
+[x] use new textview xml for tombol details
+[X] decrease font size of media and tombola details
+[x] decrease font size of media and tombola elements
+[x] add initial media
+[x] implemented caches for Susis script
+[x] implement susis stash script
+
 [x] build configuration view
     [x] add button to reset database
-
 [x] remove nuke buttons and function
 [x] format dates on view
 [x] refactor media element in media view

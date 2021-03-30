@@ -113,6 +113,10 @@ public class Tombola implements Parcelable {
         mediaDrawn.clear();
     }
 
+    public String toLabel() {
+        return name + " (" + getAllMedia().size() + " Medien)";
+    }
+
     public Long getId() {
         return id;
     }

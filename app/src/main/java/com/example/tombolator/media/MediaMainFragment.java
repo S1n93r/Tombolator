@@ -119,13 +119,10 @@ public class MediaMainFragment extends Fragment {
                 Media media = pair.getValue();
 
                 long id = media.getId();
-                String name = media.getName();
-                String title = media.getTitle();
-                int number = media.getNumber();
                 String type = media.getType();
 
                 TextView textView = (TextView) View.inflate(
-                        parent.getApplicationContext(), R.layout.media_list_element_textview, null);
+                        parent.getApplicationContext(), R.layout.list_element, null);
 
                 textView.setText(" " + media.toLabel());
                 textView.setOnClickListener(showDetailsListener);

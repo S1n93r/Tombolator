@@ -95,7 +95,7 @@ public class Media implements Parcelable {
     }
 
     public String toLabel() {
-        return "(" + number + ") "+ name + " - " + title;
+        return "(" + number + ") "+ name + "\n" + title;
     }
 
     public Long getId() {

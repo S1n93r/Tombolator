@@ -70,9 +70,9 @@
             app:layout_constraintHorizontal_bias="0.9"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="20sp"
-            android:layout_width="150dp"
-            android:layout_height="35dp"
+            android:textSize="16sp"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
             android:ems="10"
             android:id="@+id/name_label"
             app:layout_constraintTop_toTopOf="parent"
@@ -83,9 +83,9 @@
             app:layout_constraintHorizontal_bias="0.15"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="20sp"
-            android:layout_width="150dp"
-            android:layout_height="35dp"
+            android:textSize="16sp"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
             android:ems="10"
             android:id="@+id/name_value"
             app:layout_constraintTop_toTopOf="parent"
@@ -96,9 +96,9 @@
             app:layout_constraintHorizontal_bias="0.85"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="20sp"
-            android:layout_width="150dp"
-            android:layout_height="35dp"
+            android:textSize="16sp"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
             android:ems="10"
             android:id="@+id/created_at_label"
             android:text="@string/label_created_at"
@@ -106,12 +106,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.15"
             app:layout_constraintTop_toBottomOf="@+id/name_label"
-            android:layout_marginTop="32dp"/>
+            android:layout_marginTop="16dp"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="20sp"
-            android:layout_width="150dp"
-            android:layout_height="35dp"
+            android:textSize="16sp"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
             android:ems="10"
             android:id="@+id/created_at_value"
             android:text="@string/label_created_at"
@@ -119,10 +119,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.85"
             app:layout_constraintTop_toBottomOf="@+id/name_value"
-            android:layout_marginTop="32dp"/>
+            android:layout_marginTop="16dp"/>
     <TextView
             android:text="@string/title_media_all"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:fontFamily="@font/comic_sans_ms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -131,10 +131,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.174"
             app:layout_constraintTop_toBottomOf="@+id/created_at_label"
-            android:layout_marginTop="32dp"/>
+            android:layout_marginTop="16dp"/>
     <ScrollView
-            android:layout_width="334dp"
-            android:layout_height="250dp"
+            android:layout_width="335dp"
+            android:layout_height="325dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

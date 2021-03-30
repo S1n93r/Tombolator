@@ -113,14 +113,11 @@ public class TombolaMainFragment extends Fragment {
                 Tombola tombola = pair.getValue();
 
                 long id = tombola.getId();
-                String name = tombola.getName();
 
-                String mediaString = "[" + id + "] " + name;
+                TextView textView = (TextView) View.inflate(
+                        parent.getApplicationContext(), R.layout.list_element, null);
 
-                TextView textView = new TextView(parent.getApplicationContext());
-                textView.setTypeface(getResources().getFont(R.font.comic_sans_ms));
-                textView.setTextSize(20);
-                textView.setText(mediaString);
+                textView.setText(tombola.toLabel());
                 textView.setOnClickListener(new ShowDetailsListener());
                 textView.setId((int) id);
 
