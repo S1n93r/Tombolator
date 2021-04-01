@@ -71,9 +71,9 @@ public class MediaCreateNewFragment extends Fragment {
         mediaTypesForSpinner.add(Media.Type.BLU_RAY);
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
-                this.getActivity(), android.R.layout.simple_spinner_item, mediaTypesForSpinner);
+                this.getActivity(), R.layout.media_type_spinner_item, mediaTypesForSpinner);
 
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        arrayAdapter.setDropDownViewResource(R.layout.media_type_spinner_dropdown);
 
         spinnerType.setAdapter(arrayAdapter);
     }
