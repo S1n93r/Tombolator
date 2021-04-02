@@ -23,6 +23,7 @@
     <string name="title_media_all">Alle Medien</string>
     <string name="label_name">Name</string>
     <string name="label_title">Titel</string>
+    <string name="label_content">Inhalt</string>
     <string name="label_number">Nummer</string>
     <string name="label_type">Typ</string>
     <string name="label_created_at">Angelegt am</string>

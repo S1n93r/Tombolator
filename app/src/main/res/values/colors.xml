@@ -6,4 +6,6 @@
     <color name="color_background">#d79cff</color>
     <color name="color_button_stroke">#a86cbd</color>
     <color name="color_button_background">#ffb5ee</color>
+    <color name="color_button_stroke_dark">#7A4E8A</color>
+    <color name="color_button_background_dark">#AA7A9F</color>
 </resources>

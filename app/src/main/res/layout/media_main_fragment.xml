@@ -22,7 +22,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintVertical_bias="0.05"/>
     <Button
-            android:background="@drawable/oval_button_design_purple"
+            android:background="@drawable/button_selector_purple"
             android:text="@string/button_back"
             android:textSize="14sp"
             android:fontFamily="@font/comic_sans_ms"
@@ -39,7 +39,7 @@
             app:layout_constraintVertical_bias="0.95"/>
     <Button
             android:id="@+id/button_new_media"
-            android:background="@drawable/oval_button_design_purple"
+            android:background="@drawable/button_selector_purple"
             android:drawableBottom="@drawable/ic_add_35"
             android:text="@string/button_new"
             android:textSize="14sp"

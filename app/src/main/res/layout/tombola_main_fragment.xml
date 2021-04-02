@@ -23,7 +23,7 @@
             app:layout_constraintVertical_bias="0.05"/>
     <Button
             android:id="@+id/button_back"
-            android:background="@drawable/oval_button_design_purple"
+            android:background="@drawable/button_selector_purple"
             android:drawableBottom="@drawable/ic_arrow_35"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="14sp"
@@ -39,7 +39,7 @@
             app:layout_constraintVertical_bias="0.95"/>
     <Button
             android:id="@+id/button_new_tombola"
-            android:background="@drawable/oval_button_design_purple"
+            android:background="@drawable/button_selector_purple"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="14sp"
             android:padding="25dp"

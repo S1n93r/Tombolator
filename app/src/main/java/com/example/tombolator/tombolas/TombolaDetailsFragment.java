@@ -1,6 +1,5 @@
 package com.example.tombolator.tombolas;
 
-import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -90,12 +89,25 @@ public class TombolaDetailsFragment extends Fragment {
 
                 Tombola selectedTombola = tombolaViewModel.getSelectedTombola().getValue();
 
-                Media drawnMedia = selectedTombola.drawRandomMedia();
+                Media drawnMedia = null;
 
-                new AlertDialog.Builder(getActivity())
-                        .setTitle("Und...")
-                        .setMessage("Du hast " + drawnMedia.getName() + " - " + drawnMedia.getTitle() + " gezogen!")
-                .show();
+                if(selectedTombola != null)
+                    drawnMedia = selectedTombola.drawRandomMedia();
+
+                if(drawnMedia != null) {
+
+                    DrawnMediaDialog drawnMediaDialog = new DrawnMediaDialog(getContext());
+                    drawnMediaDialog.show();
+                    drawnMediaDialog.getContent().setText(drawnMedia.toLabel());
+
+/*
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle("Und...")
+                            .setMessage("Du hast " + drawnMedia.getName() + " - " + drawnMedia.getTitle() + " gezogen!")
+                            .show();
+
+ */
+                }
             }
         });
 

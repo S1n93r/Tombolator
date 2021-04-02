@@ -2,8 +2,9 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[ ] implement animation / graphic on draw
 [ ] --- Milestone I: Basic functions ---
+[ ] extract buttons to xml
+[ ] implement an animation for drawing media
 [ ] implement a creation wizard for medium and tombolas
     [ ] for medium start with type
 [ ] clean up app icon xmls because they seem off
@@ -26,8 +27,9 @@ ToDos:
 [ ] --- Milestone III: Technical improvements ---
 
 Done:
-[x] change font of spinner to Comic Sans
+[x] add an animation to button clicks
 
+[x] change font of spinner to Comic Sans
 [x] extract tombola element textview to xml
 [x] use new textview xml for tombol details
 [X] decrease font size of media and tombola details
