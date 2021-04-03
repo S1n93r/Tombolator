@@ -10,7 +10,7 @@ import java.util.List;
 
 public class MediaActivityViewModel extends ViewModel {
 
-    private static final int MEDIA_PER_PAGE = 10;
+    private static final int MEDIA_PER_PAGE = 9;
     private int currentPage = 1;
 
     private final MutableLiveData<Media> selectedMedia = new MutableLiveData<>();
@@ -25,13 +25,19 @@ public class MediaActivityViewModel extends ViewModel {
     }
 
     public void nextPage() {
-        currentPage++;
-        setMediaOnPageListToPage(currentPage);
+
+        if(currentPage < getNumberOfPages()) {
+            currentPage++;
+            setMediaOnPageListToPage(currentPage);
+        }
     }
 
     public void previousPage() {
-        currentPage--;
-        setMediaOnPageListToPage(currentPage);
+
+        if(currentPage > 1) {
+            currentPage--;
+            setMediaOnPageListToPage(currentPage);
+        }
     }
 
     private void setMediaOnPageListToPage(int pageNumber) {

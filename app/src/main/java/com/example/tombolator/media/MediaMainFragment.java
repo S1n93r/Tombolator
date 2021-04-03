@@ -29,6 +29,7 @@ public class MediaMainFragment extends Fragment {
 
     private Button backButton;
     private Button nextPageButton;
+    private Button previousPageButton;
     private Button newMediaButton;
 
     private MediaMainFragment() {}
@@ -50,6 +51,7 @@ public class MediaMainFragment extends Fragment {
 
         backButton = layout.findViewById(R.id.button_back);
         nextPageButton = layout.findViewById(R.id.button_next_page);
+        previousPageButton = layout.findViewById(R.id.button_previous_page);
         newMediaButton = layout.findViewById(R.id.button_new_media);
 
         registerObserver();
@@ -81,6 +83,14 @@ public class MediaMainFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mediaActivityViewModel.nextPage();
+            }
+        });
+
+        previousPageButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                mediaActivityViewModel.previousPage();
             }
         });
 

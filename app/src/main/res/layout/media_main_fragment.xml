@@ -12,6 +12,21 @@
             android:padding="20dp"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:id="@+id/button_previous_page"
+            android:background="@drawable/button_selector_purple"
+            android:fontFamily="@font/comic_sans_ms"
+            android:text="Vorh. Seite"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintVertical_bias="0.98"/>
+    <Button
+            android:padding="20dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/button_next_page"
             android:background="@drawable/button_selector_purple"
             android:fontFamily="@font/comic_sans_ms"
@@ -22,7 +37,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_bias="0.974"/>
+            app:layout_constraintVertical_bias="0.83"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
             android:layout_width="wrap_content"
@@ -70,11 +85,11 @@
             app:layout_constraintVertical_bias="0.95"/>
     <ScrollView
             android:layout_width="330dp"
-            android:layout_height="500dp"
+            android:layout_height="450dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_bias="0.4"
+            app:layout_constraintVertical_bias="0.31"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
         <LinearLayout

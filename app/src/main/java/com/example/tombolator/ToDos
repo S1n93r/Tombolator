@@ -2,11 +2,12 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[ ] pagination for media and tombola lists
+[.] pagination for media and tombola lists
     [x] implement boiler plate for pagination
     [x] implement "next page" on button click
+    [x] implement "previous page" on button click
+    [x] make sure trying to go before first or beyond last page does nothing
     [.] implement "next" and "previous" on swipe
-    [ ] make sure trying to go before first or beyond last page does nothing
 [ ] implement search fields
 [ ] implement a creation wizard for medium and tombolas
     [ ] for medium start with type
