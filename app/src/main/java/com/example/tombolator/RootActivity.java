@@ -9,7 +9,7 @@ import com.example.tombolator.config.ConfigActivity;
 import com.example.tombolator.media.MediaActivity;
 import com.example.tombolator.tombolas.TombolasActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class RootActivity extends AppCompatActivity {
 
     private Button tombolasButton;
     private Button mediaButton;
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, TombolasActivity.class));
+                startActivity(new Intent(RootActivity.this, TombolasActivity.class));
             }
         });
 
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, MediaActivity.class));
+                startActivity(new Intent(RootActivity.this, MediaActivity.class));
             }
         });
 
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, ConfigActivity.class));
+                startActivity(new Intent(RootActivity.this, ConfigActivity.class));
             }
         });
     }

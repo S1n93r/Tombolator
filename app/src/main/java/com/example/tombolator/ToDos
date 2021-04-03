@@ -2,18 +2,21 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[ ] extract buttons to xml
-[ ] implement an animation for drawing media
+[ ] pagination for media and tombola lists
+    [x] implement boiler plate for pagination
+    [x] implement "next page" on button click
+    [.] implement "next" and "previous" on swipe
+    [ ] make sure trying to go before first or beyond last page does nothing
+[ ] implement search fields
 [ ] implement a creation wizard for medium and tombolas
     [ ] for medium start with type
 [ ] clean up app icon xmls because they seem off
 [ ] check fields on creating new media and inform user if missing
 [ ] check fields on creating new tombola and inform user if missing
-[ ] pagination for media and tombola lists
-[ ] implement search fields
 [ ] implement categories
 [ ] show mistakes and errors to user
 [ ] change focus color to light blue
+[ ] implement an animation for drawing media
 [ ] --- Milestone II: Convenience functions ---
 [ ] check if onChanged events are fired more often then necessary
 [ ] build logger
@@ -23,7 +26,6 @@ ToDos:
 [ ] extract widths, heights, margins and font size to xml
     [ ] create "android resource directory" for dimensions, widths or heights
 [ ] add state effects to buttons
-
 [ ] make sure only activity ready from database, not every fragment
 [ ] replace all "x != null" with requireNonNull()
 [ ] add messages to all requireNonNull()

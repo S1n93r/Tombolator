@@ -1,10 +1,9 @@
 package com.example.tombolator.media;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,6 +28,7 @@ public class MediaMainFragment extends Fragment {
     private LinearLayout linearLayoutMedia;
 
     private Button backButton;
+    private Button nextPageButton;
     private Button newMediaButton;
 
     private MediaMainFragment() {}
@@ -49,10 +49,12 @@ public class MediaMainFragment extends Fragment {
         linearLayoutMedia = layout.findViewById(R.id.linear_layout_media);
 
         backButton = layout.findViewById(R.id.button_back);
+        nextPageButton = layout.findViewById(R.id.button_next_page);
         newMediaButton = layout.findViewById(R.id.button_new_media);
 
         registerObserver();
         registerOnClickListener();
+        registerOnTouchListener();
 
         refreshViewModel();
 
@@ -60,8 +62,8 @@ public class MediaMainFragment extends Fragment {
     }
 
     private void registerObserver() {
-        mediaActivityViewModel.getMediaDatabase()
-                .observe(Objects.requireNonNull(this.getActivity()), new MediaInsertedObserver());
+        mediaActivityViewModel.getMediaOnCurrentPage()
+                .observe(Objects.requireNonNull(this.getActivity()), new MediaInsertedToListObserver());
     }
 
     private void registerOnClickListener() {
@@ -74,10 +76,33 @@ public class MediaMainFragment extends Fragment {
             }
         });
 
+        nextPageButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                mediaActivityViewModel.nextPage();
+            }
+        });
+
         newMediaButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 mediaActivity.switchToCreateMediaView();
+            }
+        });
+    }
+
+    private void registerOnTouchListener() {
+
+        linearLayoutMedia.setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
+
+            public void onSwipeRight() {
+                mediaActivityViewModel.previousPage();
+            }
+
+            public void onSwipeLeft() {
+                mediaActivityViewModel.nextPage();
             }
         });
     }
@@ -101,8 +126,60 @@ public class MediaMainFragment extends Fragment {
                 }
 
                 mediaActivityViewModel.addMedia(mediaList);
+                mediaActivityViewModel.toFirstPage();
             }
         });
+    }
+
+    private class MediaInsertedToListObserver implements Observer<List<Media>> {
+
+        @Override
+        public void onChanged(List<Media> mediaList) {
+
+            linearLayoutMedia.removeAllViews();
+
+            for (Media media : mediaList) {
+
+                long id = media.getId();
+                String type = media.getType();
+
+                TextView textView = (TextView) View.inflate(
+                        mediaActivity.getApplicationContext(), R.layout.list_element, null);
+
+                textView.setText(" " + media.toLabel());
+                textView.setOnClickListener(showDetailsListener);
+                textView.setId((int) id);
+
+                switch(type) {
+
+                    case Media.Type.CASSETTE:
+                        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                                R.drawable.ic_cassette_25, 0, 0, 0);
+                        break;
+
+                    case Media.Type.CD:
+                    case Media.Type.DVD:
+                    case Media.Type.BLU_RAY:
+                        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                                R.drawable.ic_cd_25, 0, 0, 0);
+                        break;
+
+                    case Media.Type.BOOK:
+                        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                                R.drawable.ic_book_25, 0, 0, 0);
+                        break;
+
+                    case Media.Type.E_BOOK:
+                        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                                R.drawable.ic_ebook_25, 0, 0, 0);
+                        break;
+
+                    default: //No icon added
+                }
+
+                linearLayoutMedia.addView(textView);
+            }
+        }
     }
 
     private class MediaInsertedObserver implements Observer<Map<Long, Media>> {
@@ -168,6 +245,68 @@ public class MediaMainFragment extends Fragment {
             mediaActivityViewModel.selectMedia(mediaId);
 
             mediaActivity.switchToMediaDetailsView();
+        }
+    }
+
+    private class OnSwipeTouchListener implements View.OnTouchListener {
+
+        private final GestureDetector gestureDetector;
+
+        private OnSwipeTouchListener(Context context) {
+            this.gestureDetector = new GestureDetector(context, new GestureListener());
+        }
+
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            return gestureDetector.onTouchEvent(motionEvent);
+        }
+
+        private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
+
+            private static final int SWIPE_THRESHOLD = 100;
+            private static final int SWIPE_VELOCITY_THRESHOLD = 100;
+
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                boolean result = false;
+                try {
+                    float diffY = e2.getY() - e1.getY();
+                    float diffX = e2.getX() - e1.getX();
+                    if (Math.abs(diffX) > Math.abs(diffY)) {
+                        if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                            if (diffX > 0) {
+                                onSwipeRight();
+                            } else {
+                                onSwipeLeft();
+                            }
+                            result = true;
+                        }
+                    }
+                    else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                        if (diffY > 0) {
+                            onSwipeBottom();
+                        } else {
+                            onSwipeTop();
+                        }
+                        result = true;
+                    }
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+                return result;
+            }
+        }
+
+        public void onSwipeRight() {
+        }
+
+        public void onSwipeLeft() {
+        }
+
+        public void onSwipeTop() {
+        }
+
+        public void onSwipeBottom() {
         }
     }
 }
