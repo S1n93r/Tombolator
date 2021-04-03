@@ -21,16 +21,7 @@ import java.util.Objects;
 
 public class MediaMainFragment extends Fragment {
 
-    private final MediaActivity parent;
-
-    public static MediaMainFragment newInstance(MediaActivity parent) {
-        return new MediaMainFragment(parent);
-    }
-
-    private MediaMainFragment(MediaActivity parent) {
-        this.parent = parent;
-    }
-
+    private MediaActivity mediaActivity;
     private final View.OnClickListener showDetailsListener = new ShowDetailsListener();
 
     private MediaActivityViewModel mediaActivityViewModel;
@@ -40,10 +31,17 @@ public class MediaMainFragment extends Fragment {
     private Button backButton;
     private Button newMediaButton;
 
+    private MediaMainFragment() {}
+
+    public static MediaMainFragment newInstance() {
+        return new MediaMainFragment();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
+        mediaActivity = (MediaActivity) getActivity();
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
 
         View layout = inflater.inflate(R.layout.media_main_fragment, container, false);
@@ -72,14 +70,14 @@ public class MediaMainFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                parent.finish();
+                mediaActivity.finish();
             }
         });
 
         newMediaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                parent.switchToCreateMediaView();
+                mediaActivity.switchToCreateMediaView();
             }
         });
     }
@@ -122,7 +120,7 @@ public class MediaMainFragment extends Fragment {
                 String type = media.getType();
 
                 TextView textView = (TextView) View.inflate(
-                        parent.getApplicationContext(), R.layout.list_element, null);
+                        mediaActivity.getApplicationContext(), R.layout.list_element, null);
 
                 textView.setText(" " + media.toLabel());
                 textView.setOnClickListener(showDetailsListener);
@@ -169,7 +167,7 @@ public class MediaMainFragment extends Fragment {
             long mediaId = textView.getId();
             mediaActivityViewModel.selectMedia(mediaId);
 
-            parent.switchToMediaDetailsView();
+            mediaActivity.switchToMediaDetailsView();
         }
     }
 }

@@ -17,24 +17,14 @@ import com.example.tombolator.DateUtil;
 import com.example.tombolator.R;
 import com.example.tombolator.TomboDbApplication;
 import com.example.tombolator.media.Media;
-import com.example.tombolator.media.MediaActivityViewModel;
 
 import java.util.Objects;
 
 public class TombolaDetailsFragment extends Fragment {
 
-    TombolasActivity parent;
-
-    public static TombolaDetailsFragment newInstance(TombolasActivity parent) {
-        return new TombolaDetailsFragment(parent);
-    }
-
-    private TombolaDetailsFragment(TombolasActivity parent) {
-        this.parent = parent;
-    }
+    TombolasActivity tombolasActivity;
 
     private TombolasActivityViewModel tombolaViewModel;
-    private MediaActivityViewModel mediaActivityViewModel;
 
     private TextView nameValue;
     private TextView createdAt;
@@ -45,13 +35,19 @@ public class TombolaDetailsFragment extends Fragment {
     private Button drawButton;
     private Button deleteButton;
 
+    private TombolaDetailsFragment() {}
+
+    public static TombolaDetailsFragment newInstance() {
+        return new TombolaDetailsFragment();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
 
+        tombolasActivity = (TombolasActivity) getActivity();
         tombolaViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
-        mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
 
         View layout = inflater.inflate(R.layout.tombola_details_fragment, container, false);
 
@@ -79,7 +75,7 @@ public class TombolaDetailsFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                parent.switchToTombolasMainView();
+                tombolasActivity.switchToTombolasMainView();
             }
         });
 
@@ -89,25 +85,11 @@ public class TombolaDetailsFragment extends Fragment {
 
                 Tombola selectedTombola = tombolaViewModel.getSelectedTombola().getValue();
 
-                Media drawnMedia = null;
+                Media drawnMedia = Objects.requireNonNull(selectedTombola).drawRandomMedia();
 
-                if(selectedTombola != null)
-                    drawnMedia = selectedTombola.drawRandomMedia();
-
-                if(drawnMedia != null) {
-
-                    DrawnMediaDialog drawnMediaDialog = new DrawnMediaDialog(getContext());
-                    drawnMediaDialog.show();
-                    drawnMediaDialog.getContent().setText(drawnMedia.toLabel());
-
-/*
-                    new AlertDialog.Builder(getActivity())
-                            .setTitle("Und...")
-                            .setMessage("Du hast " + drawnMedia.getName() + " - " + drawnMedia.getTitle() + " gezogen!")
-                            .show();
-
- */
-                }
+                DrawnMediaDialog drawnMediaDialog = new DrawnMediaDialog(Objects.requireNonNull(getContext()));
+                drawnMediaDialog.show();
+                drawnMediaDialog.getContent().setText(Objects.requireNonNull(drawnMedia).toLabel());
             }
         });
 
@@ -132,7 +114,7 @@ public class TombolaDetailsFragment extends Fragment {
 
                 tombolaViewModel.removeTombola(Objects.requireNonNull(tombola).getId());
 
-                parent.switchToTombolasMainView();
+                tombolasActivity.switchToTombolasMainView();
             }
         });
     }
@@ -150,7 +132,7 @@ public class TombolaDetailsFragment extends Fragment {
             for(Media media : tombola.getAllMedia()) {
 
                 TextView textView = (TextView) View.inflate(
-                        parent.getApplicationContext(), R.layout.list_element, null);
+                        tombolasActivity.getApplicationContext(), R.layout.list_element, null);
 
                 textView.setText(media.toLabel());
                 textView.setId(media.getId().intValue());

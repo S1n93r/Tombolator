@@ -26,15 +26,13 @@ import java.util.Objects;
 
 public class TombolaCreateNewFragment extends Fragment {
 
-    TombolasActivity parent;
+    TombolasActivity tombolasActivity;
 
-    public static TombolaCreateNewFragment newInstance(TombolasActivity parent) {
-        return new TombolaCreateNewFragment(parent);
+    public static TombolaCreateNewFragment newInstance() {
+        return new TombolaCreateNewFragment();
     }
 
-    private TombolaCreateNewFragment(TombolasActivity parent) {
-        this.parent = parent;
-    }
+    private TombolaCreateNewFragment(){}
 
     private MediaActivityViewModel mediaActivityViewModel;
 
@@ -51,6 +49,7 @@ public class TombolaCreateNewFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
+        tombolasActivity = (TombolasActivity) getActivity();
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
 
         View layout = inflater.inflate(R.layout.tombola_creation_fragment, container, false);
@@ -139,7 +138,7 @@ public class TombolaCreateNewFragment extends Fragment {
                     });
 
                     resetForm();
-                    parent.switchToTombolasMainView();
+                    tombolasActivity.switchToTombolasMainView();
                 }
             }
         });
@@ -149,7 +148,7 @@ public class TombolaCreateNewFragment extends Fragment {
             public void onClick(View v) {
 
                 resetForm();
-                parent.switchToTombolasMainView();
+                tombolasActivity.switchToTombolasMainView();
             }
         });
     }
@@ -167,12 +166,8 @@ public class TombolaCreateNewFragment extends Fragment {
                 Media media = pair.getValue();
 
                 long id = media.getId();
-                String name = media.getName();
-                String title = media.getTitle();
-                int number = media.getNumber();
-                String type = media.getType();
 
-                TextView textView = new TextView(parent.getApplicationContext());
+                TextView textView = new TextView(tombolasActivity.getApplicationContext());
                 textView.setTypeface(getResources().getFont(R.font.comic_sans_ms));
                 textView.setTextSize(20);
                 textView.setText(media.toLabel());

@@ -3,6 +3,7 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [ ] --- Milestone I: Basic functions ---
+[ ] start and stop fragments instead of switching via activity
 [ ] extract buttons to xml
 [ ] implement an animation for drawing media
 [ ] implement a creation wizard for medium and tombolas
@@ -24,11 +25,15 @@ ToDos:
 [ ] add state effects to buttons
 [ ] change focus color to light blue
 [ ] make sure only activity ready from database, not every fragment
+[ ] replace all "x != null" with requireNonNull()
+[ ] build logger
+[ ] add messages to all requireNonNull()
 [ ] --- Milestone III: Technical improvements ---
 
 Done:
-[x] add an animation to button clicks
+[x] in fragments use getActivity() instead of parent as parameter
 
+[x] add an animation to button clicks
 [x] change font of spinner to Comic Sans
 [x] extract tombola element textview to xml
 [x] use new textview xml for tombol details

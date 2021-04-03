@@ -20,16 +20,7 @@ import java.util.Objects;
 
 public class MediaDetailsFragment extends Fragment {
 
-    MediaActivity parent;
-
-    public static MediaDetailsFragment newInstance(MediaActivity parent) {
-        return new MediaDetailsFragment(parent);
-    }
-
-    private MediaDetailsFragment(MediaActivity parent) {
-        this.parent = parent;
-    }
-
+    private MediaActivity mediaActivity;
     private MediaActivityViewModel mediaActivityViewModel;
 
     private TextView idValue;
@@ -42,11 +33,18 @@ public class MediaDetailsFragment extends Fragment {
     private Button backButton;
     private Button deleteButton;
 
+    public static MediaDetailsFragment newInstance() {
+        return new MediaDetailsFragment();
+    }
+
+    private MediaDetailsFragment(){}
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
 
+        mediaActivity = (MediaActivity) getActivity();
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
 
         View layout = inflater.inflate(R.layout.media_details_fragment, container, false);
@@ -76,7 +74,7 @@ public class MediaDetailsFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                parent.switchToMainView();
+                mediaActivity.switchToMainView();
             }
         });
 
@@ -101,7 +99,7 @@ public class MediaDetailsFragment extends Fragment {
 
                 mediaActivityViewModel.removeMedia(Objects.requireNonNull(media).getId());
 
-                parent.switchToMainView();
+                mediaActivity.switchToMainView();
             }
         });
     }

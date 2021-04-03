@@ -21,15 +21,7 @@ import java.util.Objects;
 
 public class MediaCreateNewFragment extends Fragment {
 
-    MediaActivity parent;
-
-    public static MediaCreateNewFragment newInstance(MediaActivity parent) {
-        return new MediaCreateNewFragment(parent);
-    }
-
-    private MediaCreateNewFragment(MediaActivity parent) {
-        this.parent = parent;
-    }
+    private MediaActivity mediaActivity;
 
     private TextView editTextName;
     private TextView editTextTitle;
@@ -39,11 +31,18 @@ public class MediaCreateNewFragment extends Fragment {
     private Button saveButton;
     private Button backButton;
 
+    private MediaCreateNewFragment() {}
+
+    public static MediaCreateNewFragment newInstance() {
+        return new MediaCreateNewFragment();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
 
+        mediaActivity = (MediaActivity) getActivity();
         View layout = inflater.inflate(R.layout.media_creation_fragment, container, false);
 
         editTextName = layout.findViewById(R.id.edit_text_name);
@@ -108,7 +107,7 @@ public class MediaCreateNewFragment extends Fragment {
                     });
 
                     resetForm();
-                    parent.switchToMainView();
+                    mediaActivity.switchToMainView();
                 }
             }
         });
@@ -117,7 +116,7 @@ public class MediaCreateNewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 resetForm();
-                parent.switchToMainView();
+                mediaActivity.switchToMainView();
             }
         });
     }

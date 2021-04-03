@@ -21,14 +21,14 @@ import java.util.Objects;
 
 public class TombolaMainFragment extends Fragment {
 
-    private final TombolasActivity parent;
+    private TombolasActivity tombolasActivity;
 
-    public static TombolaMainFragment newInstance(TombolasActivity parent) {
-        return new TombolaMainFragment(parent);
+    public static TombolaMainFragment newInstance() {
+        return new TombolaMainFragment();
     }
 
-    private TombolaMainFragment(TombolasActivity parent) {
-        this.parent = parent;
+    private TombolaMainFragment() {
+
     }
 
     private TombolasActivityViewModel tombolasActivityViewModel;
@@ -42,6 +42,7 @@ public class TombolaMainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
+        tombolasActivity = (TombolasActivity) getActivity();
         tombolasActivityViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
 
         View layout = inflater.inflate(R.layout.tombola_main_fragment, container, false);
@@ -68,13 +69,13 @@ public class TombolaMainFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                parent.finish();
+                tombolasActivity.finish();
             }
         });
         newTombolaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                parent.switchToNewTombolaView();
+                tombolasActivity.switchToNewTombolaView();
             }
         });
     }
@@ -115,7 +116,7 @@ public class TombolaMainFragment extends Fragment {
                 long id = tombola.getId();
 
                 TextView textView = (TextView) View.inflate(
-                        parent.getApplicationContext(), R.layout.list_element, null);
+                        tombolasActivity.getApplicationContext(), R.layout.list_element, null);
 
                 textView.setText(tombola.toLabel());
                 textView.setOnClickListener(new ShowDetailsListener());
@@ -135,7 +136,7 @@ public class TombolaMainFragment extends Fragment {
             long tombolaId = textView.getId();
             tombolasActivityViewModel.selectTombola(tombolaId);
 
-            parent.switchToTombolaDetailsView();
+            tombolasActivity.switchToTombolaDetailsView();
         }
     }
 }
