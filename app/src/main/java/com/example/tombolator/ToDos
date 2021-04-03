@@ -2,8 +2,6 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[ ] --- Milestone I: Basic functions ---
-[ ] start and stop fragments instead of switching via activity
 [ ] extract buttons to xml
 [ ] implement an animation for drawing media
 [ ] implement a creation wizard for medium and tombolas
@@ -11,28 +9,33 @@ ToDos:
 [ ] clean up app icon xmls because they seem off
 [ ] check fields on creating new media and inform user if missing
 [ ] check fields on creating new tombola and inform user if missing
-[ ] check if onChanged events are fired more often then necessary
 [ ] pagination for media and tombola lists
 [ ] implement search fields
 [ ] implement categories
 [ ] show mistakes and errors to user
+[ ] change focus color to light blue
 [ ] --- Milestone II: Convenience functions ---
+[ ] check if onChanged events are fired more often then necessary
+[ ] build logger
 [ ] catch all exceptions with a logger and add informative descriptions
 [ ] implement unit tests
 [ ] Write java doc
 [ ] extract widths, heights, margins and font size to xml
     [ ] create "android resource directory" for dimensions, widths or heights
 [ ] add state effects to buttons
-[ ] change focus color to light blue
+
 [ ] make sure only activity ready from database, not every fragment
 [ ] replace all "x != null" with requireNonNull()
-[ ] build logger
 [ ] add messages to all requireNonNull()
+[ ] rebuild activity to fragment structure
+    [ ] use activities on new screen
+    [ ] only use fragments for reusable PARTS of a screen
 [ ] --- Milestone III: Technical improvements ---
 
 Done:
 [x] in fragments use getActivity() instead of parent as parameter
 
+[x] --- Milestone I: Basic functions ---
 [x] add an animation to button clicks
 [x] change font of spinner to Comic Sans
 [x] extract tombola element textview to xml
