@@ -24,7 +24,7 @@
     <Button
             android:id="@+id/button_back"
             android:background="@drawable/button_selector_purple"
-            android:drawableBottom="@drawable/ic_arrow_35"
+            android:drawableBottom="@drawable/ic_arrow_left_35"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="14sp"
             android:padding="25dp"

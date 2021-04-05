@@ -10,34 +10,36 @@
 
     <Button
             android:padding="20dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
             android:id="@+id/button_previous_page"
             android:background="@drawable/button_selector_purple"
+            android:drawableBottom="@drawable/ic_arrow_left_25"
             android:fontFamily="@font/comic_sans_ms"
-            android:text="Vorh. Seite"
+            android:text="@string/button_next_or_prev_page"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_bias="0.98"/>
+            app:layout_constraintHorizontal_bias="0.35"
+            app:layout_constraintVertical_bias="0.85"/>
     <Button
             android:padding="20dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
             android:id="@+id/button_next_page"
             android:background="@drawable/button_selector_purple"
+            android:drawableBottom="@drawable/ic_arrow_right_25"
             android:fontFamily="@font/comic_sans_ms"
-            android:text="Nächste Seite"
+            android:text="@string/button_next_or_prev_page"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_bias="0.83"/>
+            app:layout_constraintHorizontal_bias="0.65"
+            app:layout_constraintVertical_bias="0.85"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
             android:layout_width="wrap_content"
@@ -50,53 +52,67 @@
             android:id="@+id/text_view_title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_bias="0.05"/>
+            app:layout_constraintVertical_bias="0.025"/>
     <Button
             android:background="@drawable/button_selector_purple"
             android:text="@string/button_back"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:fontFamily="@font/comic_sans_ms"
-            android:drawableBottom="@drawable/ic_arrow_35"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
+            android:drawableBottom="@drawable/ic_arrow_left_25"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/button_back"
             android:padding="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintHorizontal_bias="0.05"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.95"/>
+            app:layout_constraintVertical_bias="0.975"/>
     <Button
             android:id="@+id/button_new_media"
             android:background="@drawable/button_selector_purple"
-            android:drawableBottom="@drawable/ic_add_35"
+            android:drawableBottom="@drawable/ic_add_25"
             android:text="@string/button_new"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:fontFamily="@font/comic_sans_ms"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:padding="25dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.9"
-            app:layout_constraintVertical_bias="0.95"/>
+            app:layout_constraintHorizontal_bias="0.95"
+            app:layout_constraintVertical_bias="0.975"/>
     <ScrollView
             android:layout_width="330dp"
             android:layout_height="450dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_bias="0.31"
+            app:layout_constraintVertical_bias="0.425"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/scrollView4">
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:id="@+id/linear_layout_media"/>
     </ScrollView>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Suche"
+            android:ems="10"
+            android:id="@+id/editTextTextPersonName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.12"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,9 +1,10 @@
 package com.example.tombolator.media;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,7 +16,6 @@ import com.example.tombolator.TomboDbApplication;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class MediaMainFragment extends Fragment {
@@ -56,7 +56,6 @@ public class MediaMainFragment extends Fragment {
 
         registerObserver();
         registerOnClickListener();
-        registerOnTouchListener();
 
         refreshViewModel();
 
@@ -65,7 +64,7 @@ public class MediaMainFragment extends Fragment {
 
     private void registerObserver() {
         mediaActivityViewModel.getMediaOnCurrentPage()
-                .observe(Objects.requireNonNull(this.getActivity()), new MediaInsertedToListObserver());
+                .observe(Objects.requireNonNull(this.getActivity()), new MediaInsertedObserver());
     }
 
     private void registerOnClickListener() {
@@ -103,20 +102,6 @@ public class MediaMainFragment extends Fragment {
         });
     }
 
-    private void registerOnTouchListener() {
-
-        linearLayoutMedia.setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
-
-            public void onSwipeRight() {
-                mediaActivityViewModel.previousPage();
-            }
-
-            public void onSwipeLeft() {
-                mediaActivityViewModel.nextPage();
-            }
-        });
-    }
-
     public void refreshViewModel() {
 
         AsyncTask.execute(new Runnable() {
@@ -141,7 +126,7 @@ public class MediaMainFragment extends Fragment {
         });
     }
 
-    private class MediaInsertedToListObserver implements Observer<List<Media>> {
+    private class MediaInsertedObserver implements Observer<List<Media>> {
 
         @Override
         public void onChanged(List<Media> mediaList) {
@@ -149,59 +134,6 @@ public class MediaMainFragment extends Fragment {
             linearLayoutMedia.removeAllViews();
 
             for (Media media : mediaList) {
-
-                long id = media.getId();
-                String type = media.getType();
-
-                TextView textView = (TextView) View.inflate(
-                        mediaActivity.getApplicationContext(), R.layout.list_element, null);
-
-                textView.setText(" " + media.toLabel());
-                textView.setOnClickListener(showDetailsListener);
-                textView.setId((int) id);
-
-                switch(type) {
-
-                    case Media.Type.CASSETTE:
-                        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                                R.drawable.ic_cassette_25, 0, 0, 0);
-                        break;
-
-                    case Media.Type.CD:
-                    case Media.Type.DVD:
-                    case Media.Type.BLU_RAY:
-                        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                                R.drawable.ic_cd_25, 0, 0, 0);
-                        break;
-
-                    case Media.Type.BOOK:
-                        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                                R.drawable.ic_book_25, 0, 0, 0);
-                        break;
-
-                    case Media.Type.E_BOOK:
-                        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                                R.drawable.ic_ebook_25, 0, 0, 0);
-                        break;
-
-                    default: //No icon added
-                }
-
-                linearLayoutMedia.addView(textView);
-            }
-        }
-    }
-
-    private class MediaInsertedObserver implements Observer<Map<Long, Media>> {
-
-        @Override
-        public void onChanged(Map<Long, Media> mediaMapInserted) {
-
-            linearLayoutMedia.removeAllViews();
-
-            for (Map.Entry<Long, Media> pair : mediaMapInserted.entrySet()) {
-
-                Media media = pair.getValue();
 
                 long id = media.getId();
                 String type = media.getType();
@@ -258,65 +190,4 @@ public class MediaMainFragment extends Fragment {
         }
     }
 
-    private class OnSwipeTouchListener implements View.OnTouchListener {
-
-        private final GestureDetector gestureDetector;
-
-        private OnSwipeTouchListener(Context context) {
-            this.gestureDetector = new GestureDetector(context, new GestureListener());
-        }
-
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            return gestureDetector.onTouchEvent(motionEvent);
-        }
-
-        private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
-
-            private static final int SWIPE_THRESHOLD = 100;
-            private static final int SWIPE_VELOCITY_THRESHOLD = 100;
-
-            @Override
-            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                boolean result = false;
-                try {
-                    float diffY = e2.getY() - e1.getY();
-                    float diffX = e2.getX() - e1.getX();
-                    if (Math.abs(diffX) > Math.abs(diffY)) {
-                        if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                            if (diffX > 0) {
-                                onSwipeRight();
-                            } else {
-                                onSwipeLeft();
-                            }
-                            result = true;
-                        }
-                    }
-                    else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
-                        if (diffY > 0) {
-                            onSwipeBottom();
-                        } else {
-                            onSwipeTop();
-                        }
-                        result = true;
-                    }
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
-                return result;
-            }
-        }
-
-        public void onSwipeRight() {
-        }
-
-        public void onSwipeLeft() {
-        }
-
-        public void onSwipeTop() {
-        }
-
-        public void onSwipeBottom() {
-        }
-    }
 }

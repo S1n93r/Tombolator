@@ -12,7 +12,7 @@
             android:text="@string/button_back"
             android:textSize="14sp"
             android:fontFamily="@font/comic_sans_ms"
-            android:drawableBottom="@drawable/ic_arrow_35"
+            android:drawableBottom="@drawable/ic_arrow_left_35"
             android:layout_width="125dp"
             android:layout_height="125dp"
             android:id="@+id/button_back"

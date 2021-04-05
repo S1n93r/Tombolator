@@ -11,6 +11,7 @@
     <string name="button_nuke">Nuke</string>
     <string name="button_draw">Ziehen</string>
     <string name="button_delete">Löschen</string>
+    <string name="button_next_or_prev_page">Seite</string>
     <string name="title_config">Optionen</string>
     <string name="title_tombolas">Deine Tombolas</string>
     <string name="title_media">Deine Medien</string>
