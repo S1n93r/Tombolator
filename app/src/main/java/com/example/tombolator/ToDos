@@ -30,8 +30,9 @@ ToDos:
 [ ] --- Milestone III: Technical improvements ---
 
 Done:
-[x] add icons to "next page" and "previous page" buttons and make names shorter
+[x] adjust all views to be more spacious like tombola details
 
+[x] add icons to "next page" and "previous page" buttons and make names shorter
 [x] pagination for media and tombola lists
     [x] implement boiler plate for pagination
     [x] implement "next page" on button click

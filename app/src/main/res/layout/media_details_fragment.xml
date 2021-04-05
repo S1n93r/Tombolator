@@ -19,39 +19,35 @@
             android:id="@+id/text_view_title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_bias="0.05"/>
+            app:layout_constraintVertical_bias="0.025"/>
     <Button
             android:text="@string/button_back"
             android:drawableBottom="@drawable/ic_arrow_left_35"
             android:padding="25dp"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
             android:id="@+id/button_back"
             android:background="@drawable/button_selector_purple"
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="14sp"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.95"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"/>
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="15dp"/>
     <Button
             android:text="@string/button_delete"
             android:drawableBottom="@drawable/ic_delete_35"
             android:padding="25dp"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
             android:id="@+id/button_delete"
             android:background="@drawable/button_selector_purple"
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.95"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.9"/>
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="16sp"
@@ -136,11 +132,11 @@
             android:layout_height="50dp"
             android:id="@+id/id_label"
             android:text="@string/label_id"
+            android:layout_marginTop="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.15"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="140dp"/>
+            app:layout_constraintTop_toBottomOf="@+id/text_view_title"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="16sp"
@@ -160,11 +156,11 @@
             android:layout_height="50dp"
             android:id="@+id/id_value"
             android:text="@string/label_id"
+            android:layout_marginTop="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.85"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="140dp"/>
+            app:layout_constraintTop_toBottomOf="@+id/text_view_title"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="16sp"

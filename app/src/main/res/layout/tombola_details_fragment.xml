@@ -10,19 +10,17 @@
     <Button
             android:drawableBottom="@drawable/ic_bingo_35"
             android:padding="20dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
             android:id="@+id/button_draw"
             android:background="@drawable/button_selector_purple"
             android:fontFamily="@font/comic_sans_ms"
             android:text="@string/button_draw"
             android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_bias="0.974"/>
+            app:layout_constraintStart_toEndOf="@+id/button_back"
+            app:layout_constraintEnd_toStartOf="@+id/button_delete"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,39 +33,35 @@
             android:id="@+id/text_view_title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_bias="0.05"/>
+            app:layout_constraintVertical_bias="0.025"/>
     <Button
             android:text="@string/button_back"
             android:drawableBottom="@drawable/ic_arrow_left_35"
             android:padding="25dp"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
             android:id="@+id/button_back"
             android:background="@drawable/button_selector_purple"
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="14sp"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.95"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"/>
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="15dp"/>
     <Button
             android:text="@string/button_delete"
             android:drawableBottom="@drawable/ic_delete_35"
             android:padding="25dp"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
             android:id="@+id/button_delete"
             android:background="@drawable/button_selector_purple"
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.95"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.9"/>
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="16sp"
@@ -76,7 +70,7 @@
             android:ems="10"
             android:id="@+id/name_label"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="140dp"
+            android:layout_marginTop="100dp"
             android:text="@string/label_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -89,7 +83,7 @@
             android:ems="10"
             android:id="@+id/name_value"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="140dp"
+            android:layout_marginTop="100dp"
             android:text="@string/label_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -134,7 +128,7 @@
             android:layout_marginTop="16dp"/>
     <ScrollView
             android:layout_width="335dp"
-            android:layout_height="325dp"
+            android:layout_height="400dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

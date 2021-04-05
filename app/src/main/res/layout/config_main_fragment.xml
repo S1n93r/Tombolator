@@ -10,19 +10,19 @@
     <Button
             android:background="@drawable/oval_button_design_purple"
             android:text="@string/button_back"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:fontFamily="@font/comic_sans_ms"
             android:drawableBottom="@drawable/ic_arrow_left_35"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
             android:id="@+id/button_back"
             android:padding="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintHorizontal_bias="0.05"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.95"/>
+            app:layout_constraintVertical_bias="0.975"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
             android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
             android:id="@+id/text_view_title"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.05"/>
+            app:layout_constraintVertical_bias="0.025"/>
     <Button
             android:text="@string/button_reset_media_database"
             android:drawableBottom="@drawable/ic_datenbank"
@@ -46,12 +46,11 @@
             android:background="@drawable/oval_button_design_purple"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="10sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="20dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_bias="0.25"/>
+            app:layout_constraintTop_toBottomOf="@+id/text_view_title"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
