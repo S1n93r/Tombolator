@@ -47,7 +47,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginLeft="15dp"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            android:layout_marginStart="15dp"/>
     <Button
             android:text="@string/button_delete"
             android:drawableBottom="@drawable/ic_delete_35"
@@ -57,11 +58,12 @@
             android:id="@+id/button_delete"
             android:background="@drawable/button_selector_purple"
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="15dp"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="16sp"

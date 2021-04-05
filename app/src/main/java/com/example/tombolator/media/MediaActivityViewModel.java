@@ -10,7 +10,7 @@ import java.util.List;
 
 public class MediaActivityViewModel extends ViewModel {
 
-    private static final int MEDIA_PER_PAGE = 9;
+    private static final int MEDIA_PER_PAGE = 8;
     private int currentPage = 1;
 
     private final MutableLiveData<Media> selectedMedia = new MutableLiveData<>();

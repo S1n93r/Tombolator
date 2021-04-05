@@ -44,7 +44,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:hint="Suche"
+            android:hint="@string/label_search"
+            android:autofillHints="@string/label_search"
             android:ems="10"
             android:id="@+id/editTextTextPersonName2"
             app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +80,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginLeft="15dp"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            android:layout_marginStart="15dp"/>
     <Button
             android:id="@+id/button_new_tombola"
             android:background="@drawable/button_selector_purple"
@@ -93,7 +95,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="15dp"/>
     <ScrollView
             android:layout_width="330dp"
             android:layout_height="450dp"
