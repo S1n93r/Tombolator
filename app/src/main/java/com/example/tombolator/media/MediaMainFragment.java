@@ -2,10 +2,12 @@ package com.example.tombolator.media;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
@@ -24,6 +26,8 @@ public class MediaMainFragment extends Fragment {
     private final View.OnClickListener showDetailsListener = new ShowDetailsListener();
 
     private MediaActivityViewModel mediaActivityViewModel;
+
+    private EditText search;
 
     private LinearLayout linearLayoutMedia;
 
@@ -47,6 +51,8 @@ public class MediaMainFragment extends Fragment {
 
         View layout = inflater.inflate(R.layout.media_main_fragment, container, false);
 
+        search = layout.findViewById(R.id.edit_text_search);
+
         linearLayoutMedia = layout.findViewById(R.id.linear_layout_media);
 
         backButton = layout.findViewById(R.id.button_back);
@@ -55,6 +61,7 @@ public class MediaMainFragment extends Fragment {
         newMediaButton = layout.findViewById(R.id.button_new_media);
 
         registerObserver();
+        registerOnKeyListener();
         registerOnClickListener();
 
         refreshViewModel();
@@ -65,6 +72,10 @@ public class MediaMainFragment extends Fragment {
     private void registerObserver() {
         mediaActivityViewModel.getMediaOnCurrentPage()
                 .observe(Objects.requireNonNull(this.getActivity()), new MediaInsertedObserver());
+    }
+
+    private void registerOnKeyListener() {
+        search.setOnKeyListener(new SearchMediaListener());
     }
 
     private void registerOnClickListener() {
@@ -190,4 +201,18 @@ public class MediaMainFragment extends Fragment {
         }
     }
 
+    private class SearchMediaListener implements View.OnKeyListener {
+
+        @Override
+        public boolean onKey(View view, int i, KeyEvent keyEvent) {
+
+            if(keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+
+                String searchFilter = search.getText() != null ? search.getText().toString() : "";
+                mediaActivityViewModel.setMediaSearchFilter(searchFilter);
+            }
+
+            return false;
+        }
+    }
 }

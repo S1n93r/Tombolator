@@ -1,14 +1,5 @@
 apply plugin: 'com.android.application'
 
-static def generateVersionCode() {
-    def result = "git rev-list HEAD --count".execute().text.trim() //unix
-    if(result.empty) result = "PowerShell -Command git rev-list HEAD --count".execute().text.trim() //windows
-    if(result.empty) throw new RuntimeException("Could not generate versioncode on this platform? Cmd output: ${result.text}")
-    return result.toInteger()
-}
-
-def majorVersion = 1
-
 android {
     compileSdkVersion 29
     buildToolsVersion "30.0.3"
@@ -17,8 +8,8 @@ android {
         applicationId "com.example.tombolator"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode generateVersionCode()
-        versionName "${majorVersion}.${generateVersionCode()}"
+        versionCode 54
+        versionName "0.54"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -27,6 +18,11 @@ android {
                 arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
     }
 
     buildTypes {
@@ -39,13 +35,13 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
-    testImplementation 'android.arch.core:core-testing:1.0.0-alpha3'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation 'android.arch.core:core-testing:1.1.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-extensions
     runtimeOnly group: 'androidx.lifecycle', name: 'lifecycle-extensions', version: '2.2.0'
@@ -63,4 +59,7 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
+
+    // https://mvnrepository.com/artifact/com.google.guava/guava
+    implementation group: 'com.google.guava', name: 'guava', version: '30.1-android'
 }
