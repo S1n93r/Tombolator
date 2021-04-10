@@ -2,8 +2,6 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[ ] bug: buttons should not hover when keyboard opens
-
 [ ] implement a creation wizard for medium and tombolas
     [ ] for medium start with type
 [ ] clean up MediaActivityViewModel class
@@ -18,7 +16,7 @@ ToDos:
 [ ] implement an animation for drawing media
 [ ] media list should not jump back to page 1 as long as media model is opened
 [ ] add type icon to drawn media view
-[ ] add disney movies to susis stash script
+[ ] figure out how to deal with types and content types of media
 [ ] --- Milestone II: Convenience functions ---
 [ ] check if onChanged events are fired more often then necessary
 [ ] build logger
@@ -37,11 +35,14 @@ ToDos:
 [ ] --- Milestone III: Technical improvements ---
 
 Done:
+[x] bug: movies are not shown with their icon
+
+[x] add disney movies to susis stash script
+[x] bug: buttons should not hover when keyboard opens
 [x] keyboard wont push buttons up in tombola activity
 [x] centralize dimensions for buttons etc. to xml
 [x] bug: font on some buttons is too big ("löschen" & "sichern")
 [x] bug: in medium details list of media is underneath buttons
-
 [x] implement search fields
 [x] removed automated versioning by number of commits do to some bug
 [x] added Guava as dependency

@@ -51,8 +51,10 @@ public class SusisStashScript implements Runnable {
 
             String name = mediaValues[0];
             String title = mediaValues[1];
-            int number = Integer.parseInt(mediaValues[2]);
+            String numberAsString = mediaValues[2];
             String type = mediaValues[3];
+
+            int number = numberAsString.isEmpty() ? 1 : Integer.parseInt(numberAsString);
 
             Media media = new Media(name, title, number ,type);
             mediaList.add(media);
@@ -258,7 +260,59 @@ public class SusisStashScript implements Runnable {
                 "Bibi Blocksberg;Das traurige Einhorn;96;Kassette\n" +
                 "Bibi Blocksberg;Überraschung für Mami;97;Kassette\n" +
                 "Bibi Blocksberg;Der verhexte Bürgermeister;104;Kassette\n" +
-                "Bibi Blocksberg;Der Hexenbesen-Dieb;111;Kassette\n";
+                "Bibi Blocksberg;Der Hexenbesen-Dieb;111;Kassette\n" +
+                "Doug;Der 1. Film;1;Film\n" +
+                "Basil, der große Mäusedetektiv;;1;Film\n" +
+                "Winnie Puuh;;;Film\n" +
+                "Winnie Puuh;Die vielen Abenteuer von Winnie Puuh;;Film\n" +
+                "Winnie Puuh;Spaß im Frühling;;Film\n" +
+                "Heffalump;Ein neuer Freund für Winnie Puuh;;Film\n" +
+                "Tiggers großes Abenteuer;;;Film\n" +
+                "Tinkerbell;;;Film\n" +
+                "Tinkerbell;Ein Sommer voller Abenteuer;;Film\n" +
+                "Tinkerbell;und die Legende vom Nimmerbiest;;Film\n" +
+                "Tinkerbell;Die Suche nach dem verlorenen Schatz;;Film\n" +
+                "Oben;;1;Film\n" +
+                "Große Pause;Die geheime Mission;;Film\n" +
+                "Große Pause;Fünftklässler;;Film\n" +
+                "Manolo und das Buch des Lebens;;;Film\n" +
+                "Anastasia;;1;Film\n" +
+                "Ferkels großes Abenteuer;;;Film\n" +
+                "Tarzan;;1;Film\n" +
+                "Rapunzel;Neu verföhnt;1;Film\n" +
+                "Mary Poppins 1;;1;Film\n" +
+                "Mary Poppins 2;;2;Film\n" +
+                "Alice im Wunderland;;1;Film\n" +
+                "101 Dalmatiner;;1;Film\n" +
+                "Bärenbrüder;;1;Film\n" +
+                "Schneewittchen;;1;Film\n" +
+                "Zoomania;;1;Film\n" +
+                "Vaiana;;1;Film\n" +
+                "Das Dschungelbuch;;1;Film\n" +
+                "Dornröschen;;1;Film\n" +
+                "Aristocats;;1;Film\n" +
+                "Die Eiskönigin;Völlig unferforen;1;Film\n" +
+                "Aladdin;;1;Film\n" +
+                "Die Schöne und das Biest;;1;Film\n" +
+                "Die Schöne und das Biest;Weihnachtszauber;;Film\n" +
+                "Die Hexe und der Zauberer;;;Film\n" +
+                "Die Unglaublichen;;;Film\n" +
+                "Bernhard & Bianca;;;Film\n" +
+                "Coco;;;Film\n" +
+                "Cinderella;;;Film\n" +
+                "Verwünscht;;;Film\n" +
+                "Pocahontas;;;Film\n" +
+                "Mulan;;;Film\n" +
+                "Peter Pan;;;Film\n" +
+                "Robin Hood;;;Film\n" +
+                "Susi & Strolch;;;Film\n" +
+                "Hercules;;;Film\n" +
+                "Atlantis;;;Film\n" +
+                "Ralph Reichts;Chaos im Netz;;Film\n" +
+                "Lilo & Stitch;;;Film\n" +
+                "Der König der Löwen;;;Film\n" +
+                "Küss den Frosch;;;Film\n" +
+                "Alles steht Kopf;;;Film\n";
 
         return mediaContentString;
     }

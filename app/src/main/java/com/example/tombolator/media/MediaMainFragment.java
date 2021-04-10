@@ -1,6 +1,7 @@
 package com.example.tombolator.media;
 
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -80,65 +82,38 @@ public class MediaMainFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        backButton.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(view -> mediaActivity.finish());
 
-            @Override
-            public void onClick(View view) {
-                mediaActivity.finish();
-            }
-        });
+        nextPageButton.setOnClickListener(view -> mediaActivityViewModel.nextPage());
 
-        nextPageButton.setOnClickListener(new View.OnClickListener() {
+        previousPageButton.setOnClickListener(view -> mediaActivityViewModel.previousPage());
 
-            @Override
-            public void onClick(View view) {
-                mediaActivityViewModel.nextPage();
-            }
-        });
-
-        previousPageButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                mediaActivityViewModel.previousPage();
-            }
-        });
-
-        newMediaButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                mediaActivity.switchToCreateMediaView();
-            }
-        });
+        newMediaButton.setOnClickListener(view -> mediaActivity.switchToCreateMediaView());
     }
 
     public void refreshViewModel() {
 
-        AsyncTask.execute(new Runnable() {
+        AsyncTask.execute(() -> {
 
-            @Override
-            public void run() {
+            TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+                    .getApplicationContext());
 
-                TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
-                        .getApplicationContext());
+            final MediaDao mediaDao = context.getTomboDb().mediaDao();
+            List<Long> mediaIds = mediaDao.getAllIds();
+            List<Media> mediaList = new ArrayList<>();
 
-                final MediaDao mediaDao = context.getTomboDb().mediaDao();
-                List<Long> mediaIds = mediaDao.getAllIds();
-                List<Media> mediaList = new ArrayList<>();
-
-                for (long id : mediaIds) {
-                    mediaList.add(mediaDao.getById(id));
-                }
-
-                mediaActivityViewModel.addMedia(mediaList);
-                mediaActivityViewModel.toFirstPage();
+            for (long id : mediaIds) {
+                mediaList.add(mediaDao.getById(id));
             }
+
+            mediaActivityViewModel.addMedia(mediaList);
+            mediaActivityViewModel.toFirstPage();
         });
     }
 
     private class MediaInsertedObserver implements Observer<List<Media>> {
 
+        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
         @Override
         public void onChanged(List<Media> mediaList) {
 
@@ -152,7 +127,9 @@ public class MediaMainFragment extends Fragment {
                 TextView textView = (TextView) View.inflate(
                         mediaActivity.getApplicationContext(), R.layout.list_element, null);
 
-                textView.setText(" " + media.toLabel());
+                String text = " " + media.toLabel();
+
+                textView.setText(text);
                 textView.setOnClickListener(showDetailsListener);
                 textView.setId((int) id);
 
@@ -178,6 +155,11 @@ public class MediaMainFragment extends Fragment {
                     case Media.Type.E_BOOK:
                         textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
                                 R.drawable.ic_ebook_25, 0, 0, 0);
+                        break;
+
+                    case Media.ContentType.MOVIE:
+                        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                                R.drawable.ic_film_25, 0, 0, 0);
                         break;
 
                     default: //No icon added
