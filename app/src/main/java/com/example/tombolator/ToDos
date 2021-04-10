@@ -4,6 +4,8 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 ToDos:
 [ ] implement a creation wizard for medium and tombolas
     [ ] for medium start with type
+[ ] add icon to drawn media dialog
+[ ] add progress to drawn media dialog
 [ ] clean up MediaActivityViewModel class
 [ ] make tombolas editable
 [ ] make media editable
@@ -35,8 +37,9 @@ ToDos:
 [ ] --- Milestone III: Technical improvements ---
 
 Done:
-[x] bug: movies are not shown with their icon
+[x] bug: returning media from added to available is not possible in tombola
 
+[x] bug: movies are not shown with their icon
 [x] add disney movies to susis stash script
 [x] bug: buttons should not hover when keyboard opens
 [x] keyboard wont push buttons up in tombola activity

@@ -1,6 +1,7 @@
 package com.example.tombolator.tombolas;
 
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -77,84 +79,73 @@ public class TombolaCreateNewFragment extends Fragment {
 
     public void refreshViewModel() {
 
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
+        AsyncTask.execute(() -> {
 
-                TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
-                        .getApplicationContext());
+            TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+                    .getApplicationContext());
 
-                final MediaDao mediaDao = context.getTomboDb().mediaDao();
-                List<Long> mediaIds = mediaDao.getAllIds();
-                List<Media> mediaList = new ArrayList<>();
+            final MediaDao mediaDao = context.getTomboDb().mediaDao();
+            List<Long> mediaIds = mediaDao.getAllIds();
+            List<Media> mediaList = new ArrayList<>();
 
-                for (long id : mediaIds) {
-                    mediaList.add(mediaDao.getById(id));
-                }
-
-                mediaActivityViewModel.addMedia(mediaList);
+            for (long id : mediaIds) {
+                mediaList.add(mediaDao.getById(id));
             }
+
+            mediaActivityViewModel.addMedia(mediaList);
         });
     }
 
     private void registerOnClickListener() {
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        saveButton.setOnClickListener(v -> {
 
-                if(editTextName.getText().length() > 0){
+            if(editTextName.getText().length() > 0){
 
-                    String name = editTextName.getText() != null ? editTextName.getText().toString() : "";
+                String name = editTextName.getText() != null ? editTextName.getText().toString() : "";
 
-                    final Tombola tombola = new Tombola(name);
+                final Tombola tombola = new Tombola(name);
 
-                    if(addedMedia.getChildCount() > 0) {
+                if(addedMedia.getChildCount() > 0) {
 
-                        for(int i=0; i<addedMedia.getChildCount(); i++) {
+                    for(int i=0; i<addedMedia.getChildCount(); i++) {
 
-                            TextView textView = (TextView) addedMedia.getChildAt(i);
-                            long mediaId = textView.getId();
+                        TextView textView = (TextView) addedMedia.getChildAt(i);
+                        long mediaId = textView.getId();
 
-                            if(mediaActivityViewModel.getMediaDatabase().getValue() == null)
-                                throw new NullPointerException();
+                        if(mediaActivityViewModel.getMediaDatabase().getValue() == null)
+                            throw new NullPointerException();
 
-                            Media media = mediaActivityViewModel.getMediaDatabase().getValue().get(mediaId);
+                        Media media = mediaActivityViewModel.getMediaDatabase().getValue().get(mediaId);
 
-                            tombola.addMedia(media);
-                        }
+                        tombola.addMedia(media);
                     }
-
-                    AsyncTask.execute(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
-                                    .getApplicationContext());
-
-                            final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
-                            tombolaDao.insertTombola(tombola);
-                        }
-                    });
-
-                    resetForm();
-                    tombolasActivity.switchToTombolasMainView();
                 }
-            }
-        });
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                AsyncTask.execute(() -> {
+
+                    TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+                            .getApplicationContext());
+
+                    final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
+                    tombolaDao.insertTombola(tombola);
+                });
 
                 resetForm();
                 tombolasActivity.switchToTombolasMainView();
             }
         });
+
+        backButton.setOnClickListener(v -> {
+
+            resetForm();
+            tombolasActivity.switchToTombolasMainView();
+        });
     }
 
     private class MediaInsertedObserver implements Observer<Map<Long, Media>> {
 
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onChanged(Map<Long, Media> mediaMapInserted) {
 
@@ -171,7 +162,7 @@ public class TombolaCreateNewFragment extends Fragment {
                 textView.setTypeface(getResources().getFont(R.font.comic_sans_ms));
                 textView.setTextSize(20);
                 textView.setText(media.toLabel());
-                textView.setOnClickListener(new AddMedia());
+                textView.setOnClickListener(new SwitchMediaBetweenAvailableAndAdded());
                 textView.setId((int) id);
 
                 availableMedia.addView(textView);
@@ -179,14 +170,22 @@ public class TombolaCreateNewFragment extends Fragment {
         }
     }
 
-    private class AddMedia implements View.OnClickListener {
+    private class SwitchMediaBetweenAvailableAndAdded implements View.OnClickListener {
 
         @Override
         public void onClick(View view) {
 
             TextView textView = (TextView) view;
-            availableMedia.removeView(textView);
-            addedMedia.addView(textView);
+
+            if(textView.getParent() == availableMedia) {
+
+                availableMedia.removeView(textView);
+                addedMedia.addView(textView);
+            } else {
+
+                addedMedia.removeView(textView);
+                availableMedia.addView(textView);
+            }
         }
     }
 

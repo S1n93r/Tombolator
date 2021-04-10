@@ -79,45 +79,36 @@ public class MediaCreateNewFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        saveButton.setOnClickListener(v -> {
 
-                if(editTextName.getText().length() > 0){
+            if(editTextName.getText().length() > 0){
 
-                    String name = editTextName.getText() != null ? editTextName.getText().toString() : "";
-                    String title = editTextTitle.getText() != null ? editTextTitle.getText().toString() : "";
-                    String numberAsString = editTextNumber.getText() != null ? editTextNumber.getText().toString() : "";
-                    String type = spinnerType.getSelectedItem() != null ? spinnerType.getSelectedItem().toString() : "";
+                String name = editTextName.getText() != null ? editTextName.getText().toString() : "";
+                String title = editTextTitle.getText() != null ? editTextTitle.getText().toString() : "";
+                String numberAsString = editTextNumber.getText() != null ? editTextNumber.getText().toString() : "";
+                String type = spinnerType.getSelectedItem() != null ? spinnerType.getSelectedItem().toString() : "";
 
-                    int number = numberAsString.length() > 0 ? Integer.parseInt(numberAsString) : -1;
+                int number = numberAsString.length() > 0 ? Integer.parseInt(numberAsString) : -1;
 
-                    final Media media = new Media(name, title, number, type);
+                final Media media = new Media(name, title, number, type);
 
-                    AsyncTask.execute(new Runnable() {
-                        @Override
-                        public void run() {
+                AsyncTask.execute(() -> {
 
-                            TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
-                                    .getApplicationContext());
+                    TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+                            .getApplicationContext());
 
-                            final MediaDao mediaDao = context.getTomboDb().mediaDao();
-                            mediaDao.insertMedia(media);
-                        }
-                    });
+                    final MediaDao mediaDao = context.getTomboDb().mediaDao();
+                    mediaDao.insertMedia(media);
+                });
 
-                    resetForm();
-                    mediaActivity.switchToMainView();
-                }
-            }
-        });
-
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 resetForm();
                 mediaActivity.switchToMainView();
             }
+        });
+
+        backButton.setOnClickListener(v -> {
+            resetForm();
+            mediaActivity.switchToMainView();
         });
     }
 
