@@ -158,9 +158,9 @@ public class TombolaCreateNewFragment extends Fragment {
 
                 long id = media.getId();
 
-                TextView textView = new TextView(tombolasActivity.getApplicationContext());
-                textView.setTypeface(getResources().getFont(R.font.comic_sans_ms));
-                textView.setTextSize(20);
+                TextView textView = (TextView) View.inflate(
+                        tombolasActivity.getApplicationContext(), R.layout.list_element, null);
+
                 textView.setText(media.toLabel());
                 textView.setOnClickListener(new SwitchMediaBetweenAvailableAndAdded());
                 textView.setId((int) id);

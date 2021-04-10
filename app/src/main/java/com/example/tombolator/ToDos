@@ -37,8 +37,9 @@ ToDos:
 [ ] --- Milestone III: Technical improvements ---
 
 Done:
-[x] bug: returning media from added to available is not possible in tombola
+[x] use list_element.xml for media lists for tombola creation
 
+[x] bug: returning media from added to available is not possible in tombola
 [x] bug: movies are not shown with their icon
 [x] add disney movies to susis stash script
 [x] bug: buttons should not hover when keyboard opens

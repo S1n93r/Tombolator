@@ -66,39 +66,26 @@ public class TombolaMainFragment extends Fragment {
     }
 
     private void registerOnClickListener() {
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tombolasActivity.finish();
-            }
-        });
-        newTombolaButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tombolasActivity.switchToNewTombolaView();
-            }
-        });
+        backButton.setOnClickListener(view -> tombolasActivity.finish());
+        newTombolaButton.setOnClickListener(view -> tombolasActivity.switchToNewTombolaView());
     }
 
     private void refreshViewModel() {
 
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
+        AsyncTask.execute(() -> {
 
-                TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
-                        .getApplicationContext());
+            TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+                    .getApplicationContext());
 
-                final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
-                List<Long> tombolaIds = tombolaDao.getAllIds();
-                List<Tombola> tombolaList = new ArrayList<>();
+            final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
+            List<Long> tombolaIds = tombolaDao.getAllIds();
+            List<Tombola> tombolaList = new ArrayList<>();
 
-                for (long id : tombolaIds) {
-                    tombolaList.add(tombolaDao.getById(id));
-                }
-
-                tombolasActivityViewModel.addTombola(tombolaList);
+            for (long id : tombolaIds) {
+                tombolaList.add(tombolaDao.getById(id));
             }
+
+            tombolasActivityViewModel.addTombola(tombolaList);
         });
     }
 
