@@ -23,11 +23,11 @@ public class MediaActivityViewModel extends ViewModel {
 
     private final MutableLiveData<Media> selectedMedia = new MutableLiveData<>();
 
-    private final MutableLiveData<ArrayList<Media>> mediaOnCurrentPage = new MutableLiveData<>(new ArrayList<Media>());
-    private final MutableLiveData<ArrayList<Media>> mediaListFiltered = new MutableLiveData<>(new ArrayList<Media>());
+    private final MutableLiveData<ArrayList<Media>> mediaOnCurrentPage = new MutableLiveData<>(new ArrayList<>());
+    private final ArrayList<Media> mediaListFiltered = new ArrayList<>();
 
-    private final MutableLiveData<ArrayList<Media>> mediaList = new MutableLiveData<>(new ArrayList<Media>());
-    private final MutableLiveData<HashMap<Long, Media>> mediaDatabaseLiveData = new MutableLiveData<>(new HashMap<Long, Media>());
+    private final MutableLiveData<ArrayList<Media>> mediaList = new MutableLiveData<>(new ArrayList<>());
+    private final MutableLiveData<HashMap<Long, Media>> mediaDatabaseLiveData = new MutableLiveData<>(new HashMap<>());
 
     public void toFirstPage() {
         currentPage = 1;
@@ -52,29 +52,22 @@ public class MediaActivityViewModel extends ViewModel {
 
     private void setMediaOnPageListToPage(int pageNumber) {
 
-        if(mediaListFiltered.getValue() == null) {
-            /* TODO: Add error log here */
-            return;
-        }
-
         if(mediaOnCurrentPage.getValue() == null) {
             /* TODO: Add error log here */
             return;
         }
 
-        int start = pageNumber * MEDIA_PER_PAGE - MEDIA_PER_PAGE;
+        int start = (pageNumber - 1) * MEDIA_PER_PAGE;
         int end = start + MEDIA_PER_PAGE;
 
-        /* Shortens index for end if last page is < MEDIA_PER_PAGE */
-        if(pageNumber == getNumberOfPages()) {
-            end = start + mediaListFiltered.getValue().size() % MEDIA_PER_PAGE;
-        }
+        if(end > mediaListFiltered.size())
+            end = mediaListFiltered.size();
 
         mediaOnCurrentPage.getValue().clear();
 
         for(int i=start; i<end; i++) {
 
-            Media media = mediaListFiltered.getValue().get(i);
+            Media media = mediaListFiltered.get(i);
             mediaOnCurrentPage.getValue().add(media);
         }
 
@@ -83,12 +76,12 @@ public class MediaActivityViewModel extends ViewModel {
 
     private int getNumberOfPages() {
 
-        if(mediaList.getValue() == null) {
+        if(mediaListFiltered == null) {
             /* TODO: Add error log here */
             return 0;
         }
 
-        return mediaList.getValue().size() / MEDIA_PER_PAGE;
+        return mediaListFiltered.size() / MEDIA_PER_PAGE;
     }
 
     public void addMedia(List<Media> mediaList) {
@@ -172,22 +165,24 @@ public class MediaActivityViewModel extends ViewModel {
 
         if(currentSearchFilter.equals(DEFAULT_SEARCH_FILTER)) {
 
-            if (mediaListFiltered.getValue() == null) {
+            if (mediaListFiltered == null) {
                 /* TODO: Add error log here */
                 return;
             }
 
-            if(mediaListFiltered.getValue().size() == mediaList.getValue().size())
+            if(mediaListFiltered.size() == mediaList.getValue().size())
                 return;
 
-            mediaListFiltered.getValue().clear();
-            mediaListFiltered.getValue().addAll(mediaList.getValue());
-            mediaListFiltered.postValue(mediaList.getValue());
+            mediaListFiltered.clear();
+            mediaListFiltered.addAll(mediaList.getValue());
             return;
         }
 
         Collection<Media> filteredCollection = Collections2.filter(mediaList.getValue(), new MediaPredicate(currentSearchFilter));
-        mediaListFiltered.postValue(new ArrayList<>(filteredCollection));
+        mediaListFiltered.clear();
+        mediaListFiltered.addAll(filteredCollection);
+
+        toFirstPage();
     }
 
     private static class MediaPredicate implements Predicate<Media> {

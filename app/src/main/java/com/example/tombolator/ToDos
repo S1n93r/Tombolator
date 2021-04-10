@@ -2,8 +2,7 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[.] implement search fields
-    [ ] filtered media list seems to be empty
+[ ] clean up MediaActivityViewModel class
 [ ] implement a creation wizard for medium and tombolas
     [ ] for medium start with type
 [ ] make tombolas editable
@@ -36,9 +35,10 @@ ToDos:
 [ ] --- Milestone III: Technical improvements ---
 
 Done:
+[x] implement search fields
+
 [x] removed automated versioning by number of commits do to some bug
 [x] added Guava as dependency
-
 [x] adjust all views to be more spacious like tombola details
 [x] add icons to "next page" and "previous page" buttons and make names shorter
 [x] pagination for media and tombola lists
