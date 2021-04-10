@@ -16,7 +16,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="36sp"
+            android:textSize="@dimen/font_size_titles"
             android:id="@+id/text_view_title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -25,12 +25,12 @@
             android:text="@string/button_back"
             android:drawableBottom="@drawable/ic_arrow_left_35"
             android:padding="25dp"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
             android:id="@+id/button_back"
             android:background="@drawable/button_selector_purple"
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="12sp"
+            android:textSize="@dimen/font_size"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -41,12 +41,12 @@
             android:text="@string/button_save"
             android:drawableBottom="@drawable/ic_floppy_disk_35"
             android:padding="25dp"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
             android:id="@+id/button_save"
             android:background="@drawable/button_selector_purple"
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="12sp"
+            android:textSize="@dimen/font_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -55,7 +55,7 @@
             app:layout_constraintVertical_bias="0.975"/>
     <EditText
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="20sp"
+            android:textSize="@dimen/font_size_labels"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
@@ -69,7 +69,7 @@
             app:layout_constraintTop_toBottomOf="@+id/text_view_title"/>
     <EditText
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="20sp"
+            android:textSize="@dimen/font_size_labels"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
@@ -82,7 +82,7 @@
             app:layout_constraintTop_toBottomOf="@+id/edit_text_name" android:layout_marginTop="16dp"/>
     <EditText
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="20sp"
+            android:textSize="@dimen/font_size_labels"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:inputType="number"
@@ -95,7 +95,7 @@
             android:hint="@string/label_number"/>
     <Spinner
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="20sp"
+            android:textSize="@dimen/font_size_labels"
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:id="@+id/type_label"

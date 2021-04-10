@@ -10,13 +10,13 @@
     <Button
             android:drawableBottom="@drawable/ic_bingo_35"
             android:padding="20dp"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
             android:id="@+id/button_draw"
             android:background="@drawable/button_selector_purple"
             android:fontFamily="@font/comic_sans_ms"
             android:text="@string/button_draw"
-            android:textSize="12sp"
+            android:textSize="@dimen/font_size"
             android:layout_marginBottom="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/button_back"
@@ -29,7 +29,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="36sp"
+            android:textSize="@dimen/font_size_titles"
             android:id="@+id/text_view_title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -38,12 +38,12 @@
             android:text="@string/button_back"
             android:drawableBottom="@drawable/ic_arrow_left_35"
             android:padding="25dp"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
             android:id="@+id/button_back"
             android:background="@drawable/button_selector_purple"
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="12sp"
+            android:textSize="@dimen/font_size"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginLeft="15dp"
@@ -53,12 +53,12 @@
             android:text="@string/button_delete"
             android:drawableBottom="@drawable/ic_delete_35"
             android:padding="25dp"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
             android:id="@+id/button_delete"
             android:background="@drawable/button_selector_purple"
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="12sp"
+            android:textSize="@dimen/font_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginRight="15dp"
@@ -66,7 +66,7 @@
             android:layout_marginEnd="15dp"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="16sp"
+            android:textSize="@dimen/font_size_big"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:ems="10"
@@ -79,7 +79,7 @@
             app:layout_constraintHorizontal_bias="0.15"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="16sp"
+            android:textSize="@dimen/font_size_big"
             android:layout_width="200dp"
             android:layout_height="50dp"
             android:ems="10"
@@ -92,7 +92,7 @@
             app:layout_constraintHorizontal_bias="0.85"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="16sp"
+            android:textSize="@dimen/font_size_big"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:ems="10"
@@ -105,7 +105,7 @@
             android:layout_marginTop="16dp"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
-            android:textSize="16sp"
+            android:textSize="@dimen/font_size_big"
             android:layout_width="200dp"
             android:layout_height="50dp"
             android:ems="10"
@@ -118,7 +118,7 @@
             android:layout_marginTop="16dp"/>
     <TextView
             android:text="@string/title_media_all"
-            android:textSize="16sp"
+            android:textSize="@dimen/font_size_labels"
             android:fontFamily="@font/comic_sans_ms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
             android:layout_marginTop="16dp"/>
     <ScrollView
             android:layout_width="335dp"
-            android:layout_height="400dp"
+            android:layout_height="340dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

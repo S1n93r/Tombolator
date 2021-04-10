@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="button_big_width">150dp</dimen>
+    <dimen name="button_big_height">150dp</dimen>
+    <dimen name="button_width">125dp</dimen>
+    <dimen name="button_height">125dp</dimen>
+    <dimen name="button_small_width">85dp</dimen>
+    <dimen name="button_small_height">85dp</dimen>
+    <dimen name="font_size_big">14sp</dimen>
+    <dimen name="font_size">12sp</dimen>
+    <dimen name="font_size_labels">20sp</dimen>
+    <dimen name="font_size_titles">36sp</dimen>
+</resources>

@@ -16,10 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".tombolas.TombolasActivity"/>
+        <activity android:name=".tombolas.TombolasActivity"
+                  android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".media.MediaActivity"
                   android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".config.ConfigActivity"/>
+        <activity android:name=".config.ConfigActivity"
+                  android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>
