@@ -88,7 +88,7 @@ public class MediaMainFragment extends Fragment {
 
         previousPageButton.setOnClickListener(view -> mediaActivityViewModel.previousPage());
 
-        newMediaButton.setOnClickListener(view -> mediaActivity.switchToCreateMediaView());
+        newMediaButton.setOnClickListener(view -> mediaActivity.switchToCreationStepOne());
     }
 
     public void refreshViewModel() {
@@ -157,7 +157,7 @@ public class MediaMainFragment extends Fragment {
                                 R.drawable.ic_ebook_25, 0, 0, 0);
                         break;
 
-                    case Media.ContentType.MOVIE:
+                    case Media.Type.MOVIE:
                         textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
                                 R.drawable.ic_film_25, 0, 0, 0);
                         break;

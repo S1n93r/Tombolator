@@ -2,7 +2,7 @@
 <resources>
     <string name="app_mame">Tombolator</string>
     <string name="button_back">Zurück</string>
-    <string name="button_save">Sichern</string>
+    <string name="button_save">Speichern</string>
     <string name="button_tombolas">Tombolas</string>
     <string name="button_reset_media_database">Medien zurücks.</string>
     <string name="button_media">Medien</string>
@@ -11,6 +11,7 @@
     <string name="button_nuke">Nuke</string>
     <string name="button_draw">Ziehen</string>
     <string name="button_delete">Löschen</string>
+    <string name="button_continue">Weiter</string>
     <string name="button_next_or_prev_page">Seite</string>
     <string name="title_config">Optionen</string>
     <string name="title_tombolas">Deine Tombolas</string>
@@ -26,6 +27,8 @@
     <string name="label_title">Titel</string>
     <string name="label_content">Inhalt</string>
     <string name="label_number">Nummer</string>
+    <string name="label_author">Author</string>
+    <string name="label_director">Regisseur</string>
     <string name="label_type">Typ</string>
     <string name="label_created_at">Angelegt am</string>
     <string name="label_id">ID</string>
@@ -42,4 +45,6 @@
     <string name="content_type_series">Serie</string>
     <string name="content_type_book">Buch</string>
     <string name="content_type_ebook">E-Book</string>
+    <string name="media_creation_question_media_type">Welche Art von Medium\nsoll angelegt werden?</string>
+    <string name="media_creation_question_content_type">Was befindet sich auf dem Medium?</string>
 </resources>

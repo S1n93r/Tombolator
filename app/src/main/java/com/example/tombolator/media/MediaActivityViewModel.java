@@ -125,6 +125,10 @@ public class MediaActivityViewModel extends ViewModel {
         applySearchFilter();
     }
 
+    public void selectMedia(Media media) {
+        selectedMedia.postValue(media);
+    }
+
     public void selectMedia(long mediaId) {
 
         if(mediaDatabaseLiveData.getValue() == null)

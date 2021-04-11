@@ -56,7 +56,7 @@ public class SusisStashScript implements Runnable {
 
             int number = numberAsString.isEmpty() ? 1 : Integer.parseInt(numberAsString);
 
-            Media media = new Media(name, title, number ,type);
+            Media media = new Media(name, title, number, "", "" ,type);
             mediaList.add(media);
         }
 

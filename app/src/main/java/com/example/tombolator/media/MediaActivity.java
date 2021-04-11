@@ -7,7 +7,8 @@ import com.example.tombolator.R;
 public class MediaActivity extends AppCompatActivity {
 
     private MediaMainFragment mediaMainFragment;
-    private MediaCreateNewFragment mediaCreateNewFragment;
+    private MediaCreationStepOneTypesFragment mediaCreationStepOneTypesFragment;
+    private MediaCreationStepTwoDescriptionsFragment mediaCreationStepTwoDescriptionsFragment;
     private MediaDetailsFragment mediaDetailsFragment;
 
     @Override
@@ -16,9 +17,10 @@ public class MediaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         mediaMainFragment = MediaMainFragment.newInstance();
-        mediaCreateNewFragment = MediaCreateNewFragment.newInstance();
-        mediaDetailsFragment = MediaDetailsFragment.newInstance();
 
+        mediaDetailsFragment = MediaDetailsFragment.newInstance();
+        mediaCreationStepOneTypesFragment = MediaCreationStepOneTypesFragment.newInstance();
+        mediaCreationStepTwoDescriptionsFragment = MediaCreationStepTwoDescriptionsFragment.newInstance();
         setContentView(R.layout.media_activity);
         if (savedInstanceState == null) {
             switchToMainView();
@@ -32,10 +34,17 @@ public class MediaActivity extends AppCompatActivity {
                 .commitNow();
     }
 
-    protected void switchToCreateMediaView() {
+    protected void switchToCreationStepOne() {
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, mediaCreateNewFragment)
+                .replace(R.id.container, mediaCreationStepOneTypesFragment)
+                .commitNow();
+    }
+
+    protected void switchToCreationStepTwo() {
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, mediaCreationStepTwoDescriptionsFragment)
                 .commitNow();
     }
 

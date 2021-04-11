@@ -27,14 +27,24 @@ public class Media implements Parcelable {
     private int number;
 
     @ColumnInfo
+    private String author;
+
+    @ColumnInfo
+    private String director;
+
+    @ColumnInfo
     private String type;
 
-    public Media(String name, String title, int number, String type) {
+    public Media() {}
+
+    public Media(String name, String title, int number, String author, String director, String type) {
 
         creationTimestamp = System.currentTimeMillis();
         this.name = name;
         this.title = title;
         this.number = number;
+        this.author = author;
+        this.director = director;
         this.type = type;
     }
 
@@ -150,6 +160,22 @@ public class Media implements Parcelable {
         this.title = title;
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
+
     public static final class Type {
 
         public static final String CASSETTE = "Kassette";
@@ -158,15 +184,9 @@ public class Media implements Parcelable {
         public static final String BLU_RAY = "Blu-ray";
         public static final String E_BOOK = "E-Book";
         public static final String BOOK = "Buch";
-    }
-
-    public static final class ContentType {
-
         public static final String AUDIO_PLAY = "Hörspiel";
         public static final String AUDIO_BOOK = "Hörbuch";
         public static final String MOVIE = "Film";
         public static final String SERIES = "Serie";
-        public static final String BOOK = Type.BOOK;
-        public static final String E_BOOK = Type.E_BOOK;
     }
 }

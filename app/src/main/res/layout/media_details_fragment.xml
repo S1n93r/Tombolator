@@ -83,7 +83,7 @@
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:ems="10"
-            android:id="@+id/number_label"
+            android:id="@+id/edit_text_number"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/label_number"
             app:layout_constraintTop_toBottomOf="@+id/name_label"
@@ -108,7 +108,7 @@
             android:textSize="@dimen/font_size_big"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:id="@+id/type_label"
+            android:id="@+id/spinner_media_types"
             android:text="@string/label_type"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -125,7 +125,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.15"
-            app:layout_constraintTop_toBottomOf="@+id/type_label"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_media_types"
             android:layout_marginTop="16dp"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
@@ -186,7 +186,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/label_title"
             app:layout_constraintHorizontal_bias="0.15"
-            app:layout_constraintTop_toBottomOf="@+id/number_label"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_number"
             android:layout_marginTop="16dp"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
