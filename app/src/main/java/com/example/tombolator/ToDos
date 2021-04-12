@@ -2,7 +2,6 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[ ] bug: clearing search filter does not refresh list
 [ ] bug: "Speichern" does not fit button --> find permanent solution
 [ ] clean up MediaActivityViewModel class
 [ ] make tombolas editable
@@ -37,8 +36,9 @@ ToDos:
 [ ] --- Milestone III: Technical improvements ---
 
 Done:
-[x] bug: clear page list before adding
+[x] bug: clearing search filter does not refresh list
 
+[x] bug: clear page list before adding
 [x] bug: drawing media from tombola was not saved to database
 [x] add media counters to tombola details
 [x] adjust susis stash script to new media attributes

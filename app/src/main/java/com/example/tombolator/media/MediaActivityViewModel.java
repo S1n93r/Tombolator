@@ -7,10 +7,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class MediaActivityViewModel extends ViewModel {
 
@@ -75,22 +72,13 @@ public class MediaActivityViewModel extends ViewModel {
     }
 
     private int getNumberOfPages() {
-
-        if(mediaListFiltered == null) {
-            /* TODO: Add error log here */
-            return 0;
-        }
-
         return mediaListFiltered.size() / MEDIA_PER_PAGE;
     }
 
     public void  clearAndAddMedia(List<Media> mediaList) {
 
-        if(mediaDatabaseLiveData.getValue() == null)
-            throw new NullPointerException();
-
-        this.mediaList.getValue().clear();
-        mediaDatabaseLiveData.getValue().clear();
+        Objects.requireNonNull(this.mediaList.getValue()).clear();
+        Objects.requireNonNull(mediaDatabaseLiveData.getValue()).clear();
 
         for(Media media : mediaList) {
 
@@ -169,17 +157,6 @@ public class MediaActivityViewModel extends ViewModel {
         }
 
         mediaListFiltered.clear();
-
-        if(currentSearchFilter.equals(DEFAULT_SEARCH_FILTER)) {
-
-            if (mediaListFiltered == null) {
-                /* TODO: Add error log here */
-                return;
-            }
-
-            mediaListFiltered.addAll(mediaList.getValue());
-            return;
-        }
 
         Collection<Media> filteredCollection = Collections2.filter(
                 mediaList.getValue(), new MediaPredicate(currentSearchFilter));
