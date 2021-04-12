@@ -1,15 +1,16 @@
 package com.example.tombolator.tombolas;
 
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -28,8 +29,9 @@ public class TombolaDetailsFragment extends Fragment {
 
     private TextView nameValue;
     private TextView createdAt;
-
-    private LinearLayout availableMedia;
+    private TextView numberOfMediaAll;
+    private TextView numberOfMediaAvailable;
+    private TextView numberOfMediaDrawn;
 
     private Button backButton;
     private Button drawButton;
@@ -41,6 +43,7 @@ public class TombolaDetailsFragment extends Fragment {
         return new TombolaDetailsFragment();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -53,8 +56,9 @@ public class TombolaDetailsFragment extends Fragment {
 
         nameValue = layout.findViewById(R.id.name_value);
         createdAt = layout.findViewById(R.id.created_at_value);
-
-        availableMedia = layout.findViewById(R.id.linear_layout_available_media);
+        numberOfMediaAll = layout.findViewById(R.id.media_all_value);
+        numberOfMediaAvailable = layout.findViewById(R.id.media_available_value);
+        numberOfMediaDrawn = layout.findViewById(R.id.media_drawn_value);
 
         backButton = layout.findViewById(R.id.button_back);
         drawButton = layout.findViewById(R.id.button_draw);
@@ -70,9 +74,24 @@ public class TombolaDetailsFragment extends Fragment {
         tombolaViewModel.getSelectedTombola().observe(Objects.requireNonNull(this.getActivity()), new SelectedTombolaObserver());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void registerOnClickListener() {
 
-        backButton.setOnClickListener(v -> tombolasActivity.switchToTombolasMainView());
+        backButton.setOnClickListener(v -> {
+
+                final Tombola tombola = tombolaViewModel.getSelectedTombola().getValue();
+
+                AsyncTask.execute(() -> {
+
+                    TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+                            .getApplicationContext());
+
+                    final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
+                    tombolaDao.insertTombola(tombola);
+                });
+
+                tombolasActivity.switchToTombolasMainView();
+            });
 
         drawButton.setOnClickListener(v -> {
 
@@ -81,8 +100,14 @@ public class TombolaDetailsFragment extends Fragment {
             Media drawnMedia = Objects.requireNonNull(selectedTombola).drawRandomMedia();
 
             DrawnMediaDialog drawnMediaDialog = new DrawnMediaDialog(Objects.requireNonNull(getContext()));
+
+            /* Has to be called before setContent() and setIcon() so onCreate() was fired*/
             drawnMediaDialog.show();
+
+            drawnMediaDialog.setIcon(drawnMedia);
             drawnMediaDialog.getContent().setText(Objects.requireNonNull(drawnMedia).toLabel());
+
+            updateCounters(selectedTombola);
         });
 
         deleteButton.setOnClickListener(view -> {
@@ -111,8 +136,9 @@ public class TombolaDetailsFragment extends Fragment {
 
             nameValue.setText(tombola.getName());
             createdAt.setText(DateUtil.formatDate(tombola.getCreationTimestamp()));
-
-            availableMedia.removeAllViews();
+            numberOfMediaAll.setText(String.valueOf(tombola.getAllMedia().size()));
+            numberOfMediaAvailable.setText(String.valueOf(tombola.getMediaAvailable().size()));
+            numberOfMediaDrawn.setText(String.valueOf(tombola.getMediaDrawn().size()));
 
             for(Media media : tombola.getAllMedia()) {
 
@@ -121,9 +147,14 @@ public class TombolaDetailsFragment extends Fragment {
 
                 textView.setText(media.toLabel());
                 textView.setId(media.getId().intValue());
-
-                availableMedia.addView(textView);
             }
         }
+    }
+
+    private void updateCounters(Tombola tombola) {
+
+        numberOfMediaAll.setText(String.valueOf(tombola.getAllMedia().size()));
+        numberOfMediaAvailable.setText(String.valueOf(tombola.getMediaAvailable().size()));
+        numberOfMediaDrawn.setText(String.valueOf(tombola.getMediaDrawn().size()));
     }
 }

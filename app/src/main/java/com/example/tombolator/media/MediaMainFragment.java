@@ -122,7 +122,6 @@ public class MediaMainFragment extends Fragment {
             for (Media media : mediaList) {
 
                 long id = media.getId();
-                String type = media.getType();
 
                 TextView textView = (TextView) View.inflate(
                         mediaActivity.getApplicationContext(), R.layout.list_element, null);
