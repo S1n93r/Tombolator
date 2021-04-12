@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
@@ -30,21 +31,18 @@ public class Media implements Parcelable {
     private String author;
 
     @ColumnInfo
-    private String director;
-
-    @ColumnInfo
     private String type;
 
+    @Ignore
     public Media() {}
 
-    public Media(String name, String title, int number, String author, String director, String type) {
+    public Media(String name, String title, int number, String author, String type) {
 
         creationTimestamp = System.currentTimeMillis();
         this.name = name;
         this.title = title;
         this.number = number;
         this.author = author;
-        this.director = director;
         this.type = type;
     }
 
@@ -166,14 +164,6 @@ public class Media implements Parcelable {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public String getDirector() {
-        return director;
-    }
-
-    public void setDirector(String director) {
-        this.director = director;
     }
 
     public static final class Type {

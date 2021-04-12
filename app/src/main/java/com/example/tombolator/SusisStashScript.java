@@ -53,10 +53,11 @@ public class SusisStashScript implements Runnable {
             String title = mediaValues[1];
             String numberAsString = mediaValues[2];
             String type = mediaValues[3];
+            String author = mediaValues[4];
 
             int number = numberAsString.isEmpty() ? 1 : Integer.parseInt(numberAsString);
 
-            Media media = new Media(name, title, number, "", "" ,type);
+            Media media = new Media(name, title, number, author ,type);
             mediaList.add(media);
         }
 

@@ -109,17 +109,5 @@
                 android:hint="@string/label_author"
                 android:layout_marginBottom="20dp"
         />
-        <EditText
-                android:fontFamily="@font/comic_sans_ms"
-                android:textSize="@dimen/font_size_labels"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/edit_text_director"
-                android:autofillHints="@string/label_director"
-                android:hint="@string/label_director"
-                android:layout_marginBottom="20dp"
-        />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

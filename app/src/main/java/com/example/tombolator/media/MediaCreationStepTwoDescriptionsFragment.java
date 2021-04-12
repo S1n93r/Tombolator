@@ -25,7 +25,6 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
     private TextView editTextTitle;
     private TextView editTextNumber;
     private TextView editTextAuthor;
-    private TextView editTextDirector;
 
     private Button backButton;
     private Button saveButton;
@@ -50,7 +49,6 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
         editTextTitle = layout.findViewById(R.id.edit_text_title);
         editTextNumber = layout.findViewById(R.id.edit_text_number);
         editTextAuthor = layout.findViewById(R.id.edit_text_author);
-        editTextDirector = layout.findViewById(R.id.edit_text_director);
 
         backButton = layout.findViewById(R.id.button_back);
         saveButton = layout.findViewById(R.id.button_save);
@@ -70,26 +68,24 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
             case Media.Type.CD:
             case Media.Type.AUDIO_PLAY:
                 editTextAuthor.setVisibility(View.GONE);
-                editTextDirector.setVisibility(View.GONE);
                 break;
 
             case Media.Type.DVD:
             case Media.Type.BLU_RAY:
             case Media.Type.MOVIE:
                 editTextAuthor.setVisibility(View.GONE);
+                editTextNumber.setVisibility(View.GONE);
                 break;
 
             case Media.Type.BOOK:
             case Media.Type.E_BOOK:
             case Media.Type.AUDIO_BOOK:
-                editTextDirector.setVisibility(View.GONE);
+                editTextNumber.setVisibility(View.GONE);
                 break;
         }
 
         if(type == Media.Type.CASSETTE) {
-
             editTextAuthor.setVisibility(View.GONE);
-            editTextDirector.setVisibility(View.GONE);
         }
     }
 
@@ -108,7 +104,6 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
                 String title = editTextTitle.getText() != null ? editTextTitle.getText().toString() : "";
                 String numberAsString = editTextNumber.getText() != null ? editTextNumber.getText().toString() : "";
                 String author = editTextAuthor.getText() != null ? editTextAuthor.getText().toString() : "";
-                String director = editTextDirector.getText() != null ? editTextDirector.getText().toString() : "";
 
                 int number = numberAsString.length() > 0 ? Integer.parseInt(numberAsString) : -1;
 
@@ -117,7 +112,6 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
                 media.setTitle(title);
                 media.setNumber(number);
                 media.setAuthor(author);
-                media.setDirector(director);
 
                 AsyncTask.execute(() -> {
 
@@ -140,6 +134,5 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
         editTextTitle.setText("");
         editTextNumber.setText("");
         editTextAuthor.setText("");
-        editTextDirector.setText("");
     }
 }
