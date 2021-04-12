@@ -84,11 +84,12 @@ public class MediaActivityViewModel extends ViewModel {
         return mediaListFiltered.size() / MEDIA_PER_PAGE;
     }
 
-    public void addMedia(List<Media> mediaList) {
+    public void  clearAndAddMedia(List<Media> mediaList) {
 
         if(mediaDatabaseLiveData.getValue() == null)
             throw new NullPointerException();
 
+        this.mediaList.getValue().clear();
         mediaDatabaseLiveData.getValue().clear();
 
         for(Media media : mediaList) {
@@ -167,6 +168,8 @@ public class MediaActivityViewModel extends ViewModel {
             return;
         }
 
+        mediaListFiltered.clear();
+
         if(currentSearchFilter.equals(DEFAULT_SEARCH_FILTER)) {
 
             if (mediaListFiltered == null) {
@@ -174,16 +177,12 @@ public class MediaActivityViewModel extends ViewModel {
                 return;
             }
 
-            if(mediaListFiltered.size() == mediaList.getValue().size())
-                return;
-
-            mediaListFiltered.clear();
             mediaListFiltered.addAll(mediaList.getValue());
             return;
         }
 
-        Collection<Media> filteredCollection = Collections2.filter(mediaList.getValue(), new MediaPredicate(currentSearchFilter));
-        mediaListFiltered.clear();
+        Collection<Media> filteredCollection = Collections2.filter(
+                mediaList.getValue(), new MediaPredicate(currentSearchFilter));
         mediaListFiltered.addAll(filteredCollection);
 
         toFirstPage();

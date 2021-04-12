@@ -66,7 +66,7 @@ public class MediaMainFragment extends Fragment {
         registerOnKeyListener();
         registerOnClickListener();
 
-        refreshViewModel();
+        refreshView();
 
         return layout;
     }
@@ -91,7 +91,7 @@ public class MediaMainFragment extends Fragment {
         newMediaButton.setOnClickListener(view -> mediaActivity.switchToCreationStepOne());
     }
 
-    public void refreshViewModel() {
+    public void refreshView() {
 
         AsyncTask.execute(() -> {
 
@@ -106,7 +106,7 @@ public class MediaMainFragment extends Fragment {
                 mediaList.add(mediaDao.getById(id));
             }
 
-            mediaActivityViewModel.addMedia(mediaList);
+            mediaActivityViewModel.clearAndAddMedia(mediaList);
             mediaActivityViewModel.toFirstPage();
         });
     }

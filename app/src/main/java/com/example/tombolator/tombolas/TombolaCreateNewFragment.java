@@ -92,7 +92,7 @@ public class TombolaCreateNewFragment extends Fragment {
                 mediaList.add(mediaDao.getById(id));
             }
 
-            mediaActivityViewModel.addMedia(mediaList);
+            mediaActivityViewModel.clearAndAddMedia(mediaList);
         });
     }
 

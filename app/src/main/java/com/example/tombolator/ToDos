@@ -2,8 +2,6 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[ ] bug: clear page list before adding
-    [ ] stacking entries when going back from details or creation view
 [ ] bug: clearing search filter does not refresh list
 [ ] bug: "Speichern" does not fit button --> find permanent solution
 [ ] clean up MediaActivityViewModel class
@@ -20,6 +18,7 @@ ToDos:
 [ ] add type icon to drawn media view
 [ ] figure out how to deal with types and content types of media
 [ ] --- Milestone II: Convenience functions ---
+[ ] clean up list / map mess in MediaActivityViewModel
 [ ] check if onChanged events are fired more often then necessary
 [ ] build logger
 [ ] catch all exceptions with a logger and add informative descriptions
@@ -38,9 +37,10 @@ ToDos:
 [ ] --- Milestone III: Technical improvements ---
 
 Done:
+[x] bug: clear page list before adding
+
 [x] bug: drawing media from tombola was not saved to database
 [x] add media counters to tombola details
-
 [x] adjust susis stash script to new media attributes
 [x] implement a creation wizard for medium and tombolas
     [x] for medium start with type
