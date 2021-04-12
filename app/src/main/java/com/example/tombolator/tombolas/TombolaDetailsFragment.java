@@ -72,50 +72,35 @@ public class TombolaDetailsFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tombolasActivity.switchToTombolasMainView();
-            }
+        backButton.setOnClickListener(v -> tombolasActivity.switchToTombolasMainView());
+
+        drawButton.setOnClickListener(v -> {
+
+            Tombola selectedTombola = tombolaViewModel.getSelectedTombola().getValue();
+
+            Media drawnMedia = Objects.requireNonNull(selectedTombola).drawRandomMedia();
+
+            DrawnMediaDialog drawnMediaDialog = new DrawnMediaDialog(Objects.requireNonNull(getContext()));
+            drawnMediaDialog.show();
+            drawnMediaDialog.getContent().setText(Objects.requireNonNull(drawnMedia).toLabel());
         });
 
-        drawButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        deleteButton.setOnClickListener(view -> {
 
-                Tombola selectedTombola = tombolaViewModel.getSelectedTombola().getValue();
+            final Tombola tombola = tombolaViewModel.getSelectedTombola().getValue();
 
-                Media drawnMedia = Objects.requireNonNull(selectedTombola).drawRandomMedia();
+            AsyncTask.execute(() -> {
 
-                DrawnMediaDialog drawnMediaDialog = new DrawnMediaDialog(Objects.requireNonNull(getContext()));
-                drawnMediaDialog.show();
-                drawnMediaDialog.getContent().setText(Objects.requireNonNull(drawnMedia).toLabel());
-            }
-        });
+                TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+                        .getApplicationContext());
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
+                final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
+                tombolaDao.deleteMedia(tombola);
+            });
 
-            @Override
-            public void onClick(View view) {
+            tombolaViewModel.removeTombola(Objects.requireNonNull(tombola).getId());
 
-                final Tombola tombola = tombolaViewModel.getSelectedTombola().getValue();
-
-                AsyncTask.execute(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
-                                .getApplicationContext());
-
-                        final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
-                        tombolaDao.deleteMedia(tombola);
-                    }
-                });
-
-                tombolaViewModel.removeTombola(Objects.requireNonNull(tombola).getId());
-
-                tombolasActivity.switchToTombolasMainView();
-            }
+            tombolasActivity.switchToTombolasMainView();
         });
     }
 

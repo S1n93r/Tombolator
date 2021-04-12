@@ -133,37 +133,8 @@ public class MediaMainFragment extends Fragment {
                 textView.setOnClickListener(showDetailsListener);
                 textView.setId((int) id);
 
-                switch(type) {
-
-                    case Media.Type.CASSETTE:
-                        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                                R.drawable.ic_cassette_25, 0, 0, 0);
-                        break;
-
-                    case Media.Type.CD:
-                    case Media.Type.DVD:
-                    case Media.Type.BLU_RAY:
-                        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                                R.drawable.ic_cd_25, 0, 0, 0);
-                        break;
-
-                    case Media.Type.BOOK:
-                        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                                R.drawable.ic_book_25, 0, 0, 0);
-                        break;
-
-                    case Media.Type.E_BOOK:
-                        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                                R.drawable.ic_ebook_25, 0, 0, 0);
-                        break;
-
-                    case Media.Type.MOVIE:
-                        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                                R.drawable.ic_film_25, 0, 0, 0);
-                        break;
-
-                    default: //No icon added
-                }
+                textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        MediaUtil.getMediaIcon(media), 0, 0, 0);
 
                 linearLayoutMedia.addView(textView);
             }

@@ -71,36 +71,24 @@ public class MediaDetailsFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mediaActivity.switchToMainView();
-            }
-        });
+        backButton.setOnClickListener(v -> mediaActivity.switchToMainView());
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
+        deleteButton.setOnClickListener(view -> {
 
-            @Override
-            public void onClick(View view) {
+            final Media media = mediaActivityViewModel.getSelectedMedia().getValue();
 
-                final Media media = mediaActivityViewModel.getSelectedMedia().getValue();
+            AsyncTask.execute(() -> {
 
-                AsyncTask.execute(new Runnable() {
-                    @Override
-                    public void run() {
+                TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+                        .getApplicationContext());
 
-                        TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
-                                .getApplicationContext());
+                final MediaDao mediaDao = context.getTomboDb().mediaDao();
+                mediaDao.deleteMedia(media);
+            });
 
-                        final MediaDao mediaDao = context.getTomboDb().mediaDao();
-                        mediaDao.deleteMedia(media);
-                    }
-                });
+            mediaActivityViewModel.removeMedia(Objects.requireNonNull(media).getId());
 
-                mediaActivityViewModel.removeMedia(Objects.requireNonNull(media).getId());
-
-                mediaActivity.switchToMainView();
-            }
+            mediaActivity.switchToMainView();
         });
     }
 
