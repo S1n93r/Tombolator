@@ -2,7 +2,6 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[ ] adjust susis stash script to new media attributes
 [ ] add icon to drawn media dialog
 [ ] add progress to drawn media dialog
 [ ] clean up MediaActivityViewModel class
@@ -37,12 +36,13 @@ ToDos:
 [ ] --- Milestone III: Technical improvements ---
 
 Done:
+[x] adjust susis stash script to new media attributes
+
 [x] implement a creation wizard for medium and tombolas
     [x] for medium start with type
     [x] make second step of media wizard respond to type chosen
     [x] bug: NPE on going to second step --> selected media is null
     [x] implement visibility patterns for all types
-
 [x] use list_element.xml for media lists for tombola creation
 [x] bug: returning media from added to available is not possible in tombola
 [x] bug: movies are not shown with their icon
