@@ -2,7 +2,7 @@
 <resources>
     <string name="app_mame">Tombolator</string>
     <string name="button_back">Zurück</string>
-    <string name="button_save">Speichern</string>
+    <string name="button_save">Sichern</string>
     <string name="button_tombolas">Tombolas</string>
     <string name="button_reset_media_database">Medien zurücks.</string>
     <string name="button_media">Medien</string>
