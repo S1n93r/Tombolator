@@ -2,8 +2,9 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[ ] make paginated and filterable media list a generic component
-    [ ] build implementation for tombola creation view
+[.] make paginated and filterable media list a generic component
+    [x] build generic component
+    [.] use in tombola creation view
     [ ] replace media main list with component
     [ ] replace tombola main list with component
 [ ] make tombolas editable

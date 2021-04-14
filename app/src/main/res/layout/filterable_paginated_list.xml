@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_background"
+        tools:context=".components.FilterablePaginatedList">
+
+    <Button
+            android:padding="20dp"
+            android:layout_width="@dimen/button_small_width"
+            android:layout_height="@dimen/button_small_height"
+            android:id="@+id/button_previous_page"
+            android:background="@drawable/button_selector_purple"
+            android:drawableBottom="@drawable/ic_arrow_left_25"
+            android:fontFamily="@font/comic_sans_ms"
+            android:text="@string/button_next_or_prev_page"
+            android:textSize="@dimen/font_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.35"
+    />
+    <Button
+            android:padding="20dp"
+            android:layout_width="@dimen/button_small_width"
+            android:layout_height="@dimen/button_small_height"
+            android:id="@+id/button_next_page"
+            android:background="@drawable/button_selector_purple"
+            android:drawableBottom="@drawable/ic_arrow_right_25"
+            android:fontFamily="@font/comic_sans_ms"
+            android:text="@string/button_next_or_prev_page"
+            android:textSize="@dimen/font_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.65"
+    />
+    <ScrollView
+            android:layout_width="330dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="85dp"
+            android:id="@+id/scrollView4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_search"
+            app:layout_constraintBottom_toTopOf="@+id/button_previous_page">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/linear_layout_elements"/>
+    </ScrollView>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="@string/label_search"
+            android:autofillHints="@string/label_search"
+            android:ems="10"
+            android:id="@+id/edit_text_search"
+            android:textSize="@dimen/font_size_labels"
+            android:fontFamily="@font/comic_sans_ms"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toTopOf="parent"
+    />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
