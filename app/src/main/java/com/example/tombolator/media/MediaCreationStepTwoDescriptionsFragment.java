@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -21,10 +21,10 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
     private MediaActivity mediaActivity;
     private MediaActivityViewModel mediaActivityViewModel;
 
-    private TextView editTextName;
-    private TextView editTextTitle;
-    private TextView editTextNumber;
-    private TextView editTextAuthor;
+    private EditText editTextName;
+    private EditText editTextTitle;
+    private EditText editTextNumber;
+    private EditText editTextAuthor;
 
     private Button backButton;
     private Button saveButton;
@@ -61,7 +61,7 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
 
     private void setVisibilitiesByMediaType() {
 
-        String type = mediaActivityViewModel.getSelectedMedia().getValue().getType();
+        String type = Objects.requireNonNull(mediaActivityViewModel.getSelectedMedia().getValue()).getType();
 
         switch(type) {
             case Media.Type.CASSETTE:
@@ -82,10 +82,6 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
             case Media.Type.AUDIO_BOOK:
                 editTextNumber.setVisibility(View.GONE);
                 break;
-        }
-
-        if(type == Media.Type.CASSETTE) {
-            editTextAuthor.setVisibility(View.GONE);
         }
     }
 
@@ -108,6 +104,12 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
                 int number = numberAsString.length() > 0 ? Integer.parseInt(numberAsString) : -1;
 
                 final Media media = mediaActivityViewModel.getSelectedMedia().getValue();
+
+                if(media == null) {
+                    /* TODO: Write NPE to log */
+                    throw new NullPointerException();
+                }
+
                 media.setName(name);
                 media.setTitle(title);
                 media.setNumber(number);

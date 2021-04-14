@@ -7,7 +7,8 @@ import com.example.tombolator.R;
 public class TombolasActivity extends AppCompatActivity {
 
     private TombolaMainFragment tombolaMainFragment;
-    private TombolaCreateNewFragment tombolaCreateNewFragment;
+    private TombolaCreationStepOneFragment tombolaCreationStepOneFragment;
+    private TombolaCreationStepTwoFragment tombolaCreationStepTwoFragment;
     private TombolaDetailsFragment tombolaDetailsFragment;
 
     @Override
@@ -16,7 +17,8 @@ public class TombolasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         tombolaMainFragment = TombolaMainFragment.newInstance();
-        tombolaCreateNewFragment = TombolaCreateNewFragment.newInstance();
+        tombolaCreationStepOneFragment = TombolaCreationStepOneFragment.newInstance();
+        tombolaCreationStepTwoFragment = TombolaCreationStepTwoFragment.newInstance();
         tombolaDetailsFragment = TombolaDetailsFragment.newInstance();
 
         setContentView(R.layout.tombolas_activity);
@@ -32,10 +34,17 @@ public class TombolasActivity extends AppCompatActivity {
                 .commitNow();
     }
 
-    protected void switchToNewTombolaView() {
+    protected void switchToCreationStepOne() {
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, tombolaCreateNewFragment)
+                .replace(R.id.container, tombolaCreationStepOneFragment)
+                .commitNow();
+    }
+
+    protected void switchToCreationStepTwo() {
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, tombolaCreationStepTwoFragment)
                 .commitNow();
     }
 

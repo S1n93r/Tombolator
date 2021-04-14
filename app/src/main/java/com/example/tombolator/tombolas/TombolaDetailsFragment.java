@@ -104,6 +104,11 @@ public class TombolaDetailsFragment extends Fragment {
             /* Has to be called before setContent() and setIcon() so onCreate() was fired*/
             drawnMediaDialog.show();
 
+            if(drawnMedia == null) {
+                drawnMediaDialog.getContent().setText(R.string.draw_media_on_empty_tombola);
+                return;
+            }
+
             drawnMediaDialog.setIcon(drawnMedia);
             drawnMediaDialog.getContent().setText(Objects.requireNonNull(drawnMedia).toLabel());
 
