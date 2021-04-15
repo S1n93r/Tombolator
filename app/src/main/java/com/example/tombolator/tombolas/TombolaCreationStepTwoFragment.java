@@ -85,6 +85,16 @@ public class TombolaCreationStepTwoFragment extends Fragment {
 
             final Tombola tombola = tombolasActivityViewModel.getSelectedTombola().getValue();
 
+            for(int i=0; i<addedMedia.getChildCount(); i++) {
+
+                TextView textView = (TextView) addedMedia.getChildAt(i);
+                long mediaId = textView.getId();
+
+                Media media = Objects.requireNonNull(mediaActivityViewModel.getMediaDatabase().getValue()).get(mediaId);
+
+                Objects.requireNonNull(tombola).addMedia(media);
+            }
+
             AsyncTask.execute(() -> {
 
                 TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
