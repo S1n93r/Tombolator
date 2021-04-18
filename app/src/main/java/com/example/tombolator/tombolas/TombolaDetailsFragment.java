@@ -35,6 +35,7 @@ public class TombolaDetailsFragment extends Fragment {
 
     private Button backButton;
     private Button drawButton;
+    private Button editTombolaButton;
     private Button deleteButton;
 
     private TombolaDetailsFragment() {}
@@ -62,6 +63,7 @@ public class TombolaDetailsFragment extends Fragment {
 
         backButton = layout.findViewById(R.id.button_back);
         drawButton = layout.findViewById(R.id.button_draw);
+        editTombolaButton = layout.findViewById(R.id.button_edit_tombola);
         deleteButton = layout.findViewById(R.id.button_delete);
 
         registerObserver();
@@ -113,6 +115,11 @@ public class TombolaDetailsFragment extends Fragment {
             drawnMediaDialog.getContent().setText(Objects.requireNonNull(drawnMedia).toLabel());
 
             updateCounters(selectedTombola);
+        });
+
+        editTombolaButton.setOnClickListener(view -> {
+            tombolaViewModel.selectTombola(tombolaViewModel.getSelectedTombola().getValue().getId());
+            tombolasActivity.switchToCreationStepOne();
         });
 
         deleteButton.setOnClickListener(view -> {

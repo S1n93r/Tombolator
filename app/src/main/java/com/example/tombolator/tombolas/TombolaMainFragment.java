@@ -67,7 +67,13 @@ public class TombolaMainFragment extends Fragment {
 
     private void registerOnClickListener() {
         backButton.setOnClickListener(view -> tombolasActivity.finish());
-        newTombolaButton.setOnClickListener(view -> tombolasActivity.switchToCreationStepOne());
+        newTombolaButton.setOnClickListener(view -> {
+
+            Tombola tombola = new Tombola();
+
+            tombolasActivityViewModel.getSelectedTombola().setValue(tombola);
+            tombolasActivity.switchToCreationStepOne();
+        });
     }
 
     private void refreshViewModel() {

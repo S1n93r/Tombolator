@@ -2,7 +2,6 @@ package com.example.tombolator;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.tombolator.config.ConfigActivity;
@@ -31,28 +30,10 @@ public class RootActivity extends AppCompatActivity {
 
     private void registerOnClickListener() {
 
-        tombolasButton.setOnClickListener(new View.OnClickListener() {
+        tombolasButton.setOnClickListener(view -> startActivity(new Intent(RootActivity.this, TombolasActivity.class)));
 
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(RootActivity.this, TombolasActivity.class));
-            }
-        });
+        mediaButton.setOnClickListener(view -> startActivity(new Intent(RootActivity.this, MediaActivity.class)));
 
-        mediaButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(RootActivity.this, MediaActivity.class));
-            }
-        });
-
-        configButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(RootActivity.this, ConfigActivity.class));
-            }
-        });
+        configButton.setOnClickListener(view -> startActivity(new Intent(RootActivity.this, ConfigActivity.class)));
     }
 }

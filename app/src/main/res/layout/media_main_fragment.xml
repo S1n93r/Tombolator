@@ -6,7 +6,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_background"
-        tools:context=".media.MediaMainFragment">
+        tools:context=".media.MediaMainFragment"
+>
 
     <Button
             android:padding="20dp"
@@ -23,7 +24,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.35"
-            app:layout_constraintVertical_bias="0.83"/>
+            app:layout_constraintVertical_bias="0.83"
+    />
     <Button
             android:padding="20dp"
             android:layout_width="@dimen/button_small_width"
@@ -39,7 +41,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.65"
-            app:layout_constraintVertical_bias="0.83"/>
+            app:layout_constraintVertical_bias="0.83"
+    />
     <TextView
             android:fontFamily="@font/comic_sans_ms"
             android:layout_width="wrap_content"
@@ -52,7 +55,8 @@
             android:id="@+id/text_view_title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_bias="0.025"/>
+            app:layout_constraintVertical_bias="0.025"
+    />
     <Button
             android:background="@drawable/button_selector_purple"
             android:text="@string/button_back"
@@ -67,7 +71,8 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="12dp"
+    />
     <Button
             android:id="@+id/button_new_media"
             android:background="@drawable/button_selector_purple"
@@ -97,7 +102,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:id="@+id/linear_layout_media"/>
+                android:id="@+id/linear_layout_media"
+        />
     </ScrollView>
     <EditText
             android:layout_width="wrap_content"
@@ -113,6 +119,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_title"/>
+            app:layout_constraintTop_toBottomOf="@+id/text_view_title"
+    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

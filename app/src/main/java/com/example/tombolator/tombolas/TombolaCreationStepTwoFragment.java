@@ -70,7 +70,7 @@ public class TombolaCreationStepTwoFragment extends Fragment {
     }
 
     private void registerObserver() {
-        mediaActivityViewModel.getMediaDatabase()
+            mediaActivityViewModel.getMediaDatabase()
                 .observe(Objects.requireNonNull(this.getActivity()), new MediaInsertedObserver());
     }
 
@@ -155,7 +155,24 @@ public class TombolaCreationStepTwoFragment extends Fragment {
                 textView.setOnClickListener(new SwitchMediaBetweenAvailableAndAdded());
                 textView.setId((int) id);
 
-                availableMedia.addView(textView);
+                Tombola selectedTombola = tombolasActivityViewModel.getSelectedTombola().getValue();
+
+                if(selectedTombola != null) {
+
+                    List<Media> mediaListSelectedTombola = selectedTombola.getAllMedia();
+
+                    for(Media mediaSelectedTombola : mediaListSelectedTombola) {
+
+                        if(mediaSelectedTombola.getId() == media.getId()) {
+
+                            addedMedia.addView(textView);
+                            break;
+                        }
+                    }
+
+                    if(textView.getParent() == null)
+                        availableMedia.addView(textView);
+                }
             }
         }
     }

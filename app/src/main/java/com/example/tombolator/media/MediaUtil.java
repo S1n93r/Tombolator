@@ -2,6 +2,8 @@ package com.example.tombolator.media;
 
 import com.example.tombolator.R;
 
+import java.util.Collection;
+
 public final class MediaUtil {
 
     public static int getMediaIcon(Media media) {
@@ -28,5 +30,17 @@ public final class MediaUtil {
             default:
                 return R.drawable.ic_cassette_25;
         }
+    }
+
+    public static boolean listContainsMedia(Collection<Media> mediaCollection, long id) {
+
+        for(Media media : mediaCollection) {
+            if(media.getId() == id) {
+                return true;
+            }
+
+        }
+
+        return false;
     }
 }

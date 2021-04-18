@@ -2,12 +2,10 @@ package com.example.tombolator.tombolas;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
+import androidx.room.*;
 import com.example.tombolator.Converters;
 import com.example.tombolator.media.Media;
+import com.example.tombolator.media.MediaUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,6 +31,9 @@ public class Tombola implements Parcelable {
     @TypeConverters({Converters.class})
     @ColumnInfo
     private List<Media> mediaDrawn = new ArrayList<>();
+
+    @Ignore
+    public Tombola() {}
 
     protected Tombola(String name) {
 
@@ -84,6 +85,12 @@ public class Tombola implements Parcelable {
     }
 
     public void addMedia(Media media) {
+
+        if(MediaUtil.listContainsMedia(mediaAvailable, media.getId())) {
+            System.out.println("Tombola " + getName() + " already contains media with id " + media.getId() + ".");
+            return;
+        }
+
         mediaAvailable.add(media);
     }
 

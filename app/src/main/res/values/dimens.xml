@@ -4,8 +4,11 @@
     <dimen name="button_big_height">150dp</dimen>
     <dimen name="button_width">125dp</dimen>
     <dimen name="button_height">125dp</dimen>
+    <dimen name="button_medium_width">100dp</dimen>
+    <dimen name="button_medium_height">100dp</dimen>
     <dimen name="button_small_width">85dp</dimen>
     <dimen name="button_small_height">85dp</dimen>
+    <dimen name="button_padding">25dp</dimen>
     <dimen name="font_size_big">14sp</dimen>
     <dimen name="font_size">12sp</dimen>
     <dimen name="font_size_labels">20sp</dimen>

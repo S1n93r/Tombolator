@@ -2,9 +2,8 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[ ] make tombolas editable
-[ ] make media editable
 [ ] implement categories for media
+[ ] change media list in tombola creation from dual to single list with marking
 [ ] clean up app icon xmls because they seem off
 [ ] check fields on creating new media and inform user if missing
 [ ] check fields on creating new tombola and inform user if missing
@@ -14,12 +13,14 @@ ToDos:
 [ ] media list should not jump back to page 1 as long as media model is opened
 [ ] add type icon to drawn media view
 [ ] figure out how to deal with types and content types of media
+[ ] make sure that
 [ ] --- Milestone II: Convenience functions ---
 [.] make paginated and filterable media list a generic component
     [x] build generic component
     [.] use in tombola creation view
     [ ] replace media main list with component
     [ ] replace tombola main list with component
+[ ] use image views with background to represent icons on buttons --> files for 25, 35 and 50 not needed
 [ ] view should not constantly refresh the media model just because they show a media list
 [ ] clean up list / map mess in MediaActivityViewModel
 [ ] check if onChanged events are fired more often then necessary
@@ -40,8 +41,11 @@ ToDos:
 [ ] --- Milestone III: Technical improvements ---
 
 Done:
-[x] bug: media is not added to tombola on creation in step two
+[x] editing tombola should trigger the whole creation flow
+[x] make media addable to tombola AFTER creation
+    [x] bug: whole list is getting re-added plus what you selected
 
+[x] bug: media is not added to tombola on creation in step two
 [x] implement creation wizard for tombolas
 [x] bug: application throws out of bound exception when trying to draw from an empty tombola
 [x] bug: "Speichern" does not fit button --> find permanent solution

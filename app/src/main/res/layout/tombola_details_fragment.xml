@@ -8,19 +8,39 @@
         android:layout_height="match_parent"
         tools:context=".tombolas.TombolaDetailsFragment">
     <Button
-            android:drawableBottom="@drawable/ic_bingo_35"
-            android:padding="20dp"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="@dimen/button_height"
+            android:drawableBottom="@drawable/ic_bingo_25"
+            android:paddingTop="@dimen/button_padding"
+            android:paddingBottom="@dimen/button_padding"
+            android:layout_width="@dimen/button_medium_width"
+            android:layout_height="@dimen/button_medium_height"
             android:id="@+id/button_draw"
             android:background="@drawable/button_selector_purple"
             android:fontFamily="@font/comic_sans_ms"
             android:text="@string/button_draw"
             android:textSize="@dimen/font_size"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="125dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button_back"
-            app:layout_constraintEnd_toStartOf="@+id/button_delete"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="100dp"
+            android:layout_marginStart="100dp"
+    />
+    <Button
+            android:drawableBottom="@drawable/ic_pencil_25"
+            android:paddingTop="@dimen/button_padding"
+            android:paddingBottom="@dimen/button_padding"
+            android:layout_width="@dimen/button_medium_width"
+            android:layout_height="@dimen/button_medium_height"
+            android:id="@+id/button_edit_tombola"
+            android:background="@drawable/button_selector_purple"
+            android:fontFamily="@font/comic_sans_ms"
+            android:text="@string/button_edit"
+            android:textSize="@dimen/font_size"
+            android:layout_marginBottom="125dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginRight="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+    />
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,7 +57,8 @@
     <Button
             android:text="@string/button_back"
             android:drawableBottom="@drawable/ic_arrow_left_35"
-            android:padding="25dp"
+            android:paddingTop="@dimen/button_padding"
+            android:paddingBottom="@dimen/button_padding"
             android:layout_width="@dimen/button_width"
             android:layout_height="@dimen/button_height"
             android:id="@+id/button_back"
@@ -52,7 +73,8 @@
     <Button
             android:text="@string/button_delete"
             android:drawableBottom="@drawable/ic_delete_35"
-            android:padding="25dp"
+            android:paddingTop="@dimen/button_padding"
+            android:paddingBottom="@dimen/button_padding"
             android:layout_width="@dimen/button_width"
             android:layout_height="@dimen/button_height"
             android:id="@+id/button_delete"
@@ -80,7 +102,7 @@
     <TextView
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="@dimen/font_size_big"
-            android:layout_width="200dp"
+            android:layout_width="250dp"
             android:layout_height="50dp"
             android:ems="10"
             android:id="@+id/name_value"
@@ -145,7 +167,7 @@
     <TextView
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="@dimen/font_size_big"
-            android:layout_width="200dp"
+            android:layout_width="250dp"
             android:layout_height="50dp"
             android:ems="10"
             android:id="@+id/created_at_value"
@@ -158,7 +180,7 @@
     <TextView
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="@dimen/font_size_big"
-            android:layout_width="200dp"
+            android:layout_width="250dp"
             android:layout_height="50dp"
             android:ems="10"
             android:id="@+id/media_all_value"
@@ -171,7 +193,7 @@
     <TextView
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="@dimen/font_size_big"
-            android:layout_width="200dp"
+            android:layout_width="250dp"
             android:layout_height="50dp"
             android:ems="10"
             android:id="@+id/media_available_value"
@@ -184,7 +206,7 @@
     <TextView
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="@dimen/font_size_big"
-            android:layout_width="200dp"
+            android:layout_width="250dp"
             android:layout_height="50dp"
             android:ems="10"
             android:id="@+id/media_drawn_value"
@@ -194,4 +216,5 @@
             android:layout_marginTop="12dp"
             app:layout_constraintStart_toEndOf="@+id/media_drawn_label"
             app:layout_constraintTop_toBottomOf="@+id/media_available_value"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

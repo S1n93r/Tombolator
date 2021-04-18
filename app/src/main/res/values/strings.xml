@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_mame">Tombolator</string>
+    <string name="icon_edit">Feld bearbeiten</string>
     <string name="button_back">Zurück</string>
+    <string name="button_add_to_tombola">Zu Tombola</string>
     <string name="button_save">Sichern</string>
     <string name="button_tombolas">Tombolas</string>
     <string name="button_reset_media_database">Medien zurücks.</string>
@@ -10,6 +12,8 @@
     <string name="button_new">Neu</string>
     <string name="button_nuke">Nuke</string>
     <string name="button_draw">Ziehen</string>
+    <string name="button_add">Hinzufügen</string>
+    <string name="button_edit">Ändern</string>
     <string name="button_delete">Löschen</string>
     <string name="button_continue">Weiter</string>
     <string name="button_next_or_prev_page">Seite</string>

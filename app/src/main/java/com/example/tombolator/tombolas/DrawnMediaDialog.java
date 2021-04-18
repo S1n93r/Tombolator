@@ -1,5 +1,7 @@
 package com.example.tombolator.tombolas;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -19,6 +21,9 @@ public class DrawnMediaDialog extends Dialog implements View.OnClickListener {
 
     private TextView content;
 
+    private Animator fadeIn = AnimatorInflater.loadAnimator(getContext(), R.animator.fade_in);
+    private Animator fadeOut = AnimatorInflater.loadAnimator(getContext(), R.animator.fade_out);
+
     public DrawnMediaDialog(@NonNull Context context) {
         super(context);
     }
@@ -35,6 +40,45 @@ public class DrawnMediaDialog extends Dialog implements View.OnClickListener {
         setContentView(R.layout.drawn_media_dialog);
 
         content = findViewById(R.id.label_content);
+
+        fadeIn.setTarget(content);
+        fadeIn.start();
+
+        content.setOnClickListener(view -> {
+
+            fadeOut.setTarget(content);
+            fadeOut.start();
+            fadeOut.addListener(new FadeOutEndListener(this));
+        });
+    }
+
+    private class FadeOutEndListener implements Animator.AnimatorListener {
+
+        private final Dialog dialog;
+
+        public FadeOutEndListener(Dialog dialog) {
+            this.dialog = dialog;
+        }
+
+        @Override
+        public void onAnimationStart(Animator animator) {
+
+        }
+
+        @Override
+        public void onAnimationEnd(Animator animator) {
+            dialog.cancel();
+        }
+
+        @Override
+        public void onAnimationCancel(Animator animator) {
+
+        }
+
+        @Override
+        public void onAnimationRepeat(Animator animator) {
+
+        }
     }
 
     @Override
