@@ -2,6 +2,8 @@ package com.example.tombolator;
 
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaDao;
+import com.example.tombolator.tombolas.Tombola;
+import com.example.tombolator.tombolas.TombolaDao;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,10 +11,10 @@ import java.util.List;
 
 public class SusisStashScript implements Runnable {
 
+    private static List<Media> MEDIA_CACHE;
     private final TomboDbApplication context;
 
     String mediaContentString;
-    List<Media> mediaList;
 
     public SusisStashScript(TomboDbApplication context) {
         this.context = context;
@@ -20,26 +22,49 @@ public class SusisStashScript implements Runnable {
 
     @Override
     public void run() {
+        setUpMedia();
+        setUpTombolas();
+    }
+
+    private void setUpMedia() {
 
         MediaDao mediaDao = context.getTomboDb().mediaDao();
         mediaDao.nukeTable();
 
         try {
-            for(Media media : createMediaList()) {
+            for(Media media : createMediaList())
                 mediaDao.insertMedia(media);
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    private void setUpTombolas() {
+
+        MediaDao mediaDao = context.getTomboDb().mediaDao();
+        List<Long> mediaIds = mediaDao.getAllIds();
+
+        TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
+        tombolaDao.nukeTable();
+
+        Tombola tombola = new Tombola();
+
+        tombola.setName("Disney+ Filme");
+        tombola.setCreationTimestamp(System.currentTimeMillis());
+
+        for(int i=191; i<mediaIds.size(); i++)
+            tombola.addMedia(mediaDao.getById(mediaIds.get(i)));
+
+        tombolaDao.insertTombola(tombola);
+    }
+
     private List<Media> createMediaList() throws IOException {
 
         /* Loading from cache. */
-        if(mediaList != null)
-            return mediaList;
+        if(MEDIA_CACHE != null)
+            return MEDIA_CACHE;
 
-        mediaList = new ArrayList<>();
+        MEDIA_CACHE = new ArrayList<>();
 
         String mediaContentString = createMediaContentAsString();
 
@@ -58,10 +83,10 @@ public class SusisStashScript implements Runnable {
             int number = numberAsString.isEmpty() ? 1 : Integer.parseInt(numberAsString);
 
             Media media = new Media(name, title, number, author ,type);
-            mediaList.add(media);
+            MEDIA_CACHE.add(media);
         }
 
-        return mediaList;
+        return MEDIA_CACHE;
     }
 
     private String createMediaContentAsString() {
@@ -313,7 +338,42 @@ public class SusisStashScript implements Runnable {
                 "Lilo & Stitch;;;;Film\n" +
                 "Der König der Löwen;;;;Film\n" +
                 "Küss den Frosch;;;;Film\n" +
-                "Alles steht Kopf;;;;Film\n";
+                "Alles steht Kopf;;;;Film\n"+
+                "High School Musical 1, 2 & 3;;;;Film\n" +
+                "Die Bücherdiebin;;;;Film\n" +
+                "Pretty Women;;;;Film\n" +
+                "Christopher Robin;;;;Film\n" +
+                "Bibi & Tina - Voll verhext!;;;;Film\n" +
+                "Vier zauberhafte Schwestern;;;;Film\n" +
+                "Der König der Löwen;;;;Film\n" +
+                "Bibi & Tina;;;;Film\n" +
+                "Die gute Fee;;;;Film\n" +
+                "Die Familie Stone - Verloben verboten;;;;Film\n" +
+                "10 Dinge, die ich an Dir hasse;;;;Film\n" +
+                "Bibi & Tina - Tohuwabohu Total;;;;Film\n" +
+                "Mrs. Doubtfire;;;;Film\n" +
+                "Steinzeit Junior;;;;Film\n" +
+                "Noelle;;;;Film\n" +
+                "Into the Woods;;;;Film\n" +
+                "Rubinrot;;;;Film\n" +
+                "Bibi & Tina - Mädchen gegen Jungs;;;;Film\n" +
+                "Susi & Strolch;;;;Film\n" +
+                "Guardians of the Galaxy;;;;Film\n" +
+                "Der geheime Club der zweitgeborenen Royals;;;;Film\n" +
+                "Harry Potter;;;;Film\n" +
+                "Black Panther;;;;Film\n" +
+                "Captain Marvel;;;;Film\n" +
+                "Dumbo;;;;Film\n" +
+                "Der Nussknacker und die vier Reiche;;;;Film\n" +
+                "Das Zeiträtsel;;;;Film\n" +
+                "Mulan;;;;Film\n" +
+                "Die Schöne und das Biest;;;;Film\n" +
+                "Avengers;;;;Film\n" +
+                "Ant-Man;;;;Film\n" +
+                "Alice im Wunderland;;;;Film\n" +
+                "Descendants;;;;Film\n" +
+                "Aladdin;;;;Film\n" +
+                "Die Liga der außergewöhnlichen Gentleman;;;;Film\n";
 
         return mediaContentString;
     }

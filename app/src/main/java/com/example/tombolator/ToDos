@@ -10,6 +10,14 @@ ToDos:
 [ ] show mistakes and errors to user
 [ ] change focus color to light blue
 [ ] implement an animation for drawing media
+    [ ] Pusteblumen fliegen auseinander (runder Button)
+    [ ] Sonnenblume öffnet sich
+    [ ] Kleiderschranktüren gehen auf, Ergebnis kommt inklusive Fledermäuse oder andere fliegende Tiere raus
+    [ ] Glühbirne hängt rum, dann wird an der hängenden Schnur gezogen - Licht geht an und Ergebnis kommt
+    [ ] Ergebnis kommt im Kreis mit Feuerwerk
+    [ ] Fernseher wird angemacht, Ergebnis kommt
+    [ ] Ergebnis kommt aus einem Brief
+    [ ] Kissen wird ausgeschüttelt mit Federn kommt das Ergebnis  raus
 [ ] media list should not jump back to page 1 as long as media model is opened
 [ ] add type icon to drawn media view
 [ ] figure out how to deal with types and content types of media
@@ -41,10 +49,13 @@ ToDos:
 [ ] --- Milestone III: Technical improvements ---
 
 Done:
+[x] improve susis stash script
+    [x] add new disney movies
+    [x] add disney tombola
+
 [x] editing tombola should trigger the whole creation flow
 [x] make media addable to tombola AFTER creation
     [x] bug: whole list is getting re-added plus what you selected
-
 [x] bug: media is not added to tombola on creation in step two
 [x] implement creation wizard for tombolas
 [x] bug: application throws out of bound exception when trying to draw from an empty tombola
