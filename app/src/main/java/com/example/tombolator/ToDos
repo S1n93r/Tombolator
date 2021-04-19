@@ -2,6 +2,7 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
+[ ] --- Milestone II: Convenience functions ---
 [ ] change media list in tombola creation from dual to single list with marking
 [ ] implement categories for media
 [ ] clean up app icon xmls because they seem off
@@ -22,7 +23,8 @@ ToDos:
 [ ] add type icon to drawn media view
 [ ] figure out how to deal with types and content types of media
 [ ] fix types of media --> type, sub type or labels?
-[ ] --- Milestone II: Convenience functions ---
+[ ] --- ------------------------------ ---
+[ ] --- Milestone III: Technical improvements ---
 [.] make paginated and filterable media list a generic component
     [x] build generic component
     [.] use in tombola creation view
@@ -46,7 +48,7 @@ ToDos:
     [ ] use activities on new screen
     [ ] only use fragments for reusable PARTS of a screen
 [ ] clean up build gradle
-[ ] --- Milestone III: Technical improvements ---
+[ ] --- ------------------------------ ---
 
 Done:
 [x] bug: media in tombola list is empty
