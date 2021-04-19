@@ -10,7 +10,6 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 import com.example.tombolator.media.Media;
@@ -59,12 +58,7 @@ public class TombolaCreationStepOneFragment extends Fragment {
 
     private void registerObserver() {
         tombolasActivityViewModel.getSelectedTombola().observe(
-                Objects.requireNonNull(getActivity()), new Observer<Tombola>() {
-                    @Override
-                    public void onChanged(Tombola tombola) {
-                        nameEditText.setText(tombola.getName());
-                    }
-                });
+                Objects.requireNonNull(getActivity()), tombola -> nameEditText.setText(tombola.getName()));
     }
 
     private void setUpMediaTypeSpinner() {
@@ -95,9 +89,8 @@ public class TombolaCreationStepOneFragment extends Fragment {
             String name = nameEditText.getText() != null ? nameEditText.getText().toString() : "";
 
             Tombola selectedTombola = tombolasActivityViewModel.getSelectedTombola().getValue();
-            selectedTombola.setName(name);
+            Objects.requireNonNull(selectedTombola).setName(name);
 
-            resetForm();
             tombolasActivity.switchToCreationStepTwo();
         });
     }
