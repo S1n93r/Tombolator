@@ -21,7 +21,6 @@ import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaActivityViewModel;
 import com.example.tombolator.media.MediaDao;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -92,7 +91,7 @@ public class TombolaCreationStepTwoFragment extends Fragment {
 
                 Media media = Objects.requireNonNull(mediaActivityViewModel.getMediaDatabase().getValue()).get(mediaId);
 
-                Objects.requireNonNull(tombola).addMedia(media);
+                Objects.requireNonNull(tombola).addMedia(Objects.requireNonNull(media));
             }
 
             AsyncTask.execute(() -> {
@@ -122,12 +121,7 @@ public class TombolaCreationStepTwoFragment extends Fragment {
                     .getApplicationContext());
 
             final MediaDao mediaDao = context.getTomboDb().mediaDao();
-            List<Long> mediaIds = mediaDao.getAllIds();
-            List<Media> mediaList = new ArrayList<>();
-
-            for (long id : mediaIds) {
-                mediaList.add(mediaDao.getById(id));
-            }
+            List<Media> mediaList = mediaDao.getAllMedia();
 
             mediaActivityViewModel.clearAndAddMedia(mediaList);
         });
@@ -163,7 +157,7 @@ public class TombolaCreationStepTwoFragment extends Fragment {
 
                     for(Media mediaSelectedTombola : mediaListSelectedTombola) {
 
-                        if(mediaSelectedTombola.getId() == media.getId()) {
+                        if(mediaSelectedTombola.getId().equals(media.getId())) {
 
                             addedMedia.addView(textView);
                             break;

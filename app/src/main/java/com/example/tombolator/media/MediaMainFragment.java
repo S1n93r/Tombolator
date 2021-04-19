@@ -18,7 +18,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 import com.example.tombolator.TomboDbApplication;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -99,12 +98,7 @@ public class MediaMainFragment extends Fragment {
                     .getApplicationContext());
 
             final MediaDao mediaDao = context.getTomboDb().mediaDao();
-            List<Long> mediaIds = mediaDao.getAllIds();
-            List<Media> mediaList = new ArrayList<>();
-
-            for (long id : mediaIds) {
-                mediaList.add(mediaDao.getById(id));
-            }
+            List<Media> mediaList = mediaDao.getAllMedia();
 
             mediaActivityViewModel.clearAndAddMedia(mediaList);
             mediaActivityViewModel.toFirstPage();
