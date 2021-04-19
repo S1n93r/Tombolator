@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_mame">Tombolator</string>
-    <string name="icon_edit">Feld bearbeiten</string>
+    <string name="icon_media_type">Medientyp-Icon</string>
     <string name="button_back">Zurück</string>
     <string name="button_add_to_tombola">Zu Tombola</string>
     <string name="button_save">Sichern</string>
@@ -25,11 +25,11 @@
     <string name="title_media_details">Medium Details</string>
     <string name="title_tombola_details">Tombola Details</string>
     <string name="title_media_available">Verfügbare Medien</string>
-    <string name="title_media_added">Median in Tombola</string>
+    <string name="title_media_added">Medien in Tombola</string>
     <string name="title_media_all">Alle Medien</string>
     <string name="label_name">Name</string>
     <string name="label_title">Titel</string>
-    <string name="label_content">Inhalt</string>
+    <string name="text_view_content">Inhalt</string>
     <string name="label_number">Nummer</string>
     <string name="label_author">Author</string>
     <string name="label_director">Regisseur</string>

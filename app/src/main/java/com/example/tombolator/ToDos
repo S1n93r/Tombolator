@@ -2,6 +2,7 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
+[ ] bug: media in tombola list is empty
 [ ] change media list in tombola creation from dual to single list with marking
 [ ] implement categories for media
 [ ] clean up app icon xmls because they seem off
@@ -49,10 +50,12 @@ ToDos:
 [ ] --- Milestone III: Technical improvements ---
 
 Done:
+[x] bug: susis stash script adds non-disney to the tombola
+[x] clean up drawing dialog
+
 [x] improve susis stash script
     [x] add new disney movies
     [x] add disney tombola
-
 [x] editing tombola should trigger the whole creation flow
 [x] make media addable to tombola AFTER creation
     [x] bug: whole list is getting re-added plus what you selected

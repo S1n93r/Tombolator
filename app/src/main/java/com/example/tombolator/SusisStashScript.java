@@ -22,11 +22,16 @@ public class SusisStashScript implements Runnable {
 
     @Override
     public void run() {
-        setUpMedia();
-        setUpTombolas();
+
+        if(MEDIA_CACHE == null) {
+            setUpAndSaveMediaToDatabase();
+            MEDIA_CACHE = getMediaFromDatabase();
+        }
+
+        setUpTombolas(MEDIA_CACHE);
     }
 
-    private void setUpMedia() {
+    private void setUpAndSaveMediaToDatabase() {
 
         MediaDao mediaDao = context.getTomboDb().mediaDao();
         mediaDao.nukeTable();
@@ -39,10 +44,12 @@ public class SusisStashScript implements Runnable {
         }
     }
 
-    private void setUpTombolas() {
+    private List<Media> getMediaFromDatabase() {
 
-        MediaDao mediaDao = context.getTomboDb().mediaDao();
-        List<Long> mediaIds = mediaDao.getAllIds();
+        return context.getTomboDb().mediaDao().getAllMedia();
+    }
+
+    private void setUpTombolas(List<Media> mediaList) {
 
         TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
         tombolaDao.nukeTable();
@@ -52,8 +59,10 @@ public class SusisStashScript implements Runnable {
         tombola.setName("Disney+ Filme");
         tombola.setCreationTimestamp(System.currentTimeMillis());
 
-        for(int i=191; i<mediaIds.size(); i++)
-            tombola.addMedia(mediaDao.getById(mediaIds.get(i)));
+        for(Media media : mediaList) {
+            if(media.getType().equals(Media.Type.MOVIE))
+                tombola.addMedia(media);
+        }
 
         tombolaDao.insertTombola(tombola);
     }

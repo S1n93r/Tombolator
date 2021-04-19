@@ -107,18 +107,19 @@ public class TombolaDetailsFragment extends Fragment {
             drawnMediaDialog.show();
 
             if(drawnMedia == null) {
-                drawnMediaDialog.getContent().setText(R.string.draw_media_on_empty_tombola);
+                drawnMediaDialog.getContentText().setText(R.string.draw_media_on_empty_tombola);
                 return;
             }
 
             drawnMediaDialog.setIcon(drawnMedia);
-            drawnMediaDialog.getContent().setText(Objects.requireNonNull(drawnMedia).toLabel());
+            drawnMediaDialog.getContentText().setText(Objects.requireNonNull(drawnMedia).toLabel());
 
             updateCounters(selectedTombola);
         });
 
         editTombolaButton.setOnClickListener(view -> {
-            tombolaViewModel.selectTombola(tombolaViewModel.getSelectedTombola().getValue().getId());
+            tombolaViewModel.selectTombola(
+                    Objects.requireNonNull(tombolaViewModel.getSelectedTombola().getValue()).getId());
             tombolasActivity.switchToCreationStepOne();
         });
 

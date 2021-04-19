@@ -10,6 +10,9 @@ public interface MediaDao {
     @Query("SELECT id FROM Media")
     List<Long> getAllIds();
 
+    @Query("SELECT * FROM Media")
+    List<Media> getAllMedia();
+
     @Query("SELECT * FROM Media WHERE id = :mediaId")
     Media getById(long mediaId);
 
