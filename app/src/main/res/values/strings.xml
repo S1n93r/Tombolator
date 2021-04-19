@@ -25,7 +25,7 @@
     <string name="title_media_details">Medium Details</string>
     <string name="title_tombola_details">Tombola Details</string>
     <string name="title_media_available">Verfügbare Medien</string>
-    <string name="title_media_added">Ausgewählte Medien</string>
+    <string name="title_media_added">Median in Tombola</string>
     <string name="title_media_all">Alle Medien</string>
     <string name="label_name">Name</string>
     <string name="label_title">Titel</string>
@@ -36,8 +36,8 @@
     <string name="label_type">Typ</string>
     <string name="label_created_at">Angelegt am</string>
     <string name="label_media_all">Medien gesamt</string>
-    <string name="label_media_available">... verfügbar</string>
-    <string name="label_media_drawn">... gezogen</string>
+    <string name="label_media_available">…davon verfügbar</string>
+    <string name="label_media_drawn">…davon gezogen</string>
     <string name="label_id">ID</string>
     <string name="label_search">Suche</string>
     <string name="media_type_cassette">Kassette</string>
