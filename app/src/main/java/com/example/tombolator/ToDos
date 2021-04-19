@@ -24,6 +24,7 @@ ToDos:
 [ ] figure out how to deal with types and content types of media
 [ ] fix types of media --> type, sub type or labels?
 [ ] --- ------------------------------ ---
+
 [ ] --- Milestone III: Technical improvements ---
 [.] make paginated and filterable media list a generic component
     [x] build generic component
