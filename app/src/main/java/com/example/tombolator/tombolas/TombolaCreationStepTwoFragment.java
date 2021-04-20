@@ -21,6 +21,7 @@ import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaActivityViewModel;
 import com.example.tombolator.media.MediaDao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -82,30 +83,91 @@ public class TombolaCreationStepTwoFragment extends Fragment {
 
         saveButton.setOnClickListener(v -> {
 
-            final Tombola tombola = tombolasActivityViewModel.getSelectedTombola().getValue();
+            saveTombola();
+            resetForm();
+            tombolasActivity.switchToTombolasMainView();
+        });
+    }
+
+    private void saveTombola() {
+
+        final Tombola tombola = tombolasActivityViewModel.getSelectedTombola().getValue();
+
+        addMediaDeltaToTombola(tombola);
+        removeMediaDeltaFromTombola(tombola);
+
+        AsyncTask.execute(() -> {
+
+            TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+                    .getApplicationContext());
+
+            final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
+            tombolaDao.insertTombola(tombola);
+        });
+    }
+
+    private void addMediaDeltaToTombola(Tombola tombola) {
+
+        if(mediaActivityViewModel.getMediaDatabase().getValue() == null) {
+            /* TODO: Add log here. */
+            return;
+        }
+
+        for(int i=0; i<addedMedia.getChildCount(); i++) {
+
+            TextView textView = (TextView) addedMedia.getChildAt(i);
+            long mediaId = textView.getId();
+
+            boolean layoutHasIdTombolaHasNot = true;
+
+            for(Media media : tombola.getMediaAvailable()) {
+                if (mediaId == media.getId()) {
+                    layoutHasIdTombolaHasNot = false;
+                    break;
+                }
+            }
+
+            for(Media media : tombola.getMediaDrawn()) {
+                if (mediaId == media.getId()) {
+                    layoutHasIdTombolaHasNot = false;
+                    break;
+                }
+            }
+
+            if(layoutHasIdTombolaHasNot)
+                tombola.addMedia(mediaActivityViewModel.getMediaDatabase().getValue().get(mediaId));
+        }
+    }
+
+    private void removeMediaDeltaFromTombola(Tombola tombola) {
+
+        removeMediaDeltaFromMediaList(tombola, tombola.getMediaAvailable());
+        removeMediaDeltaFromMediaList(tombola, tombola.getMediaDrawn());
+    }
+
+    private synchronized void removeMediaDeltaFromMediaList(Tombola tombola, List<Media> mediaList) {
+
+        boolean tombolaHasIdLayoutHasNot = true;
+
+        List<Media> mediaToBeRemoved = new ArrayList<>();
+
+        for(Media media : mediaList) {
 
             for(int i=0; i<addedMedia.getChildCount(); i++) {
 
                 TextView textView = (TextView) addedMedia.getChildAt(i);
                 long mediaId = textView.getId();
 
-                Media media = Objects.requireNonNull(mediaActivityViewModel.getMediaDatabase().getValue()).get(mediaId);
-
-                Objects.requireNonNull(tombola).addMedia(Objects.requireNonNull(media));
+                if(mediaId == media.getId()) {
+                    tombolaHasIdLayoutHasNot = false;
+                }
             }
 
-            AsyncTask.execute(() -> {
+            if(tombolaHasIdLayoutHasNot)
+                mediaToBeRemoved.add(media);
+        }
 
-                TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
-                        .getApplicationContext());
-
-                final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
-                tombolaDao.insertTombola(tombola);
-            });
-
-            resetForm();
-            tombolasActivity.switchToTombolasMainView();
-        });
+        mediaList.removeAll(mediaToBeRemoved);
     }
 
     private void resetForm() {

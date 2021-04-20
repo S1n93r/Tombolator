@@ -52,8 +52,9 @@ ToDos:
 [ ] --- ------------------------------ ---
 
 Done:
-[x] bug: media in tombola list is empty
+[x] bug: can't remove media from tombola when editing media
 
+[x] bug: media in tombola list is empty
 [x] bug: susis stash script adds non-disney to the tombola
 [x] clean up drawing dialog
 [x] improve susis stash script
