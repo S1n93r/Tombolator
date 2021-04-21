@@ -1,7 +1,9 @@
 package com.example.tombolator.tombolas;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import androidx.annotation.RequiresApi;
 import androidx.room.*;
 import com.example.tombolator.Converters;
 import com.example.tombolator.media.Media;
@@ -9,6 +11,7 @@ import com.example.tombolator.media.Media;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 @Entity
 public class Tombola implements Parcelable {
@@ -87,8 +90,16 @@ public class Tombola implements Parcelable {
         mediaAvailable.add(media);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void removeMedia(long mediaId) {
+        mediaAvailable.removeIf(new MediaIdsComparePredicate(mediaId));
+        mediaDrawn.removeIf(new MediaIdsComparePredicate(mediaId));
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void removeMedia(Media media) {
-        mediaAvailable.remove(media);
+        removeMedia(media.getId());
+        removeMedia(media.getId());
     }
 
     public Media drawRandomMedia() {
@@ -167,5 +178,20 @@ public class Tombola implements Parcelable {
         allMedia.addAll(mediaDrawn);
 
         return allMedia;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private class MediaIdsComparePredicate implements Predicate<Media> {
+
+        private final long mediaId;
+
+        public MediaIdsComparePredicate(long mediaId) {
+            this.mediaId = mediaId;
+        }
+
+        @Override
+        public boolean test(Media media) {
+            return mediaId == media.getId();
+        }
     }
 }
