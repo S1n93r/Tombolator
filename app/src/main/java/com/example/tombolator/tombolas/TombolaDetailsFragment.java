@@ -81,16 +81,7 @@ public class TombolaDetailsFragment extends Fragment {
 
         backButton.setOnClickListener(v -> {
 
-                final Tombola tombola = tombolaViewModel.getSelectedTombola().getValue();
 
-                AsyncTask.execute(() -> {
-
-                    TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
-                            .getApplicationContext());
-
-                    final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
-                    tombolaDao.insertTombola(tombola);
-                });
 
                 tombolasActivity.switchToTombolasMainView();
             });
@@ -115,6 +106,7 @@ public class TombolaDetailsFragment extends Fragment {
             drawnMediaDialog.getContentText().setText(Objects.requireNonNull(drawnMedia).toLabel());
 
             updateCounters(selectedTombola);
+            saveTombolaToDatabase(selectedTombola);
         });
 
         editTombolaButton.setOnClickListener(view -> {
@@ -169,5 +161,17 @@ public class TombolaDetailsFragment extends Fragment {
         numberOfMediaAll.setText(String.valueOf(tombola.getAllMedia().size()));
         numberOfMediaAvailable.setText(String.valueOf(tombola.getMediaAvailable().size()));
         numberOfMediaDrawn.setText(String.valueOf(tombola.getMediaDrawn().size()));
+    }
+
+    private void saveTombolaToDatabase(final Tombola tombola) {
+
+        AsyncTask.execute(() -> {
+
+            TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+                    .getApplicationContext());
+
+            final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
+            tombolaDao.insertTombola(tombola);
+        });
     }
 }

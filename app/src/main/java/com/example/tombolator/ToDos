@@ -3,6 +3,10 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [ ] --- Milestone II: Convenience functions ---
+[ ] add buttons to sort media list
+[ ] change tombola list to tiles
+[ ] add icon to tombola to be displayed
+    [ ] add icon database
 [ ] change media list in tombola creation from dual to single list with marking
 [ ] implement categories for media
 [ ] clean up app icon xmls because they seem off
@@ -53,9 +57,10 @@ ToDos:
 [ ] --- ------------------------------ ---
 
 Done:
+[81] bug: when exiting the app with continuously pressing "back" the tombola status is not saved
+
 [x] bug: can't remove media from tombola when editing media
     [x] after drawing multiple times media cant be removed anymore
-
 [x] bug: media in tombola list is empty
 [x] bug: susis stash script adds non-disney to the tombola
 [x] clean up drawing dialog
