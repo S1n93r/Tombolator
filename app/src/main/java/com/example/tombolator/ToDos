@@ -3,6 +3,7 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [ ] --- Milestone II: Convenience functions ---
+[.] implement updater
 [ ] add buttons to sort media list
 [ ] change tombola list to tiles
 [ ] add icon to tombola to be displayed
@@ -35,6 +36,7 @@ ToDos:
     [.] use in tombola creation view
     [ ] replace media main list with component
     [ ] replace tombola main list with component
+[ ] implement updater
 [ ] use image views with background to represent icons on buttons --> files for 25, 35 and 50 not needed
 [ ] in tombola edit step two linear layout should listen to tombola instead of changing model and view one by one
 [ ] view should not constantly refresh the media model just because they show a media list

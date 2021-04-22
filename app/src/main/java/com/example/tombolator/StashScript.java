@@ -9,14 +9,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SusisStashScript implements Runnable {
+public class StashScript implements Runnable {
 
     private static List<Media> MEDIA_CACHE;
     private final TomboDbApplication context;
 
     String mediaContentString;
 
-    public SusisStashScript(TomboDbApplication context) {
+    public StashScript(TomboDbApplication context) {
         this.context = context;
     }
 

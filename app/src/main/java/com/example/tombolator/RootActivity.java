@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.tombolator.config.ConfigActivity;
 import com.example.tombolator.media.MediaActivity;
 import com.example.tombolator.tombolas.TombolasActivity;
+import com.github.javiersantos.appupdater.AppUpdater;
+import com.github.javiersantos.appupdater.enums.UpdateFrom;
 
 public class RootActivity extends AppCompatActivity {
 
@@ -19,6 +21,8 @@ public class RootActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
+        tryUpdate();
+
         setContentView(R.layout.root_activity);
 
         tombolasButton = findViewById(R.id.button_tombolas);
@@ -26,6 +30,17 @@ public class RootActivity extends AppCompatActivity {
         configButton = findViewById(R.id.button_config);
 
         registerOnClickListener();
+    }
+
+    private void tryUpdate() {
+
+        String user = "S1n93r";
+        String repo = "https://github.com/S1n93r/Tombolator";
+
+        new AppUpdater(this)
+                .setUpdateFrom(UpdateFrom.GITHUB)
+                .setGitHubUserAndRepo(user, repo)
+                .start();
     }
 
     private void registerOnClickListener() {

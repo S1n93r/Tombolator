@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import androidx.fragment.app.Fragment;
 import com.example.tombolator.R;
-import com.example.tombolator.SusisStashScript;
+import com.example.tombolator.StashScript;
 import com.example.tombolator.TomboDbApplication;
 
 import java.util.Objects;
@@ -56,7 +56,7 @@ public class ConfigMainFragment extends Fragment {
                         TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
                                 .getApplicationContext());
 
-                        new SusisStashScript(context).run();
+                        new StashScript(context).run();
                     }
                 });
             }
