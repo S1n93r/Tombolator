@@ -3,8 +3,10 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [ ] --- Milestone II: Convenience functions ---
-[.] implement updater
-[ ] add buttons to sort media list
+[ ] style media sorting button
+[ ] test updater...
+    [ ] push v0.84 to github
+    [ ] revert to v0.83 locally and start app to check if updater tries to pull v0.84
 [ ] change tombola list to tiles
 [ ] add icon to tombola to be displayed
     [ ] add icon database
@@ -59,9 +61,10 @@ ToDos:
 [ ] --- ------------------------------ ---
 
 Done:
-[81] bug: when exiting the app with continuously pressing "back" the tombola status is not saved
-
-[x] bug: can't remove media from tombola when editing media
+[84] add buttons to sort media list
+[83] implement updater
+[82] bug: when exiting the app with continuously pressing "back" the tombola status is not saved
+[81] bug: can't remove media from tombola when editing media
     [x] after drawing multiple times media cant be removed anymore
 [x] bug: media in tombola list is empty
 [x] bug: susis stash script adds non-disney to the tombola

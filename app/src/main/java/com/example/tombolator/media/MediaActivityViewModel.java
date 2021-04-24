@@ -1,5 +1,7 @@
 package com.example.tombolator.media;
 
+import android.os.Build;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -13,6 +15,11 @@ public class MediaActivityViewModel extends ViewModel {
 
     private static final String DEFAULT_SEARCH_FILTER = "[show all media]";
     private static final int MEDIA_PER_PAGE = 8;
+
+    private static final int SORTING_REGULAR = 0;
+    private static final int SORTING_REVERSED = 1;
+
+    private int currentSortingMode = SORTING_REGULAR;
 
     private String currentSearchFilter = DEFAULT_SEARCH_FILTER;
 
@@ -185,6 +192,35 @@ public class MediaActivityViewModel extends ViewModel {
             }
 
             return media.toLabel().contains(searchFilter);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void sortMediaByName() {
+
+        switch(currentSortingMode) {
+
+            case SORTING_REVERSED: Collections.sort(mediaListFiltered, new MediaComparator().reversed());
+                currentSortingMode = SORTING_REGULAR;
+                break;
+
+            default:
+                Collections.sort(mediaListFiltered, new MediaComparator());
+                currentSortingMode = SORTING_REVERSED;
+        }
+
+        toFirstPage();
+    }
+
+    private static class MediaComparator implements Comparator<Media> {
+
+        @Override
+        public int compare(Media m1, Media m2) {
+
+            String titleAndName1 = m1.getTitle() + m1.getName();
+            String titleAndName2 = m2.getTitle() + m2.getName();
+
+            return titleAndName1.compareTo(titleAndName2);
         }
     }
 

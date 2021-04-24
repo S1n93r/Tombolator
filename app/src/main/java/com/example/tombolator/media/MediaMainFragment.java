@@ -32,6 +32,7 @@ public class MediaMainFragment extends Fragment {
 
     private LinearLayout linearLayoutMedia;
 
+    private Button sortButton;
     private Button backButton;
     private Button nextPageButton;
     private Button previousPageButton;
@@ -43,6 +44,7 @@ public class MediaMainFragment extends Fragment {
         return new MediaMainFragment();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class MediaMainFragment extends Fragment {
 
         linearLayoutMedia = layout.findViewById(R.id.linear_layout_media);
 
+        sortButton = layout.findViewById(R.id.button_sort);
         backButton = layout.findViewById(R.id.button_back);
         nextPageButton = layout.findViewById(R.id.button_next_page);
         previousPageButton = layout.findViewById(R.id.button_previous_page);
@@ -79,7 +82,10 @@ public class MediaMainFragment extends Fragment {
         search.setOnKeyListener(new SearchMediaListener());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void registerOnClickListener() {
+
+        sortButton.setOnClickListener(view -> mediaActivityViewModel.sortMediaByName());
 
         backButton.setOnClickListener(view -> mediaActivity.finish());
 
