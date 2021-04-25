@@ -2,12 +2,11 @@ Intent & Bundles to pass data during runtime: https://guides.codepath.com/androi
 Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
-[ ] --- Milestone II: Convenience functions ---
-[ ] style media sorting button
+[.] --- Milestone II: Convenience functions ---
+[ ] change tombola list to tiles
 [ ] test updater...
     [ ] push v0.84 to github
     [ ] revert to v0.83 locally and start app to check if updater tries to pull v0.84
-[ ] change tombola list to tiles
 [ ] add icon to tombola to be displayed
     [ ] add icon database
 [ ] change media list in tombola creation from dual to single list with marking
@@ -61,6 +60,9 @@ ToDos:
 [ ] --- ------------------------------ ---
 
 Done:
+[86] style media sorting button
+[86] text entries should start with caps
+
 [85] set minimum skd to 29 and removed all @requiresApi from code
 [84] add buttons to sort media list
 [83] implement updater

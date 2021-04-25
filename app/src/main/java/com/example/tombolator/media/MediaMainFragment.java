@@ -6,10 +6,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -30,7 +27,7 @@ public class MediaMainFragment extends Fragment {
 
     private LinearLayout linearLayoutMedia;
 
-    private Button sortButton;
+    private ImageView sortButton;
     private Button backButton;
     private Button nextPageButton;
     private Button previousPageButton;

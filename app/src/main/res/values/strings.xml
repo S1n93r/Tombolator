@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_mame">Tombolator</string>
-    <string name="icon_media_type">Medientyp-Icon</string>
+    <string name="icon_media_type_content_description">Medientyp-Icon</string>
+    <string name="icon_sort_media_content_description">Sortiere Medien absteigend</string>
+    <string name="icon_search_media_content_description">Medien durchsuchen</string>
     <string name="button_back">Zurück</string>
     <string name="button_add_to_tombola">Zu Tombola</string>
     <string name="button_save">Sichern</string>

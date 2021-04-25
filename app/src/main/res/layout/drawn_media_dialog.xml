@@ -10,7 +10,7 @@
             android:id="@+id/icon_media_type"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:contentDescription="@string/icon_media_type"
+            android:contentDescription="@string/icon_media_type_content_description"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/label_content"
