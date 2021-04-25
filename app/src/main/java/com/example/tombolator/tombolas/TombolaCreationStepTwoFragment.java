@@ -1,7 +1,6 @@
 package com.example.tombolator.tombolas;
 
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -119,7 +117,6 @@ public class TombolaCreationStepTwoFragment extends Fragment {
 
     private class MediaInsertedObserver implements Observer<Map<Long, Media>> {
 
-        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onChanged(Map<Long, Media> mediaMapInserted) {
 
@@ -163,7 +160,6 @@ public class TombolaCreationStepTwoFragment extends Fragment {
 
     private class SwitchMediaBetweenAvailableAndAdded implements View.OnClickListener {
 
-        @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void onClick(View view) {
 

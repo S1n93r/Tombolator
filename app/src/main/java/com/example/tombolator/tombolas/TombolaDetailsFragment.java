@@ -1,7 +1,6 @@
 package com.example.tombolator.tombolas;
 
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -44,7 +42,6 @@ public class TombolaDetailsFragment extends Fragment {
         return new TombolaDetailsFragment();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -76,15 +73,9 @@ public class TombolaDetailsFragment extends Fragment {
         tombolaViewModel.getSelectedTombola().observe(Objects.requireNonNull(this.getActivity()), new SelectedTombolaObserver());
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void registerOnClickListener() {
 
-        backButton.setOnClickListener(v -> {
-
-
-
-                tombolasActivity.switchToTombolasMainView();
-            });
+        backButton.setOnClickListener(v -> tombolasActivity.switchToTombolasMainView());
 
         drawButton.setOnClickListener(v -> {
 

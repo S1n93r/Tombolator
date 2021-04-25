@@ -7,7 +7,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import com.example.tombolator.R;
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaUtil;
@@ -95,7 +93,6 @@ public class DrawnMediaDialog extends Dialog implements View.OnClickListener {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void setIcon(Media media) {
         mediaTypeIcon.setImageResource(MediaUtil.getMediaIcon(media));
     }

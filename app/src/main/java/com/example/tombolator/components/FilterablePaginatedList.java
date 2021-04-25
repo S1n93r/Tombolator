@@ -1,13 +1,11 @@
 package com.example.tombolator.components;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import androidx.annotation.RequiresApi;
 import androidx.arch.core.util.Function;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
@@ -53,7 +51,6 @@ public class FilterablePaginatedList<T> extends Fragment {
 
     private class ElementListObserver implements Observer<List<T>> {
 
-        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
         @Override
         public void onChanged(List<T> elementList) {
 

@@ -61,6 +61,7 @@ ToDos:
 [ ] --- ------------------------------ ---
 
 Done:
+[85] set minimum skd to 29 and removed all @requiresApi from code
 [84] add buttons to sort media list
 [83] implement updater
 [82] bug: when exiting the app with continuously pressing "back" the tombola status is not saved

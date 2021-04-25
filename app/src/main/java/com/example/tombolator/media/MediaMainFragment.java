@@ -1,7 +1,6 @@
 package com.example.tombolator.media;
 
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -44,7 +42,6 @@ public class MediaMainFragment extends Fragment {
         return new MediaMainFragment();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -82,7 +79,6 @@ public class MediaMainFragment extends Fragment {
         search.setOnKeyListener(new SearchMediaListener());
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void registerOnClickListener() {
 
         sortButton.setOnClickListener(view -> mediaActivityViewModel.sortMediaByName());
@@ -113,7 +109,6 @@ public class MediaMainFragment extends Fragment {
 
     private class MediaInsertedObserver implements Observer<List<Media>> {
 
-        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
         @Override
         public void onChanged(List<Media> mediaList) {
 

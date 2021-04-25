@@ -1,7 +1,5 @@
 package com.example.tombolator.media;
 
-import android.os.Build;
-import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -121,10 +119,6 @@ public class MediaActivityViewModel extends ViewModel {
         applySearchFilter();
     }
 
-    public void selectMedia(Media media) {
-        selectedMedia.postValue(media);
-    }
-
     public void selectMedia(long mediaId) {
 
         if(mediaDatabaseLiveData.getValue() == null)
@@ -195,18 +189,14 @@ public class MediaActivityViewModel extends ViewModel {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void sortMediaByName() {
 
-        switch(currentSortingMode) {
-
-            case SORTING_REVERSED: Collections.sort(mediaListFiltered, new MediaComparator().reversed());
-                currentSortingMode = SORTING_REGULAR;
-                break;
-
-            default:
-                Collections.sort(mediaListFiltered, new MediaComparator());
-                currentSortingMode = SORTING_REVERSED;
+        if(currentSortingMode == SORTING_REVERSED) {
+            mediaListFiltered.sort(new MediaComparator().reversed());
+            currentSortingMode = SORTING_REGULAR;
+        }else {
+            mediaListFiltered.sort(new MediaComparator());
+            currentSortingMode = SORTING_REVERSED;
         }
 
         toFirstPage();
