@@ -21,7 +21,8 @@ public class MediaActivityViewModel extends ViewModel {
 
     private String currentSearchFilter = DEFAULT_SEARCH_FILTER;
 
-    private int currentPage = 1;
+    private final MutableLiveData<Integer> currentPage = new MutableLiveData<>(1);
+    private final MutableLiveData<Integer> numberOfPages = new MutableLiveData<>(1);
 
     private final MutableLiveData<Media> selectedMedia = new MutableLiveData<>();
 
@@ -32,23 +33,39 @@ public class MediaActivityViewModel extends ViewModel {
     private final MutableLiveData<HashMap<Long, Media>> mediaDatabaseLiveData = new MutableLiveData<>(new HashMap<>());
 
     public void toFirstPage() {
-        currentPage = 1;
-        setMediaOnPageListToPage(currentPage);
+
+        if(currentPage.getValue() == null) {
+            /* TODO: Log entry. */
+            return;
+        }
+
+        currentPage.postValue(1);
+        setMediaOnPageListToPage(currentPage.getValue());
     }
 
     public void nextPage() {
 
-        if(currentPage < getNumberOfPages()) {
-            currentPage++;
-            setMediaOnPageListToPage(currentPage);
+        if(currentPage.getValue() == null) {
+            /* TODO: Log entry. */
+            return;
+        }
+
+        if(currentPage.getValue() < getNumberOfPages()) {
+            currentPage.postValue(currentPage.getValue() + 1);
+            setMediaOnPageListToPage(currentPage.getValue());
         }
     }
 
     public void previousPage() {
 
-        if(currentPage > 1) {
-            currentPage--;
-            setMediaOnPageListToPage(currentPage);
+        if(currentPage.getValue() == null) {
+            /* TODO: Log entry. */
+            return;
+        }
+
+        if(currentPage.getValue() > 1) {
+            currentPage.postValue(currentPage.getValue() - 1);
+            setMediaOnPageListToPage(currentPage.getValue());
         }
     }
 
@@ -76,7 +93,7 @@ public class MediaActivityViewModel extends ViewModel {
         mediaOnCurrentPage.postValue(mediaOnCurrentPage.getValue());
     }
 
-    private int getNumberOfPages() {
+    public int getNumberOfPages() {
         return mediaListFiltered.size() / MEDIA_PER_PAGE;
     }
 
@@ -224,5 +241,9 @@ public class MediaActivityViewModel extends ViewModel {
 
     public MutableLiveData<ArrayList<Media>> getMediaOnCurrentPage() {
         return mediaOnCurrentPage;
+    }
+
+    public MutableLiveData<Integer> getCurrentPage() {
+        return currentPage;
     }
 }

@@ -14,6 +14,7 @@ import com.example.tombolator.R;
 import com.example.tombolator.TomboDbApplication;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class MediaMainFragment extends Fragment {
@@ -26,6 +27,8 @@ public class MediaMainFragment extends Fragment {
     private EditText search;
 
     private LinearLayout linearLayoutMedia;
+
+    private TextView pageNumberLabel;
 
     private ImageView sortButton;
     private Button backButton;
@@ -52,6 +55,8 @@ public class MediaMainFragment extends Fragment {
 
         linearLayoutMedia = layout.findViewById(R.id.linear_layout_media);
 
+        pageNumberLabel = layout.findViewById(R.id.label_page_number);
+
         sortButton = layout.findViewById(R.id.button_sort);
         backButton = layout.findViewById(R.id.button_back);
         nextPageButton = layout.findViewById(R.id.button_next_page);
@@ -68,8 +73,11 @@ public class MediaMainFragment extends Fragment {
     }
 
     private void registerObserver() {
+
         mediaActivityViewModel.getMediaOnCurrentPage()
                 .observe(Objects.requireNonNull(this.getActivity()), new MediaInsertedObserver());
+
+        mediaActivityViewModel.getCurrentPage().observe(this.getActivity(), new PageChangedObserver());
     }
 
     private void registerOnKeyListener() {
@@ -129,6 +137,25 @@ public class MediaMainFragment extends Fragment {
 
                 linearLayoutMedia.addView(textView);
             }
+        }
+    }
+
+    private class PageChangedObserver implements Observer<Integer> {
+
+        @Override
+        public void onChanged(Integer pageNumber) {
+
+            int numberOfPages = mediaActivityViewModel.getNumberOfPages();
+            int numberOfDigits = String.valueOf(numberOfPages).length();
+
+            String numberFormat = "%0" + numberOfDigits + "d";
+
+            String formattedCurrentPageNumber = String.format(Locale.getDefault(), numberFormat, pageNumber);
+            String formattedTotalPageNumbers = String.format(Locale.getDefault(), numberFormat, numberOfPages);
+
+            String numberOfPagesText = formattedCurrentPageNumber + " / " + formattedTotalPageNumbers;
+
+            pageNumberLabel.setText(numberOfPagesText);
         }
     }
 

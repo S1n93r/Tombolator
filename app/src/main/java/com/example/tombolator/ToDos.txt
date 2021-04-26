@@ -3,25 +3,29 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [.] --- Milestone II: Convenience functions ---
-[87] bug: when deleting media the user can see for a split second how the list is manipulated
+[ ] sort by number, name and author depending on type
+    [ ] audio plays
+    [ ] movies
+    [ ] series
+    [ ] books
 
-[88] add page number to paginated media list
+[ ] add icon to tombola to be displayed
+    [ ] add icon database
+    [ ] color of icon can be picked freely
+[ ] in media list mark media blue when at least in one tombola
+    [ ] also show new tombola icon
 
-[89] add tombola mode that removes media drawn
-[89] color code tombolas depending on their mode
+[ ] add tombola mode that removes media drawn
+    [ ] also delete media from database
+[ ] color code tombolas depending on their mode
     [ ] gradient I: purple-blue
     [ ] gradient II: red-yellow
-
-[90] change tombola list to tiles
-
-[91] implement label system
-[91] implement label-tiles before media list
-
+[ ] change tombola list to tiles
+[ ] implement label system
+[ ] implement label-tiles before media list
 [ ] test updater...
     [ ] push v0.84 to github
     [ ] revert to v0.83 locally and start app to check if updater tries to pull v0.84
-[ ] add icon to tombola to be displayed
-    [ ] add icon database
 [ ] change media list in tombola creation from dual to single list with marking
 [ ] implement categories for media
 [ ] clean up app icon xmls because they seem off
@@ -51,6 +55,7 @@ ToDos:
     [ ] replace media main list with component
     [ ] replace tombola main list with component
 [ ] utilize DAO inheritance and create a BaseDao
+[ ] when deleting media the user can see for a split second how the list is manipulated
 [ ] implement updater
 [ ] restructure model, gui and database tasks
 [ ] use image views with background to represent icons on buttons --> files for 25, 35 and 50 not needed
@@ -75,6 +80,7 @@ ToDos:
 [ ] --- ------------------------------ ---
 
 Done:
+[87] add page number to paginated media list
 [87] deleting media should also remove the media from all tombolas
 [87] bug: concurrent modification exception on MediaMainFragment / MediaInsertedObserver.onChanged()
 

@@ -8,8 +8,8 @@ android {
         applicationId "com.example.tombolator"
         minSdkVersion 24
         targetSdkVersion 29
-        versionCode 86
-        versionName "0.86"
+        versionCode 87
+        versionName "0.87"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
