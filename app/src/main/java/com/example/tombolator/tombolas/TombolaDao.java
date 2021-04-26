@@ -10,11 +10,17 @@ public interface TombolaDao {
     @Query("SELECT id FROM Tombola")
     List<Long> getAllIds();
 
+    @Query("SELECT * FROM Tombola")
+    List<Tombola> getAllTombolas();
+
     @Query("SELECT * FROM Tombola WHERE id = :tombolaId")
     Tombola getById(long tombolaId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertTombola(Tombola tombola);
+
+    @Update
+    void updateTombola(Tombola tombola);
 
     @Delete
     void deleteMedia(Tombola tombola);

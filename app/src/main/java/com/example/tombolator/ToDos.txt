@@ -3,7 +3,20 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [.] --- Milestone II: Convenience functions ---
-[ ] change tombola list to tiles
+[87] bug: when deleting media the user can see for a split second how the list is manipulated
+
+[88] add page number to paginated media list
+
+[89] add tombola mode that removes media drawn
+[89] color code tombolas depending on their mode
+    [ ] gradient I: purple-blue
+    [ ] gradient II: red-yellow
+
+[90] change tombola list to tiles
+
+[91] implement label system
+[91] implement label-tiles before media list
+
 [ ] test updater...
     [ ] push v0.84 to github
     [ ] revert to v0.83 locally and start app to check if updater tries to pull v0.84
@@ -37,7 +50,9 @@ ToDos:
     [.] use in tombola creation view
     [ ] replace media main list with component
     [ ] replace tombola main list with component
+[ ] utilize DAO inheritance and create a BaseDao
 [ ] implement updater
+[ ] restructure model, gui and database tasks
 [ ] use image views with background to represent icons on buttons --> files for 25, 35 and 50 not needed
 [ ] in tombola edit step two linear layout should listen to tombola instead of changing model and view one by one
 [ ] view should not constantly refresh the media model just because they show a media list
@@ -60,121 +75,13 @@ ToDos:
 [ ] --- ------------------------------ ---
 
 Done:
+[87] deleting media should also remove the media from all tombolas
+[87] bug: concurrent modification exception on MediaMainFragment / MediaInsertedObserver.onChanged()
+
 [86] style media sorting button
 [86] text entries should start with caps
-
 [85] set minimum skd to 29 and removed all @requiresApi from code
 [84] add buttons to sort media list
 [83] implement updater
 [82] bug: when exiting the app with continuously pressing "back" the tombola status is not saved
 [81] bug: can't remove media from tombola when editing media
-    [x] after drawing multiple times media cant be removed anymore
-[x] bug: media in tombola list is empty
-[x] bug: susis stash script adds non-disney to the tombola
-[x] clean up drawing dialog
-[x] improve susis stash script
-    [x] add new disney movies
-    [x] add disney tombola
-[x] editing tombola should trigger the whole creation flow
-[x] make media addable to tombola AFTER creation
-    [x] bug: whole list is getting re-added plus what you selected
-[x] bug: media is not added to tombola on creation in step two
-[x] implement creation wizard for tombolas
-[x] bug: application throws out of bound exception when trying to draw from an empty tombola
-[x] bug: "Speichern" does not fit button --> find permanent solution
-[x] bug: clearing search filter does not refresh list
-[x] bug: clear page list before adding
-[x] bug: drawing media from tombola was not saved to database
-[x] add media counters to tombola details
-[x] adjust susis stash script to new media attributes
-[x] implement a creation wizard for medium and tombolas
-    [x] for medium start with type
-    [x] make second step of media wizard respond to type chosen
-    [x] bug: NPE on going to second step --> selected media is null
-    [x] implement visibility patterns for all types
-[x] use list_element.xml for media lists for tombola creation
-[x] bug: returning media from added to available is not possible in tombola
-[x] bug: movies are not shown with their icon
-[x] add disney movies to susis stash script
-[x] bug: buttons should not hover when keyboard opens
-[x] keyboard wont push buttons up in tombola activity
-[x] centralize dimensions for buttons etc. to xml
-[x] bug: font on some buttons is too big ("löschen" & "sichern")
-[x] bug: in medium details list of media is underneath buttons
-[x] implement search fields
-[x] removed automated versioning by number of commits do to some bug
-[x] added Guava as dependency
-[x] adjust all views to be more spacious like tombola details
-[x] add icons to "next page" and "previous page" buttons and make names shorter
-[x] pagination for media and tombola lists
-    [x] implement boiler plate for pagination
-    [x] implement "next page" on button click
-    [x] implement "previous page" on button click
-    [x] make sure trying to go before first or beyond last page does nothing
-[x] in fragments use getActivity() instead of parent as parameter
-[x] --- Milestone I: Basic functions ---
-[x] add an animation to button clicks
-[x] change font of spinner to Comic Sans
-[x] extract tombola element textview to xml
-[x] use new textview xml for tombol details
-[X] decrease font size of media and tombola details
-[x] decrease font size of media and tombola elements
-[x] add initial media
-[x] implemented caches for Susis script
-[x] implement susis stash script
-
-[x] build configuration view
-    [x] add button to reset database
-[x] remove nuke buttons and function
-[x] format dates on view
-[x] refactor media element in media view
-    [x] move id to details
-    [x] replace type string with icon
-[x] added id to media details view
-[x] extracted textview for media element to xml
-[x] make media drawable from tombola at random
-    [x] implement in model
-    [x] connect with view
-    [x] create prompt with details of drawn media
-[x] bug: after reopening tombola details, view show 4 times the media what the tombola object actually has
-[x] make media addable in newTombola view
-[x] extract all used colors to colors.xml
-    [x] buttons
-    [x] activities
-    [x] fragments
-[x] map instead of list for tombola database
-[x] implement tombola details view
-    [x] see tombola details
-    [x] delete tombola
-[x] increase text size to 20sp in tombola main
-[x] use map instead of list as media database
-[x] implement media details view
-    [x] see media details
-    [x] delete media
-[x] compliment button texts with icons
-[x] add mediaLists to tombola
-[x] make mediaLists serializable and deserializable
-[x] implement functionality to draw a random media from tombola
-[x] fix TODOs
-[x] fix linters
-[x] bug: deleteAll button is not working properly
-[x] bug: tombola list is shown above the title
-[x] wire up model and views for tombola
-[x] create Tombola views
-[x] rename database to TomboDb
-[x] create Tombola table in db
-[x] create Tombola dao
-[x] implemented auto-increment for app version by number of github commits
-[x] create Tombola class
-[x] button in new media should not block form
-[x] fix bug where list is shown twice + the new entry
-[x] implement deleteMedia helper
-[x] persist media
-[x] implement insertMedia with AsyncTask
-[x] implement getAllMedia
-[x] add options to media type combobox
-[x] font: comic sans
-[x] bigger buttons
-[x] round / oval buttons
-[x] Extend new media view to input more information
-[x] Extend media class to hold more information

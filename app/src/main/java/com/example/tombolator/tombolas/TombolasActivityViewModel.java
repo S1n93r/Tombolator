@@ -11,7 +11,7 @@ public class TombolasActivityViewModel extends ViewModel {
 
     private final MutableLiveData<Tombola> selectedTombola = new MutableLiveData<>();
 
-    private final MutableLiveData<HashMap<Long, Tombola>> tombolaDatabase = new MutableLiveData<>(new HashMap<Long, Tombola>());
+    private final MutableLiveData<HashMap<Long, Tombola>> tombolaDatabase = new MutableLiveData<>(new HashMap<>());
 
     public void addTombola(List<Tombola> tombolaList) {
 
@@ -22,16 +22,6 @@ public class TombolasActivityViewModel extends ViewModel {
 
         for(Tombola tombola : tombolaList)
             tombolaDatabase.getValue().put(tombola.getId(), tombola);
-
-        tombolaDatabase.postValue(tombolaDatabase.getValue());
-    }
-
-    public void removeAllTombolas() {
-
-        if(tombolaDatabase.getValue() == null)
-            throw new NullPointerException();
-
-        tombolaDatabase.getValue().clear();
 
         tombolaDatabase.postValue(tombolaDatabase.getValue());
     }

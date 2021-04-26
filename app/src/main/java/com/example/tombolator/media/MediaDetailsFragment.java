@@ -15,13 +15,18 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.DateUtil;
 import com.example.tombolator.R;
 import com.example.tombolator.TomboDbApplication;
+import com.example.tombolator.tombolas.Tombola;
+import com.example.tombolator.tombolas.TombolaDao;
+import com.example.tombolator.tombolas.TombolasActivityViewModel;
 
+import java.util.List;
 import java.util.Objects;
 
 public class MediaDetailsFragment extends Fragment {
 
     private MediaActivity mediaActivity;
     private MediaActivityViewModel mediaActivityViewModel;
+    private TombolasActivityViewModel tombolasActivityViewModel;
 
     private TextView idValue;
     private TextView nameValue;
@@ -46,6 +51,7 @@ public class MediaDetailsFragment extends Fragment {
 
         mediaActivity = (MediaActivity) getActivity();
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
+        tombolasActivityViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
 
         View layout = inflater.inflate(R.layout.media_details_fragment, container, false);
 
@@ -73,22 +79,51 @@ public class MediaDetailsFragment extends Fragment {
 
         backButton.setOnClickListener(v -> mediaActivity.switchToMainView());
 
-        deleteButton.setOnClickListener(view -> {
+        deleteButton.setOnClickListener(v -> deleteMedia());
+    }
 
-            final Media media = mediaActivityViewModel.getSelectedMedia().getValue();
+    private void deleteMedia() {
 
-            AsyncTask.execute(() -> {
+        final Media media = mediaActivityViewModel.getSelectedMedia().getValue();
 
-                TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
-                        .getApplicationContext());
+        if(media == null) {
+            /* TODO: Add log entry. */
+            return;
+        }
 
-                final MediaDao mediaDao = context.getTomboDb().mediaDao();
-                mediaDao.deleteMedia(media);
-            });
+        AsyncTask.execute(() -> {
 
-            mediaActivityViewModel.removeMedia(Objects.requireNonNull(media).getId());
+            TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+                    .getApplicationContext());
 
-            mediaActivity.switchToMainView();
+            final MediaDao mediaDao = context.getTomboDb().mediaDao();
+            mediaDao.deleteMedia(media);
+        });
+
+        removeMediaFromTombolas(media.getId());
+
+        mediaActivity.switchToMainView();
+    }
+
+    private void removeMediaFromTombolas(long mediaId) {
+
+        if(tombolasActivityViewModel.getTombolaDatabase().getValue() == null) {
+            /* TODO: Add log entry. */
+            return;
+        }
+
+        AsyncTask.execute(() -> {
+
+            TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+                    .getApplicationContext());
+
+            final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
+            List<Tombola> tombolaListFromDatabase = tombolaDao.getAllTombolas();
+
+            for(Tombola tombola : tombolaListFromDatabase) {
+                tombola.removeMedia(mediaId);
+                tombolaDao.updateTombola(tombola);
+            }
         });
     }
 
