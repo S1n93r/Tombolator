@@ -3,6 +3,7 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [.] --- Milestone II: Convenience functions ---
+[ ] add a choosable filter for media list
 [ ] sort by number, name and author depending on type
     [ ] audio plays
     [ ] movies
@@ -27,7 +28,6 @@ ToDos:
     [ ] push v0.84 to github
     [ ] revert to v0.83 locally and start app to check if updater tries to pull v0.84
 [ ] change media list in tombola creation from dual to single list with marking
-[ ] implement categories for media
 [ ] clean up app icon xmls because they seem off
 [ ] check fields on creating new media and inform user if missing
 [ ] check fields on creating new tombola and inform user if missing

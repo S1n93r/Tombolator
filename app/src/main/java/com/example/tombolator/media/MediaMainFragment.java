@@ -57,7 +57,7 @@ public class MediaMainFragment extends Fragment {
 
         pageNumberLabel = layout.findViewById(R.id.label_page_number);
 
-        sortButton = layout.findViewById(R.id.button_sort);
+        sortButton = layout.findViewById(R.id.button_sort_by);
         backButton = layout.findViewById(R.id.button_back);
         nextPageButton = layout.findViewById(R.id.button_next_page);
         previousPageButton = layout.findViewById(R.id.button_previous_page);
