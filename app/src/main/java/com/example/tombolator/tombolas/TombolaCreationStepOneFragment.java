@@ -42,7 +42,7 @@ public class TombolaCreationStepOneFragment extends Fragment {
         tombolasActivity = (TombolasActivity) getActivity();
         tombolasActivityViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
 
-        View layout = inflater.inflate(R.layout.tombola_creation_step_one_fragment, container, false);
+        View layout = inflater.inflate(R.layout.tombolas_creation_step_one_fragment, container, false);
 
         nameEditText = layout.findViewById(R.id.edit_text_name);
 

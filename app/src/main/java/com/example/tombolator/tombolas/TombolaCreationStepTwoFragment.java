@@ -50,7 +50,7 @@ public class TombolaCreationStepTwoFragment extends Fragment {
         tombolasActivityViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
 
-        View layout = inflater.inflate(R.layout.tombola_creation_step_two_fragment, container, false);
+        View layout = inflater.inflate(R.layout.tombolas_creation_step_two_fragment, container, false);
 
         availableMedia = layout.findViewById(R.id.linear_layout_available_media);
         addedMedia = layout.findViewById(R.id.linear_layout_added_media);

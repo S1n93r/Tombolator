@@ -50,7 +50,7 @@ public class TombolaDetailsFragment extends Fragment {
         tombolasActivity = (TombolasActivity) getActivity();
         tombolaViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
 
-        View layout = inflater.inflate(R.layout.tombola_details_fragment, container, false);
+        View layout = inflater.inflate(R.layout.tombolas_details_fragment, container, false);
 
         nameValue = layout.findViewById(R.id.name_value);
         createdAt = layout.findViewById(R.id.created_at_value);
