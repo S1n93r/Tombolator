@@ -1,7 +1,6 @@
 package com.example.tombolator;
 
 import android.app.Application;
-import androidx.room.Room;
 
 public class TomboApplication extends Application {
 
@@ -12,8 +11,7 @@ public class TomboApplication extends Application {
 
         super.onCreate();
 
-        tomboDatabase = Room.databaseBuilder(this, TomboDatabase.class, TomboDatabase.NAME)
-                .fallbackToDestructiveMigration().build();
+        tomboDatabase = TomboDatabase.getInstance(getApplicationContext());
     }
 
     public TomboDatabase getTomboDb() {

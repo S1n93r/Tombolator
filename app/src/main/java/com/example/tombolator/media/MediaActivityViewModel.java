@@ -42,6 +42,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
     private String currentSearchFilter = DEFAULT_SEARCH_FILTER;
 
     public MediaActivityViewModel(@NonNull Application application) {
+
         super(application);
 
         TomboApplication tomboApplication = (TomboApplication) getApplication().getApplicationContext();
@@ -189,8 +190,11 @@ public class MediaActivityViewModel extends AndroidViewModel {
     }
 
     public void loadMediaFromDatabase() {
+
         mediaList.getValue().addAll(mediaDao.getAllMedia());
         mediaList.postValue(mediaList.getValue());
+
+        updateMediaTypes();
     }
 
     private void applySearchFilter() {
