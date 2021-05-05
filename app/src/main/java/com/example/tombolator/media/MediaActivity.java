@@ -6,7 +6,8 @@ import com.example.tombolator.R;
 
 public class MediaActivity extends AppCompatActivity {
 
-    private MediaMainFragment mediaMainFragment;
+    private MediaListStepOneMediaTypeSelectFragment mediaListStepOneMediaTypeSelectFragment;
+    private MediaListStepTwoMediaListFragment mediaListStepTwoMediaListFragment;
     private MediaCreationStepOneTypesFragment mediaCreationStepOneTypesFragment;
     private MediaCreationStepTwoDescriptionsFragment mediaCreationStepTwoDescriptionsFragment;
     private MediaDetailsFragment mediaDetailsFragment;
@@ -16,21 +17,36 @@ public class MediaActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        mediaMainFragment = MediaMainFragment.newInstance();
+        mediaListStepOneMediaTypeSelectFragment = MediaListStepOneMediaTypeSelectFragment.newInstance();
+        mediaListStepTwoMediaListFragment = MediaListStepTwoMediaListFragment.newInstance();
 
         mediaDetailsFragment = MediaDetailsFragment.newInstance();
         mediaCreationStepOneTypesFragment = MediaCreationStepOneTypesFragment.newInstance();
         mediaCreationStepTwoDescriptionsFragment = MediaCreationStepTwoDescriptionsFragment.newInstance();
         setContentView(R.layout.media_activity);
         if (savedInstanceState == null) {
-            switchToMainView();
+            switchToMediaListStepOne();
         }
     }
 
-    protected void switchToMainView() {
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        /* TODO: Save media list from model to database. */
+    }
+
+    protected void switchToMediaListStepOne() {
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, mediaMainFragment)
+                .replace(R.id.container, mediaListStepOneMediaTypeSelectFragment)
+                .commitNow();
+    }
+
+    protected void switchToMediaListStepTwo() {
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, mediaListStepTwoMediaListFragment)
                 .commitNow();
     }
 

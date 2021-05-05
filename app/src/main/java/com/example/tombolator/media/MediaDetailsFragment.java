@@ -14,7 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.DateUtil;
 import com.example.tombolator.R;
-import com.example.tombolator.TomboDbApplication;
+import com.example.tombolator.TomboApplication;
 import com.example.tombolator.tombolas.Tombola;
 import com.example.tombolator.tombolas.TombolaDao;
 import com.example.tombolator.tombolas.TombolasActivityViewModel;
@@ -77,7 +77,7 @@ public class MediaDetailsFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        backButton.setOnClickListener(v -> mediaActivity.switchToMainView());
+        backButton.setOnClickListener(v -> mediaActivity.switchToMediaListStepTwo());
 
         deleteButton.setOnClickListener(v -> deleteMedia());
     }
@@ -93,7 +93,7 @@ public class MediaDetailsFragment extends Fragment {
 
         AsyncTask.execute(() -> {
 
-            TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+            TomboApplication context = ((TomboApplication) Objects.requireNonNull(getActivity())
                     .getApplicationContext());
 
             final MediaDao mediaDao = context.getTomboDb().mediaDao();
@@ -102,7 +102,7 @@ public class MediaDetailsFragment extends Fragment {
 
         removeMediaFromTombolas(media.getId());
 
-        mediaActivity.switchToMainView();
+        mediaActivity.switchToMediaListStepTwo();
     }
 
     private void removeMediaFromTombolas(long mediaId) {
@@ -114,7 +114,7 @@ public class MediaDetailsFragment extends Fragment {
 
         AsyncTask.execute(() -> {
 
-            TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+            TomboApplication context = ((TomboApplication) Objects.requireNonNull(getActivity())
                     .getApplicationContext());
 
             final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();

@@ -12,11 +12,11 @@ import java.util.List;
 public class StashScript implements Runnable {
 
     private static List<Media> MEDIA_CACHE;
-    private final TomboDbApplication context;
+    private final TomboApplication context;
 
     String mediaContentString;
 
-    public StashScript(TomboDbApplication context) {
+    public StashScript(TomboApplication context) {
         this.context = context;
     }
 

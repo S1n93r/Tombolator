@@ -1,15 +1,19 @@
 package com.example.tombolator.media;
 
+import android.app.Application;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+import com.example.tombolator.TomboApplication;
+import com.example.tombolator.TomboDatabase;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 import java.util.*;
 
-public class MediaActivityViewModel extends ViewModel {
+public class MediaActivityViewModel extends AndroidViewModel {
 
     private static final String DEFAULT_SEARCH_FILTER = "[show all media]";
     private static final int MEDIA_PER_PAGE = 8;
@@ -17,20 +21,33 @@ public class MediaActivityViewModel extends ViewModel {
     private static final int SORTING_REGULAR = 0;
     private static final int SORTING_REVERSED = 1;
 
-    private int currentSortingMode = SORTING_REGULAR;
-
-    private String currentSearchFilter = DEFAULT_SEARCH_FILTER;
+    private final MediaDao mediaDao;
 
     private final MutableLiveData<Integer> currentPage = new MutableLiveData<>(1);
     private final MutableLiveData<Integer> numberOfPages = new MutableLiveData<>(1);
 
     private final MutableLiveData<Media> selectedMedia = new MutableLiveData<>();
 
+    private final MutableLiveData<ArrayList<String>> availableMediaTypes = new MutableLiveData<>(new ArrayList<>());
+    private final MutableLiveData<ArrayList<String>> selectedMediaTypes = new MutableLiveData<>(new ArrayList<>());
+
     private final MutableLiveData<ArrayList<Media>> mediaOnCurrentPage = new MutableLiveData<>(new ArrayList<>());
     private final ArrayList<Media> mediaListFiltered = new ArrayList<>();
 
     private final MutableLiveData<ArrayList<Media>> mediaList = new MutableLiveData<>(new ArrayList<>());
     private final MutableLiveData<HashMap<Long, Media>> mediaDatabaseLiveData = new MutableLiveData<>(new HashMap<>());
+
+    private int currentSortingMode = SORTING_REGULAR;
+
+    private String currentSearchFilter = DEFAULT_SEARCH_FILTER;
+
+    public MediaActivityViewModel(@NonNull Application application) {
+        super(application);
+
+        TomboApplication tomboApplication = (TomboApplication) getApplication().getApplicationContext();
+        TomboDatabase tomboDatabase = tomboApplication.getTomboDb();
+        mediaDao = tomboDatabase.mediaDao();
+    }
 
     public void toFirstPage() {
 
@@ -167,6 +184,15 @@ public class MediaActivityViewModel extends ViewModel {
         applySearchFilter();
     }
 
+    public void writeMediaToDatabase() {
+        mediaDao.insertAllMedia(mediaList.getValue());
+    }
+
+    public void loadMediaFromDatabase() {
+        mediaList.getValue().addAll(mediaDao.getAllMedia());
+        mediaList.postValue(mediaList.getValue());
+    }
+
     private void applySearchFilter() {
 
         if (mediaList.getValue() == null) {
@@ -231,6 +257,21 @@ public class MediaActivityViewModel extends ViewModel {
         }
     }
 
+    private synchronized void updateMediaTypes() {
+
+        Set<String> set = new HashSet<>();
+
+        for(Media media : mediaList.getValue()) {
+            set.add(media.getType());
+        }
+
+        for(String mediaType : set) {
+            availableMediaTypes.getValue().add(mediaType);
+        }
+
+        availableMediaTypes.postValue(availableMediaTypes.getValue());
+    }
+
     public LiveData<HashMap<Long, Media>> getMediaDatabase() {
         return mediaDatabaseLiveData;
     }
@@ -245,5 +286,17 @@ public class MediaActivityViewModel extends ViewModel {
 
     public MutableLiveData<Integer> getCurrentPage() {
         return currentPage;
+    }
+
+    public MutableLiveData<ArrayList<String>> getSelectedMediaTypes() {
+        return selectedMediaTypes;
+    }
+
+    public MutableLiveData<ArrayList<String>> getAvailableMediaTypes() {
+        return availableMediaTypes;
+    }
+
+    public List<String> getAvailableMediaTypesAsUnmodifiableList() {
+        return Collections.unmodifiableList(availableMediaTypes.getValue());
     }
 }

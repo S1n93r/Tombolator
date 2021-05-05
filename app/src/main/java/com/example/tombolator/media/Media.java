@@ -110,6 +110,20 @@ public class Media implements Parcelable {
         return "(" + number + ") "+ name + "\n" + title;
     }
 
+    public static final class Type {
+
+        public static final String CASSETTE = "Kassette";
+        public static final String CD = "CD";
+        public static final String DVD = "DVD";
+        public static final String BLU_RAY = "Blu-ray";
+        public static final String E_BOOK = "E-Book";
+        public static final String BOOK = "Buch";
+        public static final String AUDIO_PLAY = "Hörspiel";
+        public static final String AUDIO_BOOK = "Hörbuch";
+        public static final String MOVIE = "Film";
+        public static final String SERIES = "Serie";
+    }
+
     public Long getId() {
         return id;
     }
@@ -164,19 +178,5 @@ public class Media implements Parcelable {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public static final class Type {
-
-        public static final String CASSETTE = "Kassette";
-        public static final String CD = "CD";
-        public static final String DVD = "DVD";
-        public static final String BLU_RAY = "Blu-ray";
-        public static final String E_BOOK = "E-Book";
-        public static final String BOOK = "Buch";
-        public static final String AUDIO_PLAY = "Hörspiel";
-        public static final String AUDIO_BOOK = "Hörbuch";
-        public static final String MOVIE = "Film";
-        public static final String SERIES = "Serie";
     }
 }

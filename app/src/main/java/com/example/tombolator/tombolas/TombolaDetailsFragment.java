@@ -14,7 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.DateUtil;
 import com.example.tombolator.R;
-import com.example.tombolator.TomboDbApplication;
+import com.example.tombolator.TomboApplication;
 import com.example.tombolator.media.Media;
 
 import java.util.Objects;
@@ -112,7 +112,7 @@ public class TombolaDetailsFragment extends Fragment {
 
             AsyncTask.execute(() -> {
 
-                TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+                TomboApplication context = ((TomboApplication) Objects.requireNonNull(getActivity())
                         .getApplicationContext());
 
                 final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
@@ -158,7 +158,7 @@ public class TombolaDetailsFragment extends Fragment {
 
         AsyncTask.execute(() -> {
 
-            TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+            TomboApplication context = ((TomboApplication) Objects.requireNonNull(getActivity())
                     .getApplicationContext());
 
             final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();

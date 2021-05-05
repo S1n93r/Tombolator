@@ -9,7 +9,7 @@ import android.widget.Button;
 import androidx.fragment.app.Fragment;
 import com.example.tombolator.R;
 import com.example.tombolator.StashScript;
-import com.example.tombolator.TomboDbApplication;
+import com.example.tombolator.TomboApplication;
 
 import java.util.Objects;
 
@@ -53,7 +53,7 @@ public class ConfigMainFragment extends Fragment {
                     @Override
                     public void run() {
 
-                        TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+                        TomboApplication context = ((TomboApplication) Objects.requireNonNull(getActivity())
                                 .getApplicationContext());
 
                         new StashScript(context).run();

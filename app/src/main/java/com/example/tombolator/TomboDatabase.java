@@ -12,7 +12,7 @@ import com.example.tombolator.tombolas.TombolaDao;
         Tombola.class
 }, version = 1)
 @TypeConverters({Converters.class})
-public abstract class TomboDb extends RoomDatabase {
+public abstract class TomboDatabase extends RoomDatabase {
 
     public abstract MediaDao mediaDao();
     public abstract TombolaDao tombolaDao();

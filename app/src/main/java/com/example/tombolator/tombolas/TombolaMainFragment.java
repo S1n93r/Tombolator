@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
-import com.example.tombolator.TomboDbApplication;
+import com.example.tombolator.TomboApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +80,7 @@ public class TombolaMainFragment extends Fragment {
 
         AsyncTask.execute(() -> {
 
-            TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+            TomboApplication context = ((TomboApplication) Objects.requireNonNull(getActivity())
                     .getApplicationContext());
 
             final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();

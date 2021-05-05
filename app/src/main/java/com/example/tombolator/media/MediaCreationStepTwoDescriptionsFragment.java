@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
-import com.example.tombolator.TomboDbApplication;
+import com.example.tombolator.TomboApplication;
 
 import java.util.Objects;
 
@@ -117,7 +117,7 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
 
                 AsyncTask.execute(() -> {
 
-                    TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+                    TomboApplication context = ((TomboApplication) Objects.requireNonNull(getActivity())
                             .getApplicationContext());
 
                     final MediaDao mediaDao = context.getTomboDb().mediaDao();
@@ -125,7 +125,7 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
                 });
 
                 resetForm();
-                mediaActivity.switchToMainView();
+                mediaActivity.switchToMediaListStepTwo();
             }
         });
     }

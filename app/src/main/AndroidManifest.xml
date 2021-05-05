@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.example.tombolator">
 
-    <application android:name=".TomboDbApplication"
+    <application android:name=".TomboApplication"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher_bingo"
             android:label="@string/app_mame"

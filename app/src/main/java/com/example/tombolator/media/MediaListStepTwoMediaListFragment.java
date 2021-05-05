@@ -11,13 +11,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
-import com.example.tombolator.TomboDbApplication;
+import com.example.tombolator.TomboApplication;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class MediaMainFragment extends Fragment {
+public class MediaListStepTwoMediaListFragment extends Fragment {
 
     private MediaActivity mediaActivity;
     private final View.OnClickListener showDetailsListener = new ShowDetailsListener();
@@ -36,10 +36,10 @@ public class MediaMainFragment extends Fragment {
     private Button previousPageButton;
     private Button newMediaButton;
 
-    private MediaMainFragment() {}
+    private MediaListStepTwoMediaListFragment() {}
 
-    public static MediaMainFragment newInstance() {
-        return new MediaMainFragment();
+    public static MediaListStepTwoMediaListFragment newInstance() {
+        return new MediaListStepTwoMediaListFragment();
     }
 
     @Override
@@ -49,7 +49,7 @@ public class MediaMainFragment extends Fragment {
         mediaActivity = (MediaActivity) getActivity();
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
 
-        View layout = inflater.inflate(R.layout.media_main_fragment, container, false);
+        View layout = inflater.inflate(R.layout.media_list_step_two_media_list, container, false);
 
         search = layout.findViewById(R.id.edit_text_search);
 
@@ -67,7 +67,7 @@ public class MediaMainFragment extends Fragment {
         registerOnKeyListener();
         registerOnClickListener();
 
-        refreshView();
+        loadMediaFromDatabase();
 
         return layout;
     }
@@ -88,7 +88,7 @@ public class MediaMainFragment extends Fragment {
 
         sortButton.setOnClickListener(view -> mediaActivityViewModel.sortMediaByName());
 
-        backButton.setOnClickListener(view -> mediaActivity.finish());
+        backButton.setOnClickListener(view -> mediaActivity.switchToMediaListStepOne());
 
         nextPageButton.setOnClickListener(view -> mediaActivityViewModel.nextPage());
 
@@ -97,11 +97,12 @@ public class MediaMainFragment extends Fragment {
         newMediaButton.setOnClickListener(view -> mediaActivity.switchToCreationStepOne());
     }
 
-    public void refreshView() {
+    /* TODO: View fragment is probably not the right place for this... */
+    public void loadMediaFromDatabase() {
 
         AsyncTask.execute(() -> {
 
-            TomboDbApplication context = ((TomboDbApplication) Objects.requireNonNull(getActivity())
+            TomboApplication context = ((TomboApplication) Objects.requireNonNull(getActivity())
                     .getApplicationContext());
 
             final MediaDao mediaDao = context.getTomboDb().mediaDao();

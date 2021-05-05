@@ -42,6 +42,7 @@
     <string name="label_media_drawn">…davon gezogen</string>
     <string name="label_id">ID</string>
     <string name="label_search">Suche</string>
+    <string name="label_what_category">Welche Kategorie(n)?</string>
     <string name="media_type_cassette">Kassette</string>
     <string name="media_type_cd">CD</string>
     <string name="media_type_dvd">DVD</string>
