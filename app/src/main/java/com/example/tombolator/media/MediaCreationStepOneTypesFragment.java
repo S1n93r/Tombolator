@@ -84,10 +84,10 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
             String type = spinnerType.getSelectedItem() != null ? spinnerType.getSelectedItem().toString() : "";
 
-            Media media = new Media();
-            media.setType(type);
+            Media selectedMedia = mediaActivityViewModel.getSelectedMedia().getValue();
+            selectedMedia.setType(type);
 
-            mediaActivityViewModel.getSelectedMedia().setValue(media);
+            mediaActivityViewModel.selectMedia(selectedMedia);
 
             resetForm();
             mediaActivity.switchToCreationStepTwo();

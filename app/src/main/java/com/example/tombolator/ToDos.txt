@@ -3,11 +3,13 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [.] --- Milestone II: Convenience functions ---
-[.] re-structure mvvm pattern for MediaActivity
-    [ ] remove database access from views
-    [ ] make sure view model saves to db when paused or shut down --> onCleared()
-    [ ] change all view actions to manipulate the view model only
-    [ ] view model should not call database but user repository
+[ ] bug: media selected getValue() after creation step one is null
+    [ ] on Tombolas the "exact" same thing is working
+[.] bug: insertAll() on onClear() from view models runs into NPE
+    [x] remove insertAll() from onClear()
+    [ ] find better place
+
+[.] re-implement pagination for MediaActivity
     [ ] test if implementation is function-neutral
 
 [ ] add a choosable filter for media list
@@ -87,11 +89,17 @@ ToDos:
 [ ] --- ------------------------------ ---
 
 Done:
+[x] re-structure mvvm pattern for MediaActivity
+    [x] remove database access from views
+    [x] make sure view model saves to db when paused or shut down --> onCleared()
+    [x] change all view actions to manipulate the view model only
+    [x] view model should not call database but use repository
+
 [x] re-structure mvvm pattern for TombolasActivity
     [x] remove database access from views
     [x] make sure view model saves to db when paused or shut down --> onCleared()
     [x] change all view actions to manipulate the view model only
-    [x] view model should not call database but user repository
+    [x] view model should not call database but use repository
     [x] test if implementation is function-neutral
 
 [87] add page number to paginated media list

@@ -1,6 +1,5 @@
 package com.example.tombolator.media;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -8,16 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
-import com.example.tombolator.TomboApplication;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
 public class MediaListStepTwoMediaListFragment extends Fragment {
+
+    private static final int ELEMENTS_PER_PAGE = 8;
+    private MutableLiveData<Integer> currentPage = new MutableLiveData<>(1);
 
     private MediaActivity mediaActivity;
     private final View.OnClickListener showDetailsListener = new ShowDetailsListener();
@@ -67,17 +69,17 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
         registerOnKeyListener();
         registerOnClickListener();
 
-        loadMediaFromDatabase();
-
         return layout;
     }
 
     private void registerObserver() {
 
-        mediaActivityViewModel.getMediaOnCurrentPage()
+        mediaActivityViewModel.getAllMedia()
                 .observe(Objects.requireNonNull(this.getActivity()), new MediaInsertedObserver());
 
         mediaActivityViewModel.getCurrentPage().observe(this.getActivity(), new PageChangedObserver());
+
+        currentPage.observe(this.getActivity(), new PageChangedObserver());
     }
 
     private void registerOnKeyListener() {
@@ -86,30 +88,21 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        sortButton.setOnClickListener(view -> mediaActivityViewModel.sortMediaByName());
+        sortButton.setOnClickListener((View view) -> mediaActivityViewModel.sortMediaByName());
 
-        backButton.setOnClickListener(view -> mediaActivity.switchToMediaListStepOne());
+        backButton.setOnClickListener((View view) -> mediaActivity.switchToMediaListStepOne());
 
-        nextPageButton.setOnClickListener(view -> mediaActivityViewModel.nextPage());
+        nextPageButton.setOnClickListener((View view) -> currentPage.postValue(currentPage.getValue() + 1));
 
-        previousPageButton.setOnClickListener(view -> mediaActivityViewModel.previousPage());
+        previousPageButton.setOnClickListener((View view) -> currentPage.postValue(currentPage.getValue() - 1));
 
-        newMediaButton.setOnClickListener(view -> mediaActivity.switchToCreationStepOne());
-    }
+        newMediaButton.setOnClickListener((View view) -> {
 
-    /* TODO: View fragment is probably not the right place for this... */
-    public void loadMediaFromDatabase() {
+            Media media = new Media();
 
-        AsyncTask.execute(() -> {
+            mediaActivityViewModel.selectMedia(media);
 
-            TomboApplication context = ((TomboApplication) Objects.requireNonNull(getActivity())
-                    .getApplicationContext());
-
-            final MediaDao mediaDao = context.getTomboDb().mediaDao();
-            List<Media> mediaList = mediaDao.getAllMedia();
-
-            mediaActivityViewModel.clearAndAddMedia(mediaList);
-            mediaActivityViewModel.toFirstPage();
+            mediaActivity.switchToCreationStepOne();
         });
     }
 
@@ -146,7 +139,7 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
         @Override
         public void onChanged(Integer pageNumber) {
 
-            int numberOfPages = mediaActivityViewModel.getNumberOfPages();
+            int numberOfPages = 99;
             int numberOfDigits = String.valueOf(numberOfPages).length();
 
             String numberFormat = "%0" + numberOfDigits + "d";

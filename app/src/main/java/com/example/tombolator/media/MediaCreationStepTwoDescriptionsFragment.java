@@ -1,6 +1,5 @@
 package com.example.tombolator.media;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
-import com.example.tombolator.TomboApplication;
 
 import java.util.Objects;
 
@@ -115,14 +113,7 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
                 media.setNumber(number);
                 media.setAuthor(author);
 
-                AsyncTask.execute(() -> {
-
-                    TomboApplication context = ((TomboApplication) Objects.requireNonNull(getActivity())
-                            .getApplicationContext());
-
-                    final MediaDao mediaDao = context.getTomboDb().mediaDao();
-                    mediaDao.insertMedia(media);
-                });
+                mediaActivityViewModel.insert(media);
 
                 resetForm();
                 mediaActivity.switchToMediaListStepTwo();

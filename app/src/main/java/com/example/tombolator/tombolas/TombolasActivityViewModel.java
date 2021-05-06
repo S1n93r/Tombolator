@@ -24,14 +24,6 @@ public class TombolasActivityViewModel extends AndroidViewModel {
         allTombolas = tomboRepository.getAllTombolasLiveData();
     }
 
-    @Override
-    protected void onCleared() {
-
-        super.onCleared();
-
-        tomboRepository.insertAllTombolas(allTombolas.getValue());
-    }
-
     public void insertTombola(Tombola tombola) {
         tomboRepository.insertTombola(tombola);
     }
@@ -56,13 +48,19 @@ public class TombolasActivityViewModel extends AndroidViewModel {
         tomboRepository.deleteAllTombolas();
     }
 
+    public void selectTombola(Tombola tombola) {
+        selectedTombola.setValue(tombola);
+        selectedTombola.postValue(selectedTombola.getValue());
+    }
+
     public void selectTombola(long tombolaId) {
 
         for(Tombola tombola : allTombolas.getValue()) {
 
             if(tombola.getId() == tombolaId) {
 
-                selectedTombola.postValue(tombola);
+                selectedTombola.setValue(tombola);
+                selectedTombola.postValue(selectedTombola.getValue());
                 return;
             }
         }

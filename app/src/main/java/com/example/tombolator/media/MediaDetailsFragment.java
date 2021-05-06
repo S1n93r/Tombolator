@@ -1,6 +1,5 @@
 package com.example.tombolator.media;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.DateUtil;
 import com.example.tombolator.R;
-import com.example.tombolator.TomboApplication;
 import com.example.tombolator.tombolas.Tombola;
 import com.example.tombolator.tombolas.TombolasActivityViewModel;
 
@@ -75,31 +73,18 @@ public class MediaDetailsFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        backButton.setOnClickListener(v -> mediaActivity.switchToMediaListStepTwo());
+        backButton.setOnClickListener((View v) -> mediaActivity.switchToMediaListStepTwo());
 
-        deleteButton.setOnClickListener(v -> deleteMedia());
+        deleteButton.setOnClickListener((View v) -> deleteMedia());
     }
 
     private void deleteMedia() {
 
-        final Media media = mediaActivityViewModel.getSelectedMedia().getValue();
-
-        if(media == null) {
-            /* TODO: Add log entry. */
-            return;
-        }
-
-        AsyncTask.execute(() -> {
-
-            TomboApplication context = ((TomboApplication) Objects.requireNonNull(getActivity())
-                    .getApplicationContext());
-
-            final MediaDao mediaDao = context.getTomboDb().mediaDao();
-            mediaDao.deleteMedia(media);
-        });
+        Media media = mediaActivityViewModel.getSelectedMedia().getValue();
 
         removeMediaFromTombolas(media.getId());
 
+        mediaActivityViewModel.delete(media);
         mediaActivity.switchToMediaListStepTwo();
     }
 

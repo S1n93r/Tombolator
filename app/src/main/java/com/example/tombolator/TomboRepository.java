@@ -33,8 +33,16 @@ public class TomboRepository {
         new InsertMediaAsyncTask(mediaDao).execute(media);
     }
 
+    public void insertAllMedia(List<Media> mediaList) {
+        new InsertAllMediaAsyncTask(mediaDao).execute(mediaList);
+    }
+
     public void updateMedia(Media media) {
         new UpdateMediaAsyncTask(mediaDao).execute(media);
+    }
+
+    public void updateAllMedia(List<Media> mediaList) {
+        new UpdateAllMediaAsyncTask(mediaDao).execute(mediaList);
     }
 
     public void deleteMedia(Media media) {
@@ -93,6 +101,22 @@ public class TomboRepository {
         }
     }
 
+    private static class InsertAllMediaAsyncTask extends AsyncTask<List<Media>, Void, Void> {
+
+        private final MediaDao mediaDao;
+
+        public InsertAllMediaAsyncTask(MediaDao mediaDao) {
+            this.mediaDao = mediaDao;
+        }
+
+        @Override
+        protected Void doInBackground(List<Media>... lists) {
+
+            mediaDao.insertAllMedia(lists[0]);
+            return null;
+        }
+    }
+
     private static class UpdateMediaAsyncTask extends AsyncTask<Media, Void, Void> {
 
         private final MediaDao mediaDao;
@@ -105,6 +129,22 @@ public class TomboRepository {
         protected Void doInBackground(Media... media) {
 
             mediaDao.updateMedia(media[0]);
+            return null;
+        }
+    }
+
+    private static class UpdateAllMediaAsyncTask extends AsyncTask<List<Media>, Void, Void> {
+
+        private final MediaDao mediaDao;
+
+        public UpdateAllMediaAsyncTask(MediaDao mediaDao) {
+            this.mediaDao = mediaDao;
+        }
+
+        @Override
+        protected Void doInBackground(List<Media>... lists) {
+
+            mediaDao.updateAllMedia(lists[0]);
             return null;
         }
     }

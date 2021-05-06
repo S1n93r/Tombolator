@@ -134,38 +134,23 @@ public class MediaActivityViewModel extends AndroidViewModel {
         applySearchFilter();
     }
 
-    public void removeMedia(long mediaId) {
-
-        if (this.mediaList.getValue() == null) {
-            /* TODO: Add error log here */
-            return;
-        }
-
-        if (mediaDatabaseLiveData.getValue() == null) {
-            /* TODO: Add error log here */
-            return;
-        }
-
-        mediaList.getValue().remove(mediaDatabaseLiveData.getValue().get(mediaId));
-        mediaDatabaseLiveData.getValue().remove(mediaId);
-
-        mediaDatabaseLiveData.postValue(mediaDatabaseLiveData.getValue());
-        applySearchFilter();
+    public void selectMedia(Media media) {
+        selectedMedia.setValue(Objects.requireNonNull(media));
+        selectedMedia.postValue(selectedMedia.getValue());
     }
 
     public void selectMedia(long mediaId) {
 
-        if(mediaDatabaseLiveData.getValue() == null)
-            throw new NullPointerException();
+        for(Media media : allMedia.getValue()) {
 
-        Media media = mediaDatabaseLiveData.getValue().get(mediaId);
+            if(media.getId() == mediaId) {
 
-        if(media == null) {
-            System.err.println("Medium not found. Selected media remains null.");
-            return;
+                selectedMedia.postValue(media);
+                return;
+            }
         }
 
-        selectedMedia.postValue(media);
+        System.err.println("Media with id " + mediaId + " was not found in " + this.getClass() + ".");
     }
 
     public void setMediaSearchFilter(String searchFilter) {
@@ -240,8 +225,16 @@ public class MediaActivityViewModel extends AndroidViewModel {
         tomboRepository.insertMedia(media);
     }
 
+    public void insertAll(List<Media> mediaList) {
+        tomboRepository.insertAllMedia(mediaList);
+    }
+
     public void update(Media media) {
         tomboRepository.updateMedia(media);
+    }
+
+    public void updateAll(List<Media> mediaList) {
+        tomboRepository.updateAllMedia(mediaList);
     }
 
     public void delete(Media media) {

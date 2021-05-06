@@ -65,7 +65,7 @@ public class TombolaMainFragment extends Fragment {
 
             Tombola tombola = new Tombola();
 
-            tombolasActivityViewModel.getSelectedTombola().setValue(tombola);
+            tombolasActivityViewModel.selectTombola(tombola);
             tombolasActivity.switchToCreationStepOne();
         });
     }

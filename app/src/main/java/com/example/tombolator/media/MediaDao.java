@@ -18,7 +18,7 @@ public interface MediaDao {
     LiveData<List<Media>> getAllMediaAsLiveData();
 
     @Query("SELECT * FROM Media WHERE id = :mediaId")
-    Media getById(long mediaId);
+    Media getMedia(long mediaId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMedia(Media media);
