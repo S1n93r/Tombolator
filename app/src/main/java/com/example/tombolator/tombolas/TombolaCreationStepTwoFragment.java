@@ -17,7 +17,6 @@ import com.example.tombolator.R;
 import com.example.tombolator.TomboApplication;
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaActivityViewModel;
-import com.example.tombolator.media.MediaDao;
 
 import java.util.List;
 import java.util.Map;
@@ -61,8 +60,6 @@ public class TombolaCreationStepTwoFragment extends Fragment {
         registerObserver();
         registerOnClickListener();
 
-        refreshViewModel();
-
         return layout;
     }
 
@@ -99,20 +96,6 @@ public class TombolaCreationStepTwoFragment extends Fragment {
     private void resetForm() {
         availableMedia.removeAllViews();
         addedMedia.removeAllViews();
-    }
-
-    public void refreshViewModel() {
-
-        AsyncTask.execute(() -> {
-
-            TomboApplication context = ((TomboApplication) Objects.requireNonNull(getActivity())
-                    .getApplicationContext());
-
-            final MediaDao mediaDao = context.getTomboDb().mediaDao();
-            List<Media> mediaList = mediaDao.getAllMedia();
-
-            mediaActivityViewModel.clearAndAddMedia(mediaList);
-        });
     }
 
     private class MediaInsertedObserver implements Observer<Map<Long, Media>> {

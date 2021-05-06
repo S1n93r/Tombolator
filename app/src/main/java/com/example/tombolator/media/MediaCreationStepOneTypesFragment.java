@@ -38,7 +38,9 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
             @Nullable Bundle savedInstanceState) {
 
         mediaActivity = (MediaActivity) getActivity();
-        mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
+        mediaActivityViewModel = new ViewModelProvider(
+                this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.getActivity().getApplication()))
+                .get(MediaActivityViewModel.class);
 
         View layout = inflater.inflate(R.layout.media_creation_step_one_types_fragment, container, false);
 

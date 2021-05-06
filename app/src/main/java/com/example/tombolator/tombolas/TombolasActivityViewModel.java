@@ -1,52 +1,80 @@
 package com.example.tombolator.tombolas;
 
+import android.app.Application;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+import com.example.tombolator.TomboRepository;
 
-import java.util.HashMap;
 import java.util.List;
 
-public class TombolasActivityViewModel extends ViewModel {
+public class TombolasActivityViewModel extends AndroidViewModel {
+
+    private final TomboRepository tomboRepository;
+    private final LiveData<List<Tombola>> allTombolas;
 
     private final MutableLiveData<Tombola> selectedTombola = new MutableLiveData<>();
 
-    private final MutableLiveData<HashMap<Long, Tombola>> tombolaDatabase = new MutableLiveData<>(new HashMap<>());
+    public TombolasActivityViewModel(@NonNull Application application) {
 
-    public void addTombola(List<Tombola> tombolaList) {
+        super(application);
 
-        if(tombolaDatabase.getValue() == null)
-            throw new NullPointerException();
-
-        tombolaDatabase.getValue().clear();
-
-        for(Tombola tombola : tombolaList)
-            tombolaDatabase.getValue().put(tombola.getId(), tombola);
-
-        tombolaDatabase.postValue(tombolaDatabase.getValue());
+        tomboRepository = new TomboRepository(application);
+        allTombolas = tomboRepository.getAllTombolasLiveData();
     }
 
-    public void removeTombola(long tombolaId) {
+    @Override
+    protected void onCleared() {
 
-        if(tombolaDatabase.getValue() == null)
-            throw new NullPointerException();
+        super.onCleared();
 
-        tombolaDatabase.getValue().remove(tombolaId);
+        tomboRepository.insertAllTombolas(allTombolas.getValue());
+    }
+
+    public void insertTombola(Tombola tombola) {
+        tomboRepository.insertTombola(tombola);
+    }
+
+    public void insertAllTombolas(List<Tombola> tombolaList) {
+        tomboRepository.insertAllTombolas(tombolaList);
+    }
+
+    public void updateTombola(Tombola tombola) {
+        tomboRepository.updateTombola(tombola);
+    }
+
+    public void updateAllTombolas(List<Tombola> tombolaList) {
+        tomboRepository.updateAllTombolas(tombolaList);
+    }
+
+    public void deleteTombola(Tombola tombola) {
+        tomboRepository.deleteTombola(tombola);
+    }
+
+    public void deletAllTombolas() {
+        tomboRepository.deleteAllTombolas();
     }
 
     public void selectTombola(long tombolaId) {
 
-        if(tombolaDatabase.getValue() == null)
-            throw new NullPointerException();
+        for(Tombola tombola : allTombolas.getValue()) {
 
-        selectedTombola.postValue(tombolaDatabase.getValue().get(tombolaId));
+            if(tombola.getId() == tombolaId) {
+
+                selectedTombola.postValue(tombola);
+                return;
+            }
+        }
+
+        System.err.println("Tombola with id " + tombolaId + " was not found in " + this.getClass() + ".");
     }
 
     public MutableLiveData<Tombola> getSelectedTombola() {
         return selectedTombola;
     }
 
-    public LiveData<HashMap<Long, Tombola>> getTombolaDatabase() {
-        return tombolaDatabase;
+    public LiveData<List<Tombola>> getAllTombolas() {
+        return allTombolas;
     }
 }

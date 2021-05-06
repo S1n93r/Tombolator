@@ -1,6 +1,5 @@
 package com.example.tombolator.tombolas;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.DateUtil;
 import com.example.tombolator.R;
-import com.example.tombolator.TomboApplication;
 import com.example.tombolator.media.Media;
 
 import java.util.Objects;
@@ -97,7 +95,8 @@ public class TombolaDetailsFragment extends Fragment {
             drawnMediaDialog.getContentText().setText(Objects.requireNonNull(drawnMedia).toLabel());
 
             updateCounters(selectedTombola);
-            saveTombolaToDatabase(selectedTombola);
+
+            tombolaViewModel.insertTombola(selectedTombola);
         });
 
         editTombolaButton.setOnClickListener(view -> {
@@ -110,17 +109,7 @@ public class TombolaDetailsFragment extends Fragment {
 
             final Tombola tombola = tombolaViewModel.getSelectedTombola().getValue();
 
-            AsyncTask.execute(() -> {
-
-                TomboApplication context = ((TomboApplication) Objects.requireNonNull(getActivity())
-                        .getApplicationContext());
-
-                final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
-                tombolaDao.deleteMedia(tombola);
-            });
-
-            tombolaViewModel.removeTombola(Objects.requireNonNull(tombola).getId());
-
+            tombolaViewModel.deleteTombola(tombola);
             tombolasActivity.switchToTombolasMainView();
         });
     }
@@ -152,17 +141,5 @@ public class TombolaDetailsFragment extends Fragment {
         numberOfMediaAll.setText(String.valueOf(tombola.getAllMedia().size()));
         numberOfMediaAvailable.setText(String.valueOf(tombola.getMediaAvailable().size()));
         numberOfMediaDrawn.setText(String.valueOf(tombola.getMediaDrawn().size()));
-    }
-
-    private void saveTombolaToDatabase(final Tombola tombola) {
-
-        AsyncTask.execute(() -> {
-
-            TomboApplication context = ((TomboApplication) Objects.requireNonNull(getActivity())
-                    .getApplicationContext());
-
-            final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
-            tombolaDao.insertTombola(tombola);
-        });
     }
 }

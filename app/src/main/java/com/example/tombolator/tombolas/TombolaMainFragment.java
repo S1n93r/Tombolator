@@ -1,6 +1,5 @@
 package com.example.tombolator.tombolas;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
-import com.example.tombolator.TomboApplication;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class TombolaMainFragment extends Fragment {
@@ -55,14 +51,12 @@ public class TombolaMainFragment extends Fragment {
         registerObserver();
         registerOnClickListener();
 
-        refreshViewModel();
-
         return layout;
     }
 
     private void registerObserver() {
-        tombolasActivityViewModel.getTombolaDatabase()
-                .observe(Objects.requireNonNull(this.getActivity()), new TombolasInsertedObserver());
+        tombolasActivityViewModel.getAllTombolas()
+                .observe(Objects.requireNonNull(this.getActivity()), new TombolaListChangedObserver());
     }
 
     private void registerOnClickListener() {
@@ -76,35 +70,14 @@ public class TombolaMainFragment extends Fragment {
         });
     }
 
-    private void refreshViewModel() {
-
-        AsyncTask.execute(() -> {
-
-            TomboApplication context = ((TomboApplication) Objects.requireNonNull(getActivity())
-                    .getApplicationContext());
-
-            final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
-            List<Long> tombolaIds = tombolaDao.getAllIds();
-            List<Tombola> tombolaList = new ArrayList<>();
-
-            for (long id : tombolaIds) {
-                tombolaList.add(tombolaDao.getById(id));
-            }
-
-            tombolasActivityViewModel.addTombola(tombolaList);
-        });
-    }
-
-    private class TombolasInsertedObserver implements Observer<Map<Long, Tombola>> {
+    private class TombolaListChangedObserver implements Observer<List<Tombola>> {
 
         @Override
-        public void onChanged(Map<Long, Tombola> tombolaMap) {
+        public void onChanged(List<Tombola> tombolaList) {
 
             availableTombolas.removeAllViews();
 
-            for(Map.Entry<Long, Tombola> pair : tombolaMap.entrySet()) {
-
-                Tombola tombola = pair.getValue();
+            for(Tombola tombola : tombolaList) {
 
                 long id = tombola.getId();
 

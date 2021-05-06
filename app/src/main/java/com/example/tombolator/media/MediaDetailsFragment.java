@@ -16,10 +16,8 @@ import com.example.tombolator.DateUtil;
 import com.example.tombolator.R;
 import com.example.tombolator.TomboApplication;
 import com.example.tombolator.tombolas.Tombola;
-import com.example.tombolator.tombolas.TombolaDao;
 import com.example.tombolator.tombolas.TombolasActivityViewModel;
 
-import java.util.List;
 import java.util.Objects;
 
 public class MediaDetailsFragment extends Fragment {
@@ -107,24 +105,15 @@ public class MediaDetailsFragment extends Fragment {
 
     private void removeMediaFromTombolas(long mediaId) {
 
-        if(tombolasActivityViewModel.getTombolaDatabase().getValue() == null) {
+        if(tombolasActivityViewModel.getAllTombolas().getValue() == null) {
             /* TODO: Add log entry. */
             return;
         }
 
-        AsyncTask.execute(() -> {
-
-            TomboApplication context = ((TomboApplication) Objects.requireNonNull(getActivity())
-                    .getApplicationContext());
-
-            final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
-            List<Tombola> tombolaListFromDatabase = tombolaDao.getAllTombolas();
-
-            for(Tombola tombola : tombolaListFromDatabase) {
-                tombola.removeMedia(mediaId);
-                tombolaDao.updateTombola(tombola);
-            }
-        });
+        for(Tombola tombola : tombolasActivityViewModel.getAllTombolas().getValue()) {
+            tombola.removeMedia(mediaId);
+            tombolasActivityViewModel.updateTombola(tombola);
+        }
     }
 
     private class SelectedMediaObserver implements Observer<Media> {

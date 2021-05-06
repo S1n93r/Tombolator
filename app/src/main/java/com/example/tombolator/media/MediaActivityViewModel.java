@@ -5,8 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import com.example.tombolator.TomboApplication;
-import com.example.tombolator.TomboDatabase;
+import com.example.tombolator.TomboRepository;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
@@ -21,7 +20,8 @@ public class MediaActivityViewModel extends AndroidViewModel {
     private static final int SORTING_REGULAR = 0;
     private static final int SORTING_REVERSED = 1;
 
-    private final MediaDao mediaDao;
+    private final TomboRepository tomboRepository;
+    private final LiveData<List<Media>> allMedia;
 
     private final MutableLiveData<Integer> currentPage = new MutableLiveData<>(1);
     private final MutableLiveData<Integer> numberOfPages = new MutableLiveData<>(1);
@@ -45,9 +45,8 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
         super(application);
 
-        TomboApplication tomboApplication = (TomboApplication) getApplication().getApplicationContext();
-        TomboDatabase tomboDatabase = tomboApplication.getTomboDb();
-        mediaDao = tomboDatabase.mediaDao();
+        tomboRepository = new TomboRepository(application);
+        allMedia = tomboRepository.getAllMediaLiveData();
     }
 
     public void toFirstPage() {
@@ -185,18 +184,6 @@ public class MediaActivityViewModel extends AndroidViewModel {
         applySearchFilter();
     }
 
-    public void writeMediaToDatabase() {
-        mediaDao.insertAllMedia(mediaList.getValue());
-    }
-
-    public void loadMediaFromDatabase() {
-
-        mediaList.getValue().addAll(mediaDao.getAllMedia());
-        mediaList.postValue(mediaList.getValue());
-
-        updateMediaTypes();
-    }
-
     private void applySearchFilter() {
 
         if (mediaList.getValue() == null) {
@@ -247,6 +234,22 @@ public class MediaActivityViewModel extends AndroidViewModel {
         }
 
         toFirstPage();
+    }
+
+    public void insert(Media media) {
+        tomboRepository.insertMedia(media);
+    }
+
+    public void update(Media media) {
+        tomboRepository.updateMedia(media);
+    }
+
+    public void delete(Media media) {
+        tomboRepository.deleteMedia(media);
+    }
+
+    public void deleteAllMedia() {
+        tomboRepository.deleteAllMedia();
     }
 
     private static class MediaComparator implements Comparator<Media> {
@@ -302,5 +305,9 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
     public List<String> getAvailableMediaTypesAsUnmodifiableList() {
         return Collections.unmodifiableList(availableMediaTypes.getValue());
+    }
+
+    public LiveData<List<Media>> getAllMedia() {
+        return allMedia;
     }
 }
