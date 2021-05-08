@@ -19,7 +19,6 @@ import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaActivityViewModel;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class TombolaCreationStepTwoFragment extends Fragment {
@@ -64,8 +63,8 @@ public class TombolaCreationStepTwoFragment extends Fragment {
     }
 
     private void registerObserver() {
-            mediaActivityViewModel.getMediaDatabase()
-                .observe(Objects.requireNonNull(this.getActivity()), new MediaInsertedObserver());
+            mediaActivityViewModel.getAllMedia()
+                .observe(Objects.requireNonNull(this.getActivity()), new MediaListObserver());
     }
 
     private void registerOnClickListener() {
@@ -98,17 +97,15 @@ public class TombolaCreationStepTwoFragment extends Fragment {
         addedMedia.removeAllViews();
     }
 
-    private class MediaInsertedObserver implements Observer<Map<Long, Media>> {
+    private class MediaListObserver implements Observer<List<Media>> {
 
         @Override
-        public void onChanged(Map<Long, Media> mediaMapInserted) {
+        public void onChanged(List<Media> mediaList) {
 
             availableMedia.removeAllViews();
             addedMedia.removeAllViews();
 
-            for (Map.Entry<Long, Media> pair : mediaMapInserted.entrySet()) {
-
-                Media media = pair.getValue();
+            for (Media media : mediaList) {
 
                 long id = media.getId();
 

@@ -7,7 +7,17 @@ ToDos:
     [x] implement and observe page numbers
     [x] make make index stop at 1 and x (max page)
     [x] make list shown adjust to current page number
-    [.] test if implementation is function-neutral
+    [x] test if implementation is function-neutral --> TestScript.txt
+    [.] issues found during test
+        [x] no media in list for changing tombola
+        [x] no media in list for creating tombola
+        [ ] media in creation / changing tombola cant be added nor removed
+        [ ] sorting media list is not working
+        [ ] searching media list is not working
+        [ ] saving new media does not save it
+        [ ] tombola searching not implemented
+        [ ] pagination for tombola list not implemented
+        [ ] choosing category for media list is not implemented
 
 [ ] add a choosable filter for media list
 [ ] sort by number, name and author depending on type
