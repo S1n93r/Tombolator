@@ -38,9 +38,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
             @Nullable Bundle savedInstanceState) {
 
         mediaActivity = (MediaActivity) getActivity();
-        mediaActivityViewModel = new ViewModelProvider(
-                this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.getActivity().getApplication()))
-                .get(MediaActivityViewModel.class);
+        mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
 
         View layout = inflater.inflate(R.layout.media_creation_step_one_types_fragment, container, false);
 
@@ -84,10 +82,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
             String type = spinnerType.getSelectedItem() != null ? spinnerType.getSelectedItem().toString() : "";
 
-            Media selectedMedia = mediaActivityViewModel.getSelectedMedia().getValue();
-            selectedMedia.setType(type);
-
-            mediaActivityViewModel.selectMedia(selectedMedia);
+            mediaActivityViewModel.getSelectedMedia().getValue().setType(type);
 
             resetForm();
             mediaActivity.switchToCreationStepTwo();

@@ -3,8 +3,6 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [.] --- Milestone II: Convenience functions ---
-[ ] bug: media selected getValue() after creation step one is null
-    [ ] on Tombolas the "exact" same thing is working
 [.] bug: insertAll() on onClear() from view models runs into NPE
     [x] remove insertAll() from onClear()
     [ ] find better place
@@ -89,6 +87,9 @@ ToDos:
 [ ] --- ------------------------------ ---
 
 Done:
+[x] bug: media selected getValue() after creation step one is null
+    fix: MediaCreationStepOne was fetching the media view model wrongly and had another instance as other fragments
+    
 [x] re-structure mvvm pattern for MediaActivity
     [x] remove database access from views
     [x] make sure view model saves to db when paused or shut down --> onCleared()

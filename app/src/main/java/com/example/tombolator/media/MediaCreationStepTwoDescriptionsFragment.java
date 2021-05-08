@@ -101,19 +101,17 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
 
                 int number = numberAsString.length() > 0 ? Integer.parseInt(numberAsString) : -1;
 
-                final Media media = mediaActivityViewModel.getSelectedMedia().getValue();
-
-                if(media == null) {
+                if(mediaActivityViewModel.getSelectedMedia().getValue() == null) {
                     /* TODO: Write NPE to log */
                     throw new NullPointerException();
                 }
 
-                media.setName(name);
-                media.setTitle(title);
-                media.setNumber(number);
-                media.setAuthor(author);
+                mediaActivityViewModel.getSelectedMedia().getValue().setName(name);
+                mediaActivityViewModel.getSelectedMedia().getValue().setTitle(title);
+                mediaActivityViewModel.getSelectedMedia().getValue().setNumber(number);
+                mediaActivityViewModel.getSelectedMedia().getValue().setAuthor(author);
 
-                mediaActivityViewModel.insert(media);
+                mediaActivityViewModel.insert(mediaActivityViewModel.getSelectedMedia().getValue());
 
                 resetForm();
                 mediaActivity.switchToMediaListStepTwo();

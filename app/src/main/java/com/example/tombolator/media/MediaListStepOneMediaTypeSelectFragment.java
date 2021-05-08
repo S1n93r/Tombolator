@@ -103,10 +103,7 @@ public class MediaListStepOneMediaTypeSelectFragment extends Fragment {
         public void onClick(View view) {
 
             TextView textView = (TextView) view;
-            long mediaId = textView.getId();
-            mediaActivityViewModel.selectMedia(mediaId);
-
-            mediaActivity.switchToMediaDetailsView();
+            /* TODO: Implement media type selection. */
         }
     }
 }
