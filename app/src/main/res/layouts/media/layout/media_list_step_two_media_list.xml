@@ -51,14 +51,35 @@
             android:textSize="@dimen/font_size_labels"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:id="@+id/label_page_number"
+            android:id="@+id/label_page_number_current"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:fontFamily="@font/comic_sans_ms"
+            app:layout_constraintTop_toBottomOf="@+id/button_previous_page"
+            app:layout_constraintEnd_toStartOf="@+id/label_page_number_separator"/>
+    <TextView
+            android:text="@string/label_separator_slash"
+            android:textSize="@dimen/font_size_labels"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:id="@+id/label_page_number_separator"
             android:textAlignment="center"
             android:gravity="center"
             android:fontFamily="@font/comic_sans_ms"
             app:layout_constraintTop_toBottomOf="@+id/button_previous_page"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-    />
+            app:layout_constraintHorizontal_bias="0.5"/>
+    <TextView
+            android:textSize="@dimen/font_size_labels"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:id="@+id/label_page_number_total"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:fontFamily="@font/comic_sans_ms"
+            app:layout_constraintTop_toBottomOf="@+id/button_previous_page"
+            app:layout_constraintStart_toEndOf="@+id/label_page_number_separator"/>
     <Button
             android:padding="20dp"
             android:layout_width="@dimen/button_small_width"

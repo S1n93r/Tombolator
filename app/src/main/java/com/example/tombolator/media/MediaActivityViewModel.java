@@ -114,26 +114,6 @@ public class MediaActivityViewModel extends AndroidViewModel {
         return mediaListFiltered.size() / MEDIA_PER_PAGE;
     }
 
-    public void  clearAndAddMedia(List<Media> mediaList) {
-
-        Objects.requireNonNull(this.mediaList.getValue()).clear();
-        Objects.requireNonNull(mediaDatabaseLiveData.getValue()).clear();
-
-        for(Media media : mediaList) {
-
-            if(this.mediaList.getValue() == null) {
-                /* TODO: Add error log here */
-                return;
-            }
-
-            this.mediaList.getValue().add(media);
-            mediaDatabaseLiveData.getValue().put(media.getId(), media);
-        }
-
-        mediaDatabaseLiveData.postValue(mediaDatabaseLiveData.getValue());
-        applySearchFilter();
-    }
-
     public void selectMedia(Media media) {
         selectedMedia.setValue(Objects.requireNonNull(media));
         selectedMedia.postValue(selectedMedia.getValue());

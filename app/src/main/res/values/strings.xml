@@ -43,6 +43,7 @@
     <string name="label_id">ID</string>
     <string name="label_search">Suche</string>
     <string name="label_what_category">Welche Kategorie(n)?</string>
+    <string name="label_separator_slash">/</string>
     <string name="media_type_cassette">Kassette</string>
     <string name="media_type_cd">CD</string>
     <string name="media_type_dvd">DVD</string>

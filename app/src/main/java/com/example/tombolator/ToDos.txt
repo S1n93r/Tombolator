@@ -3,12 +3,11 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [.] --- Milestone II: Convenience functions ---
-[.] bug: insertAll() on onClear() from view models runs into NPE
-    [x] remove insertAll() from onClear()
-    [ ] find better place
-
-[.] re-implement pagination for MediaActivity
-    [ ] test if implementation is function-neutral
+[x] re-implement pagination for MediaActivity
+    [x] implement and observe page numbers
+    [x] make make index stop at 1 and x (max page)
+    [x] make list shown adjust to current page number
+    [.] test if implementation is function-neutral
 
 [ ] add a choosable filter for media list
 [ ] sort by number, name and author depending on type
@@ -89,7 +88,7 @@ ToDos:
 Done:
 [x] bug: media selected getValue() after creation step one is null
     fix: MediaCreationStepOne was fetching the media view model wrongly and had another instance as other fragments
-    
+
 [x] re-structure mvvm pattern for MediaActivity
     [x] remove database access from views
     [x] make sure view model saves to db when paused or shut down --> onCleared()

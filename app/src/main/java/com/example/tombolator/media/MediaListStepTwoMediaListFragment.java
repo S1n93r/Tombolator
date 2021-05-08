@@ -19,7 +19,7 @@ import java.util.Objects;
 public class MediaListStepTwoMediaListFragment extends Fragment {
 
     private static final int ELEMENTS_PER_PAGE = 8;
-    private MutableLiveData<Integer> currentPage = new MutableLiveData<>(1);
+    private final MutableLiveData<Integer> currentPage = new MutableLiveData<>(1);
 
     private MediaActivity mediaActivity;
     private final View.OnClickListener showDetailsListener = new ShowDetailsListener();
@@ -30,7 +30,8 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
 
     private LinearLayout linearLayoutMedia;
 
-    private TextView pageNumberLabel;
+    private TextView pageNumberCurrent;
+    private TextView pageNumberMax;
 
     private ImageView sortButton;
     private Button backButton;
@@ -57,7 +58,8 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
 
         linearLayoutMedia = layout.findViewById(R.id.linear_layout_media);
 
-        pageNumberLabel = layout.findViewById(R.id.label_page_number);
+        pageNumberCurrent = layout.findViewById(R.id.label_page_number_current);
+        pageNumberMax = layout.findViewById(R.id.label_page_number_total);
 
         sortButton = layout.findViewById(R.id.button_sort_by);
         backButton = layout.findViewById(R.id.button_back);
@@ -75,11 +77,13 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
     private void registerObserver() {
 
         mediaActivityViewModel.getAllMedia()
-                .observe(Objects.requireNonNull(this.getActivity()), new MediaInsertedObserver());
+                .observe(Objects.requireNonNull(this.getActivity()), new MediaListObserver());
 
-        mediaActivityViewModel.getCurrentPage().observe(this.getActivity(), new PageChangedObserver());
+        mediaActivityViewModel.getCurrentPage().observe(this.getActivity(), new PageNumberCurrentObserver());
 
-        currentPage.observe(this.getActivity(), new PageChangedObserver());
+        currentPage.observe(this.getActivity(), new PageNumberCurrentObserver());
+
+        mediaActivityViewModel.getAllMedia().observe(this.getActivity(), new PageNumberTotalObserver());
     }
 
     private void registerOnKeyListener() {
@@ -92,9 +96,38 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
 
         backButton.setOnClickListener((View view) -> mediaActivity.switchToMediaListStepOne());
 
-        nextPageButton.setOnClickListener((View view) -> currentPage.postValue(currentPage.getValue() + 1));
+        nextPageButton.setOnClickListener((View view) -> {
 
-        previousPageButton.setOnClickListener((View view) -> currentPage.postValue(currentPage.getValue() - 1));
+            if(currentPage.getValue() == null) {
+                /* TODO: Log NPE here. */
+                return;
+            }
+
+            if(mediaActivityViewModel.getAllMedia().getValue() == null) {
+                /* TODO: Log NPE here. */
+                return;
+            }
+
+            if(currentPage.getValue() == (mediaActivityViewModel.getAllMedia().getValue().size() / ELEMENTS_PER_PAGE))
+                return;
+
+            currentPage.postValue(currentPage.getValue() + 1);
+        });
+
+        previousPageButton.setOnClickListener((View view) -> {
+
+            if(currentPage.getValue() == null) {
+                /* TODO: Log NPE here. */
+                return;
+            }
+
+            if(currentPage.getValue() == 1) {
+                /* TODO: Log NPE here. */
+                return;
+            }
+
+            currentPage.postValue(currentPage.getValue() - 1);
+        });
 
         newMediaButton.setOnClickListener((View view) -> {
 
@@ -106,51 +139,84 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
         });
     }
 
-    private class MediaInsertedObserver implements Observer<List<Media>> {
+    private class MediaListObserver implements Observer<List<Media>> {
 
         @Override
         public void onChanged(List<Media> mediaList) {
-
-            linearLayoutMedia.removeAllViews();
-
-            for (Media media : mediaList) {
-
-                long id = media.getId();
-
-                TextView textView = (TextView) View.inflate(
-                        mediaActivity.getApplicationContext(), R.layout.list_element, null);
-
-                String text = " " + media.toLabel();
-
-                textView.setText(text);
-                textView.setOnClickListener(showDetailsListener);
-                textView.setId((int) id);
-
-                textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                        MediaUtil.getMediaIcon(media), 0, 0, 0);
-
-                linearLayoutMedia.addView(textView);
-            }
+            showMediaOnCurrentPage(mediaList);
         }
     }
 
-    private class PageChangedObserver implements Observer<Integer> {
+    private class PageNumberCurrentObserver implements Observer<Integer> {
 
         @Override
         public void onChanged(Integer pageNumber) {
 
-            int numberOfPages = 99;
-            int numberOfDigits = String.valueOf(numberOfPages).length();
-
-            String numberFormat = "%0" + numberOfDigits + "d";
-
-            String formattedCurrentPageNumber = String.format(Locale.getDefault(), numberFormat, pageNumber);
-            String formattedTotalPageNumbers = String.format(Locale.getDefault(), numberFormat, numberOfPages);
-
-            String numberOfPagesText = formattedCurrentPageNumber + " / " + formattedTotalPageNumbers;
-
-            pageNumberLabel.setText(numberOfPagesText);
+            pageNumberCurrent.setText(formatNumberFullDigitsLeadingZero(pageNumber));
+            showMediaOnCurrentPage(mediaActivityViewModel.getAllMedia().getValue());
         }
+    }
+
+    private class PageNumberTotalObserver implements Observer<List<Media>> {
+
+        @Override
+        public void onChanged(List<Media> mediaList) {
+
+            int numberOfPages = mediaList.size() / ELEMENTS_PER_PAGE;
+
+            pageNumberMax.setText(formatNumberFullDigitsLeadingZero(numberOfPages));
+        }
+    }
+
+    private void showMediaOnCurrentPage (List<Media> mediaList) {
+
+        if(currentPage.getValue() == null) {
+            /* TODO: Log NPE here. */
+            return;
+        }
+
+        if(mediaActivityViewModel.getAllMedia().getValue() == null) {
+            /* TODO: Log NPE here. */
+            return;
+        }
+
+        int start = (currentPage.getValue() - 1) * ELEMENTS_PER_PAGE;
+        int end = start + ELEMENTS_PER_PAGE;
+
+        if(end > mediaActivityViewModel.getAllMedia().getValue().size())
+            end = mediaActivityViewModel.getAllMedia().getValue().size();
+
+        linearLayoutMedia.removeAllViews();
+
+        for(int i=start; i<end; i++) {
+
+            Media media = mediaList.get(i);
+
+            long id = media.getId();
+
+            TextView textView = (TextView) View.inflate(
+                    mediaActivity.getApplicationContext(), R.layout.list_element, null);
+
+            String text = " " + media.toLabel();
+
+            textView.setText(text);
+            textView.setOnClickListener(showDetailsListener);
+            textView.setId((int) id);
+
+            textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    MediaUtil.getMediaIcon(media), 0, 0, 0);
+
+            linearLayoutMedia.addView(textView);
+        }
+    }
+
+    private static String formatNumberFullDigitsLeadingZero(int number) {
+
+        int numberOfDigits = String.valueOf(number).length();
+
+        String numberFormat = "%0" + numberOfDigits + "d";
+
+        return String.format(Locale.getDefault(), numberFormat, number);
     }
 
     private class ShowDetailsListener implements View.OnClickListener {
