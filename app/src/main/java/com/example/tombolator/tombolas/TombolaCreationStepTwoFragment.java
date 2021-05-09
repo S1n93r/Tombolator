@@ -1,6 +1,5 @@
 package com.example.tombolator.tombolas;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
-import com.example.tombolator.TomboApplication;
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaActivityViewModel;
 
@@ -69,27 +67,53 @@ public class TombolaCreationStepTwoFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        backButton.setOnClickListener(v -> {
+        backButton.setOnClickListener((View v) -> {
             resetForm();
             tombolasActivity.switchToCreationStepOne();
         });
 
-        saveButton.setOnClickListener(v -> {
+        saveButton.setOnClickListener(new SaveTombolaListener());
+    }
 
-            final Tombola tombola = tombolasActivityViewModel.getSelectedTombola().getValue();
+    private class SaveTombolaListener implements View.OnClickListener {
 
-            AsyncTask.execute(() -> {
+        @Override
+        public void onClick(View view) {
 
-                TomboApplication context = ((TomboApplication) Objects.requireNonNull(getActivity())
-                        .getApplicationContext());
+            if(tombolasActivityViewModel.getSelectedTombola().getValue() == null) {
+                /* TODO: Add log entry */
+                return;
+            }
 
-                final TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
-                tombolaDao.insertTombola(tombola);
-            });
+            Tombola selectedTombola = tombolasActivityViewModel.getSelectedTombola().getValue();
+            addMediaToTombola(selectedTombola);
+
+            tombolasActivityViewModel.insertTombola(selectedTombola);
 
             resetForm();
             tombolasActivity.switchToTombolasMainView();
-        });
+        }
+    }
+
+    private void addMediaToTombola(Tombola tombola) {
+
+        tombola.getMediaDrawn().clear();
+        tombola.getMediaAvailable().clear();
+
+        for(int i=0; i<addedMedia.getChildCount(); i++) {
+
+            TextView view = (TextView) addedMedia.getChildAt(i);
+            long mediaId = view.getId();
+
+            Media media = mediaActivityViewModel.getMedia(mediaId);
+
+            if(media == null) {
+                /* Add log entry here. */
+                continue;
+            }
+
+            tombola.addMedia(media);
+        }
     }
 
     private void resetForm() {
@@ -143,36 +167,13 @@ public class TombolaCreationStepTwoFragment extends Fragment {
         @Override
         public void onClick(View view) {
 
-            Tombola tombola = tombolasActivityViewModel.getSelectedTombola().getValue();
-
-            if(mediaActivityViewModel.getMediaDatabase().getValue() == null) {
-                /* TODO: Write to log. */
-                return;
-            }
-
-            if(tombola == null) {
-                /* TODO: Write to log. */
-                return;
-            }
-
             TextView textView = (TextView) view;
-            long mediaId = view.getId();
-            Media media = mediaActivityViewModel.getMediaDatabase().getValue().get(mediaId);
-
-            if(media == null) {
-                /* TODO: Write to log. */
-                return;
-            }
 
             if(textView.getParent() == availableMedia) {
-
-                tombola.addMedia(media);
 
                 availableMedia.removeView(textView);
                 addedMedia.addView(textView);
             } else {
-
-                tombola.removeMedia(media);
 
                 addedMedia.removeView(textView);
                 availableMedia.addView(textView);

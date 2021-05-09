@@ -86,6 +86,17 @@ public class MediaActivityViewModel extends AndroidViewModel {
         }
     }
 
+    public Media getMedia(long mediaId) {
+
+        for(Media media : allMedia.getValue()) {
+
+            if(media.getId() == mediaId)
+                return media;
+        }
+
+        return null;
+    }
+
     private void setMediaOnPageListToPage(int pageNumber) {
 
         if(mediaOnCurrentPage.getValue() == null) {

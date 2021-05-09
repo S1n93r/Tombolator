@@ -11,7 +11,6 @@ ToDos:
     [.] issues found during test
         [x] no media in list for changing tombola
         [x] no media in list for creating tombola
-        [ ] media in creation / changing tombola cant be added nor removed
         [ ] sorting media list is not working
         [ ] searching media list is not working
         [ ] saving new media does not save it
