@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import com.example.tombolator.TomboRepository;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
@@ -14,17 +15,16 @@ import java.util.*;
 
 public class MediaActivityViewModel extends AndroidViewModel {
 
-    private static final String DEFAULT_SEARCH_FILTER = "[show all media]";
+    private static final String FILTER_NONE = "[show all media]";
     private static final int MEDIA_PER_PAGE = 8;
 
-    private static final int SORTING_REGULAR = 0;
-    private static final int SORTING_REVERSED = 1;
+    private static final int SORTING_NONE = 0;
+    private static final int SORTING_REGULAR = 1;
+    private static final int SORTING_REVERSED = 2;
 
     private final TomboRepository tomboRepository;
-    private final LiveData<List<Media>> allMedia;
-
-    private final MutableLiveData<Integer> currentPage = new MutableLiveData<>(1);
-    private final MutableLiveData<Integer> numberOfPages = new MutableLiveData<>(1);
+    private final LiveData<List<Media>> allMediaLiveData;
+    private final MutableLiveData<List<Media>> allMediaFilteredAndSortedLiveData = new MutableLiveData<>(new ArrayList<>());
 
     private final MutableLiveData<Media> selectedMedia = new MutableLiveData<>();
 
@@ -34,61 +34,29 @@ public class MediaActivityViewModel extends AndroidViewModel {
     private final MutableLiveData<ArrayList<Media>> mediaOnCurrentPage = new MutableLiveData<>(new ArrayList<>());
     private final ArrayList<Media> mediaListFiltered = new ArrayList<>();
 
-    private final MutableLiveData<ArrayList<Media>> mediaList = new MutableLiveData<>(new ArrayList<>());
-    private final MutableLiveData<HashMap<Long, Media>> mediaDatabaseLiveData = new MutableLiveData<>(new HashMap<>());
+    private int currentSortingMode = SORTING_NONE;
 
-    private int currentSortingMode = SORTING_REGULAR;
-
-    private String currentSearchFilter = DEFAULT_SEARCH_FILTER;
+    private String currentSearchFilter = FILTER_NONE;
 
     public MediaActivityViewModel(@NonNull Application application) {
 
         super(application);
 
         tomboRepository = new TomboRepository(application);
-        allMedia = tomboRepository.getAllMediaLiveData();
+        allMediaLiveData = tomboRepository.getAllMediaLiveData();
+        applySearchFilterAndPopulate(allMediaFilteredAndSortedLiveData);
+
+        registerObserver();
     }
 
-    public void toFirstPage() {
+    private void registerObserver() {
 
-        if(currentPage.getValue() == null) {
-            /* TODO: Log entry. */
-            return;
-        }
-
-        currentPage.postValue(1);
-        setMediaOnPageListToPage(currentPage.getValue());
-    }
-
-    public void nextPage() {
-
-        if(currentPage.getValue() == null) {
-            /* TODO: Log entry. */
-            return;
-        }
-
-        if(currentPage.getValue() < getNumberOfPages()) {
-            currentPage.postValue(currentPage.getValue() + 1);
-            setMediaOnPageListToPage(currentPage.getValue());
-        }
-    }
-
-    public void previousPage() {
-
-        if(currentPage.getValue() == null) {
-            /* TODO: Log entry. */
-            return;
-        }
-
-        if(currentPage.getValue() > 1) {
-            currentPage.postValue(currentPage.getValue() - 1);
-            setMediaOnPageListToPage(currentPage.getValue());
-        }
+        allMediaLiveData.observeForever(new AllMediaSortAndFilterObserver());
     }
 
     public Media getMedia(long mediaId) {
 
-        for(Media media : allMedia.getValue()) {
+        for(Media media : allMediaLiveData.getValue()) {
 
             if(media.getId() == mediaId)
                 return media;
@@ -132,7 +100,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
     public void selectMedia(long mediaId) {
 
-        for(Media media : allMedia.getValue()) {
+        for(Media media : allMediaLiveData.getValue()) {
 
             if(media.getId() == mediaId) {
 
@@ -152,42 +120,77 @@ public class MediaActivityViewModel extends AndroidViewModel {
         }
 
         currentSearchFilter = searchFilter;
-        applySearchFilter();
+        applySearchFilterAndSorting();
     }
 
     public void clearMediaSearchFilter() {
-        currentSearchFilter = DEFAULT_SEARCH_FILTER;
-        applySearchFilter();
+        currentSearchFilter = FILTER_NONE;
+        applySearchFilterAndSorting();
     }
 
-    private void applySearchFilter() {
+    public void toggleSorting() {
 
-        if (mediaList.getValue() == null) {
+        switch(currentSortingMode) {
+
+            case SORTING_NONE:
+                currentSortingMode = SORTING_REGULAR;
+                break;
+            case SORTING_REGULAR:
+                currentSortingMode = SORTING_REVERSED;
+                break;
+            case SORTING_REVERSED:
+            default:
+                currentSortingMode = SORTING_NONE;
+        }
+
+        applySearchFilterAndSorting();
+    }
+
+    private void applySearchFilterAndSorting() {
+
+        applySearchFilterAndPopulate(allMediaFilteredAndSortedLiveData);
+        applySorting(allMediaFilteredAndSortedLiveData);
+
+        allMediaFilteredAndSortedLiveData.postValue(allMediaFilteredAndSortedLiveData.getValue());
+    }
+
+    private void applySearchFilterAndPopulate(LiveData<List<Media>> mediaListLiveData) {
+
+        if(allMediaLiveData.getValue() == null) {
             /* TODO: Add error log here */
             return;
         }
 
-        mediaListFiltered.clear();
+        if(mediaListLiveData.getValue() == null) {
+            /* TODO: Add error log here */
+            return;
+        }
+
+        if(currentSearchFilter.equals(FILTER_NONE)) {
+
+            mediaListLiveData.getValue().addAll(allMediaLiveData.getValue());
+            return;
+        }
 
         Collection<Media> filteredCollection = Collections2.filter(
-                mediaList.getValue(), new MediaPredicate(currentSearchFilter));
-        mediaListFiltered.addAll(filteredCollection);
+                allMediaLiveData.getValue(), new ApplySearchFilterToMediaListPredicate(currentSearchFilter));
 
-        toFirstPage();
+        mediaListLiveData.getValue().clear();
+        mediaListLiveData.getValue().addAll(filteredCollection);
     }
 
-    private static class MediaPredicate implements Predicate<Media> {
+    private static class ApplySearchFilterToMediaListPredicate implements Predicate<Media> {
 
         private final String searchFilter;
 
-        public MediaPredicate(String searchFilter) {
+        public ApplySearchFilterToMediaListPredicate(String searchFilter) {
             this.searchFilter = searchFilter;
         }
 
         @Override
         public boolean apply(@NullableDecl Media media) {
 
-            if(searchFilter.equals(DEFAULT_SEARCH_FILTER))
+            if(searchFilter.equals(FILTER_NONE))
                 return true;
 
             if (media == null) {
@@ -199,17 +202,25 @@ public class MediaActivityViewModel extends AndroidViewModel {
         }
     }
 
-    public void sortMediaByName() {
+    private void applySorting(LiveData<List<Media>> mediaListLiveData) {
 
-        if(currentSortingMode == SORTING_REVERSED) {
-            mediaListFiltered.sort(new MediaComparator().reversed());
-            currentSortingMode = SORTING_REGULAR;
-        }else {
-            mediaListFiltered.sort(new MediaComparator());
-            currentSortingMode = SORTING_REVERSED;
+        if(mediaListLiveData.getValue() == null) {
+            /* TODO: Add log entry. */
+            return;
         }
 
-        toFirstPage();
+        switch(currentSortingMode) {
+            case SORTING_NONE:
+                break;
+            case SORTING_REGULAR:
+                mediaListLiveData.getValue().sort(new MediaComparator());
+                break;
+            case SORTING_REVERSED:
+                mediaListLiveData.getValue().sort(new MediaComparator().reversed());
+                break;
+            default:
+                /* TODO: Add error log here. */
+        }
     }
 
     public void insert(Media media) {
@@ -252,7 +263,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
         Set<String> set = new HashSet<>();
 
-        for(Media media : mediaList.getValue()) {
+        for(Media media : allMediaLiveData.getValue()) {
             set.add(media.getType());
         }
 
@@ -263,35 +274,27 @@ public class MediaActivityViewModel extends AndroidViewModel {
         availableMediaTypes.postValue(availableMediaTypes.getValue());
     }
 
-    public LiveData<HashMap<Long, Media>> getMediaDatabase() {
-        return mediaDatabaseLiveData;
+    private class AllMediaSortAndFilterObserver implements Observer<List<Media>> {
+
+        @Override
+        public void onChanged(List<Media> mediaList) {
+            applySearchFilterAndSorting();
+        }
     }
 
     public MutableLiveData<Media> getSelectedMedia() {
         return selectedMedia;
     }
 
-    public MutableLiveData<ArrayList<Media>> getMediaOnCurrentPage() {
-        return mediaOnCurrentPage;
-    }
-
-    public MutableLiveData<Integer> getCurrentPage() {
-        return currentPage;
-    }
-
-    public MutableLiveData<ArrayList<String>> getSelectedMediaTypes() {
-        return selectedMediaTypes;
-    }
-
     public MutableLiveData<ArrayList<String>> getAvailableMediaTypes() {
         return availableMediaTypes;
     }
 
-    public List<String> getAvailableMediaTypesAsUnmodifiableList() {
-        return Collections.unmodifiableList(availableMediaTypes.getValue());
+    public LiveData<List<Media>> getAllMediaLiveData() {
+        return allMediaLiveData;
     }
 
-    public LiveData<List<Media>> getAllMedia() {
-        return allMedia;
+    public MutableLiveData<List<Media>> getAllMediaFilteredAndSortedLiveData() {
+        return allMediaFilteredAndSortedLiveData;
     }
 }

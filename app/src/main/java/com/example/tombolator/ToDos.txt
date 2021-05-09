@@ -3,7 +3,7 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [.] --- Milestone II: Convenience functions ---
-[x] re-implement pagination for MediaActivity
+[.] make implementation function neutral again
     [x] implement and observe page numbers
     [x] make make index stop at 1 and x (max page)
     [x] make list shown adjust to current page number
@@ -11,12 +11,14 @@ ToDos:
     [.] issues found during test
         [x] no media in list for changing tombola
         [x] no media in list for creating tombola
-        [ ] sorting media list is not working
-        [ ] searching media list is not working
-        [ ] saving new media does not save it
-        [ ] tombola searching not implemented
-        [ ] pagination for tombola list not implemented
-        [ ] choosing category for media list is not implemented
+        [ ] sorting media list is not working --> move to view?
+        [x] searching media list is not working
+        [x] saving new media does not save it
+
+[ ] add missing implementations that came up during testing
+    [ ] tombola searching not implemented
+    [ ] pagination for tombola list not implemented
+    [ ] choosing category for media list is not implemented
 
 [ ] add a choosable filter for media list
 [ ] sort by number, name and author depending on type
@@ -64,6 +66,7 @@ ToDos:
 [ ] --- ------------------------------ ---
 
 [ ] --- Milestone III: Technical improvements ---
+[ ] fix all todos
 [.] make paginated and filterable media list a generic component
     [x] build generic component
     [.] use in tombola creation view

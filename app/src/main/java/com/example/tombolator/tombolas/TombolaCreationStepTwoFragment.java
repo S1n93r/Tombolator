@@ -61,7 +61,7 @@ public class TombolaCreationStepTwoFragment extends Fragment {
     }
 
     private void registerObserver() {
-            mediaActivityViewModel.getAllMedia()
+            mediaActivityViewModel.getAllMediaLiveData()
                 .observe(Objects.requireNonNull(this.getActivity()), new MediaListObserver());
     }
 

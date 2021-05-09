@@ -90,7 +90,13 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
             mediaActivity.switchToCreationStepOne();
         });
 
-        saveButton.setOnClickListener(v -> {
+        saveButton.setOnClickListener(new SaveMediaListener());
+    }
+
+    private class SaveMediaListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
 
             if(editTextName.getText().length() > 0){
 
@@ -106,17 +112,19 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
                     throw new NullPointerException();
                 }
 
-                mediaActivityViewModel.getSelectedMedia().getValue().setName(name);
-                mediaActivityViewModel.getSelectedMedia().getValue().setTitle(title);
-                mediaActivityViewModel.getSelectedMedia().getValue().setNumber(number);
-                mediaActivityViewModel.getSelectedMedia().getValue().setAuthor(author);
+                Media selectedMedia = mediaActivityViewModel.getSelectedMedia().getValue();
 
-                mediaActivityViewModel.insert(mediaActivityViewModel.getSelectedMedia().getValue());
+                selectedMedia.setName(name);
+                selectedMedia.setTitle(title);
+                selectedMedia.setNumber(number);
+                selectedMedia.setAuthor(author);
+
+                mediaActivityViewModel.insert(selectedMedia);
 
                 resetForm();
                 mediaActivity.switchToMediaListStepTwo();
             }
-        });
+        }
     }
 
     private void resetForm() {

@@ -76,14 +76,12 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
 
     private void registerObserver() {
 
-        mediaActivityViewModel.getAllMedia()
+        mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData()
                 .observe(Objects.requireNonNull(this.getActivity()), new MediaListObserver());
-
-        mediaActivityViewModel.getCurrentPage().observe(this.getActivity(), new PageNumberCurrentObserver());
 
         currentPage.observe(this.getActivity(), new PageNumberCurrentObserver());
 
-        mediaActivityViewModel.getAllMedia().observe(this.getActivity(), new PageNumberTotalObserver());
+        mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().observe(this.getActivity(), new PageNumberTotalObserver());
     }
 
     private void registerOnKeyListener() {
@@ -92,9 +90,13 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        sortButton.setOnClickListener((View view) -> mediaActivityViewModel.sortMediaByName());
+        sortButton.setOnClickListener((View view) -> {
+            mediaActivityViewModel.toggleSorting();
+        });
 
-        backButton.setOnClickListener((View view) -> mediaActivity.switchToMediaListStepOne());
+        backButton.setOnClickListener((View view) -> {
+            mediaActivity.switchToMediaListStepOne();
+        });
 
         nextPageButton.setOnClickListener((View view) -> {
 
@@ -103,12 +105,13 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
                 return;
             }
 
-            if(mediaActivityViewModel.getAllMedia().getValue() == null) {
+            if(mediaActivityViewModel.getAllMediaLiveData().getValue() == null) {
                 /* TODO: Log NPE here. */
                 return;
             }
 
-            if(currentPage.getValue() == (mediaActivityViewModel.getAllMedia().getValue().size() / ELEMENTS_PER_PAGE))
+            if(currentPage.getValue() == MediaUtil.getTotalNumberOfPages(
+                    mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().getValue(), ELEMENTS_PER_PAGE))
                 return;
 
             currentPage.postValue(currentPage.getValue() + 1);
@@ -153,7 +156,7 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
         public void onChanged(Integer pageNumber) {
 
             pageNumberCurrent.setText(formatNumberFullDigitsLeadingZero(pageNumber));
-            showMediaOnCurrentPage(mediaActivityViewModel.getAllMedia().getValue());
+            showMediaOnCurrentPage(mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().getValue());
         }
     }
 
@@ -162,7 +165,7 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
         @Override
         public void onChanged(List<Media> mediaList) {
 
-            int numberOfPages = mediaList.size() / ELEMENTS_PER_PAGE;
+            int numberOfPages = MediaUtil.getTotalNumberOfPages(mediaList, ELEMENTS_PER_PAGE);
 
             pageNumberMax.setText(formatNumberFullDigitsLeadingZero(numberOfPages));
         }
@@ -175,16 +178,11 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
             return;
         }
 
-        if(mediaActivityViewModel.getAllMedia().getValue() == null) {
-            /* TODO: Log NPE here. */
-            return;
-        }
-
         int start = (currentPage.getValue() - 1) * ELEMENTS_PER_PAGE;
         int end = start + ELEMENTS_PER_PAGE;
 
-        if(end > mediaActivityViewModel.getAllMedia().getValue().size())
-            end = mediaActivityViewModel.getAllMedia().getValue().size();
+        if(end > mediaList.size())
+            end = mediaList.size();
 
         linearLayoutMedia.removeAllViews();
 

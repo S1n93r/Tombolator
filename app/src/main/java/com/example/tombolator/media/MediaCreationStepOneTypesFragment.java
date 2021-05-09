@@ -82,6 +82,11 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
             String type = spinnerType.getSelectedItem() != null ? spinnerType.getSelectedItem().toString() : "";
 
+            if(mediaActivityViewModel.getSelectedMedia().getValue() == null) {
+                /* TODO: Add log entry. */
+                return;
+            }
+
             mediaActivityViewModel.getSelectedMedia().getValue().setType(type);
 
             resetForm();

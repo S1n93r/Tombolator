@@ -2,6 +2,8 @@ package com.example.tombolator.media;
 
 import com.example.tombolator.R;
 
+import java.util.List;
+
 public final class MediaUtil {
 
     public static int getMediaIcon(String mediaType) {
@@ -52,5 +54,9 @@ public final class MediaUtil {
             default:
                 return R.drawable.ic_cassette_25;
         }
+    }
+
+    public static int getTotalNumberOfPages(List list, int elementsPerPage) {
+        return list.size() / elementsPerPage +  1;
     }
 }
