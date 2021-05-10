@@ -120,12 +120,12 @@ public class MediaActivityViewModel extends AndroidViewModel {
         }
 
         currentSearchFilter = searchFilter;
-        applySearchFilterAndSorting();
+        refreshFilteredAndSortedMediaLiveData();
     }
 
     public void clearMediaSearchFilter() {
         currentSearchFilter = FILTER_NONE;
-        applySearchFilterAndSorting();
+        refreshFilteredAndSortedMediaLiveData();
     }
 
     public void toggleSorting() {
@@ -143,10 +143,11 @@ public class MediaActivityViewModel extends AndroidViewModel {
                 currentSortingMode = SORTING_NONE;
         }
 
-        applySearchFilterAndSorting();
+        refreshFilteredAndSortedMediaLiveData();
     }
 
-    private void applySearchFilterAndSorting() {
+    private void refreshFilteredAndSortedMediaLiveData() {
+
 
         applySearchFilterAndPopulate(allMediaFilteredAndSortedLiveData);
         applySorting(allMediaFilteredAndSortedLiveData);
@@ -165,6 +166,8 @@ public class MediaActivityViewModel extends AndroidViewModel {
             /* TODO: Add error log here */
             return;
         }
+
+        mediaListLiveData.getValue().clear();
 
         if(currentSearchFilter.equals(FILTER_NONE)) {
 
@@ -210,16 +213,17 @@ public class MediaActivityViewModel extends AndroidViewModel {
         }
 
         switch(currentSortingMode) {
-            case SORTING_NONE:
-                break;
+
             case SORTING_REGULAR:
                 mediaListLiveData.getValue().sort(new MediaComparator());
                 break;
+
             case SORTING_REVERSED:
                 mediaListLiveData.getValue().sort(new MediaComparator().reversed());
                 break;
-            default:
-                /* TODO: Add error log here. */
+
+            case SORTING_NONE:
+            default: /* TODO: Implement default sorting. */
         }
     }
 
@@ -278,7 +282,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
         @Override
         public void onChanged(List<Media> mediaList) {
-            applySearchFilterAndSorting();
+            refreshFilteredAndSortedMediaLiveData();
         }
     }
 

@@ -63,6 +63,7 @@ ToDos:
 [ ] add type icon to drawn media view
 [ ] figure out how to deal with types and content types of media
 [ ] fix types of media --> type, sub type or labels?
+[ ] implement sorting mode for "no sorting"
 [ ] --- ------------------------------ ---
 
 [ ] --- Milestone III: Technical improvements ---
@@ -98,26 +99,24 @@ ToDos:
 [ ] --- ------------------------------ ---
 
 Done:
+[x] fixed issue where sorting and filtering added media to the list rather then updating the list
+
 [x] bug: media selected getValue() after creation step one is null
     fix: MediaCreationStepOne was fetching the media view model wrongly and had another instance as other fragments
-
 [x] re-structure mvvm pattern for MediaActivity
     [x] remove database access from views
     [x] make sure view model saves to db when paused or shut down --> onCleared()
     [x] change all view actions to manipulate the view model only
     [x] view model should not call database but use repository
-
 [x] re-structure mvvm pattern for TombolasActivity
     [x] remove database access from views
     [x] make sure view model saves to db when paused or shut down --> onCleared()
     [x] change all view actions to manipulate the view model only
     [x] view model should not call database but use repository
     [x] test if implementation is function-neutral
-
 [87] add page number to paginated media list
 [87] deleting media should also remove the media from all tombolas
 [87] bug: concurrent modification exception on MediaMainFragment / MediaInsertedObserver.onChanged()
-
 [86] style media sorting button
 [86] text entries should start with caps
 [85] set minimum skd to 29 and removed all @requiresApi from code
