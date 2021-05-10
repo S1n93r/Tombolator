@@ -3,8 +3,6 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [.] --- Milestone II: Convenience functions ---
-[ ] bug: max pages is one too high --> last page is empty
-
 [ ] add missing implementations that came up during testing
     [ ] tombola searching not implemented
     [ ] pagination for tombola list not implemented
@@ -16,6 +14,8 @@ ToDos:
     [ ] movies
     [ ] series
     [ ] books
+
+[ ] push new version to susi
 
 [ ] add icon to tombola to be displayed
     [ ] add icon database
@@ -89,6 +89,8 @@ ToDos:
 [ ] --- ------------------------------ ---
 
 Done:
+[x] bug: max pages is one too high --> last page is empty
+
 [x] make implementation function neutral again
     [x] implement and observe page numbers
     [x] make make index stop at 1 and x (max page)
@@ -100,7 +102,6 @@ Done:
         [x] sorting media list is not working --> move to view?
         [x] searching media list is not working
         [x] saving new media does not save it
-
 [x] fixed issue where sorting and filtering added media to the list rather then updating the list
 [x] bug: media selected getValue() after creation step one is null
     fix: MediaCreationStepOne was fetching the media view model wrongly and had another instance as other fragments

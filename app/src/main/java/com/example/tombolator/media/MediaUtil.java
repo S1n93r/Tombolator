@@ -57,6 +57,9 @@ public final class MediaUtil {
     }
 
     public static int getTotalNumberOfPages(List list, int elementsPerPage) {
-        return list.size() / elementsPerPage +  1;
+
+        int numberOfPages = (int) (Math.ceil((double) list.size() / elementsPerPage));
+
+        return numberOfPages;
     }
 }
