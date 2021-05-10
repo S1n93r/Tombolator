@@ -381,7 +381,6 @@ public class StashScript implements Runnable {
                 "Ant-Man;;;;Film\n" +
                 "Alice im Wunderland;;;;Film\n" +
                 "Descendants;;;;Film\n" +
-                "Aladdin;;;;Film\n" +
                 "Die Liga der außergewöhnlichen Gentleman;;;;Film\n";
 
         return mediaContentString;

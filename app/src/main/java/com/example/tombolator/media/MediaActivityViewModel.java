@@ -148,7 +148,6 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
     private void refreshFilteredAndSortedMediaLiveData() {
 
-
         applySearchFilterAndPopulate(allMediaFilteredAndSortedLiveData);
         applySorting(allMediaFilteredAndSortedLiveData);
 
@@ -256,8 +255,8 @@ public class MediaActivityViewModel extends AndroidViewModel {
         @Override
         public int compare(Media m1, Media m2) {
 
-            String titleAndName1 = m1.getTitle() + m1.getName();
-            String titleAndName2 = m2.getTitle() + m2.getName();
+            String titleAndName1 = m1.getName() + m1.getTitle();
+            String titleAndName2 = m2.getName() + m2.getTitle();
 
             return titleAndName1.compareTo(titleAndName2);
         }

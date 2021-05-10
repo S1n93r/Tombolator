@@ -3,17 +3,7 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [.] --- Milestone II: Convenience functions ---
-[.] make implementation function neutral again
-    [x] implement and observe page numbers
-    [x] make make index stop at 1 and x (max page)
-    [x] make list shown adjust to current page number
-    [x] test if implementation is function-neutral --> TestScript.txt
-    [.] issues found during test
-        [x] no media in list for changing tombola
-        [x] no media in list for creating tombola
-        [ ] sorting media list is not working --> move to view?
-        [x] searching media list is not working
-        [x] saving new media does not save it
+[ ] bug: max pages is one too high --> last page is empty
 
 [ ] add missing implementations that came up during testing
     [ ] tombola searching not implemented
@@ -99,8 +89,19 @@ ToDos:
 [ ] --- ------------------------------ ---
 
 Done:
-[x] fixed issue where sorting and filtering added media to the list rather then updating the list
+[x] make implementation function neutral again
+    [x] implement and observe page numbers
+    [x] make make index stop at 1 and x (max page)
+    [x] make list shown adjust to current page number
+    [x] test if implementation is function-neutral --> TestScript.txt
+    [x] issues found during test
+        [x] no media in list for changing tombola
+        [x] no media in list for creating tombola
+        [x] sorting media list is not working --> move to view?
+        [x] searching media list is not working
+        [x] saving new media does not save it
 
+[x] fixed issue where sorting and filtering added media to the list rather then updating the list
 [x] bug: media selected getValue() after creation step one is null
     fix: MediaCreationStepOne was fetching the media view model wrongly and had another instance as other fragments
 [x] re-structure mvvm pattern for MediaActivity
