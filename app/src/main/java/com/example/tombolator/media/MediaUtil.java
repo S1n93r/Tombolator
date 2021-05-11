@@ -2,7 +2,9 @@ package com.example.tombolator.media;
 
 import com.example.tombolator.R;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public final class MediaUtil {
 
@@ -61,5 +63,16 @@ public final class MediaUtil {
         int numberOfPages = (int) (Math.ceil((double) list.size() / elementsPerPage));
 
         return numberOfPages;
+    }
+
+    public static Set<String> getMediaTypes(List<Media> mediaList) {
+
+        Set<String> mediaTypeSet = new HashSet();
+
+        for(Media media : mediaList) {
+            mediaTypeSet.add(media.getType());
+        }
+
+        return mediaTypeSet;
     }
 }

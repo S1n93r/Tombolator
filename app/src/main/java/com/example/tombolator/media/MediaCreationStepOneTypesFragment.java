@@ -21,7 +21,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
     private MediaActivity mediaActivity;
     private MediaActivityViewModel mediaActivityViewModel;
 
-    private Spinner spinnerType;
+    private Spinner mediaTypeSpinner;
 
     private Button continueButton;
     private Button backButton;
@@ -42,7 +42,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
         View layout = inflater.inflate(R.layout.media_creation_step_one_types_fragment, container, false);
 
-        spinnerType = layout.findViewById(R.id.spinner_media_types);
+        mediaTypeSpinner = layout.findViewById(R.id.spinner_media_types);
 
         continueButton = layout.findViewById(R.id.button_continue);
         backButton = layout.findViewById(R.id.button_back);
@@ -68,7 +68,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
         arrayAdapter.setDropDownViewResource(R.layout.media_type_spinner_dropdown);
 
-        spinnerType.setAdapter(arrayAdapter);
+        mediaTypeSpinner.setAdapter(arrayAdapter);
     }
 
     private void registerOnClickListener() {
@@ -80,7 +80,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
         continueButton.setOnClickListener(v -> {
 
-            String type = spinnerType.getSelectedItem() != null ? spinnerType.getSelectedItem().toString() : "";
+            String type = mediaTypeSpinner.getSelectedItem() != null ? mediaTypeSpinner.getSelectedItem().toString() : "";
 
             if(mediaActivityViewModel.getSelectedMedia().getValue() == null) {
                 /* TODO: Add log entry. */
@@ -96,6 +96,6 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
     private void resetForm() {
 
-        spinnerType.setSelection(0);
+        mediaTypeSpinner.setSelection(0);
     }
 }

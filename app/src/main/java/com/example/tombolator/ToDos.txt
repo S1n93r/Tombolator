@@ -3,12 +3,6 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [.] --- Milestone II: Convenience functions ---
-[ ] add missing implementations that came up during testing
-    [ ] tombola searching not implemented
-    [ ] pagination for tombola list not implemented
-    [ ] choosing category for media list is not implemented
-
-[ ] add a choosable filter for media list
 [ ] sort by number, name and author depending on type
     [ ] audio plays
     [ ] movies
@@ -89,8 +83,10 @@ ToDos:
 [ ] --- ------------------------------ ---
 
 Done:
-[x] bug: max pages is one too high --> last page is empty
+[x] implement category choosing to media list
+    [x] bug: max page number is not updated correctly
 
+[x] bug: max pages is one too high --> last page is empty
 [x] make implementation function neutral again
     [x] implement and observe page numbers
     [x] make make index stop at 1 and x (max page)

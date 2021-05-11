@@ -82,6 +82,8 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
         currentPage.observe(this.getActivity(), new PageNumberCurrentObserver());
 
         mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().observe(this.getActivity(), new PageNumberTotalObserver());
+
+        mediaActivityViewModel.getSelectedMediaType().observe(this.getActivity(), new SelectedMediaTypesObserver());
     }
 
     private void registerOnKeyListener() {
@@ -142,10 +144,19 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
         });
     }
 
+    private class SelectedMediaTypesObserver implements Observer<List<String>> {
+
+        @Override
+        public void onChanged(List<String> mediaTypes) {
+            currentPage.postValue(1);
+        }
+    }
+
     private class MediaListObserver implements Observer<List<Media>> {
 
         @Override
         public void onChanged(List<Media> mediaList) {
+
             showMediaOnCurrentPage(mediaList);
         }
     }
