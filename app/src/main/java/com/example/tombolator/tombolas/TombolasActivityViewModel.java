@@ -55,6 +55,11 @@ public class TombolasActivityViewModel extends AndroidViewModel {
 
     public void selectTombola(long tombolaId) {
 
+        if(allTombolas.getValue() == null) {
+            /* TODO: Add log entry. */
+            throw new NullPointerException();
+        }
+
         for(Tombola tombola : allTombolas.getValue()) {
 
             if(tombola.getId() == tombolaId) {

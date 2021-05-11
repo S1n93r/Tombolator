@@ -51,6 +51,11 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
     public Media getMedia(long mediaId) {
 
+        if(allMediaLiveData.getValue() == null) {
+            /* TODO: Add log entry. */
+            throw new NullPointerException();
+        }
+
         for(Media media : allMediaLiveData.getValue()) {
 
             if(media.getId() == mediaId)
@@ -66,6 +71,11 @@ public class MediaActivityViewModel extends AndroidViewModel {
     }
 
     public void selectMedia(long mediaId) {
+
+        if(allMediaLiveData.getValue() == null) {
+            /* TODO: Add log entry. */
+            throw new NullPointerException();
+        }
 
         for(Media media : allMediaLiveData.getValue()) {
 
@@ -123,6 +133,16 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
     public void applyMediaTypeFilterAndPopulate(List<String> mediaTypes) {
 
+        if(allMediaFilteredAndSortedLiveData.getValue() == null) {
+            /* TODO: Add log entry. */
+            throw new NullPointerException();
+        }
+
+        if(allMediaLiveData.getValue() == null) {
+            /* TODO: Add log entry. */
+            throw new NullPointerException();
+        }
+
         allMediaFilteredAndSortedLiveData.getValue().clear();
 
         if(mediaTypes.isEmpty()) {
@@ -150,7 +170,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
             if (media == null) {
                 /* TODO: Add error log here */
-                return false;
+                throw new NullPointerException();
             }
 
             for(String mediaType : mediaTypes) {
@@ -168,12 +188,12 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
         if(allMediaLiveData.getValue() == null) {
             /* TODO: Add error log here */
-            return;
+            throw new NullPointerException();
         }
 
         if(mediaListLiveData.getValue() == null) {
             /* TODO: Add error log here */
-            return;
+            throw new NullPointerException();
         }
 
         mediaListLiveData.getValue().clear();
@@ -204,7 +224,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
             if (media == null) {
                 /* TODO: Add error log here */
-                return false;
+                throw new NullPointerException();
             }
 
             return media.toLabel().contains(searchFilter);
@@ -215,7 +235,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
         if(mediaListLiveData.getValue() == null) {
             /* TODO: Add log entry. */
-            return;
+            throw new NullPointerException();
         }
 
         switch(currentSortingMode) {

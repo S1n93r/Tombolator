@@ -58,16 +58,13 @@ public final class MediaUtil {
         }
     }
 
-    public static int getTotalNumberOfPages(List list, int elementsPerPage) {
-
-        int numberOfPages = (int) (Math.ceil((double) list.size() / elementsPerPage));
-
-        return numberOfPages;
+    public static int getTotalNumberOfPages(List<?> list, int elementsPerPage) {
+        return (int) (Math.ceil((double) list.size() / elementsPerPage));
     }
 
     public static Set<String> getMediaTypes(List<Media> mediaList) {
 
-        Set<String> mediaTypeSet = new HashSet();
+        Set<String> mediaTypeSet = new HashSet<>();
 
         for(Media media : mediaList) {
             mediaTypeSet.add(media.getType());

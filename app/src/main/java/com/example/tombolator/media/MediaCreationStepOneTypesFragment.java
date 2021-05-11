@@ -84,7 +84,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
             if(mediaActivityViewModel.getSelectedMedia().getValue() == null) {
                 /* TODO: Add log entry. */
-                return;
+                throw new NullPointerException();
             }
 
             mediaActivityViewModel.getSelectedMedia().getValue().setType(type);

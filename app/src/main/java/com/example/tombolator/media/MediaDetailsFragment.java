@@ -82,6 +82,11 @@ public class MediaDetailsFragment extends Fragment {
 
         Media media = mediaActivityViewModel.getSelectedMedia().getValue();
 
+        if(media == null) {
+            /* TODO: Add log entry. */
+            throw new NullPointerException();
+        }
+
         removeMediaFromTombolas(media.getId());
 
         mediaActivityViewModel.delete(media);
@@ -92,7 +97,7 @@ public class MediaDetailsFragment extends Fragment {
 
         if(tombolasActivityViewModel.getAllTombolas().getValue() == null) {
             /* TODO: Add log entry. */
-            return;
+            throw new NullPointerException();
         }
 
         for(Tombola tombola : tombolasActivityViewModel.getAllTombolas().getValue()) {

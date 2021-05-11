@@ -92,24 +92,20 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        sortButton.setOnClickListener((View view) -> {
-            mediaActivityViewModel.toggleSorting();
-        });
+        sortButton.setOnClickListener((View view) -> mediaActivityViewModel.toggleSorting());
 
-        backButton.setOnClickListener((View view) -> {
-            mediaActivity.switchToMediaListStepOne();
-        });
+        backButton.setOnClickListener((View view) -> mediaActivity.switchToMediaListStepOne());
 
         nextPageButton.setOnClickListener((View view) -> {
 
             if(currentPage.getValue() == null) {
                 /* TODO: Log NPE here. */
-                return;
+                throw new NullPointerException();
             }
 
-            if(mediaActivityViewModel.getAllMediaLiveData().getValue() == null) {
+            if(mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().getValue() == null) {
                 /* TODO: Log NPE here. */
-                return;
+                throw new NullPointerException();
             }
 
             if(currentPage.getValue() == MediaUtil.getTotalNumberOfPages(
@@ -123,12 +119,12 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
 
             if(currentPage.getValue() == null) {
                 /* TODO: Log NPE here. */
-                return;
+                throw new NullPointerException();
             }
 
             if(currentPage.getValue() == 1) {
                 /* TODO: Log NPE here. */
-                return;
+                throw new NullPointerException();
             }
 
             currentPage.postValue(currentPage.getValue() - 1);
@@ -186,7 +182,7 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
 
         if(currentPage.getValue() == null) {
             /* TODO: Log NPE here. */
-            return;
+            throw new NullPointerException();
         }
 
         int start = (currentPage.getValue() - 1) * ELEMENTS_PER_PAGE;

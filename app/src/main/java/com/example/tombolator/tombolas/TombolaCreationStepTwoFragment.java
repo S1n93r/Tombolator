@@ -82,7 +82,7 @@ public class TombolaCreationStepTwoFragment extends Fragment {
 
             if(tombolasActivityViewModel.getSelectedTombola().getValue() == null) {
                 /* TODO: Add log entry */
-                return;
+                throw new NullPointerException();
             }
 
             Tombola selectedTombola = tombolasActivityViewModel.getSelectedTombola().getValue();

@@ -71,6 +71,11 @@ public class MediaListStepOneMediaTypeSelectFragment extends Fragment {
 
         continueButton.setOnClickListener((View view) -> {
 
+            if(mediaActivityViewModel.getSelectedMediaType().getValue() == null) {
+                /* TODO: Add log entry. */
+                throw new NullPointerException();
+            }
+
             List<String> mediaTypes = new ArrayList<>();
 
             for(int i=0; i<mediaTypeLinearLayout.getChildCount(); i++) {
