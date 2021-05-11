@@ -83,9 +83,10 @@ ToDos:
 [ ] --- ------------------------------ ---
 
 Done:
+[x] fixed a bug where MediaActivityViewModel could not be loaded due to an NPE to high up in the code
+
 [x] implement category choosing to media list
     [x] bug: max page number is not updated correctly
-
 [x] bug: max pages is one too high --> last page is empty
 [x] make implementation function neutral again
     [x] implement and observe page numbers

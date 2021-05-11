@@ -186,11 +186,6 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
     private void applyMediaTypeFilterAndPopulate(LiveData<List<Media>> mediaListLiveData) {
 
-        if(allMediaLiveData.getValue() == null) {
-            /* TODO: Add error log here */
-            throw new NullPointerException();
-        }
-
         if(mediaListLiveData.getValue() == null) {
             /* TODO: Add error log here */
             throw new NullPointerException();
@@ -200,6 +195,11 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
         if(currentSearchFilter.equals(FILTER_NONE))
             return;
+
+        if(allMediaLiveData.getValue() == null) {
+            /* TODO: Add error log here */
+            throw new NullPointerException();
+        }
 
         Collection<Media> filteredCollection = Collections2.filter(
                 allMediaLiveData.getValue(), new MediaSearchFilterPredicate(currentSearchFilter));
