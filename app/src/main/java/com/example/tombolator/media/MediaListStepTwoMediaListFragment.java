@@ -122,10 +122,8 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
                 throw new NullPointerException();
             }
 
-            if(currentPage.getValue() == 1) {
-                /* TODO: Log NPE here. */
-                throw new NullPointerException();
-            }
+            if(currentPage.getValue() == 1)
+                return;
 
             currentPage.postValue(currentPage.getValue() - 1);
         });
