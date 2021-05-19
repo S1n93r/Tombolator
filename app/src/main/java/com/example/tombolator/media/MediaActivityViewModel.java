@@ -25,7 +25,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
     private final LiveData<List<Media>> allMediaLiveData;
     private final MutableLiveData<List<Media>> allMediaFilteredAndSortedLiveData = new MutableLiveData<>(new ArrayList<>());
 
-    private final MutableLiveData<List<String>> selectedMediaType = new MutableLiveData<>(new ArrayList<>());
+    private final MutableLiveData<List<String>> selectedMediaTypes = new MutableLiveData<>(new ArrayList<>());
 
     private final MutableLiveData<Media> selectedMedia = new MutableLiveData<>();
 
@@ -120,7 +120,9 @@ public class MediaActivityViewModel extends AndroidViewModel {
                 currentSortingMode = SORTING_NONE;
         }
 
-        refreshFilteredAndSortedMediaLiveData();
+        applySorting(allMediaFilteredAndSortedLiveData);
+
+        allMediaFilteredAndSortedLiveData.postValue(allMediaFilteredAndSortedLiveData.getValue());
     }
 
     private void refreshFilteredAndSortedMediaLiveData() {
@@ -153,7 +155,6 @@ public class MediaActivityViewModel extends AndroidViewModel {
         Collection<Media> filteredCollection = Collections2.filter(
                 allMediaLiveData.getValue(), new MediaTypeFilterPredicate(mediaTypes));
 
-        allMediaFilteredAndSortedLiveData.getValue().clear();
         allMediaFilteredAndSortedLiveData.getValue().addAll(filteredCollection);
     }
 
@@ -253,6 +254,14 @@ public class MediaActivityViewModel extends AndroidViewModel {
         }
     }
 
+    public void selectMediaTypes(List<String> mediaTypesList) {
+
+        selectedMediaTypes.getValue().addAll(mediaTypesList);
+        selectedMediaTypes.postValue(selectedMediaTypes.getValue());
+
+        applyMediaTypeFilterAndPopulate(mediaTypesList);
+    }
+
     public void insert(Media media) {
         tomboRepository.insertMedia(media);
     }
@@ -309,7 +318,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
         return allMediaFilteredAndSortedLiveData;
     }
 
-    public MutableLiveData<List<String>> getSelectedMediaType() {
-        return selectedMediaType;
+    public MutableLiveData<List<String>> getSelectedMediaTypes() {
+        return selectedMediaTypes;
     }
 }

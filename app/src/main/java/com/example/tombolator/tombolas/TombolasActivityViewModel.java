@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.example.tombolator.TomboRepository;
+import com.example.tombolator.media.Media;
 
 import java.util.List;
 
@@ -46,6 +47,10 @@ public class TombolasActivityViewModel extends AndroidViewModel {
 
     public void deletAllTombolas() {
         tomboRepository.deleteAllTombolas();
+    }
+
+    public void deleteMediaFromAllTombolas(Media media) {
+        tomboRepository.deleteMediaFromAllTombolas(media);
     }
 
     public void selectTombola(Tombola tombola) {

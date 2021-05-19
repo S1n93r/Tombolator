@@ -3,37 +3,13 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [.] --- Milestone II: Convenience functions ---
-[ ] sort by number, name and author depending on type
-    [ ] audio plays
-    [ ] movies
-    [ ] series
-    [ ] books
+[ ] bug: sorting or deleting media empties media list
 
-[ ] push new version to susi
-
-[ ] add icon to tombola to be displayed
-    [ ] add icon database
-    [ ] color of icon can be picked freely
-[ ] in media list mark media blue when at least in one tombola
-    [ ] also show new tombola icon
+[ ] add warning to reset button in config
 
 [ ] add tombola mode that removes media drawn
     [ ] also delete media from database
-[ ] color code tombolas depending on their mode
-    [ ] gradient I: purple-blue
-    [ ] gradient II: red-yellow
-[ ] change tombola list to tiles
-[ ] implement label system
-[ ] implement label-tiles before media list
-[ ] test updater...
-    [ ] push v0.84 to github
-    [ ] revert to v0.83 locally and start app to check if updater tries to pull v0.84
-[ ] change media list in tombola creation from dual to single list with marking
-[ ] clean up app icon xmls because they seem off
-[ ] check fields on creating new media and inform user if missing
-[ ] check fields on creating new tombola and inform user if missing
-[ ] show mistakes and errors to user
-[ ] change focus color to light blue
+
 [ ] implement an animation for drawing media
     [ ] Pusteblumen fliegen auseinander (runder Button)
     [ ] Sonnenblume öffnet sich
@@ -43,6 +19,38 @@ ToDos:
     [ ] Fernseher wird angemacht, Ergebnis kommt
     [ ] Ergebnis kommt aus einem Brief
     [ ] Kissen wird ausgeschüttelt mit Federn kommt das Ergebnis  raus
+
+[ ] add icon to tombola to be displayed
+    [ ] add icon database
+    [ ] color of icon can be picked freely
+
+[ ] sort by number, name and author depending on type
+    [ ] audio plays
+    [ ] movies
+    [ ] series
+    [ ] books
+
+[ ] in media list mark media blue when at least in one tombola
+    [ ] also show new tombola icon
+
+[ ] color code tombolas depending on their mode
+    [ ] gradient I: purple-blue
+    [ ] gradient II: red-yellow
+
+[ ] change tombola list to tiles
+[ ] implement label system
+[ ] implement label-tiles before media list
+
+[ ] test updater...
+    [ ] push v0.84 to github
+    [ ] revert to v0.83 locally and start app to check if updater tries to pull v0.84
+
+[ ] change media list in tombola creation from dual to single list with marking
+[ ] clean up app icon xmls because they seem off
+[ ] check fields on creating new media and inform user if missing
+[ ] check fields on creating new tombola and inform user if missing
+[ ] show mistakes and errors to user
+[ ] change focus color to light blue
 [ ] media list should not jump back to page 1 as long as media model is opened
 [ ] add type icon to drawn media view
 [ ] figure out how to deal with types and content types of media
@@ -83,8 +91,9 @@ ToDos:
 [ ] --- ------------------------------ ---
 
 Done:
-[x] fixed a bug where MediaActivityViewModel could not be loaded due to an NPE to high up in the code
+[x] bug: deleting media is not working --> app crashes
 
+[x] fixed a bug where MediaActivityViewModel could not be loaded due to an NPE to high up in the code
 [x] implement category choosing to media list
     [x] bug: max page number is not updated correctly
 [x] bug: max pages is one too high --> last page is empty

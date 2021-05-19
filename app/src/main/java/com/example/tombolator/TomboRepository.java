@@ -77,6 +77,10 @@ public class TomboRepository {
         new DeleteAllTombolaAsyncTask(tombolaDao).execute();
     }
 
+    public void deleteMediaFromAllTombolas(Media media) {
+        new DeleteMediaFromAllTombolasAsyncTask(tombolaDao).execute(media);
+    }
+
     public LiveData<List<Media>> getAllMediaLiveData() {
         return allMediaLiveData;
     }
@@ -270,11 +274,33 @@ public class TomboRepository {
             this.tombolaDao = tombolaDao;
         }
 
-
         @Override
         protected Void doInBackground(Void... voids) {
 
             tombolaDao.nukeTable();
+            return null;
+        }
+    }
+
+    private static class DeleteMediaFromAllTombolasAsyncTask extends AsyncTask<Media, Void, Void> {
+
+        private final TombolaDao tombolaDao;
+
+        public DeleteMediaFromAllTombolasAsyncTask(TombolaDao tombolaDao) {
+            this.tombolaDao = tombolaDao;
+        }
+
+        @Override
+        protected Void doInBackground(Media... media) {
+
+            List<Tombola> tombolaList = tombolaDao.getAllTombolas();
+
+            for(Tombola tombola : tombolaList) {
+                tombola.removeMedia(media[0]);
+            }
+
+            tombolaDao.updateAllTombolas(tombolaList);
+
             return null;
         }
     }

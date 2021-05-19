@@ -13,7 +13,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.DateUtil;
 import com.example.tombolator.R;
-import com.example.tombolator.tombolas.Tombola;
 import com.example.tombolator.tombolas.TombolasActivityViewModel;
 
 import java.util.Objects;
@@ -87,23 +86,10 @@ public class MediaDetailsFragment extends Fragment {
             throw new NullPointerException();
         }
 
-        removeMediaFromTombolas(media.getId());
+        tombolasActivityViewModel.deleteMediaFromAllTombolas(media);
 
         mediaActivityViewModel.delete(media);
         mediaActivity.switchToMediaListStepTwo();
-    }
-
-    private void removeMediaFromTombolas(long mediaId) {
-
-        if(tombolasActivityViewModel.getAllTombolas().getValue() == null) {
-            /* TODO: Add log entry. */
-            throw new NullPointerException();
-        }
-
-        for(Tombola tombola : tombolasActivityViewModel.getAllTombolas().getValue()) {
-            tombola.removeMedia(mediaId);
-            tombolasActivityViewModel.updateTombola(tombola);
-        }
     }
 
     private class SelectedMediaObserver implements Observer<Media> {

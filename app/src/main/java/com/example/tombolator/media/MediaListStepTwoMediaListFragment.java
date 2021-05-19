@@ -83,7 +83,7 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
 
         mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().observe(this.getActivity(), new PageNumberTotalObserver());
 
-        mediaActivityViewModel.getSelectedMediaType().observe(this.getActivity(), new SelectedMediaTypesObserver());
+        mediaActivityViewModel.getSelectedMediaTypes().observe(this.getActivity(), new SelectedMediaTypesObserver());
     }
 
     private void registerOnKeyListener() {

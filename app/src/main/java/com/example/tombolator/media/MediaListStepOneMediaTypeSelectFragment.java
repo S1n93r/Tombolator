@@ -71,7 +71,7 @@ public class MediaListStepOneMediaTypeSelectFragment extends Fragment {
 
         continueButton.setOnClickListener((View view) -> {
 
-            if(mediaActivityViewModel.getSelectedMediaType().getValue() == null) {
+            if(mediaActivityViewModel.getSelectedMediaTypes().getValue() == null) {
                 /* TODO: Add log entry. */
                 throw new NullPointerException();
             }
@@ -86,13 +86,7 @@ public class MediaListStepOneMediaTypeSelectFragment extends Fragment {
                     mediaTypes.add(mediaTypeTextView.getText().toString());
             }
 
-            /* TODO: Currently I set selected media types in model and populate for the next step. Feels redundant
-                but makes sure things happen in the right order. (Solved bug on updating max page number) */
-            mediaActivityViewModel.getSelectedMediaType().getValue().addAll(mediaTypes);
-            mediaActivityViewModel.getSelectedMediaType().postValue(
-                    mediaActivityViewModel.getSelectedMediaType().getValue());
-
-            mediaActivityViewModel.applyMediaTypeFilterAndPopulate(mediaTypes);
+            mediaActivityViewModel.selectMediaTypes(mediaTypes);
 
             mediaActivity.switchToMediaListStepTwo();
         });
