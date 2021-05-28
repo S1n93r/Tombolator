@@ -11,7 +11,10 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
 
 public class MediaActivityViewModel extends AndroidViewModel {
 
@@ -39,7 +42,6 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
         tomboRepository = new TomboRepository(application);
         allMediaLiveData = tomboRepository.getAllMediaLiveData();
-        applyMediaTypeFilterAndPopulate(allMediaFilteredAndSortedLiveData);
 
         registerObserver();
     }
@@ -120,42 +122,87 @@ public class MediaActivityViewModel extends AndroidViewModel {
                 currentSortingMode = SORTING_NONE;
         }
 
-        applySorting(allMediaFilteredAndSortedLiveData);
-
-        allMediaFilteredAndSortedLiveData.postValue(allMediaFilteredAndSortedLiveData.getValue());
+        refreshFilteredAndSortedMediaLiveData();
     }
 
     private void refreshFilteredAndSortedMediaLiveData() {
 
-        applyMediaTypeFilterAndPopulate(allMediaFilteredAndSortedLiveData);
-        applySorting(allMediaFilteredAndSortedLiveData);
+        List<Media> updatedFilteredAndSortedList = applyMediaTypeFilter(allMediaLiveData.getValue());
+        updatedFilteredAndSortedList = applyMediaSearchFilter(updatedFilteredAndSortedList);
+        updatedFilteredAndSortedList = applySorting(updatedFilteredAndSortedList);
 
-        allMediaFilteredAndSortedLiveData.postValue(allMediaFilteredAndSortedLiveData.getValue());
+        allMediaFilteredAndSortedLiveData.postValue(updatedFilteredAndSortedList);
     }
 
-    public void applyMediaTypeFilterAndPopulate(List<String> mediaTypes) {
+    public List<Media> applyMediaTypeFilter(List<Media> mediaList) {
 
-        if(allMediaFilteredAndSortedLiveData.getValue() == null) {
-            /* TODO: Add log entry. */
-            throw new NullPointerException();
+        List<Media> filteredList = new ArrayList<>();
+
+        filteredList.addAll(Collections2.filter(
+                mediaList, new MediaTypeFilterPredicate(selectedMediaTypes.getValue())));
+
+        return filteredList;
+    }
+
+    private List<Media> applyMediaSearchFilter(List<Media> mediaList) {
+
+        List<Media> filteredList = new ArrayList<>();
+
+        filteredList.addAll(Collections2.filter(
+                mediaList, new MediaSearchFilterPredicate(currentSearchFilter)));
+
+        return filteredList;
+    }
+
+    private List<Media> applySorting(List<Media> mediaList) {
+
+        switch(currentSortingMode) {
+
+            case SORTING_REGULAR:
+                mediaList.sort(new MediaComparator());
+                break;
+
+            case SORTING_REVERSED:
+                mediaList.sort(new MediaComparator().reversed());
+                break;
+
+            case SORTING_NONE:
+            default: /* TODO: Implement default sorting. */
         }
 
-        if(allMediaLiveData.getValue() == null) {
-            /* TODO: Add log entry. */
-            throw new NullPointerException();
-        }
+        return mediaList;
+    }
 
-        allMediaFilteredAndSortedLiveData.getValue().clear();
+    public void selectMediaTypes(List<String> mediaTypesList) {
 
-        if(mediaTypes.isEmpty()) {
-            allMediaFilteredAndSortedLiveData.getValue().addAll(allMediaLiveData.getValue());
-            return;
-        }
+        selectedMediaTypes.getValue().addAll(mediaTypesList);
+        selectedMediaTypes.postValue(selectedMediaTypes.getValue());
 
-        Collection<Media> filteredCollection = Collections2.filter(
-                allMediaLiveData.getValue(), new MediaTypeFilterPredicate(mediaTypes));
+        refreshFilteredAndSortedMediaLiveData();
+    }
 
-        allMediaFilteredAndSortedLiveData.getValue().addAll(filteredCollection);
+    public void insert(Media media) {
+        tomboRepository.insertMedia(media);
+    }
+
+    public void insertAll(List<Media> mediaList) {
+        tomboRepository.insertAllMedia(mediaList);
+    }
+
+    public void update(Media media) {
+        tomboRepository.updateMedia(media);
+    }
+
+    public void updateAll(List<Media> mediaList) {
+        tomboRepository.updateAllMedia(mediaList);
+    }
+
+    public void delete(Media media) {
+        tomboRepository.deleteMedia(media);
+    }
+
+    public void deleteAllMedia() {
+        tomboRepository.deleteAllMedia();
     }
 
     private static class MediaTypeFilterPredicate implements Predicate<Media> {
@@ -185,30 +232,6 @@ public class MediaActivityViewModel extends AndroidViewModel {
         }
     }
 
-    private void applyMediaTypeFilterAndPopulate(LiveData<List<Media>> mediaListLiveData) {
-
-        if(mediaListLiveData.getValue() == null) {
-            /* TODO: Add error log here */
-            throw new NullPointerException();
-        }
-
-        mediaListLiveData.getValue().clear();
-
-        if(currentSearchFilter.equals(FILTER_NONE))
-            return;
-
-        if(allMediaLiveData.getValue() == null) {
-            /* TODO: Add error log here */
-            throw new NullPointerException();
-        }
-
-        Collection<Media> filteredCollection = Collections2.filter(
-                allMediaLiveData.getValue(), new MediaSearchFilterPredicate(currentSearchFilter));
-
-        mediaListLiveData.getValue().clear();
-        mediaListLiveData.getValue().addAll(filteredCollection);
-    }
-
     private static class MediaSearchFilterPredicate implements Predicate<Media> {
 
         private final String searchFilter;
@@ -230,60 +253,6 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
             return media.toLabel().contains(searchFilter);
         }
-    }
-
-    private void applySorting(LiveData<List<Media>> mediaListLiveData) {
-
-        if(mediaListLiveData.getValue() == null) {
-            /* TODO: Add log entry. */
-            throw new NullPointerException();
-        }
-
-        switch(currentSortingMode) {
-
-            case SORTING_REGULAR:
-                mediaListLiveData.getValue().sort(new MediaComparator());
-                break;
-
-            case SORTING_REVERSED:
-                mediaListLiveData.getValue().sort(new MediaComparator().reversed());
-                break;
-
-            case SORTING_NONE:
-            default: /* TODO: Implement default sorting. */
-        }
-    }
-
-    public void selectMediaTypes(List<String> mediaTypesList) {
-
-        selectedMediaTypes.getValue().addAll(mediaTypesList);
-        selectedMediaTypes.postValue(selectedMediaTypes.getValue());
-
-        applyMediaTypeFilterAndPopulate(mediaTypesList);
-    }
-
-    public void insert(Media media) {
-        tomboRepository.insertMedia(media);
-    }
-
-    public void insertAll(List<Media> mediaList) {
-        tomboRepository.insertAllMedia(mediaList);
-    }
-
-    public void update(Media media) {
-        tomboRepository.updateMedia(media);
-    }
-
-    public void updateAll(List<Media> mediaList) {
-        tomboRepository.updateAllMedia(mediaList);
-    }
-
-    public void delete(Media media) {
-        tomboRepository.deleteMedia(media);
-    }
-
-    public void deleteAllMedia() {
-        tomboRepository.deleteAllMedia();
     }
 
     private static class MediaComparator implements Comparator<Media> {
