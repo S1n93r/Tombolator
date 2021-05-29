@@ -13,10 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class MediaListStepOneMediaTypeSelectFragment extends Fragment {
 
@@ -97,7 +94,8 @@ public class MediaListStepOneMediaTypeSelectFragment extends Fragment {
         @Override
         public void onChanged(List<Media> mediaList) {
 
-            Set<String> mediaTypes = MediaUtil.getMediaTypes(mediaList);
+            Set<String> mediaTypes = new HashSet<>();
+            mediaList.forEach((Media media) -> mediaTypes.add(media.getMediaType()));
 
             mediaTypeLinearLayout.removeAllViews();
 
@@ -108,7 +106,7 @@ public class MediaListStepOneMediaTypeSelectFragment extends Fragment {
                         mediaActivity.getApplicationContext(), R.layout.list_element, null);
 
                 mediaTypeTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                        MediaUtil.getMediaIcon(mediaType), 0, 0, 0);
+                        MediaUtil.getMediaTypeIcon(mediaType), 0, 0, 0);
 
                 mediaTypeTextView.setText(mediaType);
                 mediaTypeTextView.setId(UNSELECTED);

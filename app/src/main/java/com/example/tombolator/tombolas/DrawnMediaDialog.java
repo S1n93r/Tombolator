@@ -94,7 +94,7 @@ public class DrawnMediaDialog extends Dialog implements View.OnClickListener {
     }
 
     public void setIcon(Media media) {
-        mediaTypeIcon.setImageResource(MediaUtil.getMediaIcon(media));
+        mediaTypeIcon.setImageResource(MediaUtil.getMediaTypeIcon(media));
     }
 
     public TextView getContentText() {

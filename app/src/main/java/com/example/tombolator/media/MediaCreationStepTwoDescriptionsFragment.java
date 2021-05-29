@@ -9,6 +9,7 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 
@@ -52,45 +53,49 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
         saveButton = layout.findViewById(R.id.button_save);
 
         registerOnClickListener();
+        registerObserver();
         setVisibilitiesByMediaType();
 
         return layout;
     }
 
-    private void setVisibilitiesByMediaType() {
-
-        String type = Objects.requireNonNull(mediaActivityViewModel.getSelectedMedia().getValue()).getType();
-
-        switch(type) {
-            case Media.Type.CASSETTE:
-            case Media.Type.CD:
-            case Media.Type.AUDIO_PLAY:
-                editTextAuthor.setVisibility(View.GONE);
-                break;
-
-            case Media.Type.DVD:
-            case Media.Type.BLU_RAY:
-            case Media.Type.MOVIE:
-                editTextAuthor.setVisibility(View.GONE);
-                editTextNumber.setVisibility(View.GONE);
-                break;
-
-            case Media.Type.BOOK:
-            case Media.Type.E_BOOK:
-            case Media.Type.AUDIO_BOOK:
-                editTextNumber.setVisibility(View.GONE);
-                break;
-        }
-    }
-
     private void registerOnClickListener() {
 
         backButton.setOnClickListener(v -> {
-            resetForm();
             mediaActivity.switchToCreationStepOne();
         });
 
         saveButton.setOnClickListener(new SaveMediaListener());
+    }
+
+    private void registerObserver() {
+        mediaActivityViewModel.getSelectedMedia().observe(
+                Objects.requireNonNull(getActivity()), new MediaSelectedObserver());
+    }
+
+    private void setVisibilitiesByMediaType() {
+
+        String type = Objects.requireNonNull(mediaActivityViewModel.getSelectedMedia().getValue()).getMediaType();
+
+        switch(type) {
+            case Media.MediaType.CASSETTE:
+            case Media.MediaType.CD:
+            case Media.ContentType.AUDIO_PLAY:
+                editTextAuthor.setVisibility(View.GONE);
+                break;
+
+            case Media.MediaType.DVD:
+            case Media.MediaType.BLU_RAY:
+            case Media.ContentType.MOVIE:
+                editTextAuthor.setVisibility(View.GONE);
+                editTextNumber.setVisibility(View.GONE);
+                break;
+
+            case Media.MediaType.BOOK:
+            case Media.MediaType.E_BOOK:
+                editTextNumber.setVisibility(View.GONE);
+                break;
+        }
     }
 
     private class SaveMediaListener implements View.OnClickListener {
@@ -121,17 +126,20 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
 
                 mediaActivityViewModel.insert(selectedMedia);
 
-                resetForm();
                 mediaActivity.switchToMediaListStepTwo();
             }
         }
     }
 
-    private void resetForm() {
+    private class MediaSelectedObserver implements Observer<Media> {
 
-        editTextName.setText("");
-        editTextTitle.setText("");
-        editTextNumber.setText("");
-        editTextAuthor.setText("");
+        @Override
+        public void onChanged(Media media) {
+
+            editTextName.setText(media.getName());
+            editTextName.setText(media.getName());
+            editTextName.setText(media.getName());
+            editTextName.setText(media.getName());
+        }
     }
 }

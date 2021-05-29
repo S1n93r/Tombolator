@@ -130,9 +130,7 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
 
         newMediaButton.setOnClickListener((View view) -> {
 
-            Media media = new Media();
-
-            mediaActivityViewModel.selectMedia(media);
+            mediaActivityViewModel.selectMedia(new Media());
 
             mediaActivity.switchToCreationStepOne();
         });
@@ -207,7 +205,7 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
             textView.setId((int) id);
 
             textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                    MediaUtil.getMediaIcon(media), 0, 0, 0);
+                    MediaUtil.getMediaTypeIcon(media), 0, 0, 0);
 
             linearLayoutMedia.addView(textView);
         }

@@ -64,12 +64,12 @@ public class TombolaCreationStepOneFragment extends Fragment {
     private void setUpMediaTypeSpinner() {
 
         List<String> mediaTypesForSpinner = new ArrayList<>();
-        mediaTypesForSpinner.add(Media.Type.CASSETTE);
-        mediaTypesForSpinner.add(Media.Type.CD);
-        mediaTypesForSpinner.add(Media.Type.BOOK);
-        mediaTypesForSpinner.add(Media.Type.E_BOOK);
-        mediaTypesForSpinner.add(Media.Type.DVD);
-        mediaTypesForSpinner.add(Media.Type.BLU_RAY);
+        mediaTypesForSpinner.add(Media.MediaType.CASSETTE);
+        mediaTypesForSpinner.add(Media.MediaType.CD);
+        mediaTypesForSpinner.add(Media.MediaType.BOOK);
+        mediaTypesForSpinner.add(Media.MediaType.E_BOOK);
+        mediaTypesForSpinner.add(Media.MediaType.DVD);
+        mediaTypesForSpinner.add(Media.MediaType.BLU_RAY);
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                 this.getActivity(), R.layout.media_type_spinner_item, mediaTypesForSpinner);

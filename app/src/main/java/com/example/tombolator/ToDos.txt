@@ -3,10 +3,10 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [.] --- Milestone II: Convenience functions ---
-[ ] add warning to reset button in config
+[.] edit media
+    [.] bug: media creation flow keeps wrong values --> selected media
 
-[ ] add tombola mode that removes media drawn
-    [ ] also delete media from database
+[ ] make sorting persistent
 
 [ ] implement an animation for drawing media
     [ ] Pusteblumen fliegen auseinander (runder Button)
@@ -18,9 +18,15 @@ ToDos:
     [ ] Ergebnis kommt aus einem Brief
     [ ] Kissen wird ausgeschüttelt mit Federn kommt das Ergebnis  raus
 
+[ ] do not jump back to first page when deleting media
+
+[ ] add warning to reset button in config
+
 [ ] add icon to tombola to be displayed
     [ ] add icon database
     [ ] color of icon can be picked freely
+
+[ ] Do not show index numbers on non-cassettes / non-cds
 
 [ ] sort by number, name and author depending on type
     [ ] audio plays

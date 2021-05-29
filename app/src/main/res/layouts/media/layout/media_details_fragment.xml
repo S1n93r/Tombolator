@@ -7,6 +7,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".media.MediaDetailsFragment">
+    <Button
+            android:drawableBottom="@drawable/ic_pencil_25"
+            android:paddingTop="@dimen/button_padding"
+            android:paddingBottom="@dimen/button_padding"
+            android:layout_width="@dimen/button_medium_width"
+            android:layout_height="@dimen/button_medium_height"
+            android:id="@+id/button_edit_media"
+            android:background="@drawable/button_selector_purple"
+            android:fontFamily="@font/comic_sans_ms"
+            android:text="@string/button_edit"
+            android:textSize="@dimen/font_size"
+            android:layout_marginBottom="125dp"
+            android:layout_marginEnd="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+    />
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

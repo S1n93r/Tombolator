@@ -14,7 +14,6 @@ import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 public class MediaActivityViewModel extends AndroidViewModel {
 
@@ -68,8 +67,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
     }
 
     public void selectMedia(Media media) {
-        selectedMedia.setValue(Objects.requireNonNull(media));
-        selectedMedia.postValue(selectedMedia.getValue());
+        selectedMedia.postValue(media);
     }
 
     public void selectMedia(long mediaId) {
@@ -83,12 +81,14 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
             if(media.getId() == mediaId) {
 
-                selectedMedia.postValue(media);
+                selectMedia(media);
                 return;
             }
         }
 
-        System.err.println("Media with id " + mediaId + " was not found in " + this.getClass() + ".");
+        Media mediaNotFound = new Media();
+        mediaNotFound.setName("Media not found...");
+        selectMedia(mediaNotFound);
     }
 
     public void setMediaSearchFilter(String searchFilter) {
@@ -223,7 +223,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
             for(String mediaType : mediaTypes) {
 
-                if(mediaType.equals(media.getType())) {
+                if(mediaType.equals(media.getMediaType())) {
                     return true;
                 }
             }

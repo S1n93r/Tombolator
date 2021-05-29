@@ -8,6 +8,10 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 @Entity
 public class Media implements Parcelable {
 
@@ -31,19 +35,23 @@ public class Media implements Parcelable {
     private String author;
 
     @ColumnInfo
-    private String type;
+    private String mediaType;
+
+    @ColumnInfo
+    private String contentType;
 
     @Ignore
     public Media() {}
 
-    public Media(String name, String title, int number, String author, String type) {
+    public Media(String name, String title, int number, String author, String mediaType, String contentType) {
 
         creationTimestamp = System.currentTimeMillis();
         this.name = name;
         this.title = title;
         this.number = number;
         this.author = author;
-        this.type = type;
+        this.mediaType = mediaType;
+        this.contentType = contentType;
     }
 
     public Media(Parcel in) {
@@ -58,7 +66,7 @@ public class Media implements Parcelable {
         name = in.readString();
         title = in.readString();
         number = in.readInt();
-        type = in.readString();
+        mediaType = in.readString();
     }
 
     public static final Creator<Media> CREATOR = new Creator<Media>() {
@@ -99,7 +107,7 @@ public class Media implements Parcelable {
         parcel.writeString(name);
         parcel.writeString(title);
         parcel.writeInt(number);
-        parcel.writeString(type);
+        parcel.writeString(mediaType);
     }
 
     public String toLabel() {
@@ -110,7 +118,7 @@ public class Media implements Parcelable {
         return "(" + number + ") "+ name + "\n" + title;
     }
 
-    public static final class Type {
+    public static final class MediaType {
 
         public static final String CASSETTE = "Kassette";
         public static final String CD = "CD";
@@ -118,10 +126,56 @@ public class Media implements Parcelable {
         public static final String BLU_RAY = "Blu-ray";
         public static final String E_BOOK = "E-Book";
         public static final String BOOK = "Buch";
+        public static final String STREAMING = "Streaming";
+        public static final String MEAL = "Essen";
+
+        public static List<String> getMediaTypes() {
+
+            List<String> mediaTypes = new ArrayList<>();
+            Collections.addAll(mediaTypes, CASSETTE, CD, DVD, BLU_RAY, E_BOOK, BOOK, STREAMING, MEAL);
+
+            return mediaTypes;
+        }
+
+        public static int getIndex(String type) {
+
+            switch(type) {
+                case CASSETTE:
+                default: return 0;
+                case CD: return 1;
+                case DVD: return 2;
+                case BLU_RAY: return 3;
+                case E_BOOK: return 4;
+                case BOOK: return 5;
+                case STREAMING: return 6;
+                case MEAL: return 7;
+            }
+        }
+    }
+
+    public static final class ContentType {
+
         public static final String AUDIO_PLAY = "Hörspiel";
-        public static final String AUDIO_BOOK = "Hörbuch";
         public static final String MOVIE = "Film";
         public static final String SERIES = "Serie";
+
+        public static List<String> getContentTypes() {
+
+            List<String> mediaTypes = new ArrayList<>();
+            Collections.addAll(mediaTypes, AUDIO_PLAY, MOVIE, SERIES);
+
+            return mediaTypes;
+        }
+
+        public static int getIndex(String type) {
+
+            switch(type) {
+                case AUDIO_PLAY:
+                default: return 0;
+                case MOVIE: return 1;
+                case SERIES: return 2;
+            }
+        }
     }
 
     public Long getId() {
@@ -160,12 +214,12 @@ public class Media implements Parcelable {
         this.number = number;
     }
 
-    public String getType() {
-        return type;
+    public String getMediaType() {
+        return mediaType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setMediaType(String mediaType) {
+        this.mediaType = mediaType;
     }
 
     public void setTitle(String title) {
@@ -178,5 +232,13 @@ public class Media implements Parcelable {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 }

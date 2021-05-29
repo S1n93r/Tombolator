@@ -99,11 +99,7 @@ public class TombolaDetailsFragment extends Fragment {
             tombolaViewModel.insertTombola(selectedTombola);
         });
 
-        editTombolaButton.setOnClickListener((View view) -> {
-            tombolaViewModel.selectTombola(
-                    Objects.requireNonNull(tombolaViewModel.getSelectedTombola().getValue()).getId());
-            tombolasActivity.switchToCreationStepOne();
-        });
+        editTombolaButton.setOnClickListener((View view) -> tombolasActivity.switchToCreationStepOne());
 
         deleteButton.setOnClickListener((View view) -> {
 

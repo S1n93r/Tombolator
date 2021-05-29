@@ -30,6 +30,7 @@ public class MediaDetailsFragment extends Fragment {
     private TextView typeValue;
     private TextView createdAt;
 
+    private Button editMediaButton;
     private Button backButton;
     private Button deleteButton;
 
@@ -57,6 +58,7 @@ public class MediaDetailsFragment extends Fragment {
         typeValue = layout.findViewById(R.id.type_value);
         createdAt = layout.findViewById(R.id.created_at_value);
 
+        editMediaButton = layout.findViewById(R.id.button_edit_media);
         backButton = layout.findViewById(R.id.button_back);
         deleteButton = layout.findViewById(R.id.button_delete);
 
@@ -71,6 +73,8 @@ public class MediaDetailsFragment extends Fragment {
     }
 
     private void registerOnClickListener() {
+
+        editMediaButton.setOnClickListener((View v) -> mediaActivity.switchToCreationStepOne());
 
         backButton.setOnClickListener((View v) -> mediaActivity.switchToMediaListStepTwo());
 
@@ -101,7 +105,7 @@ public class MediaDetailsFragment extends Fragment {
             nameValue.setText(media.getName());
             numberValue.setText(String.valueOf(media.getNumber()));
             titleValue.setText(media.getTitle());
-            typeValue.setText(media.getType());
+            typeValue.setText(media.getMediaType());
             createdAt.setText(DateUtil.formatDate(media.getCreationTimestamp()));
         }
     }
