@@ -29,7 +29,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
     private final MutableLiveData<List<String>> selectedMediaTypes = new MutableLiveData<>(new ArrayList<>());
 
-    private final MutableLiveData<Media> selectedMedia = new MutableLiveData<>();
+    private Media selectedMedia;
 
     private int currentSortingMode = SORTING_NONE;
 
@@ -67,7 +67,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
     }
 
     public void selectMedia(Media media) {
-        selectedMedia.postValue(media);
+        selectedMedia = media;
     }
 
     public void selectMedia(long mediaId) {
@@ -135,23 +135,13 @@ public class MediaActivityViewModel extends AndroidViewModel {
     }
 
     public List<Media> applyMediaTypeFilter(List<Media> mediaList) {
-
-        List<Media> filteredList = new ArrayList<>();
-
-        filteredList.addAll(Collections2.filter(
+        return new ArrayList<>(Collections2.filter(
                 mediaList, new MediaTypeFilterPredicate(selectedMediaTypes.getValue())));
-
-        return filteredList;
     }
 
     private List<Media> applyMediaSearchFilter(List<Media> mediaList) {
-
-        List<Media> filteredList = new ArrayList<>();
-
-        filteredList.addAll(Collections2.filter(
+        return new ArrayList<>(Collections2.filter(
                 mediaList, new MediaSearchFilterPredicate(currentSearchFilter)));
-
-        return filteredList;
     }
 
     private List<Media> applySorting(List<Media> mediaList) {
@@ -174,6 +164,11 @@ public class MediaActivityViewModel extends AndroidViewModel {
     }
 
     public void selectMediaTypes(List<String> mediaTypesList) {
+
+        if(selectedMediaTypes.getValue() == null) {
+            /* Add logger entry. */
+            throw new NullPointerException();
+        }
 
         selectedMediaTypes.getValue().addAll(mediaTypesList);
         selectedMediaTypes.postValue(selectedMediaTypes.getValue());
@@ -275,7 +270,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
         }
     }
 
-    public MutableLiveData<Media> getSelectedMedia() {
+    public Media getSelectedMedia() {
         return selectedMedia;
     }
 

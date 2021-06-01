@@ -10,12 +10,10 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 
 import java.util.List;
-import java.util.Objects;
 
 public class MediaCreationStepOneTypesFragment extends Fragment {
 
@@ -53,9 +51,16 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
         setUpMediaTypeSpinner();
         setUpContentTypeSpinner();
         registerOnClickListener();
-        registerObserver();
 
         return layout;
+    }
+
+    @Override
+    public void onStart() {
+
+        super.onStart();
+
+        updateView();
     }
 
     private void setUpMediaTypeSpinner() {
@@ -84,45 +89,36 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        backButton.setOnClickListener(v -> {
-            mediaActivity.switchToMediaListStepTwo();
-        });
+        backButton.setOnClickListener((View v) -> mediaActivity.switchToMediaListStepTwo());
 
         continueButton.setOnClickListener(v -> {
 
             String mediaType = mediaTypeSpinner.getSelectedItem() != null ? mediaTypeSpinner.getSelectedItem().toString() : "";
             String contentType = contentTypeSpinner.getSelectedItem() != null ? contentTypeSpinner.getSelectedItem().toString() : "";
 
-            if(mediaActivityViewModel.getSelectedMedia().getValue() == null) {
+            if(mediaActivityViewModel.getSelectedMedia() == null) {
                 /* TODO: Add log entry. */
                 throw new NullPointerException();
             }
 
-            mediaActivityViewModel.getSelectedMedia().getValue().setMediaType(mediaType);
-            mediaActivityViewModel.getSelectedMedia().getValue().setContentType(contentType);
+            mediaActivityViewModel.getSelectedMedia().setMediaType(mediaType);
+            mediaActivityViewModel.getSelectedMedia().setContentType(contentType);
 
             mediaActivity.switchToCreationStepTwo();
         });
     }
 
-    private void registerObserver() {
-        mediaActivityViewModel.getSelectedMedia().observe(
-                Objects.requireNonNull(getActivity()), new SelectedMediaObserver());
-    }
+    private void updateView() {
 
-    private class SelectedMediaObserver implements Observer<Media> {
+        Media media = mediaActivityViewModel.getSelectedMedia();
 
-        @Override
-        public void onChanged(Media media) {
+        int mediaTypeIndex = media.getMediaType() == null
+                ? 0 : Media.MediaType.getIndex(media.getMediaType());
 
-            int mediaTypeIndex = media.getMediaType() == null
-                    ? 0 : Media.MediaType.getIndex(media.getMediaType());
+        int contentTypeIndex = media.getContentType() == null
+                ? 0 : Media.ContentType.getIndex(media.getContentType());
 
-            int contentTypeIndex = media.getContentType() == null
-                    ? 0 : Media.ContentType.getIndex(media.getContentType());
-
-            mediaTypeSpinner.setSelection(mediaTypeIndex);
-            contentTypeSpinner.setSelection(contentTypeIndex);
-        }
+        mediaTypeSpinner.setSelection(mediaTypeIndex);
+        contentTypeSpinner.setSelection(contentTypeIndex);
     }
 }

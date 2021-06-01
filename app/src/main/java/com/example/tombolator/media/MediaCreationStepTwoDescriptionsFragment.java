@@ -9,7 +9,6 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 
@@ -53,29 +52,39 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
         saveButton = layout.findViewById(R.id.button_save);
 
         registerOnClickListener();
-        registerObserver();
         setVisibilitiesByMediaType();
 
         return layout;
     }
 
+    @Override
+    public void onStart() {
+
+        super.onStart();
+
+        updateView();
+    }
+
     private void registerOnClickListener() {
 
-        backButton.setOnClickListener(v -> {
-            mediaActivity.switchToCreationStepOne();
-        });
+        backButton.setOnClickListener((View v) -> mediaActivity.switchToCreationStepOne());
 
         saveButton.setOnClickListener(new SaveMediaListener());
     }
 
-    private void registerObserver() {
-        mediaActivityViewModel.getSelectedMedia().observe(
-                Objects.requireNonNull(getActivity()), new MediaSelectedObserver());
+    private void updateView() {
+
+        Media media = mediaActivityViewModel.getSelectedMedia();
+
+        editTextName.setText(media.getName());
+        editTextTitle.setText(media.getTitle());
+        editTextNumber.setText(String.valueOf(media.getNumber()));
+        editTextAuthor.setText(media.getAuthor());
     }
 
     private void setVisibilitiesByMediaType() {
 
-        String type = Objects.requireNonNull(mediaActivityViewModel.getSelectedMedia().getValue()).getMediaType();
+        String type = Objects.requireNonNull(mediaActivityViewModel.getSelectedMedia()).getMediaType();
 
         switch(type) {
             case Media.MediaType.CASSETTE:
@@ -112,12 +121,12 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
 
                 int number = numberAsString.length() > 0 ? Integer.parseInt(numberAsString) : -1;
 
-                if(mediaActivityViewModel.getSelectedMedia().getValue() == null) {
+                if(mediaActivityViewModel.getSelectedMedia() == null) {
                     /* TODO: Write NPE to log */
                     throw new NullPointerException();
                 }
 
-                Media selectedMedia = mediaActivityViewModel.getSelectedMedia().getValue();
+                Media selectedMedia = mediaActivityViewModel.getSelectedMedia();
 
                 selectedMedia.setName(name);
                 selectedMedia.setTitle(title);
@@ -128,18 +137,6 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
 
                 mediaActivity.switchToMediaListStepTwo();
             }
-        }
-    }
-
-    private class MediaSelectedObserver implements Observer<Media> {
-
-        @Override
-        public void onChanged(Media media) {
-
-            editTextName.setText(media.getName());
-            editTextName.setText(media.getName());
-            editTextName.setText(media.getName());
-            editTextName.setText(media.getName());
         }
     }
 }

@@ -45,10 +45,13 @@ public class RootActivity extends AppCompatActivity {
 
     private void registerOnClickListener() {
 
-        tombolasButton.setOnClickListener(view -> startActivity(new Intent(RootActivity.this, TombolasActivity.class)));
+        tombolasButton.setOnClickListener(view -> startActivity(
+                new Intent(RootActivity.this, TombolasActivity.class)));
 
-        mediaButton.setOnClickListener(view -> startActivity(new Intent(RootActivity.this, MediaActivity.class)));
+        mediaButton.setOnClickListener(view -> startActivity(
+                new Intent(RootActivity.this, MediaActivity.class)));
 
-        configButton.setOnClickListener(view -> startActivity(new Intent(RootActivity.this, ConfigActivity.class)));
+        configButton.setOnClickListener(view -> startActivity(
+                new Intent(RootActivity.this, ConfigActivity.class)));
     }
 }

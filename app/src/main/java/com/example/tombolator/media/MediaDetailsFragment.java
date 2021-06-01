@@ -9,13 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.DateUtil;
 import com.example.tombolator.R;
 import com.example.tombolator.tombolas.TombolasActivityViewModel;
-
-import java.util.Objects;
 
 public class MediaDetailsFragment extends Fragment {
 
@@ -62,14 +59,29 @@ public class MediaDetailsFragment extends Fragment {
         backButton = layout.findViewById(R.id.button_back);
         deleteButton = layout.findViewById(R.id.button_delete);
 
-        registerObserver();
         registerOnClickListener();
 
         return layout;
     }
 
-    private void registerObserver() {
-        mediaActivityViewModel.getSelectedMedia().observe(Objects.requireNonNull(this.getActivity()), new SelectedMediaObserver());
+    @Override
+    public void onStart() {
+
+        super.onStart();
+
+        updateView();
+    }
+
+    private void updateView() {
+
+        Media media = mediaActivityViewModel.getSelectedMedia();
+
+        idValue.setText(String.valueOf(media.getId()));
+        nameValue.setText(media.getName());
+        numberValue.setText(String.valueOf(media.getNumber()));
+        titleValue.setText(media.getTitle());
+        typeValue.setText(media.getMediaType());
+        createdAt.setText(DateUtil.formatDate(media.getCreationTimestamp()));
     }
 
     private void registerOnClickListener() {
@@ -83,7 +95,7 @@ public class MediaDetailsFragment extends Fragment {
 
     private void deleteMedia() {
 
-        Media media = mediaActivityViewModel.getSelectedMedia().getValue();
+        Media media = mediaActivityViewModel.getSelectedMedia();
 
         if(media == null) {
             /* TODO: Add log entry. */
@@ -96,17 +108,4 @@ public class MediaDetailsFragment extends Fragment {
         mediaActivity.switchToMediaListStepTwo();
     }
 
-    private class SelectedMediaObserver implements Observer<Media> {
-
-        @Override
-        public void onChanged(Media media) {
-
-            idValue.setText(String.valueOf(media.getId()));
-            nameValue.setText(media.getName());
-            numberValue.setText(String.valueOf(media.getNumber()));
-            titleValue.setText(media.getTitle());
-            typeValue.setText(media.getMediaType());
-            createdAt.setText(DateUtil.formatDate(media.getCreationTimestamp()));
-        }
-    }
 }

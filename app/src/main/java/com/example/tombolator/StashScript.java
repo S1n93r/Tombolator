@@ -60,7 +60,7 @@ public class StashScript implements Runnable {
         tombola.setCreationTimestamp(System.currentTimeMillis());
 
         for(Media media : mediaList) {
-            if(media.getMediaType().equals(Media.ContentType.MOVIE))
+            if(media.getContentType().equals(Media.ContentType.MOVIE))
                 tombola.addMedia(media);
         }
 
