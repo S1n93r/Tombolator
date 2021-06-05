@@ -3,8 +3,6 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [.] --- Milestone II: Convenience functions ---
-[ ] bug: deleting or creating removes category filter
-
 [ ] add warning to reset button in config
 
 [ ] add tombola mode that removes media drawn
@@ -91,8 +89,9 @@ ToDos:
 [ ] --- ------------------------------ ---
 
 Done:
-[x] bug: sorting or deleting media empties media list
+[x] bug: deleting or creating removes category filter
 
+[x] bug: sorting or deleting media empties media list
 [x] bug: deleting media is not working --> app crashes
 [x] fixed a bug where MediaActivityViewModel could not be loaded due to an NPE to high up in the code
 [x] implement category choosing to media list

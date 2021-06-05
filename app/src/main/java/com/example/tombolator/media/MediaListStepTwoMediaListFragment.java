@@ -208,7 +208,6 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
 
             linearLayoutMedia.addView(textView);
         }
-        System.out.println("Test");
     }
 
     private static String formatNumberFullDigitsLeadingZero(int number) {
