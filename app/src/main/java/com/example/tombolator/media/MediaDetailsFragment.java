@@ -60,42 +60,38 @@ public class MediaDetailsFragment extends Fragment {
         deleteButton = layout.findViewById(R.id.button_delete);
 
         registerOnClickListener();
+        registerObserver();
 
         return layout;
     }
 
-    @Override
-    public void onStart() {
+    private void registerObserver() {
 
-        super.onStart();
+        mediaActivityViewModel.getSelectedMedia().observe(this, media -> {
 
-        updateView();
-    }
-
-    private void updateView() {
-
-        Media media = mediaActivityViewModel.getSelectedMedia();
-
-        idValue.setText(String.valueOf(media.getId()));
-        nameValue.setText(media.getName());
-        numberValue.setText(String.valueOf(media.getNumber()));
-        titleValue.setText(media.getTitle());
-        typeValue.setText(media.getMediaType());
-        createdAt.setText(DateUtil.formatDate(media.getCreationTimestamp()));
+            idValue.setText(String.valueOf(media.getId()));
+            nameValue.setText(media.getName());
+            numberValue.setText(String.valueOf(media.getNumber()));
+            titleValue.setText(media.getTitle());
+            typeValue.setText(media.getMediaType());
+            createdAt.setText(DateUtil.formatDate(media.getCreationTimestamp()));
+        });
     }
 
     private void registerOnClickListener() {
 
         editMediaButton.setOnClickListener((View v) -> mediaActivity.switchToCreationStepOne());
 
-        backButton.setOnClickListener((View v) -> mediaActivity.switchToMediaListStepTwo());
+        backButton.setOnClickListener((View v) -> {
+            mediaActivity.switchToMediaListStepTwo();
+        });
 
         deleteButton.setOnClickListener((View v) -> deleteMedia());
     }
 
     private void deleteMedia() {
 
-        Media media = mediaActivityViewModel.getSelectedMedia();
+        Media media = mediaActivityViewModel.getSelectedMedia().getValue();
 
         if(media == null) {
             /* TODO: Add log entry. */
@@ -103,9 +99,8 @@ public class MediaDetailsFragment extends Fragment {
         }
 
         tombolasActivityViewModel.deleteMediaFromAllTombolas(media);
-
         mediaActivityViewModel.delete(media);
+
         mediaActivity.switchToMediaListStepTwo();
     }
-
 }

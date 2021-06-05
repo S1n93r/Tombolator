@@ -9,11 +9,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MediaListStepOneMediaTypeSelectFragment extends Fragment {
 
@@ -50,16 +50,30 @@ public class MediaListStepOneMediaTypeSelectFragment extends Fragment {
         backButton = layout.findViewById(R.id.button_back);
         continueButton = layout.findViewById(R.id.button_continue);
 
-        registerObserver();
         registerOnClickListener();
+        setupMediaTypeSpinner();
 
         return layout;
     }
 
-    private void registerObserver() {
+    private void setupMediaTypeSpinner() {
 
-        mediaActivityViewModel.getAllMediaLiveData()
-                .observe(Objects.requireNonNull(this.getActivity()), new MediaTypesUpdatedObserver());
+        for(String mediaType : Media.MediaType.getMediaTypes()) {
+
+            /* TODO: Replace with icon views. */
+            TextView mediaTypeTextView = (TextView) View.inflate(
+                    mediaActivity.getApplicationContext(), R.layout.list_element, null);
+
+            mediaTypeTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    MediaUtil.getMediaTypeIcon(mediaType), 0, 0, 0);
+
+            mediaTypeTextView.setText(mediaType);
+            mediaTypeTextView.setId(UNSELECTED);
+            mediaTypeTextView.setOnClickListener(toggleMediaTypeSelectListener);
+            mediaTypeTextView.setTextSize(20);
+
+            mediaTypeLinearLayout.addView(mediaTypeTextView);
+        }
     }
 
     private void registerOnClickListener() {
@@ -87,35 +101,6 @@ public class MediaListStepOneMediaTypeSelectFragment extends Fragment {
 
             mediaActivity.switchToMediaListStepTwo();
         });
-    }
-
-    private class MediaTypesUpdatedObserver implements Observer<List<Media>> {
-
-        @Override
-        public void onChanged(List<Media> mediaList) {
-
-            Set<String> mediaTypes = new HashSet<>();
-            mediaList.forEach((Media media) -> mediaTypes.add(media.getMediaType()));
-
-            mediaTypeLinearLayout.removeAllViews();
-
-            for(String mediaType : mediaTypes) {
-
-                /* TODO: Replace with icon views. */
-                TextView mediaTypeTextView = (TextView) View.inflate(
-                        mediaActivity.getApplicationContext(), R.layout.list_element, null);
-
-                mediaTypeTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                        MediaUtil.getMediaTypeIcon(mediaType), 0, 0, 0);
-
-                mediaTypeTextView.setText(mediaType);
-                mediaTypeTextView.setId(UNSELECTED);
-                mediaTypeTextView.setOnClickListener(toggleMediaTypeSelectListener);
-                mediaTypeTextView.setTextSize(20);
-
-                mediaTypeLinearLayout.addView(mediaTypeTextView);
-            }
-        }
     }
 
     private static class ToggleMediaTypeSelectListener implements View.OnClickListener {

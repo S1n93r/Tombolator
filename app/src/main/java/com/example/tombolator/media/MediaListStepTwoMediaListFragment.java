@@ -14,7 +14,6 @@ import com.example.tombolator.R;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 public class MediaListStepTwoMediaListFragment extends Fragment {
 
@@ -76,14 +75,15 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
 
     private void registerObserver() {
 
-        mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData()
-                .observe(Objects.requireNonNull(this.getActivity()), new MediaListObserver());
+        mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().observe(this, new MediaListObserver());
 
-        currentPage.observe(this.getActivity(), new PageNumberCurrentObserver());
+        currentPage.removeObservers(this);
 
-        mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().observe(this.getActivity(), new PageNumberTotalObserver());
+        currentPage.observe(this, new PageNumberCurrentObserver());
 
-        mediaActivityViewModel.getSelectedMediaTypes().observe(this.getActivity(), new SelectedMediaTypesObserver());
+        mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().observe(this, new PageNumberTotalObserver());
+
+        mediaActivityViewModel.getSelectedMediaTypes().observe(this, new SelectedMediaTypesObserver());
     }
 
     private void registerOnKeyListener() {
@@ -112,7 +112,7 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
                     mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().getValue(), ELEMENTS_PER_PAGE))
                 return;
 
-            currentPage.postValue(currentPage.getValue() + 1);
+            currentPage.setValue(currentPage.getValue() + 1);
         });
 
         previousPageButton.setOnClickListener((View view) -> {
@@ -125,7 +125,7 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
             if(currentPage.getValue() == 1)
                 return;
 
-            currentPage.postValue(currentPage.getValue() - 1);
+            currentPage.setValue(currentPage.getValue() - 1);
         });
 
         newMediaButton.setOnClickListener((View view) -> {
@@ -140,7 +140,7 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
 
         @Override
         public void onChanged(List<String> mediaTypes) {
-            currentPage.postValue(1);
+            currentPage.setValue(1);
         }
     }
 
@@ -148,7 +148,6 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
 
         @Override
         public void onChanged(List<Media> mediaList) {
-
             showMediaOnCurrentPage(mediaList);
         }
     }
@@ -209,6 +208,7 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
 
             linearLayoutMedia.addView(textView);
         }
+        System.out.println("Test");
     }
 
     private static String formatNumberFullDigitsLeadingZero(int number) {

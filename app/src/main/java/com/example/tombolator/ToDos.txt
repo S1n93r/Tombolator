@@ -3,11 +3,12 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [.] --- Milestone II: Convenience functions ---
-[ ] remove live data usage from media list --> closing memory leak
-[ ] remove live data usage from tombola list --> closing memory leak
-[ ] remove live data usage from tombola details --> closing memory leak
+[ ] bug: deleting or creating removes category filter
 
-[ ] make sorting persistent
+[ ] add warning to reset button in config
+
+[ ] add tombola mode that removes media drawn
+    [ ] also delete media from database
 
 [ ] implement an animation for drawing media
     [ ] Pusteblumen fliegen auseinander (runder Button)
@@ -19,15 +20,9 @@ ToDos:
     [ ] Ergebnis kommt aus einem Brief
     [ ] Kissen wird ausgeschüttelt mit Federn kommt das Ergebnis  raus
 
-[ ] do not jump back to first page when deleting media
-
-[ ] add warning to reset button in config
-
 [ ] add icon to tombola to be displayed
     [ ] add icon database
     [ ] color of icon can be picked freely
-
-[ ] Do not show index numbers on non-cassettes / non-cds
 
 [ ] sort by number, name and author depending on type
     [ ] audio plays
@@ -96,11 +91,8 @@ ToDos:
 [ ] --- ------------------------------ ---
 
 Done:
-[x] edit media
-    [x] bug: media creation flow keeps wrong values --> selected media
-        [x] keep observer list from growing --> might fix bug and prevent memory leak
-
 [x] bug: sorting or deleting media empties media list
+
 [x] bug: deleting media is not working --> app crashes
 [x] fixed a bug where MediaActivityViewModel could not be loaded due to an NPE to high up in the code
 [x] implement category choosing to media list

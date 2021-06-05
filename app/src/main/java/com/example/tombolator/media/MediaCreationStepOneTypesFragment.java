@@ -51,16 +51,9 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
         setUpMediaTypeSpinner();
         setUpContentTypeSpinner();
         registerOnClickListener();
+        registerObserver();
 
         return layout;
-    }
-
-    @Override
-    public void onStart() {
-
-        super.onStart();
-
-        updateView();
     }
 
     private void setUpMediaTypeSpinner() {
@@ -96,29 +89,30 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
             String mediaType = mediaTypeSpinner.getSelectedItem() != null ? mediaTypeSpinner.getSelectedItem().toString() : "";
             String contentType = contentTypeSpinner.getSelectedItem() != null ? contentTypeSpinner.getSelectedItem().toString() : "";
 
-            if(mediaActivityViewModel.getSelectedMedia() == null) {
+            if(mediaActivityViewModel.getSelectedMedia().getValue() == null) {
                 /* TODO: Add log entry. */
                 throw new NullPointerException();
             }
 
-            mediaActivityViewModel.getSelectedMedia().setMediaType(mediaType);
-            mediaActivityViewModel.getSelectedMedia().setContentType(contentType);
+            mediaActivityViewModel.getSelectedMedia().getValue().setMediaType(mediaType);
+            mediaActivityViewModel.getSelectedMedia().getValue().setContentType(contentType);
 
             mediaActivity.switchToCreationStepTwo();
         });
     }
 
-    private void updateView() {
+    private void registerObserver() {
 
-        Media media = mediaActivityViewModel.getSelectedMedia();
+        mediaActivityViewModel.getSelectedMedia().observe(this, media -> {
 
-        int mediaTypeIndex = media.getMediaType() == null
-                ? 0 : Media.MediaType.getIndex(media.getMediaType());
+            int mediaTypeIndex = media.getMediaType() == null
+                    ? 0 : Media.MediaType.getIndex(media.getMediaType());
 
-        int contentTypeIndex = media.getContentType() == null
-                ? 0 : Media.ContentType.getIndex(media.getContentType());
+            int contentTypeIndex = media.getContentType() == null
+                    ? 0 : Media.ContentType.getIndex(media.getContentType());
 
-        mediaTypeSpinner.setSelection(mediaTypeIndex);
-        contentTypeSpinner.setSelection(contentTypeIndex);
+            mediaTypeSpinner.setSelection(mediaTypeIndex);
+            contentTypeSpinner.setSelection(contentTypeIndex);
+        });
     }
 }
