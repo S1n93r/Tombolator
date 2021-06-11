@@ -3,10 +3,10 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [.] --- Milestone II: Convenience functions ---
-[ ] add warning to reset button in config
-
 [ ] add tombola mode that removes media drawn
     [ ] also delete media from database
+
+[ ] add warning to reset button in config
 
 [ ] implement an animation for drawing media
     [ ] Pusteblumen fliegen auseinander (runder Button)
@@ -38,10 +38,6 @@ ToDos:
 [ ] change tombola list to tiles
 [ ] implement label system
 [ ] implement label-tiles before media list
-
-[ ] test updater...
-    [ ] push v0.84 to github
-    [ ] revert to v0.83 locally and start app to check if updater tries to pull v0.84
 
 [ ] change media list in tombola creation from dual to single list with marking
 [ ] clean up app icon xmls because they seem off
@@ -76,6 +72,7 @@ ToDos:
 [ ] catch all exceptions with a logger and add informative descriptions
 [ ] implement unit tests
 [ ] Write java doc
+[ ] implement app updater
 [ ] extract widths, heights, margins and font size to xml
     [ ] create "android resource directory" for dimensions, widths or heights
 [ ] add state effects to buttons
@@ -85,6 +82,7 @@ ToDos:
 [ ] rebuild activity to fragment structure
     [ ] use activities on new screen
     [ ] only use fragments for reusable PARTS of a screen
+[ ] update to java 11
 [ ] clean up build gradle
 [ ] --- ------------------------------ ---
 
