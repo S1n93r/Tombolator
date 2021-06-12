@@ -151,6 +151,21 @@ public class Media implements Parcelable {
                 case MEAL: return 7;
             }
         }
+
+        public static String getMediaType(int index) {
+
+            switch(index) {
+                case 0:
+                default: return CASSETTE;
+                case 1: return CD;
+                case 2: return DVD;
+                case 3: return BLU_RAY;
+                case 4: return E_BOOK;
+                case 5: return BOOK;
+                case 6: return STREAMING;
+                case 7: return MEAL;
+            }
+        }
     }
 
     public static final class ContentType {

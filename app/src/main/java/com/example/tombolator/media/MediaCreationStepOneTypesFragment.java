@@ -20,7 +20,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
     private MediaActivity mediaActivity;
     private MediaActivityViewModel mediaActivityViewModel;
 
-    private Spinner mediaTypeSpinner;
+    private Spinner mediaTypesSpinner;
     private Spinner contentTypeSpinner;
 
     private Button continueButton;
@@ -42,7 +42,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
         View layout = inflater.inflate(R.layout.media_creation_step_one_types_fragment, container, false);
 
-        mediaTypeSpinner = layout.findViewById(R.id.spinner_media_types);
+        mediaTypesSpinner = layout.findViewById(R.id.spinner_media_types);
         contentTypeSpinner = layout.findViewById(R.id.spinner_content_types);
 
         continueButton = layout.findViewById(R.id.button_continue);
@@ -65,7 +65,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
         arrayAdapter.setDropDownViewResource(R.layout.media_type_spinner_dropdown);
 
-        mediaTypeSpinner.setAdapter(arrayAdapter);
+        mediaTypesSpinner.setAdapter(arrayAdapter);
     }
 
     private void setUpContentTypeSpinner() {
@@ -86,7 +86,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
         continueButton.setOnClickListener(v -> {
 
-            String mediaType = mediaTypeSpinner.getSelectedItem() != null ? mediaTypeSpinner.getSelectedItem().toString() : "";
+            String mediaType = mediaTypesSpinner.getSelectedItem() != null ? mediaTypesSpinner.getSelectedItem().toString() : "";
             String contentType = contentTypeSpinner.getSelectedItem() != null ? contentTypeSpinner.getSelectedItem().toString() : "";
 
             if(mediaActivityViewModel.getSelectedMedia().getValue() == null) {
@@ -111,7 +111,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
             int contentTypeIndex = media.getContentType() == null
                     ? 0 : Media.ContentType.getIndex(media.getContentType());
 
-            mediaTypeSpinner.setSelection(mediaTypeIndex);
+            mediaTypesSpinner.setSelection(mediaTypeIndex);
             contentTypeSpinner.setSelection(contentTypeIndex);
         });
     }

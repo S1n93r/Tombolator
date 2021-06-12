@@ -12,9 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MediaListStepOneMediaTypeSelectFragment extends Fragment {
 
     private static final int UNSELECTED = 0;
@@ -81,24 +78,6 @@ public class MediaListStepOneMediaTypeSelectFragment extends Fragment {
         backButton.setOnClickListener((View view) -> mediaActivity.finish());
 
         continueButton.setOnClickListener((View view) -> {
-
-            if(mediaActivityViewModel.getSelectedMediaTypes().getValue() == null) {
-                /* TODO: Add log entry. */
-                throw new NullPointerException();
-            }
-
-            List<String> mediaTypes = new ArrayList<>();
-
-            for(int i=0; i<mediaTypeLinearLayout.getChildCount(); i++) {
-
-                TextView mediaTypeTextView = (TextView) mediaTypeLinearLayout.getChildAt(i);
-
-                if(mediaTypeTextView.getId() == SELECTED)
-                    mediaTypes.add(mediaTypeTextView.getText().toString());
-            }
-
-            mediaActivityViewModel.selectMediaTypes(mediaTypes);
-
             mediaActivity.switchToMediaListStepTwo();
         });
     }

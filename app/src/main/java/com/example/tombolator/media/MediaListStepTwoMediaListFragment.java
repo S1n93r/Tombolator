@@ -1,7 +1,6 @@
 package com.example.tombolator.media;
 
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,14 +24,14 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
 
     private MediaActivityViewModel mediaActivityViewModel;
 
-    private EditText search;
-
     private LinearLayout linearLayoutMedia;
 
     private TextView pageNumberCurrent;
     private TextView pageNumberMax;
 
     private ImageView sortButton;
+    private Spinner mediaTypesSpinner;
+
     private Button backButton;
     private Button nextPageButton;
     private Button previousPageButton;
@@ -53,24 +52,55 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
 
         View layout = inflater.inflate(R.layout.media_list_step_two_media_list, container, false);
 
-        search = layout.findViewById(R.id.edit_text_search);
-
         linearLayoutMedia = layout.findViewById(R.id.linear_layout_media);
 
         pageNumberCurrent = layout.findViewById(R.id.label_page_number_current);
         pageNumberMax = layout.findViewById(R.id.label_page_number_total);
 
         sortButton = layout.findViewById(R.id.button_sort_by);
+        mediaTypesSpinner = layout.findViewById(R.id.spinner_media_types);
+
         backButton = layout.findViewById(R.id.button_back);
         nextPageButton = layout.findViewById(R.id.button_next_page);
         previousPageButton = layout.findViewById(R.id.button_previous_page);
         newMediaButton = layout.findViewById(R.id.button_new_media);
 
+        setUpMediaTypesSpinner();
+
         registerObserver();
-        registerOnKeyListener();
         registerOnClickListener();
 
         return layout;
+    }
+
+    private void setUpMediaTypesSpinner() {
+
+        List<String> mediaTypesForSpinner = Media.MediaType.getMediaTypes();
+        mediaTypesForSpinner.add(0, "Alle");
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
+                this.getActivity(), R.layout.media_type_spinner_item, mediaTypesForSpinner);
+
+        arrayAdapter.setDropDownViewResource(R.layout.media_type_spinner_dropdown);
+        mediaTypesSpinner.setAdapter(arrayAdapter);
+
+        mediaTypesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                if(i == 0)
+                    mediaActivityViewModel.clearMediaType();
+                else
+                    mediaActivityViewModel.selectMediaType(Media.MediaType.getMediaType(i - 1));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
     }
 
     private void registerObserver() {
@@ -83,18 +113,14 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
 
         mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().observe(this, new PageNumberTotalObserver());
 
-        mediaActivityViewModel.getSelectedMediaTypes().observe(this, new SelectedMediaTypesObserver());
-    }
-
-    private void registerOnKeyListener() {
-        search.setOnKeyListener(new SearchMediaListener());
+        mediaActivityViewModel.getSelectedMediaType().observe(this, new SelectedMediaTypeObserver());
     }
 
     private void registerOnClickListener() {
 
         sortButton.setOnClickListener((View view) -> mediaActivityViewModel.toggleSorting());
 
-        backButton.setOnClickListener((View view) -> mediaActivity.switchToMediaListStepOne());
+        backButton.setOnClickListener((View view) -> mediaActivity.finish());
 
         nextPageButton.setOnClickListener((View view) -> {
 
@@ -136,10 +162,10 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
         });
     }
 
-    private class SelectedMediaTypesObserver implements Observer<List<String>> {
+    private class SelectedMediaTypeObserver implements Observer<String> {
 
         @Override
-        public void onChanged(List<String> mediaTypes) {
+        public void onChanged(String mediaType) {
             currentPage.setValue(1);
         }
     }
@@ -229,21 +255,6 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
             mediaActivityViewModel.selectMedia(mediaId);
 
             mediaActivity.switchToMediaDetailsView();
-        }
-    }
-
-    private class SearchMediaListener implements View.OnKeyListener {
-
-        @Override
-        public boolean onKey(View view, int i, KeyEvent keyEvent) {
-
-            if(keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-
-                String searchFilter = search.getText() != null ? search.getText().toString() : "";
-                mediaActivityViewModel.setMediaSearchFilter(searchFilter);
-            }
-
-            return false;
         }
     }
 }

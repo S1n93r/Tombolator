@@ -11,25 +11,23 @@
 
     <ImageView
             android:src="@drawable/ic_sort_by_desc"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:id="@+id/button_sort_by"
-            android:layout_marginTop="28dp"
             android:layout_marginStart="40dp"
             android:contentDescription="@string/icon_sort_media_content_description"
+            app:layout_constraintBottom_toTopOf="@+id/scroll_view_list"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_title"
     />
-    <ImageView
-            android:src="@drawable/ic_magnifying_glass"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginStart="92dp"
-            android:contentDescription="@string/icon_search_media_content_description"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_title"
-    />
+    <Spinner
+            android:fontFamily="@font/comic_sans_ms"
+            android:textSize="@dimen/font_size_labels"
+            android:layout_width="196dp"
+            android:layout_height="40dp"
+            android:gravity="center_horizontal"
+            android:id="@+id/spinner_media_types"
+            app:layout_constraintBottom_toTopOf="@+id/scroll_view_list"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="40dp"/>
     <Button
             android:padding="20dp"
             android:layout_width="@dimen/button_small_width"
@@ -108,8 +106,8 @@
             android:textSize="@dimen/font_size_titles"
             android:id="@+id/text_view_title"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_bias="0.025"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintVertical_bias="0.023"
     />
     <Button
             android:background="@drawable/button_selector_purple"
@@ -145,11 +143,12 @@
             android:layout_width="330dp"
             android:layout_height="380dp"
             android:id="@+id/scroll_view_list"
-            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintTop_toBottomOf="@+id/edit_text_search">
+            app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintBottom_toTopOf="@+id/button_previous_page"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_title"
+            app:layout_constraintVertical_bias="0.8">
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -157,20 +156,5 @@
                 android:id="@+id/linear_layout_media"
         />
     </ScrollView>
-    <EditText
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:hint="@string/label_search"
-            android:autofillHints="@string/label_search"
-            android:ems="10"
-            android:id="@+id/edit_text_search"
-            android:textSize="@dimen/font_size_labels"
-            android:fontFamily="@font/comic_sans_ms"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="40dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_title"
-    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

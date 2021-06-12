@@ -25,7 +25,7 @@ public class MediaActivity extends AppCompatActivity {
         mediaCreationStepTwoDescriptionsFragment = MediaCreationStepTwoDescriptionsFragment.newInstance();
         setContentView(R.layout.media_activity);
         if (savedInstanceState == null) {
-            switchToMediaListStepOne();
+            switchToMediaListStepTwo();
         }
     }
 
