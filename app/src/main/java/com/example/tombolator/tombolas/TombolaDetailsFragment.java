@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +17,8 @@ import com.example.tombolator.DateUtil;
 import com.example.tombolator.R;
 import com.example.tombolator.media.Media;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class TombolaDetailsFragment extends Fragment {
@@ -28,6 +32,8 @@ public class TombolaDetailsFragment extends Fragment {
     private TextView numberOfMediaAll;
     private TextView numberOfMediaAvailable;
     private TextView numberOfMediaDrawn;
+
+    private Spinner tombolaTypeSpinner;
 
     private Button backButton;
     private Button drawButton;
@@ -56,6 +62,8 @@ public class TombolaDetailsFragment extends Fragment {
         numberOfMediaAvailable = layout.findViewById(R.id.media_available_value);
         numberOfMediaDrawn = layout.findViewById(R.id.media_drawn_value);
 
+        tombolaTypeSpinner = layout.findViewById(R.id.spinner_tombola_type);
+
         backButton = layout.findViewById(R.id.button_back);
         drawButton = layout.findViewById(R.id.button_draw);
         editTombolaButton = layout.findViewById(R.id.button_edit_tombola);
@@ -63,8 +71,25 @@ public class TombolaDetailsFragment extends Fragment {
 
         registerObserver();
         registerOnClickListener();
+        setUpSpinner();
 
         return layout;
+    }
+
+    private void setUpSpinner() {
+
+        List<String> typesAsStrings = new ArrayList<>();
+
+        for(Tombola.Type type : Tombola.Type.values()) {
+            typesAsStrings.add(type.description);
+        }
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
+                this.getActivity(), R.layout.media_type_spinner_item, typesAsStrings);
+
+        arrayAdapter.setDropDownViewResource(R.layout.spinner_element);
+
+        tombolaTypeSpinner.setAdapter(arrayAdapter);
     }
 
     private void registerObserver() {

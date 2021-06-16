@@ -9,10 +9,10 @@ public class TombolaTest {
     @Test
     public void testEnumType() {
 
-        assertEquals(3, Tombola.TombolaTypeConverter.values().length);
+        assertEquals(3, Tombola.Type.values().length);
 
-        assertEquals(0, Tombola.TombolaTypeConverter.REUSE.ordinal());
-        assertEquals(1, Tombola.TombolaTypeConverter.REMOVE.ordinal());
-        assertEquals(2, Tombola.TombolaTypeConverter.DELETE.ordinal());
+        assertEquals(0, Tombola.Type.REUSE.ordinal());
+        assertEquals(1, Tombola.Type.REMOVE.ordinal());
+        assertEquals(2, Tombola.Type.DELETE.ordinal());
     }
 }

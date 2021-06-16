@@ -94,10 +94,10 @@
             android:ems="10"
             android:id="@+id/name_label"
             android:text="@string/label_name"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="32dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintTop_toBottomOf="@+id/text_view_title"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
@@ -109,7 +109,7 @@
             android:text="@string/label_name"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="32dp"
             app:layout_constraintStart_toEndOf="@+id/name_label"
             app:layout_constraintTop_toBottomOf="@+id/text_view_title"/>
     <TextView
@@ -123,7 +123,7 @@
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintTop_toBottomOf="@+id/name_label"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
@@ -136,7 +136,7 @@
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintTop_toBottomOf="@+id/created_at_label"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
@@ -149,7 +149,7 @@
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.151"
+            app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintTop_toBottomOf="@+id/media_all_label"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
@@ -162,8 +162,29 @@
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.151"
+            app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintTop_toBottomOf="@+id/media_available_label"/>
+    <TextView
+            android:fontFamily="@font/comic_sans_ms"
+            android:textSize="@dimen/font_size_big"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:id="@+id/media_drawn_label2"
+            android:text="@string/lable_media_type"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintTop_toBottomOf="@+id/media_drawn_label"/>
+    <Spinner
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:id="@+id/spinner_tombola_type"
+            app:layout_constraintStart_toEndOf="@+id/media_drawn_label2"
+            app:layout_constraintTop_toBottomOf="@+id/media_drawn_value"/>
     <TextView
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="@dimen/font_size_big"
@@ -213,7 +234,7 @@
             android:text="@string/label_media_drawn"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintStart_toEndOf="@+id/media_drawn_label"
             app:layout_constraintTop_toBottomOf="@+id/media_available_value"/>
 

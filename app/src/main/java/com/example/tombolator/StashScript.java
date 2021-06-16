@@ -58,6 +58,7 @@ public class StashScript implements Runnable {
 
         tombola.setName("Disney+ Filme");
         tombola.setCreationTimestamp(System.currentTimeMillis());
+        tombola.setType(Tombola.Type.REUSE);
 
         for(Media media : mediaList) {
             if(media.getContentType().equals(Media.ContentType.MOVIE))

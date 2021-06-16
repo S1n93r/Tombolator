@@ -26,7 +26,7 @@ public class Tombola implements Parcelable {
 
     @TypeConverters({com.example.tombolator.tombolas.TombolaTypeConverter.class})
     @ColumnInfo
-    private TombolaTypeConverter type;
+    private Type type;
 
     @TypeConverters({MediaListConverter.class})
     @ColumnInfo
@@ -43,7 +43,7 @@ public class Tombola implements Parcelable {
 
         this.name = name;
         this.creationTimestamp = System.currentTimeMillis();
-        this.type = Tombola.TombolaTypeConverter.REUSE;
+        this.type = Type.REUSE;
     }
 
     protected Tombola(Parcel in) {
@@ -172,11 +172,11 @@ public class Tombola implements Parcelable {
         this.mediaDrawn = mediaDrawn;
     }
 
-    public TombolaTypeConverter getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(TombolaTypeConverter type) {
+    public void setType(Type type) {
         this.type = type;
     }
 
@@ -189,7 +189,7 @@ public class Tombola implements Parcelable {
         return allMedia;
     }
 
-    public enum TombolaTypeConverter {
+    public enum Type {
 
         REUSE ("wiederverwenden", "Medien verbleiben nach dem Ziehen in der Tombola."),
         REMOVE ("entfernen", "Medien werden nach dem Ziehen aus der Tombola entfernt."),
@@ -198,7 +198,7 @@ public class Tombola implements Parcelable {
         final String description;
         final String toolTip;
 
-        TombolaTypeConverter(String description, String toolTip) {
+        Type(String description, String toolTip) {
             this.description = description;
             this.toolTip = toolTip;
         }

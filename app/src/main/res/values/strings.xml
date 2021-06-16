@@ -40,6 +40,7 @@
     <string name="label_media_all">Medien gesamt</string>
     <string name="label_media_available">…davon verfügbar</string>
     <string name="label_media_drawn">…davon gezogen</string>
+    <string name="lable_media_type">Medien nach dem Ziehen…</string>
     <string name="label_id">ID</string>
     <string name="label_search">Suche</string>
     <string name="label_what_category">Welche Kategorie(n)?</string>

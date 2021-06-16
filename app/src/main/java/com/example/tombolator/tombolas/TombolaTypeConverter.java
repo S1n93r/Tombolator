@@ -5,12 +5,12 @@ import androidx.room.TypeConverter;
 public class TombolaTypeConverter {
 
     @TypeConverter
-    public static Tombola.TombolaTypeConverter fromJsonString(String type) {
-        return Tombola.TombolaTypeConverter.valueOf(type);
+    public static Tombola.Type fromJsonString(String type) {
+        return Tombola.Type.valueOf(type);
     }
 
     @TypeConverter
-    public static String toJsonString(Tombola.TombolaTypeConverter type) {
+    public static String toJsonString(Tombola.Type type) {
         return type.toString();
     }
 }
