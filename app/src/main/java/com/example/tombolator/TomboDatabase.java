@@ -6,6 +6,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaDao;
+import com.example.tombolator.media.MediaListConverter;
 import com.example.tombolator.tombolas.Tombola;
 import com.example.tombolator.tombolas.TombolaDao;
 
@@ -13,7 +14,7 @@ import com.example.tombolator.tombolas.TombolaDao;
         Media.class,
         Tombola.class
 }, version = 1)
-@TypeConverters({Converters.class})
+@TypeConverters({MediaListConverter.class})
 public abstract class TomboDatabase extends RoomDatabase {
 
     private static TomboDatabase instance;

@@ -3,8 +3,8 @@ package com.example.tombolator.tombolas;
 import android.os.Parcel;
 import android.os.Parcelable;
 import androidx.room.*;
-import com.example.tombolator.Converters;
 import com.example.tombolator.media.Media;
+import com.example.tombolator.media.MediaListConverter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,11 +24,15 @@ public class Tombola implements Parcelable {
     @ColumnInfo
     private String name;
 
-    @TypeConverters({Converters.class})
+    @TypeConverters({com.example.tombolator.tombolas.TombolaTypeConverter.class})
+    @ColumnInfo
+    private TombolaTypeConverter type;
+
+    @TypeConverters({MediaListConverter.class})
     @ColumnInfo
     private List<Media> mediaAvailable = new ArrayList<>();
 
-    @TypeConverters({Converters.class})
+    @TypeConverters({MediaListConverter.class})
     @ColumnInfo
     private List<Media> mediaDrawn = new ArrayList<>();
 
@@ -39,6 +43,7 @@ public class Tombola implements Parcelable {
 
         this.name = name;
         this.creationTimestamp = System.currentTimeMillis();
+        this.type = Tombola.TombolaTypeConverter.REUSE;
     }
 
     protected Tombola(Parcel in) {
@@ -167,6 +172,14 @@ public class Tombola implements Parcelable {
         this.mediaDrawn = mediaDrawn;
     }
 
+    public TombolaTypeConverter getType() {
+        return type;
+    }
+
+    public void setType(TombolaTypeConverter type) {
+        this.type = type;
+    }
+
     public List<Media> getAllMedia() {
 
         List<Media> allMedia = new ArrayList<>();
@@ -174,6 +187,21 @@ public class Tombola implements Parcelable {
         allMedia.addAll(mediaDrawn);
 
         return allMedia;
+    }
+
+    public enum TombolaTypeConverter {
+
+        REUSE ("wiederverwenden", "Medien verbleiben nach dem Ziehen in der Tombola."),
+        REMOVE ("entfernen", "Medien werden nach dem Ziehen aus der Tombola entfernt."),
+        DELETE ("löschen", "Medien werden nach dem Ziehen aus der Tombola entfernt und gelöscht.");
+
+        final String description;
+        final String toolTip;
+
+        TombolaTypeConverter(String description, String toolTip) {
+            this.description = description;
+            this.toolTip = toolTip;
+        }
     }
 
     private static class MediaIdsComparePredicate implements Predicate<Media> {

@@ -1,7 +1,6 @@
-package com.example.tombolator;
+package com.example.tombolator.media;
 
 import androidx.room.TypeConverter;
-import com.example.tombolator.media.Media;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -9,15 +8,14 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Converters {
+public class MediaListConverter {
 
     @TypeConverter
     public static List<Media> fromJsonString(String json) {
 
         Type listOfMyClassObject = new TypeToken<ArrayList<Media>>() {}.getType();
 
-        List<Media> mediaList = new Gson().fromJson(json, listOfMyClassObject);
-        return mediaList;
+        return new Gson().fromJson(json, listOfMyClassObject);
     }
 
     @TypeConverter

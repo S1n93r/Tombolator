@@ -3,8 +3,7 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [.] --- Milestone II: Convenience functions ---
-[ ] add tombola mode that removes media drawn
-    [ ] also delete media from database
+[.] add tombola mode that removes media drawn from tombola and from tombola AND database
 
 [ ] add warning to reset button in config
 
