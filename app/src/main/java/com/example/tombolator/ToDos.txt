@@ -5,9 +5,13 @@ ToDos:
 [.] --- Milestone II: Convenience functions ---
 [.] add tombola mode that removes media drawn from tombola and from tombola AND database
     [ ] connect media drawing to tombola type
-        [ ] "wiederverwenden" --> normal mode
-        [ ] "entfernen" --> remove from tombola after drawing
-        [ ] "löschen" --> remove from application after drawing
+        [x] "wiederverwenden" --> normal mode
+        [x] "entfernen" --> remove from tombola after drawing
+        [x] "löschen" --> remove from application after drawing
+        [x] add event handler to tombola type spinner
+        [ ] bug: type does not change, save and what not
+
+[ ] AsyncTask is deprecated
 
 [ ] add warning to reset button in config
 

@@ -4,10 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.DateUtil;
 import com.example.tombolator.R;
 import com.example.tombolator.media.Media;
+import com.example.tombolator.media.MediaActivityViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +24,7 @@ public class TombolaDetailsFragment extends Fragment {
     TombolasActivity tombolasActivity;
 
     private TombolasActivityViewModel tombolaViewModel;
+    private MediaActivityViewModel mediaActivityViewModel;
 
     private TextView nameValue;
     private TextView createdAt;
@@ -53,6 +52,7 @@ public class TombolaDetailsFragment extends Fragment {
 
         tombolasActivity = (TombolasActivity) getActivity();
         tombolaViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
+        mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
 
         View layout = inflater.inflate(R.layout.tombolas_details_fragment, container, false);
 
@@ -90,9 +90,29 @@ public class TombolaDetailsFragment extends Fragment {
         arrayAdapter.setDropDownViewResource(R.layout.spinner_element);
 
         tombolaTypeSpinner.setAdapter(arrayAdapter);
+
+        tombolaTypeSpinner.setSelection(tombolaViewModel.getSelectedTombola().getValue().getType().ordinal());
+
+        tombolaTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Tombola selectedTombola = tombolaViewModel.getSelectedTombola().getValue();
+                selectedTombola.setType(Tombola.Type.values()[i]);
+
+                tombolaViewModel.updateTombola(selectedTombola);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                /* TODO: When does this trigger? */
+            }
+        });
     }
 
     private void registerObserver() {
+
+        tombolaViewModel.getSelectedTombola().removeObservers(this.getActivity());
         tombolaViewModel.getSelectedTombola().observe(Objects.requireNonNull(this.getActivity()), new SelectedTombolaObserver());
     }
 
@@ -105,6 +125,10 @@ public class TombolaDetailsFragment extends Fragment {
             Tombola selectedTombola = tombolaViewModel.getSelectedTombola().getValue();
 
             Media drawnMedia = Objects.requireNonNull(selectedTombola).drawRandomMedia();
+
+            /* TODO: A little bite hacky. Maybe I can find something better? */
+            if(selectedTombola.getType().equals(Tombola.Type.DELETE))
+                mediaActivityViewModel.delete(drawnMedia);
 
             DrawnMediaDialog drawnMediaDialog = new DrawnMediaDialog(Objects.requireNonNull(getContext()));
 
@@ -153,7 +177,9 @@ public class TombolaDetailsFragment extends Fragment {
 
                 textView.setText(media.toLabel());
                 textView.setId(media.getId().intValue());
+                tombolaTypeSpinner.setSelection(tombolaViewModel.getSelectedTombola().getValue().getType().ordinal());
             }
+            System.out.println();
         }
     }
 

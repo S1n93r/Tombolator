@@ -2,7 +2,7 @@ package com.example.tombolator;
 
 import org.junit.Test;
 
-public class SusisStashScriptTest {
+public class StashScriptTest {
 
     @Test
     public void testRun() {

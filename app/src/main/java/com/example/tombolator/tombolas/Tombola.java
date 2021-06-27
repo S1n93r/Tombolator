@@ -105,6 +105,17 @@ public class Tombola implements Parcelable {
 
     public Media drawRandomMedia() {
 
+        switch(type) {
+
+            default:
+            case REUSE: return drawRandomMediaAndReuse();
+            case REMOVE:
+            case DELETE: return drawRandomMediaAndRemove();
+        }
+    }
+
+    private Media drawRandomMediaAndReuse() {
+
         if(mediaAvailable.isEmpty() && mediaDrawn.isEmpty())
             return null;
 
@@ -121,6 +132,22 @@ public class Tombola implements Parcelable {
         mediaDrawn.add(media);
 
         return media;
+    }
+
+    private Media drawRandomMediaAndRemove() {
+
+        if(mediaAvailable.isEmpty() && mediaDrawn.isEmpty())
+            return null;
+
+        List<Media> mediaAvailableShuffled = new ArrayList<>(mediaAvailable);
+
+        Collections.shuffle(mediaAvailableShuffled);
+
+        Media media = mediaAvailableShuffled.get(0);
+
+        mediaAvailable.remove(media);
+
+        return null;
     }
 
     private void resetMediaDrawnToMediaAvailable() {
@@ -201,6 +228,16 @@ public class Tombola implements Parcelable {
         Type(String description, String toolTip) {
             this.description = description;
             this.toolTip = toolTip;
+        }
+
+        public static Type getTypeByDescription(String description) {
+
+            if(description.equals(DELETE.description))
+                return DELETE;
+            else if(description.equals(REMOVE.description))
+                return REMOVE;
+            else
+                return REUSE;
         }
     }
 

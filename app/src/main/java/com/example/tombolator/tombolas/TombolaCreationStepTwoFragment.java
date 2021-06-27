@@ -87,6 +87,7 @@ public class TombolaCreationStepTwoFragment extends Fragment {
 
             Tombola selectedTombola = tombolasActivityViewModel.getSelectedTombola().getValue();
             addMediaToTombola(selectedTombola);
+            selectedTombola.setType(Tombola.Type.REUSE);
 
             tombolasActivityViewModel.insertTombola(selectedTombola);
 
