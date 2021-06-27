@@ -57,8 +57,8 @@ public class TombolaCreationStepOneFragment extends Fragment {
     }
 
     private void registerObserver() {
-        tombolasActivityViewModel.getSelectedTombola().observe(
-                Objects.requireNonNull(getActivity()), tombola -> nameEditText.setText(tombola.getName()));
+        tombolasActivityViewModel.getSelectedTombola().observe(this,
+                (Tombola tombola) -> nameEditText.setText(tombola.getName()));
     }
 
     private void setUpMediaTypeSpinner() {

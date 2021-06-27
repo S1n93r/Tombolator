@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.DateUtil;
 import com.example.tombolator.R;
@@ -66,25 +67,14 @@ public class MediaDetailsFragment extends Fragment {
     }
 
     private void registerObserver() {
-
-        mediaActivityViewModel.getSelectedMedia().observe(this, media -> {
-
-            idValue.setText(String.valueOf(media.getId()));
-            nameValue.setText(media.getName());
-            numberValue.setText(String.valueOf(media.getNumber()));
-            titleValue.setText(media.getTitle());
-            typeValue.setText(media.getMediaType());
-            createdAt.setText(DateUtil.formatDate(media.getCreationTimestamp()));
-        });
+        mediaActivityViewModel.getSelectedMedia().observe(this, new SelectedMediaObserver());
     }
 
     private void registerOnClickListener() {
 
         editMediaButton.setOnClickListener((View v) -> mediaActivity.switchToCreationStepOne());
 
-        backButton.setOnClickListener((View v) -> {
-            mediaActivity.switchToMediaListStepTwo();
-        });
+        backButton.setOnClickListener((View v) -> mediaActivity.switchToMediaListStepTwo());
 
         deleteButton.setOnClickListener((View v) -> deleteMedia());
     }
@@ -102,5 +92,19 @@ public class MediaDetailsFragment extends Fragment {
         mediaActivityViewModel.delete(media);
 
         mediaActivity.switchToMediaListStepTwo();
+    }
+
+    private class SelectedMediaObserver implements Observer<Media> {
+
+        @Override
+        public void onChanged(Media media) {
+
+            idValue.setText(String.valueOf(media.getId()));
+            nameValue.setText(media.getName());
+            numberValue.setText(String.valueOf(media.getNumber()));
+            titleValue.setText(media.getTitle());
+            typeValue.setText(media.getMediaType());
+            createdAt.setText(DateUtil.formatDate(media.getCreationTimestamp()));
+        }
     }
 }

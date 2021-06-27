@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 
 import java.util.List;
-import java.util.Objects;
 
 public class TombolaMainFragment extends Fragment {
 
@@ -55,8 +54,7 @@ public class TombolaMainFragment extends Fragment {
     }
 
     private void registerObserver() {
-        tombolasActivityViewModel.getAllTombolas()
-                .observe(Objects.requireNonNull(this.getActivity()), new TombolaListChangedObserver());
+        tombolasActivityViewModel.getAllTombolas().observe(this, new TombolaListChangedObserver());
     }
 
     private void registerOnClickListener() {

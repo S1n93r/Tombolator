@@ -17,7 +17,6 @@ import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaActivityViewModel;
 
 import java.util.List;
-import java.util.Objects;
 
 public class TombolaCreationStepTwoFragment extends Fragment {
 
@@ -61,8 +60,7 @@ public class TombolaCreationStepTwoFragment extends Fragment {
     }
 
     private void registerObserver() {
-            mediaActivityViewModel.getAllMediaLiveData()
-                .observe(Objects.requireNonNull(this.getActivity()), new MediaListObserver());
+            mediaActivityViewModel.getAllMediaLiveData().observe(this, new MediaListObserver());
     }
 
     private void registerOnClickListener() {

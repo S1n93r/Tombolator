@@ -15,7 +15,6 @@ import java.util.*;
 
 public class MediaActivityViewModel extends AndroidViewModel {
 
-    private static final String FILTER_NONE = "[show all media]";
     private static final String FILTER_ALL_CATEGORIES = "[show all categories]";
 
     private static final int SORTING_NONE = 0;
@@ -31,8 +30,6 @@ public class MediaActivityViewModel extends AndroidViewModel {
     private final MutableLiveData<Media> selectedMedia = new MutableLiveData<>();
 
     private int currentSortingMode = SORTING_NONE;
-
-    private String currentSearchFilter = FILTER_NONE;
 
     public MediaActivityViewModel(@NonNull Application application) {
 
@@ -88,22 +85,6 @@ public class MediaActivityViewModel extends AndroidViewModel {
         System.err.println("Media with id " + mediaId + " was not found in " + this.getClass() + ".");
     }
 
-    public void setMediaSearchFilter(String searchFilter) {
-
-        if(searchFilter.isEmpty()) {
-            clearMediaSearchFilter();
-            return;
-        }
-
-        currentSearchFilter = searchFilter;
-        refreshFilteredAndSortedMediaLiveData();
-    }
-
-    public void clearMediaSearchFilter() {
-        currentSearchFilter = FILTER_NONE;
-        refreshFilteredAndSortedMediaLiveData();
-    }
-
     public void toggleSorting() {
 
         switch(currentSortingMode) {
@@ -125,7 +106,6 @@ public class MediaActivityViewModel extends AndroidViewModel {
     private void refreshFilteredAndSortedMediaLiveData() {
 
         applyMediaTypeFilterAndPopulate();
-        applySearchFilter();
         applySorting();
 
         allMediaFilteredAndSortedLiveData.postValue(allMediaFilteredAndSortedLiveData.getValue());
@@ -181,55 +161,6 @@ public class MediaActivityViewModel extends AndroidViewModel {
             }
 
             return mediaType.equals(media.getMediaType());
-        }
-    }
-
-    public void applySearchFilter() {
-
-        if(allMediaLiveData.getValue() == null) {
-            /* TODO: Add log entry. */
-            throw new NullPointerException();
-        }
-
-        if(selectedMediaType.getValue() == null) {
-            /* TODO: Add log entry. */
-            throw new NullPointerException();
-        }
-
-        if(allMediaFilteredAndSortedLiveData.getValue() == null) {
-            /* TODO: Add log entry. */
-            throw new NullPointerException();
-        }
-
-        List<Media> tempMediaListFiltered = new ArrayList<>(allMediaFilteredAndSortedLiveData.getValue());
-
-        Collection<Media> filteredCollection = Collections2.filter(
-                tempMediaListFiltered, new MediaSearchFilterPredicate(currentSearchFilter));
-
-        allMediaFilteredAndSortedLiveData.getValue().clear();
-        allMediaFilteredAndSortedLiveData.getValue().addAll(filteredCollection);
-    }
-
-    private static class MediaSearchFilterPredicate implements Predicate<Media> {
-
-        private final String searchFilter;
-
-        public MediaSearchFilterPredicate(String searchFilter) {
-            this.searchFilter = searchFilter;
-        }
-
-        @Override
-        public boolean apply(@NullableDecl Media media) {
-
-            if(searchFilter.equals(FILTER_NONE))
-                return true;
-
-            if (media == null) {
-                /* TODO: Add error log here */
-                throw new NullPointerException();
-            }
-
-            return media.toLabel().contains(searchFilter);
         }
     }
 

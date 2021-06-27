@@ -10,6 +10,7 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 
@@ -102,8 +103,13 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
     }
 
     private void registerObserver() {
+        mediaActivityViewModel.getSelectedMedia().observe(this, new SelectedMediaObserver());
+    }
 
-        mediaActivityViewModel.getSelectedMedia().observe(this, media -> {
+    private class SelectedMediaObserver implements Observer<Media> {
+
+        @Override
+        public void onChanged(Media media) {
 
             int mediaTypeIndex = media.getMediaType() == null
                     ? 0 : Media.MediaType.getIndex(media.getMediaType());
@@ -113,6 +119,6 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
             mediaTypesSpinner.setSelection(mediaTypeIndex);
             contentTypeSpinner.setSelection(contentTypeIndex);
-        });
+        }
     }
 }

@@ -65,18 +65,7 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
     }
 
     private void registerObserver() {
-
-        mediaActivityViewModel.getSelectedMedia().observe(this, new Observer<Media>() {
-
-            @Override
-            public void onChanged(Media media) {
-
-                editTextName.setText(media.getName());
-                editTextTitle.setText(media.getTitle());
-                editTextNumber.setText(String.valueOf(media.getNumber()));
-                editTextAuthor.setText(media.getAuthor());
-            }
-        });
+        mediaActivityViewModel.getSelectedMedia().observe(this, new SelectedMediaObserver());
     }
 
     private void setVisibilitiesByMediaType() {
@@ -106,6 +95,18 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
             case Media.MediaType.E_BOOK:
                 editTextNumber.setVisibility(View.GONE);
                 break;
+        }
+    }
+
+    private class SelectedMediaObserver implements Observer<Media> {
+
+        @Override
+        public void onChanged(Media media) {
+
+            editTextName.setText(media.getName());
+            editTextTitle.setText(media.getTitle());
+            editTextNumber.setText(String.valueOf(media.getNumber()));
+            editTextAuthor.setText(media.getAuthor());
         }
     }
 

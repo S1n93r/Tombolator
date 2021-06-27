@@ -97,7 +97,7 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
+                /* TODO: When is this triggered? */
             }
         });
 
