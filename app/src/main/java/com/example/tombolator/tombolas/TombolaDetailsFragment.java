@@ -78,6 +78,11 @@ public class TombolaDetailsFragment extends Fragment {
 
     private void setUpSpinner() {
 
+        if(tombolaViewModel.getSelectedTombola().getValue() == null) {
+            /* TODO: Add log entry. */
+            throw new NullPointerException();
+        }
+
         List<String> typesAsStrings = new ArrayList<>();
 
         for(Tombola.Type type : Tombola.Type.values()) {
@@ -97,6 +102,9 @@ public class TombolaDetailsFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
+                if(view == null)
+                    return;
+
                 Tombola selectedTombola = tombolaViewModel.getSelectedTombola().getValue();
                 selectedTombola.setType(Tombola.Type.values()[i]);
 
@@ -111,9 +119,7 @@ public class TombolaDetailsFragment extends Fragment {
     }
 
     private void registerObserver() {
-
-        tombolaViewModel.getSelectedTombola().removeObservers(this.getActivity());
-        tombolaViewModel.getSelectedTombola().observe(Objects.requireNonNull(this.getActivity()), new SelectedTombolaObserver());
+        tombolaViewModel.getSelectedTombola().observe(this, new SelectedTombolaObserver());
     }
 
     private void registerOnClickListener() {
@@ -164,11 +170,20 @@ public class TombolaDetailsFragment extends Fragment {
         @Override
         public void onChanged(Tombola tombola) {
 
+            if(tombolaViewModel.getSelectedTombola().getValue() == null) {
+                /* TODO: Add log entry. */
+                throw new NullPointerException();
+            }
+
             nameValue.setText(tombola.getName());
             createdAt.setText(DateUtil.formatDate(tombola.getCreationTimestamp()));
             numberOfMediaAll.setText(String.valueOf(tombola.getAllMedia().size()));
             numberOfMediaAvailable.setText(String.valueOf(tombola.getMediaAvailable().size()));
             numberOfMediaDrawn.setText(String.valueOf(tombola.getMediaDrawn().size()));
+
+            tombolaTypeSpinner.setEnabled(false);
+            tombolaTypeSpinner.setSelection(tombolaViewModel.getSelectedTombola().getValue().getType().ordinal());
+            tombolaTypeSpinner.setEnabled(true);
 
             for(Media media : tombola.getAllMedia()) {
 
@@ -177,9 +192,8 @@ public class TombolaDetailsFragment extends Fragment {
 
                 textView.setText(media.toLabel());
                 textView.setId(media.getId().intValue());
-                tombolaTypeSpinner.setSelection(tombolaViewModel.getSelectedTombola().getValue().getType().ordinal());
+
             }
-            System.out.println();
         }
     }
 

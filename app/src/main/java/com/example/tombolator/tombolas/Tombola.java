@@ -147,7 +147,7 @@ public class Tombola implements Parcelable {
 
         mediaAvailable.remove(media);
 
-        return null;
+        return media;
     }
 
     private void resetMediaDrawnToMediaAvailable() {
