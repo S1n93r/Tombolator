@@ -216,6 +216,18 @@ public class Tombola implements Parcelable {
         return allMedia;
     }
 
+    public String toCsv() {
+
+        String id = this.id != null ? this.id.toString() : "";
+        String creationTimestamp = String.valueOf(this.creationTimestamp);
+        String name = this.name != null ? this.name : "";
+        String type = this.type != null ? this.type.toString() : "";
+        String mediaAvailable = this.mediaAvailable.isEmpty() ? "" : this.mediaAvailable.toString();
+        String mediaDawn = this.mediaDrawn.isEmpty() ? "" : this.mediaDrawn.toString();
+
+        return id + ";" + creationTimestamp + ";" + name + ";" + type + ";" + mediaAvailable + ";" + mediaDawn;
+    }
+
     public enum Type {
 
         REUSE ("wiederverwenden", "Medien verbleiben nach dem Ziehen in der Tombola."),

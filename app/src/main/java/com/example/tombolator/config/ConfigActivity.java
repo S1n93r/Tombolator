@@ -13,7 +13,7 @@ public class ConfigActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        configMainFragment = ConfigMainFragment.newInstance(this);
+        configMainFragment = ConfigMainFragment.newInstance();
 
         setContentView(R.layout.media_activity);
         if (savedInstanceState == null) {

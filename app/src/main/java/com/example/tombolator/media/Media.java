@@ -118,6 +118,21 @@ public class Media implements Parcelable {
         return "(" + number + ") "+ name + "\n" + title;
     }
 
+    public String toCsv() {
+
+        String id = this.id != null ? this.id.toString() : "";
+        String creationTimestamp = String.valueOf(this.creationTimestamp);
+        String name = this.name != null ? this.name : "";
+        String title = this.title != null ? this.title : "";
+        String number = String.valueOf(this.number);
+        String author = this.author != null ? this.author : "";
+        String mediaType = this.mediaType != null ? this.mediaType : "";
+        String contenType = this.contentType != null ? this.contentType : "";
+
+        return id + ";" + creationTimestamp + ";" + name + ";" + title + ";" + number + ";" + author + ";"
+                + mediaType +  ";" + contenType;
+    }
+
     public static final class MediaType {
 
         public static final String CASSETTE = "Kassette";

@@ -3,6 +3,10 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [.] --- Milestone II: Convenience functions ---
+[ ] bug: when asking tombola model for tombolas, list is empty --> example: export in config
+
+[ ] implement toasts
+
 [ ] AsyncTask is deprecated
 
 [ ] add warning to reset button in config
@@ -86,6 +90,8 @@ ToDos:
 [ ] --- ------------------------------ ---
 
 Done:
+[x] export data function
+
 [x] add tombola mode that removes media drawn from tombola and from tombola AND database
     [x] connect media drawing to tombola type
         [x] "wiederverwenden" --> normal mode
@@ -93,7 +99,6 @@ Done:
         [x] "löschen" --> remove from application after drawing
         [x] add event handler to tombola type spinner
         [x] bug: type does not change, save and what not
-
 [x] bug: deleting or creating removes category filter
 [x] bug: sorting or deleting media empties media list
 [x] bug: deleting media is not working --> app crashes
