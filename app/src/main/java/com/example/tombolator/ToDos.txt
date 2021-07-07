@@ -3,8 +3,6 @@ Room guide to persist data: https://guides.codepath.com/android/Room-Guide
 
 ToDos:
 [.] --- Milestone II: Convenience functions ---
-[ ] bug: when asking tombola model for tombolas, list is empty --> example: export in config
-
 [ ] implement toasts
 
 [ ] AsyncTask is deprecated
@@ -90,8 +88,9 @@ ToDos:
 [ ] --- ------------------------------ ---
 
 Done:
-[x] export data function
+[x] bug: when asking tombola model for tombolas, list is empty --> example: export in config
 
+[x] export data function
 [x] add tombola mode that removes media drawn from tombola and from tombola AND database
     [x] connect media drawing to tombola type
         [x] "wiederverwenden" --> normal mode

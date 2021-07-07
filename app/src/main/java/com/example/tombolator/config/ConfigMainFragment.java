@@ -15,7 +15,9 @@ import com.example.tombolator.StashScript;
 import com.example.tombolator.TomboApplication;
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaActivityViewModel;
+import com.example.tombolator.media.MediaDao;
 import com.example.tombolator.tombolas.Tombola;
+import com.example.tombolator.tombolas.TombolaDao;
 import com.example.tombolator.tombolas.TombolasActivityViewModel;
 
 import java.io.File;
@@ -30,6 +32,9 @@ public class ConfigMainFragment extends Fragment {
     private static final String FILE_NAME_EXPORT_MEDIA = "export_media";
     private static final String FILE_NAME_EXPORT_TOMBOLAS = "export_tombolas";
 
+    private String savePathExportMedia;
+    private String savePathExportTombolas;
+
     private MediaActivityViewModel mediaActivityViewModel;
     private TombolasActivityViewModel tombolasActivityViewModel;
 
@@ -38,6 +43,7 @@ public class ConfigMainFragment extends Fragment {
     }
 
     private Button exportDatabaseButton;
+    private Button testButton;
     private Button resetDatabaseButton;
     private Button backButton;
 
@@ -51,6 +57,7 @@ public class ConfigMainFragment extends Fragment {
         View layout = inflater.inflate(R.layout.config_main_fragment, container, false);
 
         exportDatabaseButton = layout.findViewById(R.id.button_export);
+        testButton = layout.findViewById(R.id.button_test);
         resetDatabaseButton = layout.findViewById(R.id.button_reset_media);
         backButton = layout.findViewById(R.id.button_back);
 
@@ -63,8 +70,25 @@ public class ConfigMainFragment extends Fragment {
 
         exportDatabaseButton.setOnClickListener(view -> {
 
-            exportMedia();
-            exportTombolas();
+                TomboApplication context = ((TomboApplication) Objects.requireNonNull(getActivity())
+                        .getApplicationContext());
+
+                exportMedia(context);
+                exportTombolas(context);
+        });
+
+        testButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                AsyncTask.execute(() -> {
+
+                    for(Tombola tombola : tombolasActivityViewModel.getAllTombolas().getValue()) {
+                        System.out.println(tombola);
+                    }
+                });
+            }
         });
 
         resetDatabaseButton.setOnClickListener((View view) -> AsyncTask.execute(() -> {
@@ -86,69 +110,77 @@ public class ConfigMainFragment extends Fragment {
         });
     }
 
-    private void exportMedia() {
+    private void exportMedia(TomboApplication context) {
 
-        StringBuilder exportedMedia = new StringBuilder();
+        AsyncTask.execute(() -> {
 
-        if(mediaActivityViewModel.getAllMediaLiveData().getValue() != null) {
-            for(Media media : mediaActivityViewModel.getAllMediaLiveData().getValue()) {
+            MediaDao mediaDao = context.getTomboDb().mediaDao();
+
+            StringBuilder exportedMedia = new StringBuilder();
+
+            for(Media media : mediaDao.getAllMedia()) {
                 exportedMedia.append(media.toCsv()).append(System.lineSeparator());
             }
-        }
 
-        try {
+            try {
 
-            if(getContext() == null) {
-                /* TODO: Add log entry. */
-                throw new NullPointerException();
+                if(getContext() == null) {
+                    /* TODO: Add log entry. */
+                    throw new NullPointerException();
+                }
+
+                File file = new File(getContext().getExternalFilesDir(null),
+                        FILE_NAME_EXPORT_MEDIA + FILE_EXTENSION);
+
+                OutputStream os = getContext().getContentResolver().openOutputStream(Uri.fromFile(file));
+
+                os.write(exportedMedia.toString().getBytes(StandardCharsets.UTF_8));
+                os.flush();
+                os.close();
+
+                getActivity().runOnUiThread(() -> Toast.makeText(getContext(),
+                        "Saved to " + file.getAbsolutePath(), Toast.LENGTH_SHORT).show());
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-            File file = new File(getContext().getExternalFilesDir(null),
-                    FILE_NAME_EXPORT_MEDIA + FILE_EXTENSION);
-
-            OutputStream os = getContext().getContentResolver().openOutputStream(Uri.fromFile(file));
-
-            os.write(exportedMedia.toString().getBytes(StandardCharsets.UTF_8));
-            os.flush();
-            os.close();
-
-            Toast.makeText(getContext(), "Saved to " + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        });
     }
 
-    private void exportTombolas() {
+    private void exportTombolas(TomboApplication context) {
 
-        StringBuilder exportedTombolas = new StringBuilder();
+        AsyncTask.execute(() -> {
 
-        if(tombolasActivityViewModel.getAllTombolas().getValue() != null) {
-            for(Tombola tombola : tombolasActivityViewModel.getAllTombolas().getValue()) {
+            TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
+
+            StringBuilder exportedTombolas = new StringBuilder();
+
+            for(Tombola tombola : tombolaDao.getAllTombolas()) {
                 exportedTombolas.append(tombola.toCsv()).append(System.lineSeparator());
             }
-        }
 
-        try {
+            try {
 
-            if(getContext() == null) {
-                /* TODO: Add log entry. */
-                throw new NullPointerException();
+                if(getContext() == null) {
+                    /* TODO: Add log entry. */
+                    throw new NullPointerException();
+                }
+
+                File file = new File(getContext().getExternalFilesDir(null),
+                        FILE_NAME_EXPORT_TOMBOLAS + FILE_EXTENSION);
+
+                OutputStream os = getContext().getContentResolver().openOutputStream(Uri.fromFile(file));
+
+                os.write(exportedTombolas.toString().getBytes(StandardCharsets.UTF_8));
+                os.flush();
+                os.close();
+
+                getActivity().runOnUiThread(() -> Toast.makeText(getContext(),
+                        "Saved to " + file.getAbsolutePath(), Toast.LENGTH_SHORT).show());
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-            File file = new File(getContext().getExternalFilesDir(null),
-                    FILE_NAME_EXPORT_TOMBOLAS + FILE_EXTENSION);
-
-            OutputStream os = getContext().getContentResolver().openOutputStream(Uri.fromFile(file));
-
-            os.write(exportedTombolas.toString().getBytes(StandardCharsets.UTF_8));
-            os.flush();
-            os.close();
-
-            Toast.makeText(getContext(), "Saved to " + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        });
     }
 }
