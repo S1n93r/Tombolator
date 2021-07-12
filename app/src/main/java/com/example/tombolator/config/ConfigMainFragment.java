@@ -19,10 +19,10 @@ import com.example.tombolator.tombolas.Tombola;
 import com.example.tombolator.tombolas.TombolaDao;
 import com.example.tombolator.tombolas.TombolasActivityViewModel;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ConfigMainFragment extends Fragment {
@@ -76,10 +76,8 @@ public class ConfigMainFragment extends Fragment {
             TomboApplication context = ((TomboApplication) Objects.requireNonNull(getActivity())
                     .getApplicationContext());
 
-            /* TODO: Implement import logic here. */
-
-            getActivity().runOnUiThread(() -> Toast.makeText(getContext(),
-                    "Importiere Daten...", Toast.LENGTH_SHORT).show());
+            importMedia(context);
+            importTombolas(context);
         }));
 
         backButton.setOnClickListener(view -> {
@@ -160,6 +158,106 @@ public class ConfigMainFragment extends Fragment {
 
                 getActivity().runOnUiThread(() -> Toast.makeText(getContext(),
                         "Saved to " + file.getAbsolutePath(), Toast.LENGTH_SHORT).show());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void importMedia(TomboApplication context) {
+
+        AsyncTask.execute(() -> {
+
+            try {
+
+                List<Media> mediaList = new ArrayList<>();
+
+                File file = new File(getContext().getExternalFilesDir(null),
+                        FILE_NAME_EXPORT_MEDIA + FILE_EXTENSION);
+
+                BufferedReader csvReader = new BufferedReader(new FileReader(file.getAbsolutePath()));
+
+                String row;
+
+                while((row = csvReader.readLine()) != null) {
+
+                    String[] data = row.split(";");
+
+                    String id = data[0];
+                    String timestamp = data[1];
+                    String name = data[2];
+                    String title = data[3];
+                    String number = data[4];
+                    //????
+                    String mediaType = data[6];
+                    String contentType = data[7];
+
+                    Media media = new Media();
+                    media.setId(Long.parseLong(id));
+                    media.setCreationTimestamp(Long.parseLong(timestamp));
+                    media.setName(name);
+                    media.setTitle(title);
+                    media.setNumber(Integer.parseInt(number));
+                    media.setMediaType(mediaType);
+                    media.setContentType(contentType);
+
+                    mediaList.add(media);
+                }
+
+                MediaDao mediaDao = context.getTomboDb().mediaDao();
+                mediaDao.insertAllMedia(mediaList);
+
+                getActivity().runOnUiThread(() -> Toast.makeText(getContext(),
+                        "Medien aus [File] importiert.", Toast.LENGTH_SHORT).show());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void importTombolas(TomboApplication context) {
+
+        AsyncTask.execute(() -> {
+
+            try {
+
+                List<Tombola> tombolaList = new ArrayList<>();
+
+                File file = new File(getContext().getExternalFilesDir(null),
+                        FILE_NAME_EXPORT_TOMBOLAS + FILE_EXTENSION);
+
+                BufferedReader csvReader = new BufferedReader(new FileReader(file.getAbsolutePath()));
+
+                String row;
+
+                while((row = csvReader.readLine()) != null) {
+
+                    String[] data = row.split(";");
+
+                    String id = data[0];
+                    String timestamp = data[1];
+                    String name = data[2];
+                    String type = data[3];
+                    String mediaList = data[4];
+
+                    /* TODO: Write code to extract media from mediaList string. */
+
+                    Tombola tombola = new Tombola();
+                    tombola.setId(Long.parseLong(id));
+                    tombola.setCreationTimestamp(Long.parseLong(timestamp));
+                    tombola.setName(name);
+                    tombola.setType(Tombola.Type.valueOf(type));
+
+                    tombolaList.add(tombola);
+                }
+
+                TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
+                tombolaDao.insertAllTombolas(tombolaList);
+
+                getActivity().runOnUiThread(() -> Toast.makeText(getContext(),
+                        "Tombolas aus " + file.getAbsolutePath() + " importiert.", Toast.LENGTH_SHORT).show());
 
             } catch (IOException e) {
                 e.printStackTrace();
