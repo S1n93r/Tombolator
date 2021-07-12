@@ -11,7 +11,6 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
-import com.example.tombolator.StashScript;
 import com.example.tombolator.TomboApplication;
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaActivityViewModel;
@@ -32,9 +31,6 @@ public class ConfigMainFragment extends Fragment {
     private static final String FILE_NAME_EXPORT_MEDIA = "export_media";
     private static final String FILE_NAME_EXPORT_TOMBOLAS = "export_tombolas";
 
-    private String savePathExportMedia;
-    private String savePathExportTombolas;
-
     private MediaActivityViewModel mediaActivityViewModel;
     private TombolasActivityViewModel tombolasActivityViewModel;
 
@@ -43,8 +39,7 @@ public class ConfigMainFragment extends Fragment {
     }
 
     private Button exportDatabaseButton;
-    private Button testButton;
-    private Button resetDatabaseButton;
+    private Button importDatabaseButton;
     private Button backButton;
 
     @Override
@@ -57,8 +52,7 @@ public class ConfigMainFragment extends Fragment {
         View layout = inflater.inflate(R.layout.config_main_fragment, container, false);
 
         exportDatabaseButton = layout.findViewById(R.id.button_export);
-        testButton = layout.findViewById(R.id.button_test);
-        resetDatabaseButton = layout.findViewById(R.id.button_reset_media);
+        importDatabaseButton = layout.findViewById(R.id.button_import);
         backButton = layout.findViewById(R.id.button_back);
 
         registerOnClickListener();
@@ -77,26 +71,15 @@ public class ConfigMainFragment extends Fragment {
                 exportTombolas(context);
         });
 
-        testButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                AsyncTask.execute(() -> {
-
-                    for(Tombola tombola : tombolasActivityViewModel.getAllTombolas().getValue()) {
-                        System.out.println(tombola);
-                    }
-                });
-            }
-        });
-
-        resetDatabaseButton.setOnClickListener((View view) -> AsyncTask.execute(() -> {
+        importDatabaseButton.setOnClickListener((View view) -> AsyncTask.execute(() -> {
 
             TomboApplication context = ((TomboApplication) Objects.requireNonNull(getActivity())
                     .getApplicationContext());
 
-            new StashScript(context).run();
+            /* TODO: Implement import logic here. */
+
+            getActivity().runOnUiThread(() -> Toast.makeText(getContext(),
+                    "Importiere Daten...", Toast.LENGTH_SHORT).show());
         }));
 
         backButton.setOnClickListener(view -> {

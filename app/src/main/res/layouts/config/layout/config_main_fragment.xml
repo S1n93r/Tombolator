@@ -37,12 +37,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.025"/>
     <Button
-            android:text="@string/button_reset_media_database"
+            android:text="@string/button_import_database"
             android:drawableBottom="@drawable/ic_datenbank"
             android:padding="25dp"
             android:layout_width="@dimen/button_big_width"
             android:layout_height="@dimen/button_big_height"
-            android:id="@+id/button_reset_media"
+            android:id="@+id/button_import"
             android:background="@drawable/oval_button_design_purple"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="@dimen/font_size"
@@ -66,20 +66,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintTop_toBottomOf="@+id/text_view_title"/>
-    <Button
-            android:drawableBottom="@drawable/ic_delete_35"
-            android:padding="25dp"
-            android:layout_width="@dimen/button_small_width"
-            android:layout_height="@dimen/button_small_height"
-            android:id="@+id/button_test"
-            android:background="@drawable/oval_button_design_purple"
-            android:fontFamily="@font/comic_sans_ms"
-            android:textSize="@dimen/font_size"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintHorizontal_bias="0.797"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.352"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

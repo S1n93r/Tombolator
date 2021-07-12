@@ -1,10 +1,14 @@
 package com.example.tombolator.media;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -14,7 +18,10 @@ import com.example.tombolator.R;
 import java.util.List;
 import java.util.Locale;
 
-public class MediaListStepTwoMediaListFragment extends Fragment {
+public class MediaListFragment extends Fragment {
+
+    private static final int UNSELECTED = 0;
+    private static final int SELECTED = 1;
 
     private static final int ELEMENTS_PER_PAGE = 8;
     private final MutableLiveData<Integer> currentPage = new MutableLiveData<>(1);
@@ -30,17 +37,15 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
     private TextView pageNumberMax;
 
     private ImageView sortButton;
-    private Spinner mediaTypesSpinner;
-
     private Button backButton;
     private Button nextPageButton;
     private Button previousPageButton;
     private Button newMediaButton;
 
-    private MediaListStepTwoMediaListFragment() {}
+    private MediaListFragment() {}
 
-    public static MediaListStepTwoMediaListFragment newInstance() {
-        return new MediaListStepTwoMediaListFragment();
+    public static MediaListFragment newInstance() {
+        return new MediaListFragment();
     }
 
     @Override
@@ -58,49 +63,15 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
         pageNumberMax = layout.findViewById(R.id.label_page_number_total);
 
         sortButton = layout.findViewById(R.id.button_sort_by);
-        mediaTypesSpinner = layout.findViewById(R.id.spinner_media_types);
-
         backButton = layout.findViewById(R.id.button_back);
         nextPageButton = layout.findViewById(R.id.button_next_page);
         previousPageButton = layout.findViewById(R.id.button_previous_page);
         newMediaButton = layout.findViewById(R.id.button_new_media);
 
-        setUpMediaTypesSpinner();
-
         registerObserver();
         registerOnClickListener();
 
         return layout;
-    }
-
-    private void setUpMediaTypesSpinner() {
-
-        List<String> mediaTypesForSpinner = Media.MediaType.getMediaTypes();
-        mediaTypesForSpinner.add(0, "Alle");
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
-                this.getActivity(), R.layout.media_type_spinner_item, mediaTypesForSpinner);
-
-        arrayAdapter.setDropDownViewResource(R.layout.media_type_spinner_dropdown);
-        mediaTypesSpinner.setAdapter(arrayAdapter);
-
-        mediaTypesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                if(i == 0)
-                    mediaActivityViewModel.clearMediaType();
-                else
-                    mediaActivityViewModel.selectMediaType(Media.MediaType.getMediaType(i - 1));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                /* TODO: When is this triggered? */
-            }
-        });
-
     }
 
     private void registerObserver() {
@@ -113,14 +84,14 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
 
         mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().observe(this, new PageNumberTotalObserver());
 
-        mediaActivityViewModel.getSelectedMediaType().observe(this, new SelectedMediaTypeObserver());
+        mediaActivityViewModel.getSelectedMediaTypes().observe(this, new SelectedMediaTypesObserver());
     }
 
     private void registerOnClickListener() {
 
         sortButton.setOnClickListener((View view) -> mediaActivityViewModel.toggleSorting());
 
-        backButton.setOnClickListener((View view) -> mediaActivity.finish());
+        backButton.setOnClickListener(v -> mediaActivity.finish());
 
         nextPageButton.setOnClickListener((View view) -> {
 
@@ -162,10 +133,10 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
         });
     }
 
-    private class SelectedMediaTypeObserver implements Observer<String> {
+    private class SelectedMediaTypesObserver implements Observer<List<String>> {
 
         @Override
-        public void onChanged(String mediaType) {
+        public void onChanged(List<String> mediaTypes) {
             currentPage.setValue(1);
         }
     }
@@ -255,6 +226,31 @@ public class MediaListStepTwoMediaListFragment extends Fragment {
             mediaActivityViewModel.selectMedia(mediaId);
 
             mediaActivity.switchToMediaDetailsView();
+        }
+    }
+
+    private static class ToggleMediaTypeSelectListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+
+            TextView textView = (TextView) view;
+
+            switch(textView.getId()) {
+
+                case UNSELECTED:
+                    textView.setTextColor(Color.CYAN);
+                    textView.setId(SELECTED);
+                    break;
+
+                case SELECTED:
+                    textView.setTextColor(Color.BLACK);
+                    textView.setId(UNSELECTED);
+                    break;
+
+                default:
+                    /* TODO: Add error log. */
+            }
         }
     }
 }

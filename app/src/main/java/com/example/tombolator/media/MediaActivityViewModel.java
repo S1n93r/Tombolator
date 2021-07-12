@@ -15,7 +15,7 @@ import java.util.*;
 
 public class MediaActivityViewModel extends AndroidViewModel {
 
-    private static final String FILTER_ALL_CATEGORIES = "[show all categories]";
+    private static final String FILTER_NONE = "[show all media]";
 
     private static final int SORTING_NONE = 0;
     private static final int SORTING_REGULAR = 1;
@@ -25,11 +25,13 @@ public class MediaActivityViewModel extends AndroidViewModel {
     private final LiveData<List<Media>> allMediaLiveData;
     private final MutableLiveData<List<Media>> allMediaFilteredAndSortedLiveData = new MutableLiveData<>(new ArrayList<>());
 
-    private final MutableLiveData<String> selectedMediaType = new MutableLiveData<>("");
+    private final MutableLiveData<List<String>> selectedMediaTypes = new MutableLiveData<>(new ArrayList<>());
 
     private final MutableLiveData<Media> selectedMedia = new MutableLiveData<>();
 
     private int currentSortingMode = SORTING_NONE;
+
+    private String currentSearchFilter = FILTER_NONE;
 
     public MediaActivityViewModel(@NonNull Application application) {
 
@@ -100,7 +102,9 @@ public class MediaActivityViewModel extends AndroidViewModel {
                 currentSortingMode = SORTING_NONE;
         }
 
-        refreshFilteredAndSortedMediaLiveData();
+        applySorting();
+
+        allMediaFilteredAndSortedLiveData.postValue(allMediaFilteredAndSortedLiveData.getValue());
     }
 
     private void refreshFilteredAndSortedMediaLiveData() {
@@ -118,7 +122,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
             throw new NullPointerException();
         }
 
-        if(selectedMediaType.getValue() == null) {
+        if(selectedMediaTypes.getValue() == null) {
             /* TODO: Add log entry. */
             throw new NullPointerException();
         }
@@ -130,37 +134,41 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
         allMediaFilteredAndSortedLiveData.getValue().clear();
 
-        if(selectedMediaType.getValue().isEmpty()) {
+        if(selectedMediaTypes.getValue().isEmpty()) {
             allMediaFilteredAndSortedLiveData.getValue().addAll(allMediaLiveData.getValue());
             return;
         }
 
         Collection<Media> filteredCollection = Collections2.filter(
-                allMediaLiveData.getValue(), new MediaTypeFilterPredicate(selectedMediaType.getValue()));
+                allMediaLiveData.getValue(), new MediaTypeFilterPredicate(selectedMediaTypes.getValue()));
 
         allMediaFilteredAndSortedLiveData.getValue().addAll(filteredCollection);
     }
 
     private static class MediaTypeFilterPredicate implements Predicate<Media> {
 
-        private final String mediaType;
+        private final List<String> mediaTypes;
 
-        public MediaTypeFilterPredicate(String mediaType) {
-            this.mediaType = mediaType;
+        public MediaTypeFilterPredicate(List<String> mediaTypes) {
+            this.mediaTypes = mediaTypes;
         }
 
         @Override
         public boolean apply(@NullableDecl Media media) {
-
-            if(mediaType.equals(FILTER_ALL_CATEGORIES))
-                return true;
 
             if (media == null) {
                 /* TODO: Add error log here */
                 throw new NullPointerException();
             }
 
-            return mediaType.equals(media.getMediaType());
+            for(String mediaType : mediaTypes) {
+
+                if(mediaType.equals(media.getMediaType())) {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 
@@ -186,29 +194,20 @@ public class MediaActivityViewModel extends AndroidViewModel {
         }
     }
 
-    public void clearMediaType() {
+    public void selectMediaTypes(List<String> mediaTypesList) {
 
-        if(selectedMediaType.getValue() == null) {
+        if(selectedMediaTypes.getValue() == null) {
             /* Add logger entry.  */
             throw new NullPointerException();
         }
 
-        selectedMediaType.setValue(FILTER_ALL_CATEGORIES);
-
-        refreshFilteredAndSortedMediaLiveData();
-    }
-
-    public void selectMediaType(String mediaType) {
-
-        if(selectedMediaType.getValue() == null) {
-            /* Add logger entry.  */
-            throw new NullPointerException();
-        }
+        selectedMediaTypes.getValue().clear();
+        selectedMediaTypes.getValue().addAll(mediaTypesList);
 
         /* TODO: Move to background thread? */
-        selectedMediaType.setValue(mediaType);
+        selectedMediaTypes.setValue(selectedMediaTypes.getValue());
 
-        refreshFilteredAndSortedMediaLiveData();
+        applyMediaTypeFilterAndPopulate();
     }
 
     public void insert(Media media) {
@@ -267,7 +266,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
         return allMediaFilteredAndSortedLiveData;
     }
 
-    public MutableLiveData<String> getSelectedMediaType() {
-        return selectedMediaType;
+    public MutableLiveData<List<String>> getSelectedMediaTypes() {
+        return selectedMediaTypes;
     }
 }

@@ -6,24 +6,33 @@ import com.example.tombolator.R;
 
 public class MediaActivity extends AppCompatActivity {
 
-    private MediaListStepOneMediaTypeSelectFragment mediaListStepOneMediaTypeSelectFragment;
-    private MediaListStepTwoMediaListFragment mediaListStepTwoMediaListFragment;
+    private MediaListFragment mediaListFragment;
     private MediaCreationStepOneTypesFragment mediaCreationStepOneTypesFragment;
     private MediaCreationStepTwoDescriptionsFragment mediaCreationStepTwoDescriptionsFragment;
     private MediaDetailsFragment mediaDetailsFragment;
+
+    Bundle savedInstanceState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
-        mediaListStepOneMediaTypeSelectFragment = MediaListStepOneMediaTypeSelectFragment.newInstance();
-        mediaListStepTwoMediaListFragment = MediaListStepTwoMediaListFragment.newInstance();
+        mediaListFragment = MediaListFragment.newInstance();
 
         mediaDetailsFragment = MediaDetailsFragment.newInstance();
         mediaCreationStepOneTypesFragment = MediaCreationStepOneTypesFragment.newInstance();
         mediaCreationStepTwoDescriptionsFragment = MediaCreationStepTwoDescriptionsFragment.newInstance();
         setContentView(R.layout.media_activity);
+
+        this.savedInstanceState = savedInstanceState;
+    }
+
+    @Override
+    protected void onStart() {
+
+        super.onStart();
+
         if (savedInstanceState == null) {
             switchToMediaListStepTwo();
         }
@@ -36,17 +45,10 @@ public class MediaActivity extends AppCompatActivity {
         /* TODO: Save media list from model to database. */
     }
 
-    protected void switchToMediaListStepOne() {
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, mediaListStepOneMediaTypeSelectFragment)
-                .commitNow();
-    }
-
     protected void switchToMediaListStepTwo() {
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, mediaListStepTwoMediaListFragment)
+                .replace(R.id.container, mediaListFragment)
                 .commitNow();
     }
 
