@@ -136,18 +136,18 @@ public class TombolaDetailsFragment extends Fragment {
             if(selectedTombola.getType().equals(Tombola.Type.DELETE))
                 mediaActivityViewModel.delete(drawnMedia);
 
-            DrawnMediaDialog drawnMediaDialog = new DrawnMediaDialog(Objects.requireNonNull(getContext()));
+            DrawDialogTv drawDialogTv = new DrawDialogTv(Objects.requireNonNull(getContext()));
 
             /* Has to be called before setContent() and setIcon() so onCreate() was fired*/
-            drawnMediaDialog.show();
+            drawDialogTv.show();
 
             if(drawnMedia == null) {
-                drawnMediaDialog.getContentText().setText(R.string.draw_media_on_empty_tombola);
+                drawDialogTv.getContentText().setText(R.string.draw_media_on_empty_tombola);
                 return;
             }
 
-            drawnMediaDialog.setIcon(drawnMedia);
-            drawnMediaDialog.getContentText().setText(Objects.requireNonNull(drawnMedia).toLabel());
+            drawDialogTv.setIcon(drawnMedia);
+            drawDialogTv.getContentText().setText(Objects.requireNonNull(drawnMedia).toLabel());
 
             updateCounters(selectedTombola);
 
