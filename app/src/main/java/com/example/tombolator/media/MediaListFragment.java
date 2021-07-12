@@ -23,7 +23,7 @@ public class MediaListFragment extends Fragment {
     private static final int UNSELECTED = 0;
     private static final int SELECTED = 1;
 
-    private static final int ELEMENTS_PER_PAGE = 8;
+    private static final int ELEMENTS_PER_PAGE = 5;
     private final MutableLiveData<Integer> currentPage = new MutableLiveData<>(1);
 
     private MediaActivity mediaActivity;
