@@ -24,6 +24,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ConfigMainFragment extends Fragment {
 
@@ -208,8 +210,13 @@ public class ConfigMainFragment extends Fragment {
                 MediaDao mediaDao = context.getTomboDb().mediaDao();
                 mediaDao.insertAllMedia(mediaList);
 
+                if(getActivity() == null) {
+                    /* TODO: Add log entry. */
+                    throw new NullPointerException();
+                }
+
                 getActivity().runOnUiThread(() -> Toast.makeText(getContext(),
-                        "Medien aus [File] importiert.", Toast.LENGTH_SHORT).show());
+                        "Medien aus " + file.getAbsolutePath() + " importiert.", Toast.LENGTH_SHORT).show());
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -230,6 +237,8 @@ public class ConfigMainFragment extends Fragment {
 
                 BufferedReader csvReader = new BufferedReader(new FileReader(file.getAbsolutePath()));
 
+                MediaDao mediaDao = context.getTomboDb().mediaDao();
+
                 String row;
 
                 while((row = csvReader.readLine()) != null) {
@@ -240,9 +249,53 @@ public class ConfigMainFragment extends Fragment {
                     String timestamp = data[1];
                     String name = data[2];
                     String type = data[3];
-                    String mediaList = data[4];
+                    String mediaAvailable = data[4];
+                    String mediaDrawn = null;
 
-                    /* TODO: Write code to extract media from mediaList string. */
+                    /* TODO: Seems a bit hacky. */
+                    try {
+                        mediaDrawn = data[5];
+                    }catch(ArrayIndexOutOfBoundsException e) {
+                        //
+                    }
+
+                    Pattern pattern = Pattern.compile("\\(\\d+\\)");
+
+                    List<Media> mediaAvailableList = new ArrayList<>();
+
+                    if(mediaAvailable != null) {
+
+                        Matcher mediaIdsAvailable = pattern.matcher(mediaAvailable);
+
+                        while(mediaIdsAvailable.find()) {
+
+                            int start = mediaIdsAvailable.start() + 1;
+                            int end = mediaIdsAvailable.end() - 1;
+
+                            String mediaId =  mediaAvailable.substring(start, end);
+
+                            Media media = mediaDao.getMedia(Long.parseLong(mediaId));
+                            mediaAvailableList.add(media);
+                        }
+                    }
+
+                    List<Media> mediaDrawnList = new ArrayList<>();
+
+                    if(mediaDrawn != null) {
+
+                        Matcher mediaIdsDrawn = pattern.matcher(mediaDrawn);
+
+                        while(mediaIdsDrawn.find()) {
+
+                            int start = mediaIdsDrawn.start();
+                            int end = mediaIdsDrawn.end();
+
+                            String mediaId =  mediaDrawn.substring(start, end);
+
+                            Media media = mediaDao.getMedia(Long.parseLong(mediaId));
+                            mediaDrawnList.add(media);
+                        }
+                    }
 
                     Tombola tombola = new Tombola();
                     tombola.setId(Long.parseLong(id));
@@ -250,11 +303,19 @@ public class ConfigMainFragment extends Fragment {
                     tombola.setName(name);
                     tombola.setType(Tombola.Type.valueOf(type));
 
+                    tombola.setMediaAvailable(mediaAvailableList);
+                    tombola.setMediaDrawn(mediaDrawnList);
+
                     tombolaList.add(tombola);
                 }
 
                 TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
                 tombolaDao.insertAllTombolas(tombolaList);
+
+                if(getActivity() == null) {
+                    /* TODO: Add log entry. */
+                    throw new NullPointerException();
+                }
 
                 getActivity().runOnUiThread(() -> Toast.makeText(getContext(),
                         "Tombolas aus " + file.getAbsolutePath() + " importiert.", Toast.LENGTH_SHORT).show());

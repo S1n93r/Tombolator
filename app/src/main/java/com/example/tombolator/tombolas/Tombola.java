@@ -223,9 +223,9 @@ public class Tombola implements Parcelable {
         String name = this.name != null ? this.name : "";
         String type = this.type != null ? this.type.toString() : "";
         String mediaAvailable = this.mediaAvailable.isEmpty() ? "" : this.mediaAvailable.toString();
-        String mediaDawn = this.mediaDrawn.isEmpty() ? "" : this.mediaDrawn.toString();
+        String mediaDrawn = this.mediaDrawn.isEmpty() ? "" : this.mediaDrawn.toString();
 
-        return id + ";" + creationTimestamp + ";" + name + ";" + type + ";" + mediaAvailable + ";" + mediaDawn;
+        return id + ";" + creationTimestamp + ";" + name + ";" + type + ";" + mediaAvailable + ";" + mediaDrawn + ";";
     }
 
     public enum Type {

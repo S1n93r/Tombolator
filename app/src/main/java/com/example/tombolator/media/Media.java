@@ -130,7 +130,7 @@ public class Media implements Parcelable {
         String contenType = this.contentType != null ? this.contentType : "";
 
         return id + ";" + creationTimestamp + ";" + name + ";" + title + ";" + number + ";" + author + ";"
-                + mediaType +  ";" + contenType;
+                + mediaType +  ";" + contenType + ";";
     }
 
     public static final class MediaType {
