@@ -7,14 +7,26 @@
 >
 
     <View
-            android:id="@+id/petal_north"
+            android:id="@+id/petal_wnw"
             android:layout_width="50dp"
             android:layout_height="110dp"
-            android:rotation="0"
+            android:rotation="292.5"
             android:background="@drawable/oval_button_design_blue"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="76dp"
+            android:layout_marginTop="88dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="40dp"/>
+            app:layout_constraintTop_toTopOf="parent"
+    />
+    <View
+            android:id="@+id/petal_nnw"
+            android:layout_width="50dp"
+            android:layout_height="110dp"
+            android:rotation="337.5"
+            android:background="@drawable/oval_button_design_blue"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="120dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="46dp"/>
     <View
             android:id="@+id/petal_nne"
             android:layout_width="50dp"
@@ -26,16 +38,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
     <View
-            android:id="@+id/petal_north_east"
-            android:layout_width="50dp"
-            android:layout_height="110dp"
-            android:rotation="45"
-            android:background="@drawable/oval_button_design_blue"
-            android:layout_marginTop="64dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginEnd="94dp"/>
-    <View
             android:id="@+id/petal_ene"
             android:layout_width="50dp"
             android:layout_height="110dp"
@@ -46,16 +48,6 @@
             android:layout_marginTop="88dp"
             android:layout_marginEnd="76dp"/>
     <View
-            android:id="@+id/petal_east"
-            android:layout_width="50dp"
-            android:layout_height="110dp"
-            android:rotation="90"
-            android:background="@drawable/oval_button_design_blue"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="70dp"/>
-    <View
             android:id="@+id/petal_ese"
             android:layout_width="50dp"
             android:layout_height="110dp"
@@ -63,16 +55,6 @@
             android:background="@drawable/oval_button_design_blue"
             android:layout_marginEnd="76dp"
             android:layout_marginBottom="88dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-    <View
-            android:id="@+id/petal_south_east"
-            android:layout_width="50dp"
-            android:layout_height="110dp"
-            android:rotation="135"
-            android:background="@drawable/oval_button_design_blue"
-            android:layout_marginBottom="64dp"
-            android:layout_marginEnd="94dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
     <View
@@ -86,16 +68,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
     <View
-            android:id="@+id/petal_south"
-            android:layout_width="50dp"
-            android:layout_height="110dp"
-            android:rotation="180"
-            android:background="@drawable/oval_button_design_blue"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="40dp"/>
-    <View
             android:id="@+id/petal_ssw"
             android:layout_width="50dp"
             android:layout_height="110dp"
@@ -104,16 +76,6 @@
             android:layout_marginBottom="46dp"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="120dp"/>
-    <View
-            android:id="@+id/petal_south_west"
-            android:layout_width="50dp"
-            android:layout_height="110dp"
-            android:rotation="225"
-            android:background="@drawable/oval_button_design_blue"
-            android:layout_marginBottom="64dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="94dp"/>
     <View
             android:id="@+id/petal_wsw"
             android:layout_width="50dp"
@@ -125,6 +87,68 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="76dp"/>
     <View
+            android:id="@+id/petal_north"
+            android:layout_width="50dp"
+            android:layout_height="110dp"
+            android:rotation="0"
+            android:background="@drawable/oval_button_design_blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="40dp"/>
+    <View
+            android:id="@+id/petal_north_east"
+            android:layout_width="50dp"
+            android:layout_height="110dp"
+            android:rotation="45"
+            android:background="@drawable/oval_button_design_blue"
+            android:layout_marginTop="64dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="94dp"/>
+
+    <View
+            android:id="@+id/petal_east"
+            android:layout_width="50dp"
+            android:layout_height="110dp"
+            android:rotation="90"
+            android:background="@drawable/oval_button_design_blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="70dp"/>
+
+    <View
+            android:id="@+id/petal_south_east"
+            android:layout_width="50dp"
+            android:layout_height="110dp"
+            android:rotation="135"
+            android:background="@drawable/oval_button_design_blue"
+            android:layout_marginBottom="64dp"
+            android:layout_marginEnd="94dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <View
+            android:id="@+id/petal_south"
+            android:layout_width="50dp"
+            android:layout_height="110dp"
+            android:rotation="180"
+            android:background="@drawable/oval_button_design_blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="40dp"/>
+    <View
+            android:id="@+id/petal_south_west"
+            android:layout_width="50dp"
+            android:layout_height="110dp"
+            android:rotation="225"
+            android:background="@drawable/oval_button_design_blue"
+            android:layout_marginBottom="64dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="94dp"/>
+    <View
             android:id="@+id/petal_west"
             android:layout_width="50dp"
             android:layout_height="110dp"
@@ -135,15 +159,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginStart="70dp"/>
     <View
-            android:id="@+id/petal_wnw"
-            android:layout_width="50dp"
-            android:layout_height="110dp"
-            android:rotation="292.5"
-            android:background="@drawable/oval_button_design_blue"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="76dp" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="88dp"/>
-    <View
             android:id="@+id/petal_north_west"
             android:layout_width="50dp"
             android:layout_height="110dp"
@@ -153,16 +168,6 @@
             android:layout_marginStart="94dp"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="64dp"/>
-    <View
-            android:id="@+id/petal_nnw"
-            android:layout_width="50dp"
-            android:layout_height="110dp"
-            android:rotation="337.5"
-            android:background="@drawable/oval_button_design_blue"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="120dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="46dp"/>
     <View
             android:id="@+id/flower_center"
             android:layout_width="175dp"
