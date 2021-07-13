@@ -3,9 +3,36 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="350dp"
-        android:layout_height="250dp"
+        android:layout_height="350dp"
 >
 
+    <View android:id="@+id/tv_antenna_one"
+          android:layout_width="125dp"
+          android:layout_height="125dp"
+          android:rotation="45"
+          android:background="@drawable/line_blue"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          android:layout_marginTop="24dp" app:layout_constraintHorizontal_bias="0.422"/>
+    <View android:id="@+id/tv_antenna_two"
+          android:layout_width="150dp"
+          android:layout_height="150dp"
+          android:rotation="135"
+          android:background="@drawable/line_blue"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintHorizontal_bias="0.735" android:layout_marginTop="4dp"/>
+    <View android:id="@+id/tv_antenna_body"
+          android:layout_width="100dp"
+          android:layout_height="100dp"
+          android:rotation="135"
+          android:background="@drawable/oval_button_design_purple"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintHorizontal_bias="0.544" android:layout_marginTop="84dp"/>
     <View android:id="@+id/tv_body"
           android:layout_width="350dp"
           android:layout_height="250dp"
@@ -13,7 +40,8 @@
           app:layout_constraintTop_toTopOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintStart_toStartOf="parent"/>
+          app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.0"
+          app:layout_constraintVertical_bias="1.0"/>
     <View android:id="@+id/tv_screen"
           android:layout_width="250dp"
           android:layout_height="175dp"
@@ -23,7 +51,7 @@
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintHorizontal_bias="0.25"
-          app:layout_constraintVertical_bias="0.35"/>
+          app:layout_constraintVertical_bias="0.742"/>
     <View android:id="@+id/tv_button_one"
           android:layout_width="50dp"
           android:layout_height="50dp"
@@ -31,8 +59,8 @@
           app:layout_constraintTop_toTopOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintHorizontal_bias="0.35"
-          app:layout_constraintVertical_bias="0.2"
+          app:layout_constraintHorizontal_bias="0.36"
+          app:layout_constraintVertical_bias="0.483"
           app:layout_constraintStart_toEndOf="@+id/tv_screen"/>
     <View android:id="@+id/tv_button_one_switch"
           android:layout_width="50dp"
@@ -49,8 +77,8 @@
           app:layout_constraintTop_toTopOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintHorizontal_bias="0.35"
-          app:layout_constraintStart_toEndOf="@+id/tv_screen"/>
+          app:layout_constraintHorizontal_bias="0.36"
+          app:layout_constraintStart_toEndOf="@+id/tv_screen" app:layout_constraintVertical_bias="0.68"/>
     <View android:id="@+id/tv_button_two_switch"
           android:layout_width="50dp"
           android:layout_height="50dp"

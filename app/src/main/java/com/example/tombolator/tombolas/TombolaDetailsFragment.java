@@ -1,5 +1,6 @@
 package com.example.tombolator.tombolas;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaActivityViewModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -136,18 +138,28 @@ public class TombolaDetailsFragment extends Fragment {
             if(selectedTombola.getType().equals(Tombola.Type.DELETE))
                 mediaActivityViewModel.delete(drawnMedia);
 
-            DrawDialogTv drawDialogTv = new DrawDialogTv(Objects.requireNonNull(getContext()));
+            Context context = getContext();
+
+            if(context == null)
+                throw new NullPointerException();
+
+            List<DrawDialog> drawDialogList = new ArrayList<>();
+            drawDialogList.add(new DrawDialogTv(context));
+            drawDialogList.add(new DrawDialogSunflower(context));
+
+            Collections.shuffle(drawDialogList);
+            DrawDialog drawDialog = drawDialogList.get(0);
 
             /* Has to be called before setContent() and setIcon() so onCreate() was fired*/
-            drawDialogTv.show();
+            drawDialog.show();
 
             if(drawnMedia == null) {
-                drawDialogTv.getContentText().setText(R.string.draw_media_on_empty_tombola);
+                drawDialog.getContentText().setText(R.string.draw_media_on_empty_tombola);
                 return;
             }
 
-            drawDialogTv.setIcon(drawnMedia);
-            drawDialogTv.getContentText().setText(Objects.requireNonNull(drawnMedia).toLabel());
+            drawDialog.setIcon(drawnMedia);
+            drawDialog.getContentText().setText(Objects.requireNonNull(drawnMedia).toLabel());
 
             updateCounters(selectedTombola);
 

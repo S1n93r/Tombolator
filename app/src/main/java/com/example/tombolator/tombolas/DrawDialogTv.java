@@ -9,7 +9,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewPropertyAnimator;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,7 +17,7 @@ import com.example.tombolator.R;
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaUtil;
 
-public class DrawDialogTv extends Dialog implements View.OnClickListener {
+public class DrawDialogTv extends Dialog implements View.OnClickListener, DrawDialog {
 
     private View tvSwitchOne;
 
@@ -49,12 +48,7 @@ public class DrawDialogTv extends Dialog implements View.OnClickListener {
         mediaTypeIcon = findViewById(R.id.icon_media_type);
         contentText = findViewById(R.id.label_content);
 
-        /* TODO: Start animation here. */
-        ViewPropertyAnimator viewPropertyAnimator = tvSwitchOne.animate();
-        viewPropertyAnimator.setUpdateListener(new TvSwitchAnimatorListener());
-        viewPropertyAnimator.setDuration(500);
-        viewPropertyAnimator.rotation(180);
-        viewPropertyAnimator.start();
+        tvSwitchOne.animate().rotation(180).setDuration(500).setUpdateListener(new TvSwitchAnimatorListener()).start();
 
         contentText.setAlpha(0);
 
@@ -79,14 +73,21 @@ public class DrawDialogTv extends Dialog implements View.OnClickListener {
     }
 
     @Override
+    public void show() {
+        super.show();
+    }
+
+    @Override
     public void onClick(View view) {
 
     }
 
+    @Override
     public void setIcon(Media media) {
         mediaTypeIcon.setImageResource(MediaUtil.getMediaTypeIcon(media));
     }
 
+    @Override
     public TextView getContentText() {
         return contentText;
     }
