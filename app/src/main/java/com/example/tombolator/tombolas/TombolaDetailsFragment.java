@@ -146,6 +146,7 @@ public class TombolaDetailsFragment extends Fragment {
             List<DrawDialog> drawDialogList = new ArrayList<>();
             drawDialogList.add(new DrawDialogTv(context));
             drawDialogList.add(new DrawDialogSunflower(context));
+            drawDialogList.add(new DrawDialogLightBulb(context));
 
             Collections.shuffle(drawDialogList);
             DrawDialog drawDialog = drawDialogList.get(0);

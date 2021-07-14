@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+>
+
+    <View
+            android:id="@+id/cable"
+            android:layout_width="10dp"
+            android:layout_height="100dp"
+            android:background="@color/color_stroke_blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+    />
+
+    <View
+            android:id="@+id/cable_switch"
+            android:layout_width="10dp"
+            android:layout_height="300dp"
+            android:background="@color/color_button_stroke"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.55"/>
+    <View
+            android:id="@+id/cable_switch_knob"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/oval_button_design_purple"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.555"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.94"/>
+    <View
+            android:id="@+id/light_bulb_on"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="@drawable/ic_light_bulb_on"
+            android:rotation="180"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.45"/>
+    <View
+            android:id="@+id/light_bulb_off"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="@drawable/ic_light_bulb_off"
+            android:rotation="180"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.45"/>
+    <View
+            android:id="@+id/light_radiant"
+            android:layout_width="275dp"
+            android:layout_height="275dp"
+            android:background="@drawable/light_radiant"
+            android:alpha="0.25"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="1.0" app:layout_constraintHorizontal_bias="0.506"/>
+    <ImageView
+            android:id="@+id/icon_media_type"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:contentDescription="@string/icon_media_type_content_description"
+            app:layout_constraintStart_toStartOf="@+id/light_bulb_on"
+            app:layout_constraintEnd_toEndOf="@+id/light_bulb_on"
+            app:layout_constraintTop_toTopOf="@+id/light_bulb_on" android:layout_marginTop="76dp"
+            app:layout_constraintHorizontal_bias="0.503"/>
+    <TextView
+            android:text="@string/text_view_content"
+            android:gravity="center_horizontal"
+            android:layout_width="121dp"
+            android:layout_height="61dp"
+            android:id="@+id/label_content"
+            android:fontFamily="@font/comic_sans_ms"
+            android:textSize="@dimen/font_size_labels"
+            app:layout_constraintTop_toBottomOf="@+id/icon_media_type"
+            app:layout_constraintStart_toStartOf="@+id/light_bulb_on"
+            app:layout_constraintEnd_toEndOf="@+id/light_bulb_on"
+            app:layout_constraintHorizontal_bias="0.506" android:layout_marginTop="16dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
