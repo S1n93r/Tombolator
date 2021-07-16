@@ -144,7 +144,7 @@ public class TombolaDetailsFragment extends Fragment {
             if(context == null)
                 throw new NullPointerException();
 
-            DrawDialog drawDialog = DrawFialogFactory.createDialog(context, DrawFialogFactory.DIALOG_COIN);
+            DrawDialog drawDialog = DrawFialogFactory.createDialog(context, DrawFialogFactory.DIALOG_BOOK);
 
             /* Has to be called before setContent() and setIcon() so onCreate() was fired*/
             drawDialog.show();

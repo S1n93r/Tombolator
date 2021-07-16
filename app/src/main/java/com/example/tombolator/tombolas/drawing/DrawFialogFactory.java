@@ -10,6 +10,7 @@ public final class DrawFialogFactory {
     public final static int DIALOG_SUNFLOWER = 1;
     public final static int DIALOG_LIGHTBULB = 2;
     public final static int DIALOG_COIN = 3;
+    public final static int DIALOG_BOOK = 4;
 
     public static DrawDialog createDialog(Context context, int type) {
 
@@ -21,13 +22,14 @@ public final class DrawFialogFactory {
             case DIALOG_SUNFLOWER: return new DrawDialogSunflower(context);
             case DIALOG_LIGHTBULB: return new DrawDialogLightBulb(context);
             case DIALOG_COIN: return new DrawDialogCoin(context);
+            case DIALOG_BOOK: return new DrawDialogBook(context);
         }
     }
 
     public static DrawDialog createRandomDialog(Context context) {
 
         Random random = new Random();
-        int type = random.nextInt(4);
+        int type = random.nextInt(5);
 
         return createDialog(context, type);
     }

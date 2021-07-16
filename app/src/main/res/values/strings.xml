@@ -33,6 +33,8 @@
     <string name="label_name">Name</string>
     <string name="label_title">Titel</string>
     <string name="text_view_content">Inhalt</string>
+    <string name="text_draw_book_page_one">Liste I\n----------\n* Wirst Du da sein?\n* Das leuchten der Stille\n* Die Schöne und das Biest</string>
+    <string name="text_draw_book_page_two">Liste II\n----------\n* City of Bones\n* Nothing Hill\n* Harry Potter\n* Winnie Puuh\n* Vaiana</string>
     <string name="label_number">Nummer</string>
     <string name="label_author">Author</string>
     <string name="label_director">Regisseur</string>
