@@ -15,9 +15,10 @@ import com.example.tombolator.DateUtil;
 import com.example.tombolator.R;
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaActivityViewModel;
+import com.example.tombolator.tombolas.drawing.DrawDialog;
+import com.example.tombolator.tombolas.drawing.DrawFialogFactory;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -143,13 +144,7 @@ public class TombolaDetailsFragment extends Fragment {
             if(context == null)
                 throw new NullPointerException();
 
-            List<DrawDialog> drawDialogList = new ArrayList<>();
-            drawDialogList.add(new DrawDialogTv(context));
-            drawDialogList.add(new DrawDialogSunflower(context));
-            drawDialogList.add(new DrawDialogLightBulb(context));
-
-            Collections.shuffle(drawDialogList);
-            DrawDialog drawDialog = drawDialogList.get(0);
+            DrawDialog drawDialog = DrawFialogFactory.createDialog(context, DrawFialogFactory.DIALOG_COIN);
 
             /* Has to be called before setContent() and setIcon() so onCreate() was fired*/
             drawDialog.show();

@@ -1,4 +1,4 @@
-package com.example.tombolator.tombolas;
+package com.example.tombolator.tombolas.drawing;
 
 import android.animation.ValueAnimator;
 import android.app.ActionBar;
@@ -118,15 +118,6 @@ public class DrawDialogSunflower extends Dialog implements View.OnClickListener,
         petalNNW.animate().scaleY(targetScale).setDuration(duration).start();
 
         contentText.setAlpha(0);
-
-        registerOnClickListener();
-    }
-
-    private void registerOnClickListener() {
-
-        contentText.setOnClickListener(view -> {
-            contentText.animate().alpha(0).setDuration(2000).start();
-        });
     }
 
     private class FlowerPetalAnimatorListener implements ValueAnimator.AnimatorUpdateListener {

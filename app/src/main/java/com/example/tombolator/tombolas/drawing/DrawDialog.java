@@ -1,4 +1,4 @@
-package com.example.tombolator.tombolas;
+package com.example.tombolator.tombolas.drawing;
 
 import android.widget.TextView;
 import com.example.tombolator.media.Media;

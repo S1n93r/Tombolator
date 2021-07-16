@@ -1,4 +1,4 @@
-package com.example.tombolator.tombolas;
+package com.example.tombolator.tombolas.drawing;
 
 import android.animation.ValueAnimator;
 import android.app.ActionBar;
@@ -61,15 +61,6 @@ public class DrawDialogLightBulb extends Dialog implements View.OnClickListener,
                 .setDuration(500).start();
 
         switchKnob.animate().translationYBy(50).setDuration(500).start();
-
-        registerOnClickListener();
-    }
-
-    private void registerOnClickListener() {
-
-        contentText.setOnClickListener(view -> {
-            contentText.animate().alpha(0).setDuration(2000).start();
-        });
     }
 
     private class CableSwitchPulledAnimationListener implements ValueAnimator.AnimatorUpdateListener {

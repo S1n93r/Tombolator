@@ -1,4 +1,4 @@
-package com.example.tombolator.tombolas;
+package com.example.tombolator.tombolas.drawing;
 
 import android.animation.ValueAnimator;
 import android.app.ActionBar;
@@ -51,15 +51,6 @@ public class DrawDialogTv extends Dialog implements View.OnClickListener, DrawDi
         tvSwitchOne.animate().rotation(180).setDuration(500).setUpdateListener(new TvSwitchAnimatorListener()).start();
 
         contentText.setAlpha(0);
-
-        registerOnClickListener();
-    }
-
-    private void registerOnClickListener() {
-
-        contentText.setOnClickListener(view -> {
-            contentText.animate().alpha(0).setDuration(2000).start();
-        });
     }
 
     private class TvSwitchAnimatorListener implements ValueAnimator.AnimatorUpdateListener {
