@@ -287,8 +287,8 @@ public class ConfigMainFragment extends Fragment {
 
                         while(mediaIdsDrawn.find()) {
 
-                            int start = mediaIdsDrawn.start();
-                            int end = mediaIdsDrawn.end();
+                            int start = mediaIdsDrawn.start() + 1;
+                            int end = mediaIdsDrawn.end() - 1;
 
                             String mediaId =  mediaDrawn.substring(start, end);
 

@@ -1,14 +1,10 @@
 package com.example.tombolator.media;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -32,6 +28,8 @@ public class MediaListFragment extends Fragment {
     private MediaActivityViewModel mediaActivityViewModel;
 
     private LinearLayout linearLayoutMedia;
+
+    private Spinner mediaTypesSpinner;
 
     private TextView pageNumberCurrent;
     private TextView pageNumberMax;
@@ -59,6 +57,8 @@ public class MediaListFragment extends Fragment {
 
         linearLayoutMedia = layout.findViewById(R.id.linear_layout_media);
 
+        mediaTypesSpinner = layout.findViewById(R.id.spinner_media_types);
+
         pageNumberCurrent = layout.findViewById(R.id.label_page_number_current);
         pageNumberMax = layout.findViewById(R.id.label_page_number_total);
 
@@ -68,10 +68,44 @@ public class MediaListFragment extends Fragment {
         previousPageButton = layout.findViewById(R.id.button_previous_page);
         newMediaButton = layout.findViewById(R.id.button_new_media);
 
+        setUpMediaTypesSpinner();
+
         registerObserver();
         registerOnClickListener();
 
         return layout;
+    }
+
+    private void setUpMediaTypesSpinner() {
+
+        List<String> mediaTypesForSpinner = Media.MediaType.getMediaTypes();
+        mediaTypesForSpinner.add(0, "Alle");
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
+                this.getActivity(), R.layout.media_type_spinner_item, mediaTypesForSpinner);
+
+        arrayAdapter.setDropDownViewResource(R.layout.media_type_spinner_dropdown);
+        mediaTypesSpinner.setAdapter(arrayAdapter);
+
+        mediaTypesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                if(i == 0)
+                    mediaActivityViewModel.clearMediaType();
+                else
+                    mediaActivityViewModel.selectMediaType(Media.MediaType.getMediaType(i - 1));
+
+                currentPage.setValue(1);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                /* TODO: When is this triggered? */
+            }
+        });
+
     }
 
     private void registerObserver() {
@@ -83,8 +117,6 @@ public class MediaListFragment extends Fragment {
         currentPage.observe(this, new PageNumberCurrentObserver());
 
         mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().observe(this, new PageNumberTotalObserver());
-
-        mediaActivityViewModel.getSelectedMediaTypes().observe(this, new SelectedMediaTypesObserver());
     }
 
     private void registerOnClickListener() {
@@ -131,14 +163,6 @@ public class MediaListFragment extends Fragment {
 
             mediaActivity.switchToCreationStepOne();
         });
-    }
-
-    private class SelectedMediaTypesObserver implements Observer<List<String>> {
-
-        @Override
-        public void onChanged(List<String> mediaTypes) {
-            currentPage.setValue(1);
-        }
     }
 
     private class MediaListObserver implements Observer<List<Media>> {
@@ -226,31 +250,6 @@ public class MediaListFragment extends Fragment {
             mediaActivityViewModel.selectMedia(mediaId);
 
             mediaActivity.switchToMediaDetailsView();
-        }
-    }
-
-    private static class ToggleMediaTypeSelectListener implements View.OnClickListener {
-
-        @Override
-        public void onClick(View view) {
-
-            TextView textView = (TextView) view;
-
-            switch(textView.getId()) {
-
-                case UNSELECTED:
-                    textView.setTextColor(Color.CYAN);
-                    textView.setId(SELECTED);
-                    break;
-
-                case SELECTED:
-                    textView.setTextColor(Color.BLACK);
-                    textView.setId(UNSELECTED);
-                    break;
-
-                default:
-                    /* TODO: Add error log. */
-            }
         }
     }
 }
