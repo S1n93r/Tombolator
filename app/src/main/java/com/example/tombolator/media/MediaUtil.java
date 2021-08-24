@@ -24,6 +24,9 @@ public final class MediaUtil {
             case Media.MediaType.STREAMING:
                 return R.drawable.ic_online_streaming_25;
 
+            case Media.MediaType.MEAL:
+                return R.drawable.ic_meal_25;
+
             case Media.MediaType.CASSETTE:
             default:
                 return R.drawable.ic_cassette_25;

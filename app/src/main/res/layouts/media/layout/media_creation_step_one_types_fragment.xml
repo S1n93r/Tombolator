@@ -49,7 +49,7 @@
                 android:layout_marginTop="44dp"
                 android:fontFamily="@font/comic_sans_ms"
                 android:textSize="@dimen/font_size_labels"
-                android:id="@+id/text_view_title3"
+                android:id="@+id/text_view_content_type"
                 app:layout_constraintTop_toBottomOf="@+id/spinner_media_types"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"

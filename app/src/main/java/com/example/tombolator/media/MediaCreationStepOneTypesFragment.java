@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -23,6 +21,8 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
     private Spinner mediaTypesSpinner;
     private Spinner contentTypeSpinner;
+
+    private TextView contentTypeTextView;
 
     private Button continueButton;
     private Button backButton;
@@ -46,6 +46,8 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
         mediaTypesSpinner = layout.findViewById(R.id.spinner_media_types);
         contentTypeSpinner = layout.findViewById(R.id.spinner_content_types);
 
+        contentTypeTextView = layout.findViewById(R.id.text_view_content_type);
+
         continueButton = layout.findViewById(R.id.button_continue);
         backButton = layout.findViewById(R.id.button_back);
 
@@ -67,6 +69,37 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
         arrayAdapter.setDropDownViewResource(R.layout.media_type_spinner_dropdown);
 
         mediaTypesSpinner.setAdapter(arrayAdapter);
+
+        mediaTypesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                if(i == Media.MediaType.getIndex(Media.MediaType.MEAL)) {
+
+                    showContentSpinnerAndLabel(false);
+                    return;
+                }
+
+                showContentSpinnerAndLabel(true);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                /* TODO: When is this triggered? */
+            }
+        });
+    }
+
+    private void showContentSpinnerAndLabel(boolean show) {
+
+        int visibility = View.INVISIBLE;
+
+        if(show)
+            visibility = View.VISIBLE;
+
+        contentTypeTextView.setVisibility(visibility);
+        contentTypeSpinner.setVisibility(visibility);
     }
 
     private void setUpContentTypeSpinner() {

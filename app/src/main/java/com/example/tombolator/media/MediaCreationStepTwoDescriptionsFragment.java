@@ -135,6 +135,7 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
                 selectedMedia.setTitle(title);
                 selectedMedia.setNumber(number);
                 selectedMedia.setAuthor(author);
+                selectedMedia.setCreationTimestamp(System.currentTimeMillis());
 
                 mediaActivityViewModel.insert(selectedMedia);
 
