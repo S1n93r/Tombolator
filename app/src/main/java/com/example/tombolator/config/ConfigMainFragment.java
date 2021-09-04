@@ -7,18 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import com.example.tombolator.DateUtil;
 import com.example.tombolator.R;
 import com.example.tombolator.ToasterUtil;
 import com.example.tombolator.TomboApplication;
 import com.example.tombolator.media.Media;
-import com.example.tombolator.media.MediaActivityViewModel;
 import com.example.tombolator.media.MediaDao;
 import com.example.tombolator.tombolas.Tombola;
 import com.example.tombolator.tombolas.TombolaDao;
-import com.example.tombolator.tombolas.TombolasActivityViewModel;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -34,12 +33,11 @@ public class ConfigMainFragment extends Fragment {
     private static final String FILE_NAME_EXPORT_MEDIA = "export_media";
     private static final String FILE_NAME_EXPORT_TOMBOLAS = "export_tombolas";
 
-    private MediaActivityViewModel mediaActivityViewModel;
-    private TombolasActivityViewModel tombolasActivityViewModel;
-
     public static ConfigMainFragment newInstance() {
         return new ConfigMainFragment();
     }
+
+    private TextView exportVersionTextView;
 
     private Button exportDatabaseButton;
     private Button importDatabaseButton;
@@ -49,16 +47,17 @@ public class ConfigMainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
-        tombolasActivityViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
-
         View layout = inflater.inflate(R.layout.config_main_fragment, container, false);
+
+        exportVersionTextView = layout.findViewById(R.id.text_view_export_version);
 
         exportDatabaseButton = layout.findViewById(R.id.button_export);
         importDatabaseButton = layout.findViewById(R.id.button_import);
         backButton = layout.findViewById(R.id.button_back);
 
         registerOnClickListener();
+
+        refreshExportedVersion();
 
         return layout;
     }
@@ -72,6 +71,8 @@ public class ConfigMainFragment extends Fragment {
 
                 exportMedia(context);
                 exportTombolas(context);
+
+                refreshExportedVersion();
         });
 
         importDatabaseButton.setOnClickListener((View view) -> AsyncTask.execute(() -> {
@@ -141,7 +142,7 @@ public class ConfigMainFragment extends Fragment {
                 os.flush();
                 os.close();
 
-                getActivity().runOnUiThread(() -> Toast.makeText(getContext(),
+                Objects.requireNonNull(getActivity()).runOnUiThread(() -> Toast.makeText(getContext(),
                         "Saved to " + file.getAbsolutePath(), Toast.LENGTH_SHORT).show());
 
             } catch (IOException e) {
@@ -158,7 +159,7 @@ public class ConfigMainFragment extends Fragment {
 
                 List<Media> mediaList = new ArrayList<>();
 
-                File file = new File(getContext().getExternalFilesDir(null),
+                File file = new File(Objects.requireNonNull(getContext()).getExternalFilesDir(null),
                         FILE_NAME_EXPORT_MEDIA + FILE_EXTENSION);
 
                 BufferedReader csvReader = new BufferedReader(new FileReader(file.getAbsolutePath()));
@@ -210,7 +211,7 @@ public class ConfigMainFragment extends Fragment {
 
                 List<Tombola> tombolaList = new ArrayList<>();
 
-                File file = new File(getContext().getExternalFilesDir(null),
+                File file = new File(Objects.requireNonNull(getContext()).getExternalFilesDir(null),
                         FILE_NAME_EXPORT_TOMBOLAS + FILE_EXTENSION);
 
                 BufferedReader csvReader = new BufferedReader(new FileReader(file.getAbsolutePath()));
@@ -297,5 +298,17 @@ public class ConfigMainFragment extends Fragment {
                 e.printStackTrace();
             }
         });
+    }
+
+    private void refreshExportedVersion() {
+
+        File file = new File(Objects.requireNonNull(getContext()).getExternalFilesDir(null),
+                FILE_NAME_EXPORT_MEDIA + FILE_EXTENSION);
+
+        long lastModified = file.lastModified();
+
+        String dateFormatted = lastModified == 0 ? "[Kein Export gefunden]" : DateUtil.formatDateAndTime(lastModified);
+
+        exportVersionTextView.setText(dateFormatted);
     }
 }
