@@ -5,7 +5,7 @@
     <string name="icon_sort_media_content_description">Sortiere Medien absteigend</string>
     <string name="icon_search_media_content_description">Medien durchsuchen</string>
     <string name="button_back">Zurück</string>
-    <string name="button_add_to_tombola">Zu Tombola</string>
+    <string name="button_add_to_tombola">Tombola</string>
     <string name="button_save">Sichern</string>
     <string name="button_tombolas">Tombolas</string>
     <string name="button_import_database">Import (.csv)</string>
@@ -27,13 +27,14 @@
     <string name="title_new_Tombola">Neue Tombola</string>
     <string name="title_media_details">Medium Details</string>
     <string name="title_tombola_details">Tombola Details</string>
+    <string name="title_edit_tombola">Tombola bearbeiten</string>
     <string name="title_media_available">Verfügbare Medien</string>
     <string name="title_media_added">Medien in Tombola</string>
     <string name="title_media_all">Alle Medien</string>
     <string name="label_name">Name</string>
     <string name="label_title">Titel</string>
     <string name="text_view_content">Inhalt</string>
-    <string name="text_draw_book_page_one">Liste I\n----------\n* Wirst Du da sein?\n* Das leuchten der Stille\n* Die Schöne und das Biest</string>
+    <string name="text_draw_book_page_one">Liste I\n----------\n* Wirst Du da sein?\n* Das Leuchten der Stille\n* Die Schöne und das Biest</string>
     <string name="text_draw_book_page_two">Liste II\n----------\n* City of Bones\n* Nothing Hill\n* Harry Potter\n* Winnie Puuh\n* Vaiana</string>
     <string name="label_number">Nummer</string>
     <string name="label_author">Author</string>
@@ -47,6 +48,7 @@
     <string name="label_id">ID</string>
     <string name="label_search">Suche</string>
     <string name="label_what_category">Welche Kategorie(n)?</string>
+    <string name="label_zu_tombola_hinzufuegen">Zu Tombola hinzufügen</string>
     <string name="label_separator_slash">/</string>
     <string name="media_type_cassette">Kassette</string>
     <string name="media_type_cd">CD</string>

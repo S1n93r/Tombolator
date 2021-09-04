@@ -6,7 +6,7 @@
         android:background="@color/color_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".tombolas.TombolaCreationStepOneFragment">
+        tools:context=".tombolas.TombolaCreationFragment">
 
     <LinearLayout
             android:orientation="vertical"
@@ -60,12 +60,12 @@
             app:layout_constraintHorizontal_bias="0.05"
     />
     <Button
-            android:text="@string/button_continue"
+            android:text="@string/button_save"
             android:drawableBottom="@drawable/ic_arrow_right_25"
             android:padding="25dp"
             android:layout_width="@dimen/button_width"
             android:layout_height="@dimen/button_height"
-            android:id="@+id/button_continue"
+            android:id="@+id/button_save"
             android:background="@drawable/button_selector_purple"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="@dimen/font_size_s"

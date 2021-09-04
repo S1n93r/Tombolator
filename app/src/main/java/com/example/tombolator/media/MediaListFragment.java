@@ -16,9 +16,6 @@ import java.util.Locale;
 
 public class MediaListFragment extends Fragment {
 
-    private static final int UNSELECTED = 0;
-    private static final int SELECTED = 1;
-
     private static final int ELEMENTS_PER_PAGE = 5;
     private final MutableLiveData<Integer> currentPage = new MutableLiveData<>(1);
 
@@ -53,7 +50,7 @@ public class MediaListFragment extends Fragment {
         mediaActivity = (MediaActivity) getActivity();
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
 
-        View layout = inflater.inflate(R.layout.media_list_step_two_media_list, container, false);
+        View layout = inflater.inflate(R.layout.media_list_fragment, container, false);
 
         linearLayoutMedia = layout.findViewById(R.id.linear_layout_media);
 
@@ -87,25 +84,7 @@ public class MediaListFragment extends Fragment {
         arrayAdapter.setDropDownViewResource(R.layout.media_type_spinner_dropdown);
         mediaTypesSpinner.setAdapter(arrayAdapter);
 
-        mediaTypesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                if(i == 0)
-                    mediaActivityViewModel.clearMediaType();
-                else
-                    mediaActivityViewModel.selectMediaType(Media.MediaType.getMediaType(i - 1));
-
-                currentPage.setValue(1);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                /* TODO: When is this triggered? */
-            }
-        });
-
+        mediaTypesSpinner.setOnItemSelectedListener(new MediaTypeItemSelectedListener());
     }
 
     private void registerObserver() {
@@ -250,6 +229,25 @@ public class MediaListFragment extends Fragment {
             mediaActivityViewModel.selectMedia(mediaId);
 
             mediaActivity.switchToMediaDetailsView();
+        }
+    }
+
+    private class MediaTypeItemSelectedListener implements AdapterView.OnItemSelectedListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+            if(i == 0)
+                mediaActivityViewModel.clearMediaType();
+            else
+                mediaActivityViewModel.selectMediaType(Media.MediaType.getMediaType(i - 1));
+
+            currentPage.setValue(1);
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+            /* TODO: When is this triggered? */
         }
     }
 }

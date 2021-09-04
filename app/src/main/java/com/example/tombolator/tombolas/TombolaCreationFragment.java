@@ -16,22 +16,21 @@ import com.example.tombolator.media.Media;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class TombolaCreationStepOneFragment extends Fragment {
+public class TombolaCreationFragment extends Fragment {
 
     private TombolasActivity tombolasActivity;
     private TombolasActivityViewModel tombolasActivityViewModel;
 
     private EditText nameEditText;
 
-    private Button continueButton;
+    private Button saveButton;
     private Button backButton;
 
-    private TombolaCreationStepOneFragment() {}
+    private TombolaCreationFragment() {}
 
-    public static TombolaCreationStepOneFragment newInstance() {
-        return new TombolaCreationStepOneFragment();
+    public static TombolaCreationFragment newInstance() {
+        return new TombolaCreationFragment();
     }
 
     @Nullable
@@ -42,12 +41,12 @@ public class TombolaCreationStepOneFragment extends Fragment {
         tombolasActivity = (TombolasActivity) getActivity();
         tombolasActivityViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
 
-        View layout = inflater.inflate(R.layout.tombolas_creation_step_one_fragment, container, false);
+        View layout = inflater.inflate(R.layout.tombolas_creation_fragment, container, false);
 
         nameEditText = layout.findViewById(R.id.edit_text_name);
 
-        continueButton = layout.findViewById(R.id.button_continue);
         backButton = layout.findViewById(R.id.button_back);
+        saveButton = layout.findViewById(R.id.button_save);
 
         setUpMediaTypeSpinner();
         registerOnClickListener();
@@ -84,15 +83,30 @@ public class TombolaCreationStepOneFragment extends Fragment {
             tombolasActivity.switchToTombolasMainView();
         });
 
-        continueButton.setOnClickListener(v -> {
+        saveButton.setOnClickListener(new SaveTombolaListener());
+    }
 
-            String name = nameEditText.getText() != null ? nameEditText.getText().toString() : "";
+    private class SaveTombolaListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+
+            if(tombolasActivityViewModel.getSelectedTombola().getValue() == null) {
+                /* TODO: Add log entry */
+                throw new NullPointerException();
+            }
 
             Tombola selectedTombola = tombolasActivityViewModel.getSelectedTombola().getValue();
-            Objects.requireNonNull(selectedTombola).setName(name);
 
-            tombolasActivity.switchToCreationStepTwo();
-        });
+            String name = nameEditText.getText() != null ? nameEditText.getText().toString() : "";
+            selectedTombola.setName(name);
+
+            selectedTombola.setType(Tombola.Type.REUSE);
+
+            tombolasActivityViewModel.insertTombola(selectedTombola);
+
+            tombolasActivity.switchToTombolasMainView();
+        }
     }
 
     private void resetForm() {

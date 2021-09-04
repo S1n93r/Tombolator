@@ -40,7 +40,7 @@ public class TombolaMainFragment extends Fragment {
         tombolasActivity = (TombolasActivity) getActivity();
         tombolasActivityViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
 
-        View layout = inflater.inflate(R.layout.tombolas_main_fragment, container, false);
+        View layout = inflater.inflate(R.layout.tombola_list_fragment, container, false);
 
         availableTombolas = layout.findViewById(R.id.linear_layout_tombolas);
 
@@ -63,7 +63,7 @@ public class TombolaMainFragment extends Fragment {
         newTombolaButton.setOnClickListener(view -> {
 
             tombolasActivityViewModel.selectTombola(new Tombola());
-            tombolasActivity.switchToCreationStepOne();
+            tombolasActivity.switchToCreation();
         });
     }
 

@@ -7,9 +7,9 @@ import com.example.tombolator.R;
 public class TombolasActivity extends AppCompatActivity {
 
     private TombolaMainFragment tombolaMainFragment;
-    private TombolaCreationStepOneFragment tombolaCreationStepOneFragment;
-    private TombolaCreationStepTwoFragment tombolaCreationStepTwoFragment;
+    private TombolaCreationFragment tombolaCreationFragment;
     private TombolaDetailsFragment tombolaDetailsFragment;
+    private TombolaEditingFragment tombolaEditingFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,9 +17,9 @@ public class TombolasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         tombolaMainFragment = TombolaMainFragment.newInstance();
-        tombolaCreationStepOneFragment = TombolaCreationStepOneFragment.newInstance();
-        tombolaCreationStepTwoFragment = TombolaCreationStepTwoFragment.newInstance();
+        tombolaCreationFragment = TombolaCreationFragment.newInstance();
         tombolaDetailsFragment = TombolaDetailsFragment.newInstance();
+        tombolaEditingFragment = TombolaEditingFragment.newInstance();
 
         setContentView(R.layout.tombolas_activity);
         if (savedInstanceState == null) {
@@ -34,17 +34,10 @@ public class TombolasActivity extends AppCompatActivity {
                 .commitNow();
     }
 
-    protected void switchToCreationStepOne() {
+    protected void switchToCreation() {
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, tombolaCreationStepOneFragment)
-                .commitNow();
-    }
-
-    protected void switchToCreationStepTwo() {
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, tombolaCreationStepTwoFragment)
+                .replace(R.id.container, tombolaCreationFragment)
                 .commitNow();
     }
 
@@ -52,6 +45,13 @@ public class TombolasActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, tombolaDetailsFragment)
+                .commitNow();
+    }
+
+    protected void switchToTombolEditingView() {
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, tombolaEditingFragment)
                 .commitNow();
     }
 }

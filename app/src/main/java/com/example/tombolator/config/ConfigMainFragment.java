@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
+import com.example.tombolator.ToasterUtil;
 import com.example.tombolator.TomboApplication;
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaActivityViewModel;
@@ -82,15 +83,7 @@ public class ConfigMainFragment extends Fragment {
             importTombolas(context);
         }));
 
-        backButton.setOnClickListener(view -> {
-
-            if(getActivity() == null) {
-                /* TODO: Add log entry. */
-                throw new NullPointerException();
-            }
-
-            getActivity().finish();
-        });
+        backButton.setOnClickListener(view -> Objects.requireNonNull(getActivity()).finish());
     }
 
     private void exportMedia(TomboApplication context) {
@@ -107,12 +100,7 @@ public class ConfigMainFragment extends Fragment {
 
             try {
 
-                if(getContext() == null) {
-                    /* TODO: Add log entry. */
-                    throw new NullPointerException();
-                }
-
-                File file = new File(getContext().getExternalFilesDir(null),
+                File file = new File(Objects.requireNonNull(getContext()).getExternalFilesDir(null),
                         FILE_NAME_EXPORT_MEDIA + FILE_EXTENSION);
 
                 OutputStream os = getContext().getContentResolver().openOutputStream(Uri.fromFile(file));
@@ -121,8 +109,8 @@ public class ConfigMainFragment extends Fragment {
                 os.flush();
                 os.close();
 
-                getActivity().runOnUiThread(() -> Toast.makeText(getContext(),
-                        "Saved to " + file.getAbsolutePath(), Toast.LENGTH_SHORT).show());
+                ToasterUtil.makeShortToast(Objects.requireNonNull(getActivity()), getContext(),
+                        "Save to {0}", file.getAbsolutePath());
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -144,12 +132,7 @@ public class ConfigMainFragment extends Fragment {
 
             try {
 
-                if(getContext() == null) {
-                    /* TODO: Add log entry. */
-                    throw new NullPointerException();
-                }
-
-                File file = new File(getContext().getExternalFilesDir(null),
+                File file = new File(Objects.requireNonNull(getContext()).getExternalFilesDir(null),
                         FILE_NAME_EXPORT_TOMBOLAS + FILE_EXTENSION);
 
                 OutputStream os = getContext().getContentResolver().openOutputStream(Uri.fromFile(file));
@@ -210,12 +193,7 @@ public class ConfigMainFragment extends Fragment {
                 MediaDao mediaDao = context.getTomboDb().mediaDao();
                 mediaDao.insertAllMedia(mediaList);
 
-                if(getActivity() == null) {
-                    /* TODO: Add log entry. */
-                    throw new NullPointerException();
-                }
-
-                getActivity().runOnUiThread(() -> Toast.makeText(getContext(),
+                Objects.requireNonNull(getActivity()).runOnUiThread(() -> Toast.makeText(getContext(),
                         "Medien aus " + file.getAbsolutePath() + " importiert.", Toast.LENGTH_SHORT).show());
 
             } catch (IOException e) {
@@ -312,12 +290,7 @@ public class ConfigMainFragment extends Fragment {
                 TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
                 tombolaDao.insertAllTombolas(tombolaList);
 
-                if(getActivity() == null) {
-                    /* TODO: Add log entry. */
-                    throw new NullPointerException();
-                }
-
-                getActivity().runOnUiThread(() -> Toast.makeText(getContext(),
+                Objects.requireNonNull(getActivity()).runOnUiThread(() -> Toast.makeText(getContext(),
                         "Tombolas aus " + file.getAbsolutePath() + " importiert.", Toast.LENGTH_SHORT).show());
 
             } catch (IOException e) {

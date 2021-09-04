@@ -1,10 +1,13 @@
 package com.example.tombolator.media;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,7 +16,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.DateUtil;
 import com.example.tombolator.R;
+import com.example.tombolator.ToasterUtil;
+import com.example.tombolator.tombolas.Tombola;
 import com.example.tombolator.tombolas.TombolasActivityViewModel;
+
+import java.util.List;
+import java.util.Objects;
 
 public class MediaDetailsFragment extends Fragment {
 
@@ -31,6 +39,9 @@ public class MediaDetailsFragment extends Fragment {
     private Button editMediaButton;
     private Button backButton;
     private Button deleteButton;
+    private Button addToTombola;
+
+    private Spinner tombolaSpinner;
 
     public static MediaDetailsFragment newInstance() {
         return new MediaDetailsFragment();
@@ -59,6 +70,9 @@ public class MediaDetailsFragment extends Fragment {
         editMediaButton = layout.findViewById(R.id.button_edit_media);
         backButton = layout.findViewById(R.id.button_back);
         deleteButton = layout.findViewById(R.id.button_delete);
+        addToTombola = layout.findViewById(R.id.button_add_to_tombola);
+
+        tombolaSpinner = layout.findViewById(R.id.tombola_spinner);
 
         registerOnClickListener();
         registerObserver();
@@ -67,12 +81,16 @@ public class MediaDetailsFragment extends Fragment {
     }
 
     private void registerObserver() {
+
         mediaActivityViewModel.getSelectedMedia().observe(this, new SelectedMediaObserver());
+        tombolasActivityViewModel.getAllTombolas().observe(this, new TombolaListObserver());
     }
 
     private void registerOnClickListener() {
 
         editMediaButton.setOnClickListener((View v) -> mediaActivity.switchToCreationStepOne());
+
+        addToTombola.setOnClickListener((View view) -> saveToTombola());
 
         backButton.setOnClickListener((View v) -> mediaActivity.switchToMediaListStepTwo());
 
@@ -94,6 +112,18 @@ public class MediaDetailsFragment extends Fragment {
         mediaActivity.switchToMediaListStepTwo();
     }
 
+    private void saveToTombola() {
+
+        Tombola selectedTombola = (Tombola) tombolaSpinner.getSelectedItem();
+
+        selectedTombola.addMedia(mediaActivityViewModel.getSelectedMedia().getValue());
+
+        tombolasActivityViewModel.updateTombola(selectedTombola);
+
+        ToasterUtil.makeShortToast(Objects.requireNonNull(getActivity()), getContext(),
+                "Medium wurde zu Tombola {0} hinzugefügt.", selectedTombola.getName());
+    }
+
     private class SelectedMediaObserver implements Observer<Media> {
 
         @Override
@@ -105,6 +135,61 @@ public class MediaDetailsFragment extends Fragment {
             titleValue.setText(media.getTitle());
             typeValue.setText(media.getMediaType());
             createdAt.setText(DateUtil.formatDate(media.getCreationTimestamp()));
+        }
+    }
+
+    private class TombolaListObserver implements Observer<List<Tombola>> {
+
+        @Override
+        public void onChanged(List<Tombola> tombolaList) {
+
+            TombolaSpinnerItemAdapter tombolaArrayAdapter = new TombolaSpinnerItemAdapter(
+                    Objects.requireNonNull(getContext()), tombolaList);
+
+            tombolaSpinner.setAdapter(tombolaArrayAdapter);
+        }
+    }
+
+    private class TombolaSpinnerItemAdapter extends BaseAdapter {
+
+        private final Context context;
+        private final List<Tombola> tombolaList;
+
+        private final LayoutInflater inflater;
+
+        public TombolaSpinnerItemAdapter(Context context, List<Tombola> tombolaList) {
+
+            this.context = context;
+            this.tombolaList = tombolaList;
+
+            this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        public int getCount() {
+            return tombolaList.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return tombolaList.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+
+            View rowView = inflater.inflate(R.layout.tombola_spinner_item, viewGroup, false);
+
+            TextView subTextView = rowView.findViewById(R.id.text_view_content);
+
+            subTextView.setText(tombolaList.get(i).getName());
+
+            return rowView;
         }
     }
 }

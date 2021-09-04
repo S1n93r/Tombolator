@@ -162,7 +162,7 @@ public class TombolaDetailsFragment extends Fragment {
             tombolaViewModel.insertTombola(selectedTombola);
         });
 
-        editTombolaButton.setOnClickListener((View view) -> tombolasActivity.switchToCreationStepOne());
+        editTombolaButton.setOnClickListener((View view) -> tombolasActivity.switchToTombolEditingView());
 
         deleteButton.setOnClickListener((View view) -> {
 
@@ -192,16 +192,6 @@ public class TombolaDetailsFragment extends Fragment {
             tombolaTypeSpinner.setEnabled(false);
             tombolaTypeSpinner.setSelection(tombolaViewModel.getSelectedTombola().getValue().getType().ordinal());
             tombolaTypeSpinner.setEnabled(true);
-
-            for(Media media : tombola.getAllMedia()) {
-
-                TextView textView = (TextView) View.inflate(
-                        tombolasActivity.getApplicationContext(), R.layout.list_element, null);
-
-                textView.setText(media.toLabel());
-                textView.setId(media.getId().intValue());
-
-            }
         }
     }
 
