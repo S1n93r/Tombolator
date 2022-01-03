@@ -12,12 +12,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import com.example.tombolator.DateUtil;
 import com.example.tombolator.R;
-import com.example.tombolator.ToasterUtil;
 import com.example.tombolator.tombolas.Tombola;
 import com.example.tombolator.tombolas.TombolaListObserver;
 import com.example.tombolator.tombolas.TombolasActivityViewModel;
+import com.example.tombolator.utils.DateUtil;
+import com.example.tombolator.utils.ToasterUtil;
 
 import java.util.Objects;
 

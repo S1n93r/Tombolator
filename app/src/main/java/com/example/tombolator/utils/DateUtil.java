@@ -1,4 +1,4 @@
-package com.example.tombolator;
+package com.example.tombolator.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

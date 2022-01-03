@@ -11,8 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
-import com.example.tombolator.ToasterUtil;
 import com.example.tombolator.media.Media;
+import com.example.tombolator.utils.ToasterUtil;
 
 import java.util.ArrayList;
 import java.util.List;

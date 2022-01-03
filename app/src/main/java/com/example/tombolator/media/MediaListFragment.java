@@ -10,23 +10,19 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
-import com.example.tombolator.ToasterUtil;
-import com.example.tombolator.tombolas.Tombola;
-import com.example.tombolator.tombolas.TombolaListObserver;
 import com.example.tombolator.tombolas.TombolasActivityViewModel;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 public class MediaListFragment extends Fragment {
 
-    private static final int ELEMENTS_PER_PAGE = 5;
-    private final MutableLiveData<Integer> currentPage = new MutableLiveData<>(1);
+    private static final int ELEMENTS_PER_PAGE = 6;
 
-    private MediaActivity mediaActivity;
+    private final MutableLiveData<Integer> currentPage = new MutableLiveData<>(1);
     private final View.OnClickListener showDetailsListener = new ShowDetailsListener();
 
+    private MediaActivity mediaActivity;
     private MediaActivityViewModel mediaActivityViewModel;
     private TombolasActivityViewModel tombolasActivityViewModel;
 
@@ -34,13 +30,11 @@ public class MediaListFragment extends Fragment {
 
     private Spinner mediaTypesSpinner;
 
-    private Spinner tombolaSpinner;
-    private Button mediaBulkAddButton;
-
     private TextView pageNumberCurrent;
     private TextView pageNumberMax;
 
     private ImageView sortButton;
+
     private Button backButton;
     private Button nextPageButton;
     private Button previousPageButton;
@@ -50,6 +44,15 @@ public class MediaListFragment extends Fragment {
 
     public static MediaListFragment newInstance() {
         return new MediaListFragment();
+    }
+
+    private static String formatNumberFullDigitsLeadingZero(int number) {
+
+        int numberOfDigits = String.valueOf(number).length();
+
+        String numberFormat = "%0" + numberOfDigits + "d";
+
+        return String.format(Locale.getDefault(), numberFormat, number);
     }
 
     @Override
@@ -65,9 +68,6 @@ public class MediaListFragment extends Fragment {
         linearLayoutMedia = layout.findViewById(R.id.linear_layout_media);
 
         mediaTypesSpinner = layout.findViewById(R.id.spinner_media_types);
-
-        tombolaSpinner = layout.findViewById(R.id.tombola_spinner);
-        mediaBulkAddButton = layout.findViewById(R.id.media_bulk_add_to_tombola);
 
         pageNumberCurrent = layout.findViewById(R.id.label_page_number_current);
         pageNumberMax = layout.findViewById(R.id.label_page_number_total);
@@ -109,9 +109,6 @@ public class MediaListFragment extends Fragment {
         currentPage.observe(this, new PageNumberCurrentObserver());
 
         mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().observe(this, new PageNumberTotalObserver());
-
-        tombolasActivityViewModel.getAllTombolas().observe(this, new TombolaListObserver(
-                tombolaSpinner, getContext()));
     }
 
     private void registerOnClickListener() {
@@ -158,37 +155,6 @@ public class MediaListFragment extends Fragment {
 
             mediaActivity.switchToCreationStepOne();
         });
-
-        mediaBulkAddButton.setOnClickListener(view -> addMediaBulkToTombola());
-    }
-
-    private class MediaListObserver implements Observer<List<Media>> {
-
-        @Override
-        public void onChanged(List<Media> mediaList) {
-            showMediaOnCurrentPage(mediaList);
-        }
-    }
-
-    private class PageNumberCurrentObserver implements Observer<Integer> {
-
-        @Override
-        public void onChanged(Integer pageNumber) {
-
-            pageNumberCurrent.setText(formatNumberFullDigitsLeadingZero(pageNumber));
-            showMediaOnCurrentPage(mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().getValue());
-        }
-    }
-
-    private class PageNumberTotalObserver implements Observer<List<Media>> {
-
-        @Override
-        public void onChanged(List<Media> mediaList) {
-
-            int numberOfPages = MediaUtil.getTotalNumberOfPages(mediaList, ELEMENTS_PER_PAGE);
-
-            pageNumberMax.setText(formatNumberFullDigitsLeadingZero(numberOfPages));
-        }
     }
 
     private void showMediaOnCurrentPage (List<Media> mediaList) {
@@ -228,13 +194,33 @@ public class MediaListFragment extends Fragment {
         }
     }
 
-    private static String formatNumberFullDigitsLeadingZero(int number) {
+    private class MediaListObserver implements Observer<List<Media>> {
 
-        int numberOfDigits = String.valueOf(number).length();
+        @Override
+        public void onChanged(List<Media> mediaList) {
+            showMediaOnCurrentPage(mediaList);
+        }
+    }
 
-        String numberFormat = "%0" + numberOfDigits + "d";
+    private class PageNumberCurrentObserver implements Observer<Integer> {
 
-        return String.format(Locale.getDefault(), numberFormat, number);
+        @Override
+        public void onChanged(Integer pageNumber) {
+
+            pageNumberCurrent.setText(formatNumberFullDigitsLeadingZero(pageNumber));
+            showMediaOnCurrentPage(mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().getValue());
+        }
+    }
+
+    private class PageNumberTotalObserver implements Observer<List<Media>> {
+
+        @Override
+        public void onChanged(List<Media> mediaList) {
+
+            int numberOfPages = MediaUtil.getTotalNumberOfPages(mediaList, ELEMENTS_PER_PAGE);
+
+            pageNumberMax.setText(formatNumberFullDigitsLeadingZero(numberOfPages));
+        }
     }
 
     private class ShowDetailsListener implements View.OnClickListener {
@@ -267,24 +253,5 @@ public class MediaListFragment extends Fragment {
         public void onNothingSelected(AdapterView<?> adapterView) {
             /* TODO: When is this triggered? */
         }
-    }
-
-    private void addMediaBulkToTombola() {
-
-        Tombola selectedTombola = (Tombola) tombolaSpinner.getSelectedItem();
-
-        int mediaAddedCount = 0;
-
-        for(Media media : Objects.requireNonNull(
-                mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().getValue())) {
-
-            selectedTombola.addMedia(media);
-            mediaAddedCount++;
-        }
-
-        tombolasActivityViewModel.updateTombola(selectedTombola);
-
-        ToasterUtil.makeShortToast(Objects.requireNonNull(getActivity()), getContext(),
-                "{0} Medien wurden zu Tombola {1} hinzugefügt.", mediaAddedCount, selectedTombola.getName());
     }
 }

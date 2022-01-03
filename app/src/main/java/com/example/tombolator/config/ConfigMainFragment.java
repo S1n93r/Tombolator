@@ -10,14 +10,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
-import com.example.tombolator.DateUtil;
 import com.example.tombolator.R;
-import com.example.tombolator.ToasterUtil;
 import com.example.tombolator.TomboApplication;
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaDao;
 import com.example.tombolator.tombolas.Tombola;
 import com.example.tombolator.tombolas.TombolaDao;
+import com.example.tombolator.utils.DateUtil;
+import com.example.tombolator.utils.ToasterUtil;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

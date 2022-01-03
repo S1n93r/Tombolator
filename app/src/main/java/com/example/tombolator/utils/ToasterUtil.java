@@ -1,4 +1,4 @@
-package com.example.tombolator;
+package com.example.tombolator.utils;
 
 import android.app.Activity;
 import android.content.Context;
