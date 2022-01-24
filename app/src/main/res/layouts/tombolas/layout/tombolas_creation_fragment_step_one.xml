@@ -6,29 +6,21 @@
         android:background="@color/color_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".tombolas.TombolaCreationFragment">
+        tools:context=".tombolas.TombolaCreationFragmentStepOne">
 
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="300dp"
-            android:layout_height="400dp"
+    <EditText
+            android:fontFamily="@font/comic_sans_ms"
+            android:textSize="@dimen/font_size_labels"
+            android:layout_width="350dp"
+            android:layout_height="60dp"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/edit_text_name"
+            android:autofillHints="@string/label_name"
+            android:hint="@string/label_name"
             app:layout_constraintTop_toBottomOf="@+id/text_view_title"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="44dp"
-            app:layout_constraintEnd_toEndOf="parent">
-        <EditText
-                android:fontFamily="@font/comic_sans_ms"
-                android:textSize="@dimen/font_size_labels"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/edit_text_name"
-                android:autofillHints="@string/label_name"
-                android:hint="@string/label_name"
-                android:layout_marginBottom="20dp"
-        />
-    </LinearLayout>
+            android:layout_marginTop="32dp" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,7 +40,7 @@
             android:padding="25dp"
             android:layout_width="@dimen/button_width"
             android:layout_height="@dimen/button_height"
-            android:id="@+id/button_back"
+            android:id="@+id/back_button"
             android:background="@drawable/button_selector_purple"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="@dimen/font_size_s"
@@ -60,12 +52,12 @@
             app:layout_constraintHorizontal_bias="0.05"
     />
     <Button
-            android:text="@string/button_save"
+            android:text="@string/button_continue"
             android:drawableBottom="@drawable/ic_arrow_right_25"
             android:padding="25dp"
             android:layout_width="@dimen/button_width"
             android:layout_height="@dimen/button_height"
-            android:id="@+id/button_save"
+            android:id="@+id/continue_button"
             android:background="@drawable/button_selector_purple"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="@dimen/font_size_s"

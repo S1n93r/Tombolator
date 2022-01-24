@@ -17,20 +17,20 @@ import com.example.tombolator.media.Media;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TombolaCreationFragment extends Fragment {
+public class TombolaCreationFragmentStepOne extends Fragment {
 
     private TombolasActivity tombolasActivity;
     private TombolasActivityViewModel tombolasActivityViewModel;
 
     private EditText nameEditText;
 
-    private Button saveButton;
+    private Button continueButton;
     private Button backButton;
 
-    private TombolaCreationFragment() {}
+    private TombolaCreationFragmentStepOne() {}
 
-    public static TombolaCreationFragment newInstance() {
-        return new TombolaCreationFragment();
+    public static TombolaCreationFragmentStepOne newInstance() {
+        return new TombolaCreationFragmentStepOne();
     }
 
     @Nullable
@@ -41,12 +41,12 @@ public class TombolaCreationFragment extends Fragment {
         tombolasActivity = (TombolasActivity) getActivity();
         tombolasActivityViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
 
-        View layout = inflater.inflate(R.layout.tombolas_creation_fragment, container, false);
+        View layout = inflater.inflate(R.layout.tombolas_creation_fragment_step_one, container, false);
 
         nameEditText = layout.findViewById(R.id.edit_text_name);
 
-        backButton = layout.findViewById(R.id.button_back);
-        saveButton = layout.findViewById(R.id.button_save);
+        backButton = layout.findViewById(R.id.back_button);
+        continueButton = layout.findViewById(R.id.continue_button);
 
         setUpMediaTypeSpinner();
         registerOnClickListener();
@@ -83,30 +83,21 @@ public class TombolaCreationFragment extends Fragment {
             tombolasActivity.switchToTombolasMainView();
         });
 
-        saveButton.setOnClickListener(new SaveTombolaListener());
-    }
-
-    private class SaveTombolaListener implements View.OnClickListener {
-
-        @Override
-        public void onClick(View view) {
+        continueButton.setOnClickListener(v -> {
 
             if(tombolasActivityViewModel.getSelectedTombola().getValue() == null) {
-                /* TODO: Add log entry */
+                /* TODO: Create log entry... Like a nice carving. */
                 throw new NullPointerException();
             }
 
             Tombola selectedTombola = tombolasActivityViewModel.getSelectedTombola().getValue();
 
-            String name = nameEditText.getText() != null ? nameEditText.getText().toString() : "";
-            selectedTombola.setName(name);
-
+            /* TODO: Type should be asked by spinner. */
             selectedTombola.setType(Tombola.Type.REUSE);
+            selectedTombola.setName(nameEditText.getText().toString());
 
-            tombolasActivityViewModel.insertTombola(selectedTombola);
-
-            tombolasActivity.switchToTombolasMainView();
-        }
+            tombolasActivity.switchToCreationStepTwo();
+        });
     }
 
     private void resetForm() {

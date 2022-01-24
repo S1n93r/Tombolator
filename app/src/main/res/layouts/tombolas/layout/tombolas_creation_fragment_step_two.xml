@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_background"
-        tools:context=".media.MediaListFragment"
+        tools:context=".tombolas.TombolaCreationFragmentStepTwo"
 >
 
     <ImageView
@@ -94,7 +94,7 @@
             android:fontFamily="@font/comic_sans_ms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_media"
+            android:text="@string/title_new_Tombola"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -122,8 +122,8 @@
     <Button
             android:id="@+id/button_new_media"
             android:background="@drawable/button_selector_purple"
-            android:drawableBottom="@drawable/ic_add_35"
-            android:text="@string/button_new"
+            android:drawableBottom="@drawable/ic_floppy_disk_35"
+            android:text="@string/button_save"
             android:textSize="@dimen/font_size_s"
             android:fontFamily="@font/comic_sans_ms"
             android:layout_width="@dimen/button_width"

@@ -41,11 +41,11 @@ public class MediaDetailsFragment extends Fragment {
 
     private Spinner tombolaSpinner;
 
+    private MediaDetailsFragment(){}
+
     public static MediaDetailsFragment newInstance() {
         return new MediaDetailsFragment();
     }
-
-    private MediaDetailsFragment(){}
 
     @Nullable
     @Override
@@ -66,7 +66,7 @@ public class MediaDetailsFragment extends Fragment {
         createdAt = layout.findViewById(R.id.created_at_value);
 
         editMediaButton = layout.findViewById(R.id.button_edit_media);
-        backButton = layout.findViewById(R.id.button_back);
+        backButton = layout.findViewById(R.id.back_button);
         deleteButton = layout.findViewById(R.id.button_delete);
         addToTombola = layout.findViewById(R.id.button_add_to_tombola);
 

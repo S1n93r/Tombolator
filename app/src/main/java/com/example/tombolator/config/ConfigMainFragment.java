@@ -32,16 +32,14 @@ public class ConfigMainFragment extends Fragment {
     private static final String FILE_EXTENSION = ".csv";
     private static final String FILE_NAME_EXPORT_MEDIA = "export_media";
     private static final String FILE_NAME_EXPORT_TOMBOLAS = "export_tombolas";
+    private TextView exportVersionTextView;
+    private Button exportDatabaseButton;
+    private Button importDatabaseButton;
+    private Button backButton;
 
     public static ConfigMainFragment newInstance() {
         return new ConfigMainFragment();
     }
-
-    private TextView exportVersionTextView;
-
-    private Button exportDatabaseButton;
-    private Button importDatabaseButton;
-    private Button backButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,7 +51,7 @@ public class ConfigMainFragment extends Fragment {
 
         exportDatabaseButton = layout.findViewById(R.id.button_export);
         importDatabaseButton = layout.findViewById(R.id.button_import);
-        backButton = layout.findViewById(R.id.button_back);
+        backButton = layout.findViewById(R.id.back_button);
 
         registerOnClickListener();
 

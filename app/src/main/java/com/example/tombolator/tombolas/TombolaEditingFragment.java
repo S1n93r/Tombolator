@@ -51,8 +51,8 @@ public class TombolaEditingFragment extends Fragment {
 
         nameValue = layout.findViewById(R.id.name_value);
 
-        backButton = layout.findViewById(R.id.button_back);
-        saveButton = layout.findViewById(R.id.button_save);
+        backButton = layout.findViewById(R.id.back_button);
+        saveButton = layout.findViewById(R.id.button_contiue);
 
         registerObserver();
         registerOnClickListener();
@@ -99,17 +99,6 @@ public class TombolaEditingFragment extends Fragment {
         });
     }
 
-    private class SelectedTombolaObserver implements Observer<Tombola> {
-
-        @Override
-        public void onChanged(Tombola tombola) {
-
-            nameValue.setText(tombola.getName());
-
-            refreshMediaList();
-        }
-    }
-
     private void refreshMediaList() {
 
         Tombola selectedTombola = tombolaViewModel.getSelectedTombola().getValue();
@@ -132,6 +121,17 @@ public class TombolaEditingFragment extends Fragment {
             subImageView.setOnClickListener(new RemoveMediaFromTombolaListener(media));
 
             availableTombolas.addView(listElement);
+        }
+    }
+
+    private class SelectedTombolaObserver implements Observer<Tombola> {
+
+        @Override
+        public void onChanged(Tombola tombola) {
+
+            nameValue.setText(tombola.getName());
+
+            refreshMediaList();
         }
     }
 

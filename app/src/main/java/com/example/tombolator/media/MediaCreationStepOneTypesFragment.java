@@ -49,7 +49,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
         contentTypeTextView = layout.findViewById(R.id.text_view_content_type);
 
         continueButton = layout.findViewById(R.id.button_continue);
-        backButton = layout.findViewById(R.id.button_back);
+        backButton = layout.findViewById(R.id.back_button);
 
         setUpMediaTypeSpinner();
         setUpContentTypeSpinner();

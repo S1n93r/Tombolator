@@ -67,7 +67,7 @@ public class TombolaDetailsFragment extends Fragment {
 
         tombolaTypeSpinner = layout.findViewById(R.id.spinner_tombola_type);
 
-        backButton = layout.findViewById(R.id.button_back);
+        backButton = layout.findViewById(R.id.back_button);
         drawButton = layout.findViewById(R.id.button_draw);
         editTombolaButton = layout.findViewById(R.id.button_edit_tombola);
         deleteButton = layout.findViewById(R.id.button_delete);
@@ -127,9 +127,9 @@ public class TombolaDetailsFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        backButton.setOnClickListener(v -> tombolasActivity.switchToTombolasMainView());
+        backButton.setOnClickListener((View view) -> tombolasActivity.switchToTombolasMainView());
 
-        drawButton.setOnClickListener(v -> {
+        drawButton.setOnClickListener((View view) -> {
 
             Tombola selectedTombola = tombolaViewModel.getSelectedTombola().getValue();
 
@@ -162,7 +162,7 @@ public class TombolaDetailsFragment extends Fragment {
             tombolaViewModel.insertTombola(selectedTombola);
         });
 
-        editTombolaButton.setOnClickListener((View view) -> tombolasActivity.switchToTombolEditingView());
+        editTombolaButton.setOnClickListener((View view) -> tombolasActivity.switchToCreationStepOne());
 
         deleteButton.setOnClickListener((View view) -> {
 
@@ -171,6 +171,13 @@ public class TombolaDetailsFragment extends Fragment {
             tombolaViewModel.deleteTombola(tombola);
             tombolasActivity.switchToTombolasMainView();
         });
+    }
+
+    private void updateCounters(Tombola tombola) {
+
+        numberOfMediaAll.setText(String.valueOf(tombola.getAllMedia().size()));
+        numberOfMediaAvailable.setText(String.valueOf(tombola.getMediaAvailable().size()));
+        numberOfMediaDrawn.setText(String.valueOf(tombola.getMediaDrawn().size()));
     }
 
     private class SelectedTombolaObserver implements Observer<Tombola> {
@@ -193,12 +200,5 @@ public class TombolaDetailsFragment extends Fragment {
             tombolaTypeSpinner.setSelection(tombolaViewModel.getSelectedTombola().getValue().getType().ordinal());
             tombolaTypeSpinner.setEnabled(true);
         }
-    }
-
-    private void updateCounters(Tombola tombola) {
-
-        numberOfMediaAll.setText(String.valueOf(tombola.getAllMedia().size()));
-        numberOfMediaAvailable.setText(String.valueOf(tombola.getMediaAvailable().size()));
-        numberOfMediaDrawn.setText(String.valueOf(tombola.getMediaDrawn().size()));
     }
 }

@@ -87,7 +87,7 @@
             android:padding="25dp"
             android:layout_width="@dimen/button_width"
             android:layout_height="@dimen/button_height"
-            android:id="@+id/button_back"
+            android:id="@+id/back_button"
             android:background="@drawable/button_selector_purple"
             android:fontFamily="@font/comic_sans_ms"
             android:textSize="@dimen/font_size_s"

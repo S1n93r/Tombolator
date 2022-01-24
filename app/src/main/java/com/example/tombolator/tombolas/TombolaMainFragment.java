@@ -17,21 +17,18 @@ import java.util.List;
 public class TombolaMainFragment extends Fragment {
 
     private TombolasActivity tombolasActivity;
-
-    public static TombolaMainFragment newInstance() {
-        return new TombolaMainFragment();
-    }
+    private TombolasActivityViewModel tombolasActivityViewModel;
+    private LinearLayout availableTombolas;
+    private Button backButton;
+    private Button newTombolaButton;
 
     private TombolaMainFragment() {
 
     }
 
-    private TombolasActivityViewModel tombolasActivityViewModel;
-
-    private LinearLayout availableTombolas;
-
-    private Button backButton;
-    private Button newTombolaButton;
+    public static TombolaMainFragment newInstance() {
+        return new TombolaMainFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,7 +41,7 @@ public class TombolaMainFragment extends Fragment {
 
         availableTombolas = layout.findViewById(R.id.linear_layout_tombolas);
 
-        backButton = layout.findViewById(R.id.button_back);
+        backButton = layout.findViewById(R.id.back_button);
         newTombolaButton = layout.findViewById(R.id.button_new_tombola);
 
         registerObserver();
@@ -63,7 +60,7 @@ public class TombolaMainFragment extends Fragment {
         newTombolaButton.setOnClickListener(view -> {
 
             tombolasActivityViewModel.selectTombola(new Tombola());
-            tombolasActivity.switchToCreation();
+            tombolasActivity.switchToCreationStepOne();
         });
     }
 

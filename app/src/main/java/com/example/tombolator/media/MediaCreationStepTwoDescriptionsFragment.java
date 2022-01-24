@@ -47,8 +47,8 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
         editTextNumber = layout.findViewById(R.id.edit_text_number);
         editTextAuthor = layout.findViewById(R.id.edit_text_author);
 
-        backButton = layout.findViewById(R.id.button_back);
-        saveButton = layout.findViewById(R.id.button_save);
+        backButton = layout.findViewById(R.id.back_button);
+        saveButton = layout.findViewById(R.id.button_contiue);
 
         registerOnClickListener();
         setVisibilitiesByMediaType();
