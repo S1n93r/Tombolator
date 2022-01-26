@@ -10,7 +10,6 @@ public class TombolasActivity extends AppCompatActivity {
     private TombolaCreationFragmentStepOne tombolaCreationFragmentStepOne;
     private TombolaCreationFragmentStepTwo tombolaCreationFragmentStepTwo;
     private TombolaDetailsFragment tombolaDetailsFragment;
-    private TombolaEditingFragment tombolaEditingFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +20,6 @@ public class TombolasActivity extends AppCompatActivity {
         tombolaCreationFragmentStepOne = TombolaCreationFragmentStepOne.newInstance();
         tombolaCreationFragmentStepTwo = TombolaCreationFragmentStepTwo.newInstance();
         tombolaDetailsFragment = TombolaDetailsFragment.newInstance();
-        tombolaEditingFragment = TombolaEditingFragment.newInstance();
 
         setContentView(R.layout.tombolas_activity);
         if (savedInstanceState == null) {
@@ -54,13 +52,6 @@ public class TombolasActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, tombolaDetailsFragment)
-                .commitNow();
-    }
-
-    protected void switchToTombolEditingView() {
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, tombolaEditingFragment)
                 .commitNow();
     }
 }

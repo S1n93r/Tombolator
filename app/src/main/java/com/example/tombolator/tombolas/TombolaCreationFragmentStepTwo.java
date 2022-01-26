@@ -1,5 +1,7 @@
 package com.example.tombolator.tombolas;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -201,17 +203,33 @@ public class TombolaCreationFragmentStepTwo extends Fragment {
 
             String text = " " + media.toLabel();
 
-            for(Media mediaInTombola : tombolasActivityViewModel.getSelectedTombola().getValue().getAllMedia())
-                if(id == mediaInTombola.getId())
-                    text += " <<<";
+            Typeface defaultTypeface = textView.getTypeface();
+            int defaultTextColor = textView.getCurrentTextColor();
+
+            for(Media mediaInTombola : tombolasActivityViewModel.getSelectedTombola().getValue().getAllMedia()) {
+
+                if(id == mediaInTombola.getId()) {
+
+                    textView.setTextColor(Color.parseColor("#3700B3"));
+                    textView.setTypeface(defaultTypeface, Typeface.BOLD);
+                }
+            }
 
             textView.setText(text);
             textView.setOnClickListener((View view) -> {
 
-                if(tombolasActivityViewModel.getSelectedTombola().getValue().getAllMedia().contains(media))
+                if(tombolasActivityViewModel.getSelectedTombola().getValue().getAllMedia().contains(media)) {
+
                     tombolasActivityViewModel.getSelectedTombola().getValue().removeMedia(media);
-                else
+                    textView.setTextColor(defaultTextColor);
+                    textView.setTypeface(defaultTypeface);
+                } else {
+
                     tombolasActivityViewModel.getSelectedTombola().getValue().addMedia(media);
+                    textView.setTextColor(Color.parseColor("#3700B3"));
+                    textView.setTypeface(defaultTypeface, Typeface.BOLD);
+                }
+
             });
             textView.setId((int) id);
 
