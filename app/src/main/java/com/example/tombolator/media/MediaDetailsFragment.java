@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
+import com.example.tombolator.commons.CustomAlertDialog;
 import com.example.tombolator.tombolas.TombolasActivityViewModel;
 import com.example.tombolator.utils.DateUtil;
 
@@ -76,7 +77,40 @@ public class MediaDetailsFragment extends Fragment {
 
         backButton.setOnClickListener((View v) -> mediaActivity.switchToMediaListStepTwo());
 
-        deleteButton.setOnClickListener((View v) -> deleteMedia());
+        deleteButton.setOnClickListener((View v) -> {
+
+            if(getActivity() == null) {
+                /* TODO: Throw log entry. */
+                throw new NullPointerException();
+            }
+
+            Media selectedMedia = mediaActivityViewModel.getSelectedMedia().getValue();
+
+            CustomAlertDialog customAlert = new CustomAlertDialog(getActivity());
+
+            customAlert.setTitle("Medium löschen");
+            customAlert.setMessage("Möchtest du das Medium \"" + selectedMedia.getName() + " - "
+                    + selectedMedia.getTitle() + "\" wirklich löschen?");
+
+            customAlert.setOnAccepted(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    deleteMedia();
+                    customAlert.dismiss();
+                }
+            });
+
+            customAlert.setOnDeny(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    customAlert.dismiss();
+                }
+            });
+
+            customAlert.show();
+        });
     }
 
     private void deleteMedia() {

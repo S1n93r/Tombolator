@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
+import com.example.tombolator.commons.CustomAlertDialog;
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaActivityViewModel;
 import com.example.tombolator.tombolas.drawing.DrawDialog;
@@ -166,10 +167,37 @@ public class TombolaDetailsFragment extends Fragment {
 
         deleteButton.setOnClickListener((View view) -> {
 
+            if(getActivity() == null) {
+                /* TODO: Throw log entry. */
+                throw new NullPointerException();
+            }
+
             Tombola tombola = tombolaViewModel.getSelectedTombola().getValue();
 
-            tombolaViewModel.deleteTombola(tombola);
-            tombolasActivity.switchToTombolasMainView();
+            CustomAlertDialog customAlert = new CustomAlertDialog(getActivity());
+
+            customAlert.setTitle("Tombola löschen");
+            customAlert.setMessage("Möchtest du die Tombola \"" + tombola.getName() + "\" wirklich löschen?");
+
+            customAlert.setOnAccepted(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    tombolaViewModel.deleteTombola(tombola);
+                    tombolasActivity.switchToTombolasMainView();
+                    customAlert.dismiss();
+                }
+            });
+
+            customAlert.setOnDeny(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    customAlert.dismiss();
+                }
+            });
+
+            customAlert.show();
         });
     }
 
