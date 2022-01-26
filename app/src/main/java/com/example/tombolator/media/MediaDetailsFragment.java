@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,13 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
-import com.example.tombolator.tombolas.Tombola;
-import com.example.tombolator.tombolas.TombolaListObserver;
 import com.example.tombolator.tombolas.TombolasActivityViewModel;
 import com.example.tombolator.utils.DateUtil;
-import com.example.tombolator.utils.ToasterUtil;
-
-import java.util.Objects;
 
 public class MediaDetailsFragment extends Fragment {
 
@@ -37,9 +31,6 @@ public class MediaDetailsFragment extends Fragment {
     private Button editMediaButton;
     private Button backButton;
     private Button deleteButton;
-    private Button addToTombola;
-
-    private Spinner tombolaSpinner;
 
     private MediaDetailsFragment(){}
 
@@ -68,9 +59,6 @@ public class MediaDetailsFragment extends Fragment {
         editMediaButton = layout.findViewById(R.id.button_edit_media);
         backButton = layout.findViewById(R.id.back_button);
         deleteButton = layout.findViewById(R.id.button_delete);
-        addToTombola = layout.findViewById(R.id.button_add_to_tombola);
-
-        tombolaSpinner = layout.findViewById(R.id.tombola_spinner);
 
         registerOnClickListener();
         registerObserver();
@@ -79,17 +67,12 @@ public class MediaDetailsFragment extends Fragment {
     }
 
     private void registerObserver() {
-
         mediaActivityViewModel.getSelectedMedia().observe(this, new SelectedMediaObserver());
-        tombolasActivityViewModel.getAllTombolas().observe(this, new TombolaListObserver(
-                tombolaSpinner, getContext()));
     }
 
     private void registerOnClickListener() {
 
         editMediaButton.setOnClickListener((View v) -> mediaActivity.switchToCreationStepOne());
-
-        addToTombola.setOnClickListener((View view) -> addMediaToTombola());
 
         backButton.setOnClickListener((View v) -> mediaActivity.switchToMediaListStepTwo());
 
@@ -109,20 +92,6 @@ public class MediaDetailsFragment extends Fragment {
         mediaActivityViewModel.delete(media);
 
         mediaActivity.switchToMediaListStepTwo();
-    }
-
-    private void addMediaToTombola() {
-
-        Tombola selectedTombola = (Tombola) tombolaSpinner.getSelectedItem();
-        Media selectedMedia = mediaActivityViewModel.getSelectedMedia().getValue();
-
-        selectedTombola.addMedia(selectedMedia);
-
-        tombolasActivityViewModel.updateTombola(selectedTombola);
-
-        ToasterUtil.makeShortToast(Objects.requireNonNull(getActivity()), getContext(),
-                "Medium {0} wurde zu Tombola {1} hinzugefügt.", selectedMedia.getName(),
-                selectedTombola.getName());
     }
 
     private class SelectedMediaObserver implements Observer<Media> {
