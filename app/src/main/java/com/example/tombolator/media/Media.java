@@ -7,6 +7,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,29 +17,57 @@ import java.util.List;
 @Entity
 public class Media implements Parcelable {
 
+    public static final Creator<Media> CREATOR = new Creator<Media>() {
+        @Override
+        public Media createFromParcel(Parcel in) {
+            return new Media(in);
+        }
+
+        @Override
+        public Media[] newArray(int size) {
+            return new Media[size];
+        }
+    };
+
     @ColumnInfo
     @PrimaryKey
+    @Getter
+    @Setter
     private Long id;
 
     @ColumnInfo
+    @Getter
+    @Setter
     private long creationTimestamp;
 
     @ColumnInfo
+    @Getter
+    @Setter
     private String name;
 
     @ColumnInfo
+    @Getter
+    @Setter
     private String title;
 
     @ColumnInfo
+    @Getter
+    @Setter
     private int number;
 
     @ColumnInfo
+    @Getter
+    @Setter
     private String author;
 
     @ColumnInfo
+    @Getter
+    @Setter
     private String mediaType;
 
     @ColumnInfo
+    @Getter
+    @Setter
     private String contentType;
 
     @Ignore
@@ -68,18 +98,6 @@ public class Media implements Parcelable {
         number = in.readInt();
         mediaType = in.readString();
     }
-
-    public static final Creator<Media> CREATOR = new Creator<Media>() {
-        @Override
-        public Media createFromParcel(Parcel in) {
-            return new Media(in);
-        }
-
-        @Override
-        public Media[] newArray(int size) {
-            return new Media[size];
-        }
-    };
 
     @NonNull
     @Override
@@ -206,69 +224,5 @@ public class Media implements Parcelable {
                 case SERIES: return 2;
             }
         }
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public long getCreationTimestamp() {
-        return creationTimestamp;
-    }
-
-    public void setCreationTimestamp(long creationTimestamp) {
-        this.creationTimestamp = creationTimestamp;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public String getMediaType() {
-        return mediaType;
-    }
-
-    public void setMediaType(String mediaType) {
-        this.mediaType = mediaType;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
     }
 }

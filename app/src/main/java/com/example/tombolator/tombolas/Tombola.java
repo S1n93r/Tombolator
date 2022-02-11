@@ -5,6 +5,8 @@ import android.os.Parcelable;
 import androidx.room.*;
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaListConverter;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,26 +16,50 @@ import java.util.function.Predicate;
 @Entity
 public class Tombola implements Parcelable {
 
+    public static final Creator<Tombola> CREATOR = new Creator<Tombola>() {
+        @Override
+        public Tombola createFromParcel(Parcel in) {
+            return new Tombola(in);
+        }
+
+        @Override
+        public Tombola[] newArray(int size) {
+            return new Tombola[size];
+        }
+    };
+
     @ColumnInfo
     @PrimaryKey
+    @Getter
+    @Setter
     private Long id;
 
     @ColumnInfo
+    @Getter
+    @Setter
     private long creationTimestamp;
 
     @ColumnInfo
+    @Getter
+    @Setter
     private String name;
 
     @TypeConverters({com.example.tombolator.tombolas.TombolaTypeConverter.class})
     @ColumnInfo
+    @Getter
+    @Setter
     private Type type;
 
     @TypeConverters({MediaListConverter.class})
     @ColumnInfo
+    @Getter
+    @Setter
     private List<Media> mediaAvailable = new ArrayList<>();
 
     @TypeConverters({MediaListConverter.class})
     @ColumnInfo
+    @Getter
+    @Setter
     private List<Media> mediaDrawn = new ArrayList<>();
 
     @Ignore
@@ -57,18 +83,6 @@ public class Tombola implements Parcelable {
         creationTimestamp = in.readLong();
         name = in.readString();
     }
-
-    public static final Creator<Tombola> CREATOR = new Creator<Tombola>() {
-        @Override
-        public Tombola createFromParcel(Parcel in) {
-            return new Tombola(in);
-        }
-
-        @Override
-        public Tombola[] newArray(int size) {
-            return new Tombola[size];
-        }
-    };
 
     @Override
     public int describeContents() {
@@ -157,54 +171,6 @@ public class Tombola implements Parcelable {
 
     public String toLabel() {
         return name + " (" + getAllMedia().size() + " Medien)";
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public long getCreationTimestamp() {
-        return creationTimestamp;
-    }
-
-    public void setCreationTimestamp(long creationTimestamp) {
-        this.creationTimestamp = creationTimestamp;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Media> getMediaAvailable() {
-        return mediaAvailable;
-    }
-
-    public void setMediaAvailable(List<Media> mediaAvailable) {
-        this.mediaAvailable = mediaAvailable;
-    }
-
-    public List<Media> getMediaDrawn() {
-        return mediaDrawn;
-    }
-
-    public void setMediaDrawn(List<Media> mediaDrawn) {
-        this.mediaDrawn = mediaDrawn;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
     }
 
     public List<Media> getAllMedia() {
