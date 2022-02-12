@@ -6,12 +6,12 @@ import com.example.tombolator.R;
 
 public class MediaActivity extends AppCompatActivity {
 
+    Bundle savedInstanceState;
     private MediaListFragment mediaListFragment;
+    private MediaListFragment2 mediaListFragment2;
     private MediaCreationStepOneTypesFragment mediaCreationStepOneTypesFragment;
     private MediaCreationStepTwoDescriptionsFragment mediaCreationStepTwoDescriptionsFragment;
     private MediaDetailsFragment mediaDetailsFragment;
-
-    Bundle savedInstanceState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +19,7 @@ public class MediaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         mediaListFragment = MediaListFragment.newInstance();
+        mediaListFragment2 = MediaListFragment2.newInstance();
 
         mediaDetailsFragment = MediaDetailsFragment.newInstance();
         mediaCreationStepOneTypesFragment = MediaCreationStepOneTypesFragment.newInstance();
@@ -48,7 +49,7 @@ public class MediaActivity extends AppCompatActivity {
     protected void switchToMediaListStepTwo() {
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, mediaListFragment)
+                .replace(R.id.container, mediaListFragment2)
                 .commitNow();
     }
 
