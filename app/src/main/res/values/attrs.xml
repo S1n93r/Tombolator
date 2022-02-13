@@ -3,6 +3,8 @@
     <declare-styleable name="PaginatedMediaList">
         <attr name="title" format="string" />
         <attr name="elementsPerPage" format="integer" />
+        <attr name="processButtonText" format="string" />
+        <attr name="processButtonIcon" format="reference" />
     </declare-styleable>
 
 </resources>

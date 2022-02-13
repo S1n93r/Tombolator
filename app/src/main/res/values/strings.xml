@@ -2,6 +2,7 @@
 <resources>
     <!-- PaginatedMediaList -->
     <string name="paginated_media_list_title_placeholder">[Title]</string>
+    <string name="process_button_text">[Text]</string>
     <!-- Common -->
     <string name="app_mame">Tombolator</string>
     <string name="icon_media_type_content_description">Medientyp-Icon</string>

@@ -2,6 +2,7 @@ package com.example.tombolator.commons;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,10 +34,15 @@ public class PaginatedMediaList extends ConstraintLayout {
     private static final int DEFAULT_ELEMENTS_PER_PAGE = 5;
 
     private static final String FILTER_ALL_CATEGORIES = "[show all categories]";
+
     private final MutableLiveData<Integer> currentPage = new MutableLiveData<>(1);
+
     private final MutableLiveData<String> selectedMediaType = new MutableLiveData<>(FILTER_ALL_CATEGORIES);
+
     private final MutableLiveData<List<Media>> filteredMediaList = new MutableLiveData<>(new ArrayList<>());
+
     private int currentSortingMode = SORTING_NONE;
+
     private boolean isConfigured = false;
 
     private LiveData<List<Media>> mediaList;
@@ -55,7 +61,8 @@ public class PaginatedMediaList extends ConstraintLayout {
     private Button previousPageButton;
 
     private Button backButton;
-    private Button newMediaButton;
+
+    private Button processMediaListButton;
 
     private int elementsPerPage;
 
@@ -106,7 +113,7 @@ public class PaginatedMediaList extends ConstraintLayout {
         backButton = view.findViewById(R.id.back_button);
         nextPageButton = view.findViewById(R.id.button_next_page);
         previousPageButton = view.findViewById(R.id.button_previous_page);
-        newMediaButton = view.findViewById(R.id.button_new_media);
+        processMediaListButton = view.findViewById(R.id.button_process_media_list);
 
         handleAttributes(context, attrs);
 
@@ -122,6 +129,11 @@ public class PaginatedMediaList extends ConstraintLayout {
 
             titleTextView.setText(a.getString(R.styleable.PaginatedMediaList_title));
             elementsPerPage = a.getInteger(R.styleable.PaginatedMediaList_elementsPerPage, DEFAULT_ELEMENTS_PER_PAGE);
+            processMediaListButton.setText(a.getString(R.styleable.PaginatedMediaList_processButtonText));
+
+            Drawable drawable = a.getDrawable(R.styleable.PaginatedMediaList_processButtonIcon);
+
+            processMediaListButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawable);
 
             a.recycle();
         }

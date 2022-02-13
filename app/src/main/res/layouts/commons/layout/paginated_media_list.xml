@@ -121,10 +121,10 @@
             android:layout_marginBottom="12dp"
     />
     <Button
-            android:id="@+id/button_new_media"
+            android:id="@+id/button_process_media_list"
             android:background="@drawable/button_selector_purple"
             android:drawableBottom="@drawable/ic_add_35"
-            android:text="@string/button_new"
+            android:text="@string/process_button_text"
             android:textSize="@dimen/font_size_s"
             android:fontFamily="@font/comic_sans_ms"
             android:layout_width="@dimen/button_width"
