@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
@@ -35,8 +36,24 @@ public class MediaListFragment2 extends Fragment {
         /* TODO: Here the back button of the creation step is currently hard coded to return to this view. This
             should be configurable when using the creation fragment. */
         paginatedMediaList.configureView(this, mediaActivityViewModel.getAllMediaLiveData(),
-                v -> mediaActivity.finish(), v -> mediaActivity.switchToCreationStepOne());
+                v -> mediaActivity.finish(), v -> mediaActivity.switchToCreationStepOne(), new ShowDetailsListener());
 
         return view;
+    }
+
+    private class ShowDetailsListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+
+            /* TODO: Here the back button of the details fragment is currently hard coded to return to this view.
+                This should be configurable when using the details step. OR BETTER: Make details fragment part of
+                paginated media list component. */
+            TextView textView = (TextView) view;
+            long mediaId = textView.getId();
+            mediaActivityViewModel.selectMedia(mediaId);
+
+            mediaActivity.switchToMediaDetailsView();
+        }
     }
 }

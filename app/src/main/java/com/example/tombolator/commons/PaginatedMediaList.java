@@ -68,6 +68,7 @@ public class PaginatedMediaList extends ConstraintLayout {
 
     private OnClickListener backButtonListener;
     private OnClickListener processMediaListButtonListener;
+    private OnClickListener mediaEntryListener;
 
     public PaginatedMediaList(@NonNull Context context) {
 
@@ -84,12 +85,14 @@ public class PaginatedMediaList extends ConstraintLayout {
     }
 
     public void configureView(LifecycleOwner lifecycleOwner, LiveData<List<Media>> mediaList,
-                              OnClickListener backButtonListener, OnClickListener processMediaListButtonListener) {
+                              OnClickListener backButtonListener, OnClickListener processMediaListButtonListener,
+                              OnClickListener mediaEntryListener) {
 
         this.lifecycleOwner = lifecycleOwner;
         this.mediaList = mediaList;
         this.backButtonListener = backButtonListener;
         this.processMediaListButtonListener = processMediaListButtonListener;
+        this.mediaEntryListener = mediaEntryListener;
 
         isConfigured = true;
 
@@ -260,6 +263,8 @@ public class PaginatedMediaList extends ConstraintLayout {
 
             textView.setText(text);
             textView.setId((int) id);
+
+            textView.setOnClickListener(mediaEntryListener);
 
             textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
                     MediaUtil.getMediaTypeIcon(media), 0, 0, 0);
