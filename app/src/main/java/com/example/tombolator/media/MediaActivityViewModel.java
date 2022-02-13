@@ -153,35 +153,14 @@ public class MediaActivityViewModel extends AndroidViewModel {
         allMediaFilteredAndSortedLiveData.getValue().addAll(filteredCollection);
     }
 
-    private static class MediaTypeFilterPredicate implements Predicate<Media> {
-
-        private final String mediaType;
-
-        public MediaTypeFilterPredicate(String mediaType) {
-            this.mediaType = mediaType;
-        }
-
-        @Override
-        public boolean apply(@NullableDecl Media media) {
-
-            if (media == null) {
-                /* TODO: Add error log here */
-                throw new NullPointerException();
-            }
-
-            if(mediaType.equals(FILTER_ALL_CATEGORIES))
-                return true;
-
-            return mediaType.equals(media.getMediaType());
-        }
-    }
-
     private void applySorting() {
 
         if(allMediaFilteredAndSortedLiveData.getValue() == null) {
             /* TODO: Add log entry. */
             throw new NullPointerException();
         }
+
+        allMediaFilteredAndSortedLiveData.getValue().sort(new MediaComparator());
 
         switch(currentSortingMode) {
 
@@ -222,6 +201,45 @@ public class MediaActivityViewModel extends AndroidViewModel {
         tomboRepository.deleteAllMedia();
     }
 
+    public MutableLiveData<Media> getSelectedMedia() {
+        return selectedMedia;
+    }
+
+    public LiveData<List<Media>> getAllMediaLiveData() {
+        return allMediaLiveData;
+    }
+
+    public MutableLiveData<List<Media>> getAllMediaFilteredAndSortedLiveData() {
+        return allMediaFilteredAndSortedLiveData;
+    }
+
+    public MutableLiveData<String> getSelectedMediaType() {
+        return selectedMediaType;
+    }
+
+    private static class MediaTypeFilterPredicate implements Predicate<Media> {
+
+        private final String mediaType;
+
+        public MediaTypeFilterPredicate(String mediaType) {
+            this.mediaType = mediaType;
+        }
+
+        @Override
+        public boolean apply(@NullableDecl Media media) {
+
+            if (media == null) {
+                /* TODO: Add error log here */
+                throw new NullPointerException();
+            }
+
+            if(mediaType.equals(FILTER_ALL_CATEGORIES))
+                return true;
+
+            return mediaType.equals(media.getMediaType());
+        }
+    }
+
     private static class MediaComparator implements Comparator<Media> {
 
         @Override
@@ -240,21 +258,5 @@ public class MediaActivityViewModel extends AndroidViewModel {
         public void onChanged(List<Media> mediaList) {
             refreshFilteredAndSortedMediaLiveData();
         }
-    }
-
-    public MutableLiveData<Media> getSelectedMedia() {
-        return selectedMedia;
-    }
-
-    public LiveData<List<Media>> getAllMediaLiveData() {
-        return allMediaLiveData;
-    }
-
-    public MutableLiveData<List<Media>> getAllMediaFilteredAndSortedLiveData() {
-        return allMediaFilteredAndSortedLiveData;
-    }
-
-    public MutableLiveData<String> getSelectedMediaType() {
-        return selectedMediaType;
     }
 }

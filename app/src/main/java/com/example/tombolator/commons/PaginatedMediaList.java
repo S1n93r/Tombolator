@@ -21,20 +21,22 @@ import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 public class PaginatedMediaList extends ConstraintLayout {
 
+    private static final int SORTING_NONE = 0;
+    private static final int SORTING_REGULAR = 1;
+    private static final int SORTING_REVERSED = 2;
+
     private static final int DEFAULT_ELEMENTS_PER_PAGE = 5;
 
     private static final String FILTER_ALL_CATEGORIES = "[show all categories]";
-
     private final MutableLiveData<Integer> currentPage = new MutableLiveData<>(1);
-
     private final MutableLiveData<String> selectedMediaType = new MutableLiveData<>(FILTER_ALL_CATEGORIES);
-
     private final MutableLiveData<List<Media>> filteredMediaList = new MutableLiveData<>(new ArrayList<>());
-
+    private int currentSortingMode = SORTING_NONE;
     private boolean isConfigured = false;
 
     private LiveData<List<Media>> mediaList;
@@ -77,6 +79,7 @@ public class PaginatedMediaList extends ConstraintLayout {
 
         this.lifecycleOwner = lifecycleOwner;
         this.mediaList = mediaList;
+        this.backButtonListener = backButtonListener;
 
         isConfigured = true;
 
@@ -203,6 +206,8 @@ public class PaginatedMediaList extends ConstraintLayout {
 
             currentPage.setValue(currentPage.getValue() - 1);
         });
+
+        sortButton.setOnClickListener(v -> toggleSorting());
     }
 
     private void checkConfiguration() {
@@ -246,6 +251,51 @@ public class PaginatedMediaList extends ConstraintLayout {
         }
     }
 
+    private void toggleSorting() {
+
+        switch(currentSortingMode) {
+
+            case SORTING_NONE:
+                currentSortingMode = SORTING_REGULAR;
+                break;
+            case SORTING_REGULAR:
+                currentSortingMode = SORTING_REVERSED;
+                break;
+            case SORTING_REVERSED:
+            default:
+                currentSortingMode = SORTING_NONE;
+        }
+
+        applySorting();
+    }
+
+    private void applySorting() {
+
+        if(filteredMediaList.getValue() == null) {
+            /* TODO: Add log entry. */
+            throw new NullPointerException();
+        }
+
+        filteredMediaList.getValue().sort(new MediaComparator());
+
+        switch(currentSortingMode) {
+
+            case SORTING_REGULAR:
+                filteredMediaList.getValue().sort(new MediaComparator());
+                break;
+
+            case SORTING_REVERSED:
+                filteredMediaList.getValue().sort(new MediaComparator().reversed());
+                break;
+
+            case SORTING_NONE:
+            default: /* TODO: Implement default sorting. */
+        }
+
+        /* TODO: Re-set necessary? */
+        filteredMediaList.postValue(filteredMediaList.getValue());
+    }
+
     private static class MediaTypeFilterPredicate implements Predicate<Media> {
 
         private final String mediaType;
@@ -266,6 +316,18 @@ public class PaginatedMediaList extends ConstraintLayout {
                 return true;
 
             return mediaType.equals(media.getMediaType());
+        }
+    }
+
+    private static class MediaComparator implements Comparator<Media> {
+
+        @Override
+        public int compare(Media m1, Media m2) {
+
+            String titleAndName1 = m1.getName() + m1.getTitle();
+            String titleAndName2 = m2.getName() + m2.getTitle();
+
+            return titleAndName1.compareTo(titleAndName2);
         }
     }
 
