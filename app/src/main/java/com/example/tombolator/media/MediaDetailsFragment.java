@@ -75,7 +75,7 @@ public class MediaDetailsFragment extends Fragment {
 
         editMediaButton.setOnClickListener((View v) -> mediaActivity.switchToCreationStepOne());
 
-        backButton.setOnClickListener((View v) -> mediaActivity.switchToMediaListStepTwo());
+        backButton.setOnClickListener((View v) -> mediaActivity.switchToMediaList());
 
         deleteButton.setOnClickListener((View v) -> {
 
@@ -125,7 +125,7 @@ public class MediaDetailsFragment extends Fragment {
         tombolasActivityViewModel.deleteMediaFromAllTombolas(media);
         mediaActivityViewModel.delete(media);
 
-        mediaActivity.switchToMediaListStepTwo();
+        mediaActivity.switchToMediaList();
     }
 
     private class SelectedMediaObserver implements Observer<Media> {

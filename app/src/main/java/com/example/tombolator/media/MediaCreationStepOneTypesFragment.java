@@ -116,7 +116,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        backButton.setOnClickListener((View v) -> mediaActivity.switchToMediaListStepTwo());
+        backButton.setOnClickListener((View v) -> mediaActivity.switchToMediaList());
 
         continueButton.setOnClickListener(v -> {
 

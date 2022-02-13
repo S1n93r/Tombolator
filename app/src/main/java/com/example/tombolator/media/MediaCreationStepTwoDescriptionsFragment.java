@@ -139,7 +139,7 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
 
                 mediaActivityViewModel.insert(selectedMedia);
 
-                mediaActivity.switchToMediaListStepTwo();
+                mediaActivity.switchToMediaList();
             }
         }
     }

@@ -35,7 +35,7 @@ public class MediaActivity extends AppCompatActivity {
         super.onStart();
 
         if (savedInstanceState == null) {
-            switchToMediaListStepTwo();
+            switchToMediaList();
         }
     }
 
@@ -46,7 +46,7 @@ public class MediaActivity extends AppCompatActivity {
         /* TODO: Save media list from model to database. */
     }
 
-    protected void switchToMediaListStepTwo() {
+    protected void switchToMediaList() {
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, mediaListFragment2)

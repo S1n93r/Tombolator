@@ -67,6 +67,7 @@ public class PaginatedMediaList extends ConstraintLayout {
     private int elementsPerPage;
 
     private OnClickListener backButtonListener;
+    private OnClickListener processMediaListButtonListener;
 
     public PaginatedMediaList(@NonNull Context context) {
 
@@ -82,11 +83,13 @@ public class PaginatedMediaList extends ConstraintLayout {
         initView(context, attrs);
     }
 
-    public void configureView(LifecycleOwner lifecycleOwner, LiveData<List<Media>> mediaList, OnClickListener backButtonListener) {
+    public void configureView(LifecycleOwner lifecycleOwner, LiveData<List<Media>> mediaList,
+                              OnClickListener backButtonListener, OnClickListener processMediaListButtonListener) {
 
         this.lifecycleOwner = lifecycleOwner;
         this.mediaList = mediaList;
         this.backButtonListener = backButtonListener;
+        this.processMediaListButtonListener = processMediaListButtonListener;
 
         isConfigured = true;
 
@@ -122,7 +125,7 @@ public class PaginatedMediaList extends ConstraintLayout {
 
     private void handleAttributes(@NonNull Context context, @Nullable AttributeSet attrs) {
 
-        if(attrs != null) {
+        if (attrs != null) {
 
             TypedArray a = context.obtainStyledAttributes(attrs,
                     R.styleable.PaginatedMediaList, 0, 0);
@@ -160,7 +163,7 @@ public class PaginatedMediaList extends ConstraintLayout {
         selectedMediaType.observe(lifecycleOwner, string -> {
 
             /* TODO: NPE because media was not yet loaded from room. Why? */
-            if(mediaList.getValue() == null)
+            if (mediaList.getValue() == null)
                 return;
 
             Collection<Media> filteredCollection = Collections2.filter(
@@ -192,15 +195,15 @@ public class PaginatedMediaList extends ConstraintLayout {
 
         nextPageButton.setOnClickListener(v -> {
 
-            if(currentPage.getValue() == null)
+            if (currentPage.getValue() == null)
                 throw new IllegalStateException("Value of live data \"currentPage\" is null." +
                         " That should never be the case.");
 
-            if(filteredMediaList.getValue() == null)
+            if (filteredMediaList.getValue() == null)
                 throw new IllegalStateException("Value of live data \"filteredMediaList\" is null. " +
                         "That should never be the case.");
 
-            if(currentPage.getValue() ==
+            if (currentPage.getValue() ==
                     MediaUtil.getTotalNumberOfPages(filteredMediaList.getValue(), elementsPerPage))
                 return;
 
@@ -209,27 +212,29 @@ public class PaginatedMediaList extends ConstraintLayout {
 
         previousPageButton.setOnClickListener(v -> {
 
-            if(currentPage.getValue() == null)
+            if (currentPage.getValue() == null)
                 throw new IllegalStateException("Value of live data \"currentPage\" is null." +
                         " That should never be the case.");
 
-            if(currentPage.getValue() == 1)
+            if (currentPage.getValue() == 1)
                 return;
 
             currentPage.setValue(currentPage.getValue() - 1);
         });
 
         sortButton.setOnClickListener(v -> toggleSorting());
+
+        processMediaListButton.setOnClickListener(processMediaListButtonListener);
     }
 
     private void checkConfiguration() {
-        if(!isConfigured)
+        if (!isConfigured)
             throw new IllegalStateException("Please call configureView() before you start using this view.");
     }
 
-    private void showMediaOnCurrentPage (List<Media> mediaList) {
+    private void showMediaOnCurrentPage(List<Media> mediaList) {
 
-        if(currentPage.getValue() == null) {
+        if (currentPage.getValue() == null) {
             /* TODO: Log NPE here. */
             throw new NullPointerException();
         }
@@ -237,12 +242,12 @@ public class PaginatedMediaList extends ConstraintLayout {
         int start = (currentPage.getValue() - 1) * elementsPerPage;
         int end = start + elementsPerPage;
 
-        if(end > mediaList.size())
+        if (end > mediaList.size())
             end = mediaList.size();
 
         linearLayoutMedia.removeAllViews();
 
-        for(int i=start; i<end; i++) {
+        for (int i = start; i < end; i++) {
 
             Media media = mediaList.get(i);
 
@@ -265,7 +270,7 @@ public class PaginatedMediaList extends ConstraintLayout {
 
     private void toggleSorting() {
 
-        switch(currentSortingMode) {
+        switch (currentSortingMode) {
 
             case SORTING_NONE:
                 currentSortingMode = SORTING_REGULAR;
@@ -283,14 +288,14 @@ public class PaginatedMediaList extends ConstraintLayout {
 
     private void applySorting() {
 
-        if(filteredMediaList.getValue() == null) {
+        if (filteredMediaList.getValue() == null) {
             /* TODO: Add log entry. */
             throw new NullPointerException();
         }
 
         filteredMediaList.getValue().sort(new MediaComparator());
 
-        switch(currentSortingMode) {
+        switch (currentSortingMode) {
 
             case SORTING_REGULAR:
                 filteredMediaList.getValue().sort(new MediaComparator());
@@ -324,7 +329,7 @@ public class PaginatedMediaList extends ConstraintLayout {
                 throw new NullPointerException();
             }
 
-            if(mediaType.equals(FILTER_ALL_CATEGORIES))
+            if (mediaType.equals(FILTER_ALL_CATEGORIES))
                 return true;
 
             return mediaType.equals(media.getMediaType());
@@ -348,7 +353,7 @@ public class PaginatedMediaList extends ConstraintLayout {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-            if(i == 0)
+            if (i == 0)
                 selectedMediaType.setValue(FILTER_ALL_CATEGORIES);
             else
                 selectedMediaType.setValue(Media.MediaType.getMediaType(i - 1));
