@@ -139,7 +139,11 @@ public class MediaListFragment extends Fragment {
 
         newMediaButton.setOnClickListener((View view) -> {
 
-            mediaActivityViewModel.selectMedia(new Media());
+            Media createdMedia = new Media();
+
+            createdMedia.setCreationTimestamp(System.currentTimeMillis());
+
+            mediaActivityViewModel.selectMedia(createdMedia);
 
             mediaActivity.switchToCreationStepOne();
         });

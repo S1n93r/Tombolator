@@ -128,8 +128,10 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
                 throw new NullPointerException();
             }
 
-            mediaActivityViewModel.getSelectedMedia().getValue().setMediaType(mediaType);
-            mediaActivityViewModel.getSelectedMedia().getValue().setContentType(contentType);
+            Media selectedMedia = mediaActivityViewModel.getSelectedMedia().getValue();
+
+            selectedMedia.setMediaType(mediaType);
+            selectedMedia.setContentType(contentType);
 
             mediaActivity.switchToCreationStepTwo();
         });
