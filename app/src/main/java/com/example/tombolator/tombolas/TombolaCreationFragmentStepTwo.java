@@ -12,12 +12,12 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
+import com.example.tombolator.commons.NumberUtil;
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaActivityViewModel;
 import com.example.tombolator.media.MediaUtil;
 
 import java.util.List;
-import java.util.Locale;
 
 public class TombolaCreationFragmentStepTwo extends Fragment {
 
@@ -48,15 +48,6 @@ public class TombolaCreationFragmentStepTwo extends Fragment {
 
     public static TombolaCreationFragmentStepTwo newInstance() {
         return new TombolaCreationFragmentStepTwo();
-    }
-
-    private static String formatNumberFullDigitsLeadingZero(int number) {
-
-        int numberOfDigits = String.valueOf(number).length();
-
-        String numberFormat = "%0" + numberOfDigits + "d";
-
-        return String.format(Locale.getDefault(), numberFormat, number);
     }
 
     @Override
@@ -261,7 +252,7 @@ public class TombolaCreationFragmentStepTwo extends Fragment {
         @Override
         public void onChanged(Integer pageNumber) {
 
-            pageNumberCurrent.setText(formatNumberFullDigitsLeadingZero(pageNumber));
+            pageNumberCurrent.setText(NumberUtil.formatNumberFullDigitsLeadingZero(pageNumber));
             showMediaOnCurrentPage(mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().getValue());
         }
     }
@@ -273,7 +264,7 @@ public class TombolaCreationFragmentStepTwo extends Fragment {
 
             int numberOfPages = MediaUtil.getTotalNumberOfPages(mediaList, ELEMENTS_PER_PAGE);
 
-            pageNumberMax.setText(formatNumberFullDigitsLeadingZero(numberOfPages));
+            pageNumberMax.setText(NumberUtil.formatNumberFullDigitsLeadingZero(numberOfPages));
         }
     }
 

@@ -6,6 +6,20 @@
         android:layout_height="match_parent"
         android:background="@color/color_background"
 >
+    <TextView
+            android:fontFamily="@font/comic_sans_ms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="@dimen/font_size_title"
+            android:text="@string/paginated_media_list_title_placeholder"
+            android:id="@+id/text_view_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintVertical_bias="0.02"
+    />
     <ImageView
             android:src="@drawable/ic_sort_by_desc"
             android:layout_width="35dp"
@@ -90,20 +104,6 @@
             android:fontFamily="@font/comic_sans_ms"
             app:layout_constraintTop_toBottomOf="@+id/button_previous_page"
             app:layout_constraintStart_toEndOf="@+id/label_page_number_separator"
-    />
-    <TextView
-            android:fontFamily="@font/comic_sans_ms"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title_media"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textSize="@dimen/font_size_title"
-            android:id="@+id/text_view_title"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintVertical_bias="0.023"
     />
     <Button
             android:background="@drawable/button_selector_purple"

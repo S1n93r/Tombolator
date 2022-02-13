@@ -12,8 +12,6 @@ import com.example.tombolator.tombolas.TombolasActivityViewModel;
 
 public class MediaListFragment2 extends Fragment {
 
-    private static final int ELEMENTS_PER_PAGE = 6;
-
     private MediaActivity mediaActivity;
     private MediaActivityViewModel mediaActivityViewModel;
     private TombolasActivityViewModel tombolasActivityViewModel;
@@ -27,8 +25,7 @@ public class MediaListFragment2 extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         mediaActivity = (MediaActivity) getActivity();
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
@@ -38,7 +35,8 @@ public class MediaListFragment2 extends Fragment {
 
         paginatedMediaList = view.findViewById(R.id.paginated_media_list);
 
-        paginatedMediaList.setElementsPerPage(ELEMENTS_PER_PAGE);
+        paginatedMediaList.configureView(this, mediaActivityViewModel.getAllMediaLiveData(),
+                v -> mediaActivity.finish());
 
         return view;
     }

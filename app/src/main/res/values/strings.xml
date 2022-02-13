@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- PaginatedMediaList -->
+    <string name="paginated_media_list_title_placeholder">[Title]</string>
+    <!-- Common -->
     <string name="app_mame">Tombolator</string>
     <string name="icon_media_type_content_description">Medientyp-Icon</string>
     <string name="icon_sort_media_content_description">Sortiere Medien absteigend</string>

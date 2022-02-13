@@ -1,6 +1,7 @@
 package com.example.tombolator.commons;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,14 +9,23 @@ import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.example.tombolator.R;
 import com.example.tombolator.media.Media;
-import lombok.Setter;
+import com.example.tombolator.media.MediaUtil;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
+import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class PaginatedMediaList extends ConstraintLayout {
+
+    private static final int DEFAULT_ELEMENTS_PER_PAGE = 5;
 
     private static final String FILTER_ALL_CATEGORIES = "[show all categories]";
 
@@ -23,55 +33,64 @@ public class PaginatedMediaList extends ConstraintLayout {
 
     private final MutableLiveData<String> selectedMediaType = new MutableLiveData<>(FILTER_ALL_CATEGORIES);
 
-    private final ImageView sortButton;
-    private final Spinner mediaTypesSpinner;
-    private final LinearLayout linearLayoutMedia;
+    private final MutableLiveData<List<Media>> filteredMediaList = new MutableLiveData<>(new ArrayList<>());
 
-    private final Button nextPageButton;
-    private final TextView pageNumberCurrent;
-    private final TextView pageNumberMax;
-    private final Button previousPageButton;
+    private boolean isConfigured = false;
 
-    private final Button backButton;
-    private final Button newMediaButton;
+    private LiveData<List<Media>> mediaList;
 
-    @Setter
-    private View.OnClickListener showDetailsListener;
+    private LifecycleOwner lifecycleOwner;
 
-    @Setter
+    private TextView titleTextView;
+
+    private ImageView sortButton;
+    private Spinner mediaTypesSpinner;
+    private LinearLayout linearLayoutMedia;
+
+    private Button nextPageButton;
+    private TextView pageNumberCurrent;
+    private TextView pageNumberMax;
+    private Button previousPageButton;
+
+    private Button backButton;
+    private Button newMediaButton;
+
     private int elementsPerPage;
+
+    private OnClickListener backButtonListener;
 
     public PaginatedMediaList(@NonNull Context context) {
 
         super(context);
 
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        inflater.inflate(R.layout.paginated_media_list, this, true);
-
-        linearLayoutMedia = findViewById(R.id.linear_layout_media);
-
-        mediaTypesSpinner = findViewById(R.id.spinner_media_types);
-
-        pageNumberCurrent = findViewById(R.id.label_page_number_current);
-        pageNumberMax = findViewById(R.id.label_page_number_total);
-
-        sortButton = findViewById(R.id.button_sort_by);
-        backButton = findViewById(R.id.back_button);
-        nextPageButton = findViewById(R.id.button_next_page);
-        previousPageButton = findViewById(R.id.button_previous_page);
-        newMediaButton = findViewById(R.id.button_new_media);
-
-        setUpMediaTypesSpinner();
+        initView(context, null);
     }
 
     public PaginatedMediaList(@NonNull Context context, @Nullable AttributeSet attrs) {
 
         super(context, attrs);
 
+        initView(context, attrs);
+    }
+
+    public void configureView(LifecycleOwner lifecycleOwner, LiveData<List<Media>> mediaList, OnClickListener backButtonListener) {
+
+        this.lifecycleOwner = lifecycleOwner;
+        this.mediaList = mediaList;
+
+        isConfigured = true;
+
+        setUpBindings();
+        setUpListener();
+    }
+
+    private void initView(@NonNull Context context, @Nullable AttributeSet attrs) {
+
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View view = inflater.inflate(R.layout.paginated_media_list, this, true);
+
+        titleTextView = view.findViewById(R.id.text_view_title);
 
         linearLayoutMedia = view.findViewById(R.id.linear_layout_media);
 
@@ -86,10 +105,24 @@ public class PaginatedMediaList extends ConstraintLayout {
         previousPageButton = view.findViewById(R.id.button_previous_page);
         newMediaButton = view.findViewById(R.id.button_new_media);
 
+        handleAttributes(context, attrs);
+
         setUpMediaTypesSpinner();
     }
 
+    private void handleAttributes(@NonNull Context context, @Nullable AttributeSet attrs) {
 
+        if(attrs != null) {
+
+            TypedArray a = context.obtainStyledAttributes(attrs,
+                    R.styleable.PaginatedMediaList, 0, 0);
+
+            titleTextView.setText(a.getString(R.styleable.PaginatedMediaList_title));
+            elementsPerPage = a.getInteger(R.styleable.PaginatedMediaList_elementsPerPage, DEFAULT_ELEMENTS_PER_PAGE);
+
+            a.recycle();
+        }
+    }
 
     private void setUpMediaTypesSpinner() {
 
@@ -103,6 +136,137 @@ public class PaginatedMediaList extends ConstraintLayout {
         mediaTypesSpinner.setAdapter(arrayAdapter);
 
         mediaTypesSpinner.setOnItemSelectedListener(new MediaTypeItemSelectedListener());
+    }
+
+    private void setUpBindings() {
+
+        checkConfiguration();
+
+        selectedMediaType.observe(lifecycleOwner, string -> {
+
+            /* TODO: NPE because media was not yet loaded from room. Why? */
+            if(mediaList.getValue() == null)
+                return;
+
+            Collection<Media> filteredCollection = Collections2.filter(
+                    mediaList.getValue(), new MediaTypeFilterPredicate(selectedMediaType.getValue()));
+
+            filteredMediaList.setValue(new ArrayList<>(filteredCollection));
+        });
+
+        filteredMediaList.observe(lifecycleOwner, media -> {
+
+            int numberOfPages = MediaUtil.getTotalNumberOfPages(media, elementsPerPage);
+
+            pageNumberMax.setText(NumberUtil.formatNumberFullDigitsLeadingZero(numberOfPages));
+
+            showMediaOnCurrentPage(filteredMediaList.getValue());
+        });
+
+        currentPage.observe(lifecycleOwner, integer -> {
+
+            pageNumberCurrent.setText(NumberUtil.formatNumberFullDigitsLeadingZero(integer));
+
+            showMediaOnCurrentPage(filteredMediaList.getValue());
+        });
+    }
+
+    private void setUpListener() {
+
+        backButton.setOnClickListener(backButtonListener);
+
+        nextPageButton.setOnClickListener(v -> {
+
+            if(currentPage.getValue() == null)
+                throw new IllegalStateException("Value of live data \"currentPage\" is null." +
+                        " That should never be the case.");
+
+            if(filteredMediaList.getValue() == null)
+                throw new IllegalStateException("Value of live data \"filteredMediaList\" is null. " +
+                        "That should never be the case.");
+
+            if(currentPage.getValue() ==
+                    MediaUtil.getTotalNumberOfPages(filteredMediaList.getValue(), elementsPerPage))
+                return;
+
+            currentPage.setValue(currentPage.getValue() + 1);
+        });
+
+        previousPageButton.setOnClickListener(v -> {
+
+            if(currentPage.getValue() == null)
+                throw new IllegalStateException("Value of live data \"currentPage\" is null." +
+                        " That should never be the case.");
+
+            if(currentPage.getValue() == 1)
+                return;
+
+            currentPage.setValue(currentPage.getValue() - 1);
+        });
+    }
+
+    private void checkConfiguration() {
+        if(!isConfigured)
+            throw new IllegalStateException("Please call configureView() before you start using this view.");
+    }
+
+    private void showMediaOnCurrentPage (List<Media> mediaList) {
+
+        if(currentPage.getValue() == null) {
+            /* TODO: Log NPE here. */
+            throw new NullPointerException();
+        }
+
+        int start = (currentPage.getValue() - 1) * elementsPerPage;
+        int end = start + elementsPerPage;
+
+        if(end > mediaList.size())
+            end = mediaList.size();
+
+        linearLayoutMedia.removeAllViews();
+
+        for(int i=start; i<end; i++) {
+
+            Media media = mediaList.get(i);
+
+            long id = media.getId();
+
+            TextView textView = (TextView) View.inflate(
+                    getContext(), R.layout.list_element, null);
+
+            String text = " " + media.toLabel();
+
+            textView.setText(text);
+            textView.setId((int) id);
+
+            textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    MediaUtil.getMediaTypeIcon(media), 0, 0, 0);
+
+            linearLayoutMedia.addView(textView);
+        }
+    }
+
+    private static class MediaTypeFilterPredicate implements Predicate<Media> {
+
+        private final String mediaType;
+
+        public MediaTypeFilterPredicate(String mediaType) {
+            this.mediaType = mediaType;
+        }
+
+        @Override
+        public boolean apply(@NullableDecl Media media) {
+
+            if (media == null) {
+                /* TODO: Add error log here */
+                throw new NullPointerException();
+            }
+
+            if(mediaType.equals(FILTER_ALL_CATEGORIES))
+                return true;
+
+            return mediaType.equals(media.getMediaType());
+        }
     }
 
     private class MediaTypeItemSelectedListener implements AdapterView.OnItemSelectedListener {
