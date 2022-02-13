@@ -8,13 +8,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 import com.example.tombolator.commons.PaginatedMediaList;
-import com.example.tombolator.tombolas.TombolasActivityViewModel;
 
 public class MediaListFragment2 extends Fragment {
 
     private MediaActivity mediaActivity;
     private MediaActivityViewModel mediaActivityViewModel;
-    private TombolasActivityViewModel tombolasActivityViewModel;
 
     private PaginatedMediaList paginatedMediaList;
 
@@ -29,7 +27,6 @@ public class MediaListFragment2 extends Fragment {
 
         mediaActivity = (MediaActivity) getActivity();
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
-        tombolasActivityViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
 
         View view = inflater.inflate(R.layout.media_list_fragment_2, container, false);
 

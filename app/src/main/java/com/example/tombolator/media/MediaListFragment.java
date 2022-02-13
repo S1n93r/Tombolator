@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 import com.example.tombolator.commons.NumberUtil;
-import com.example.tombolator.tombolas.TombolasActivityViewModel;
 
 import java.util.List;
 
@@ -24,7 +23,6 @@ public class MediaListFragment extends Fragment {
 
     private MediaActivity mediaActivity;
     private MediaActivityViewModel mediaActivityViewModel;
-    private TombolasActivityViewModel tombolasActivityViewModel;
 
     private LinearLayout linearLayoutMedia;
 
@@ -52,7 +50,6 @@ public class MediaListFragment extends Fragment {
 
         mediaActivity = (MediaActivity) getActivity();
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
-        tombolasActivityViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
 
         View layout = inflater.inflate(R.layout.media_list_fragment, container, false);
 
