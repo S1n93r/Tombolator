@@ -19,7 +19,7 @@ public class MediaListFragment extends Fragment {
     private static final int ELEMENTS_PER_PAGE = 6;
 
     private final MutableLiveData<Integer> currentPage = new MutableLiveData<>(1);
-    private final View.OnClickListener showDetailsListener = new ShowDetailsListener();
+    private final View.OnClickListener showDetailsListener = new ShowDetailsListener(this);
 
     private MediaActivity mediaActivity;
     private MediaActivityViewModel mediaActivityViewModel;
@@ -46,7 +46,7 @@ public class MediaListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
 
         mediaActivity = (MediaActivity) getActivity();
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
@@ -107,17 +107,17 @@ public class MediaListFragment extends Fragment {
 
         nextPageButton.setOnClickListener((View view) -> {
 
-            if(currentPage.getValue() == null) {
+            if (currentPage.getValue() == null) {
                 /* TODO: Log NPE here. */
                 throw new NullPointerException();
             }
 
-            if(mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().getValue() == null) {
+            if (mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().getValue() == null) {
                 /* TODO: Log NPE here. */
                 throw new NullPointerException();
             }
 
-            if(currentPage.getValue() == MediaUtil.getTotalNumberOfPages(
+            if (currentPage.getValue() == MediaUtil.getTotalNumberOfPages(
                     mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().getValue(), ELEMENTS_PER_PAGE))
                 return;
 
@@ -126,12 +126,12 @@ public class MediaListFragment extends Fragment {
 
         previousPageButton.setOnClickListener((View view) -> {
 
-            if(currentPage.getValue() == null) {
+            if (currentPage.getValue() == null) {
                 /* TODO: Log NPE here. */
                 throw new NullPointerException();
             }
 
-            if(currentPage.getValue() == 1)
+            if (currentPage.getValue() == 1)
                 return;
 
             currentPage.setValue(currentPage.getValue() - 1);
@@ -149,9 +149,9 @@ public class MediaListFragment extends Fragment {
         });
     }
 
-    private void showMediaOnCurrentPage (List<Media> mediaList) {
+    private void showMediaOnCurrentPage(List<Media> mediaList) {
 
-        if(currentPage.getValue() == null) {
+        if (currentPage.getValue() == null) {
             /* TODO: Log NPE here. */
             throw new NullPointerException();
         }
@@ -159,12 +159,12 @@ public class MediaListFragment extends Fragment {
         int start = (currentPage.getValue() - 1) * ELEMENTS_PER_PAGE;
         int end = start + ELEMENTS_PER_PAGE;
 
-        if(end > mediaList.size())
+        if (end > mediaList.size())
             end = mediaList.size();
 
         linearLayoutMedia.removeAllViews();
 
-        for(int i=start; i<end; i++) {
+        for (int i = start; i < end; i++) {
 
             Media media = mediaList.get(i);
 
@@ -217,6 +217,12 @@ public class MediaListFragment extends Fragment {
 
     private class ShowDetailsListener implements View.OnClickListener {
 
+        private final Fragment fragmentBefore;
+
+        public ShowDetailsListener(Fragment fragmentBefore) {
+            this.fragmentBefore = fragmentBefore;
+        }
+
         @Override
         public void onClick(View view) {
 
@@ -224,7 +230,7 @@ public class MediaListFragment extends Fragment {
             long mediaId = textView.getId();
             mediaActivityViewModel.selectMedia(mediaId);
 
-            mediaActivity.switchToMediaDetailsView();
+            mediaActivity.switchToMediaDetailsView(fragmentBefore);
         }
     }
 
@@ -233,7 +239,7 @@ public class MediaListFragment extends Fragment {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-            if(i == 0)
+            if (i == 0)
                 mediaActivityViewModel.clearMediaType();
             else
                 mediaActivityViewModel.selectMediaType(Media.MediaType.getMediaType(i - 1));

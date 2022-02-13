@@ -2,11 +2,13 @@ package com.example.tombolator.media;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import com.example.tombolator.R;
 
 public class MediaActivity extends AppCompatActivity {
 
     Bundle savedInstanceState;
+
     private MediaListFragment mediaListFragment;
     private MediaListFragment2 mediaListFragment2;
     private MediaCreationStepOneTypesFragment mediaCreationStepOneTypesFragment;
@@ -46,6 +48,13 @@ public class MediaActivity extends AppCompatActivity {
         /* TODO: Save media list from model to database. */
     }
 
+    protected void switchToView(Fragment fragment) {
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, fragment)
+                .commitNow();
+    }
+
     protected void switchToMediaList() {
 
         getSupportFragmentManager().beginTransaction()
@@ -67,7 +76,9 @@ public class MediaActivity extends AppCompatActivity {
                 .commitNow();
     }
 
-    protected void switchToMediaDetailsView() {
+    protected void switchToMediaDetailsView(Fragment fragmentBefore) {
+
+        mediaDetailsFragment.setFragmentBefore(fragmentBefore);
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, mediaDetailsFragment)

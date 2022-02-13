@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="PaginatedMediaList">
-        <attr name="title" format="string" />
-        <attr name="elementsPerPage" format="integer" />
-        <attr name="processButtonText" format="string" />
-        <attr name="processButtonIcon" format="reference" />
+        <attr name="title" format="string"/>
+        <attr name="elementsPerPage" format="integer"/>
+        <attr name="processButtonText" format="string"/>
+        <attr name="processButtonIcon" format="reference"/>
+        <attr name="mode" format="enum">
+            <enum name="single_select_show_details" value="0"/>
+            <enum name="multi_select_mark_media" value="1"/>
+        </attr>
     </declare-styleable>
 
 </resources>

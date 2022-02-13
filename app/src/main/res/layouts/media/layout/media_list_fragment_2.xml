@@ -17,6 +17,7 @@
             app:title="@string/title_media"
             app:processButtonText="@string/button_new"
             app:processButtonIcon="@drawable/ic_floppy_disk_35"
+            app:mode="single_select_show_details"
     />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

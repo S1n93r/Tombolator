@@ -15,12 +15,16 @@ import com.example.tombolator.R;
 import com.example.tombolator.commons.CustomAlertDialog;
 import com.example.tombolator.tombolas.TombolasActivityViewModel;
 import com.example.tombolator.utils.DateUtil;
+import lombok.Setter;
 
 public class MediaDetailsFragment extends Fragment {
 
     private MediaActivity mediaActivity;
     private MediaActivityViewModel mediaActivityViewModel;
     private TombolasActivityViewModel tombolasActivityViewModel;
+
+    @Setter
+    private Fragment fragmentBefore;
 
     private TextView idValue;
     private TextView nameValue;
@@ -33,7 +37,7 @@ public class MediaDetailsFragment extends Fragment {
     private Button backButton;
     private Button deleteButton;
 
-    private MediaDetailsFragment(){}
+    private MediaDetailsFragment() {}
 
     public static MediaDetailsFragment newInstance() {
         return new MediaDetailsFragment();
@@ -42,7 +46,7 @@ public class MediaDetailsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
 
         mediaActivity = (MediaActivity) getActivity();
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
@@ -75,11 +79,11 @@ public class MediaDetailsFragment extends Fragment {
 
         editMediaButton.setOnClickListener((View v) -> mediaActivity.switchToCreationStepOne());
 
-        backButton.setOnClickListener((View v) -> mediaActivity.switchToMediaList());
+        backButton.setOnClickListener((View v) -> mediaActivity.switchToView(fragmentBefore));
 
         deleteButton.setOnClickListener((View v) -> {
 
-            if(getActivity() == null) {
+            if (getActivity() == null) {
                 /* TODO: Throw log entry. */
                 throw new NullPointerException();
             }
@@ -117,7 +121,7 @@ public class MediaDetailsFragment extends Fragment {
 
         Media media = mediaActivityViewModel.getSelectedMedia().getValue();
 
-        if(media == null) {
+        if (media == null) {
             /* TODO: Add log entry. */
             throw new NullPointerException();
         }
