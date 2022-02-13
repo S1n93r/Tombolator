@@ -33,13 +33,31 @@ public class MediaListFragment2 extends Fragment {
 
         paginatedMediaList = view.findViewById(R.id.paginated_media_list);
 
-        /* TODO: Here the back button of the creation step is currently hard coded to return to this view. This
-            should be configurable when using the creation fragment. */
         paginatedMediaList.configureView(this, mediaActivityViewModel.getAllMediaLiveData(),
-                v -> mediaActivity.finish(), v -> mediaActivity.switchToCreationStepOne(),
-                new ShowDetailsListener(this));
+                v -> mediaActivity.finish(), new EnterCreationListener(this), new ShowDetailsListener(this));
 
         return view;
+    }
+
+    private class EnterCreationListener implements View.OnClickListener {
+
+        private final Fragment fragmentBefore;
+
+        public EnterCreationListener(Fragment fragmentBefore) {
+            this.fragmentBefore = fragmentBefore;
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            Media createdMedia = new Media();
+
+            createdMedia.setCreationTimestamp(System.currentTimeMillis());
+
+            mediaActivityViewModel.selectMedia(createdMedia);
+
+            mediaActivity.switchToCreationStepOne(fragmentBefore);
+        }
     }
 
     private class ShowDetailsListener implements View.OnClickListener {

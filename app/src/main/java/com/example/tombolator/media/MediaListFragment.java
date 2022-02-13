@@ -145,7 +145,7 @@ public class MediaListFragment extends Fragment {
 
             mediaActivityViewModel.selectMedia(createdMedia);
 
-            mediaActivity.switchToCreationStepOne();
+            mediaActivity.switchToCreationStepOne(this);
         });
     }
 

@@ -35,7 +35,7 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
 
         mediaActivity = (MediaActivity) getActivity();
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
@@ -59,7 +59,7 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        backButton.setOnClickListener((View v) -> mediaActivity.switchToCreationStepOne());
+        backButton.setOnClickListener((View v) -> mediaActivity.switchToCreationStepOne(this));
 
         saveButton.setOnClickListener(new SaveMediaListener());
     }
@@ -70,14 +70,14 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
 
     private void setVisibilitiesByMediaType() {
 
-        if(mediaActivityViewModel.getSelectedMedia().getValue() == null) {
+        if (mediaActivityViewModel.getSelectedMedia().getValue() == null) {
             /* TODO: Add log entry */
             throw new NullPointerException();
         }
 
         String type = mediaActivityViewModel.getSelectedMedia().getValue().getMediaType();
 
-        switch(type) {
+        switch (type) {
             case Media.MediaType.CASSETTE:
             case Media.MediaType.CD:
             case Media.ContentType.AUDIO_PLAY:
@@ -115,7 +115,7 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
         @Override
         public void onClick(View view) {
 
-            if(editTextName.getText().length() > 0){
+            if (editTextName.getText().length() > 0) {
 
                 String name = editTextName.getText() != null ? editTextName.getText().toString() : "";
                 String title = editTextTitle.getText() != null ? editTextTitle.getText().toString() : "";
@@ -124,7 +124,7 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
 
                 int number = numberAsString.length() > 0 ? Integer.parseInt(numberAsString) : -1;
 
-                if(mediaActivityViewModel.getSelectedMedia().getValue() == null) {
+                if (mediaActivityViewModel.getSelectedMedia().getValue() == null) {
                     /* TODO: Write NPE to log */
                     throw new NullPointerException();
                 }

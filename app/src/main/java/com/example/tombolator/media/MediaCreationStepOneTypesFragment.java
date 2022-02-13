@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -18,6 +19,9 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
     private MediaActivity mediaActivity;
     private MediaActivityViewModel mediaActivityViewModel;
+
+    @Setter
+    private Fragment fragmentBefore;
 
     private Spinner mediaTypesSpinner;
     private Spinner contentTypeSpinner;
@@ -36,7 +40,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
 
         mediaActivity = (MediaActivity) getActivity();
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
@@ -75,7 +79,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                if(i == Media.MediaType.getIndex(Media.MediaType.MEAL)) {
+                if (i == Media.MediaType.getIndex(Media.MediaType.MEAL)) {
 
                     showContentSpinnerAndLabel(false);
                     return;
@@ -95,7 +99,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
         int visibility = View.INVISIBLE;
 
-        if(show)
+        if (show)
             visibility = View.VISIBLE;
 
         contentTypeTextView.setVisibility(visibility);
@@ -116,14 +120,16 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        backButton.setOnClickListener((View v) -> mediaActivity.switchToMediaList());
+        backButton.setOnClickListener((View v) -> mediaActivity.switchToView(fragmentBefore));
 
         continueButton.setOnClickListener(v -> {
 
-            String mediaType = mediaTypesSpinner.getSelectedItem() != null ? mediaTypesSpinner.getSelectedItem().toString() : "";
-            String contentType = contentTypeSpinner.getSelectedItem() != null ? contentTypeSpinner.getSelectedItem().toString() : "";
+            String mediaType = mediaTypesSpinner.getSelectedItem() != null ?
+                    mediaTypesSpinner.getSelectedItem().toString() : "";
+            String contentType = contentTypeSpinner.getSelectedItem() != null ?
+                    contentTypeSpinner.getSelectedItem().toString() : "";
 
-            if(mediaActivityViewModel.getSelectedMedia().getValue() == null) {
+            if (mediaActivityViewModel.getSelectedMedia().getValue() == null) {
                 /* TODO: Add log entry. */
                 throw new NullPointerException();
             }

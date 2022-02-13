@@ -62,7 +62,12 @@ public class MediaActivity extends AppCompatActivity {
                 .commitNow();
     }
 
-    protected void switchToCreationStepOne() {
+    protected void switchToCreationStepOne(Fragment fragmentBefore) {
+
+        /* If the "fragment before" would be step two, because you returned from it, the reference is not overridden.
+         This way the original "before" like media details or creation steps remains intact. */
+        if (!fragmentBefore.equals(mediaCreationStepTwoDescriptionsFragment))
+            mediaCreationStepOneTypesFragment.setFragmentBefore(fragmentBefore);
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, mediaCreationStepOneTypesFragment)
