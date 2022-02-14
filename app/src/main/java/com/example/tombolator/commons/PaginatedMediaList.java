@@ -2,6 +2,8 @@ package com.example.tombolator.commons;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaUtil;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
+import lombok.Getter;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 import java.util.ArrayList;
@@ -33,6 +36,9 @@ public class PaginatedMediaList extends ConstraintLayout {
 
     private static final int DEFAULT_ELEMENTS_PER_PAGE = 5;
 
+    private static final int SINGLE_SELECT_SHOW_DETAILS = 0;
+    private static final int MULTI_SELECT_MARK_MEDIA = 1;
+
     private static final String FILTER_ALL_CATEGORIES = "[show all categories]";
 
     private final MutableLiveData<Integer> currentPage = new MutableLiveData<>(1);
@@ -40,6 +46,14 @@ public class PaginatedMediaList extends ConstraintLayout {
     private final MutableLiveData<String> selectedMediaType = new MutableLiveData<>(FILTER_ALL_CATEGORIES);
 
     private final MutableLiveData<List<Media>> filteredMediaList = new MutableLiveData<>(new ArrayList<>());
+
+    @Getter
+    private final MutableLiveData<Media> selectedMedia = new MutableLiveData<>();
+
+    @Getter
+    private final MutableLiveData<List<Media>> selectedMediaList = new MutableLiveData<>(new ArrayList<>());
+
+    private int mode = SINGLE_SELECT_SHOW_DETAILS;
 
     private int currentSortingMode = SORTING_NONE;
 
@@ -68,7 +82,6 @@ public class PaginatedMediaList extends ConstraintLayout {
 
     private OnClickListener backButtonListener;
     private OnClickListener processMediaListButtonListener;
-    private OnClickListener mediaEntryListener;
 
     public PaginatedMediaList(@NonNull Context context) {
 
@@ -85,14 +98,12 @@ public class PaginatedMediaList extends ConstraintLayout {
     }
 
     public void configureView(LifecycleOwner lifecycleOwner, LiveData<List<Media>> mediaList,
-                              OnClickListener backButtonListener, OnClickListener processMediaListButtonListener,
-                              OnClickListener mediaEntryListener) {
+                              OnClickListener backButtonListener, OnClickListener processMediaListButtonListener) {
 
         this.lifecycleOwner = lifecycleOwner;
         this.mediaList = mediaList;
         this.backButtonListener = backButtonListener;
         this.processMediaListButtonListener = processMediaListButtonListener;
-        this.mediaEntryListener = mediaEntryListener;
 
         isConfigured = true;
 
@@ -140,6 +151,8 @@ public class PaginatedMediaList extends ConstraintLayout {
             Drawable drawable = a.getDrawable(R.styleable.PaginatedMediaList_processButtonIcon);
 
             processMediaListButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawable);
+
+            mode = a.getInteger(R.styleable.PaginatedMediaList_mode, SINGLE_SELECT_SHOW_DETAILS);
 
             a.recycle();
         }
@@ -237,9 +250,12 @@ public class PaginatedMediaList extends ConstraintLayout {
 
     private void showMediaOnCurrentPage(List<Media> mediaList) {
 
+        if (selectedMediaList.getValue() == null) {
+            throw new IllegalStateException("Selected media list should not be null at this point.");
+        }
+
         if (currentPage.getValue() == null) {
-            /* TODO: Log NPE here. */
-            throw new NullPointerException();
+            throw new IllegalStateException("Current page should not be null at this point.");
         }
 
         int start = (currentPage.getValue() - 1) * elementsPerPage;
@@ -256,15 +272,29 @@ public class PaginatedMediaList extends ConstraintLayout {
 
             long id = media.getId();
 
-            TextView textView = (TextView) View.inflate(
+            MediaEntryTextView textView = (MediaEntryTextView) View.inflate(
                     getContext(), R.layout.list_element, null);
+
+            textView.setMedia(media);
 
             String text = " " + media.toLabel();
 
             textView.setText(text);
             textView.setId((int) id);
 
-            textView.setOnClickListener(mediaEntryListener);
+            Typeface defaultTypeface = textView.getTypeface();
+            int defaultTextColor = textView.getCurrentTextColor();
+
+            for (Media mediaInTombola : selectedMediaList.getValue()) {
+
+                if (id == mediaInTombola.getId()) {
+
+                    textView.setTextColor(Color.parseColor("#3700B3"));
+                    textView.setTypeface(defaultTypeface, Typeface.BOLD);
+                }
+            }
+
+            textView.setOnClickListener(new MediaEntryListener(defaultTypeface, defaultTextColor));
 
             textView.setCompoundDrawablesRelativeWithIntrinsicBounds(
                     MediaUtil.getMediaTypeIcon(media), 0, 0, 0);
@@ -369,6 +399,57 @@ public class PaginatedMediaList extends ConstraintLayout {
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {
             /* TODO: When is this triggered? */
+        }
+    }
+
+    private class MediaEntryListener implements OnClickListener {
+
+        private final Typeface defaultTypeface;
+        private final int defaultTextColor;
+
+        public MediaEntryListener(Typeface defaultTypeface, int defaultTextColor) {
+            this.defaultTypeface = defaultTypeface;
+            this.defaultTextColor = defaultTextColor;
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            if (selectedMediaList.getValue() == null)
+                throw new IllegalStateException("Selected media list should not be null at this point.");
+
+            if (!(view instanceof MediaEntryTextView))
+                throw new IllegalStateException("The view you are trying to add is not of type MediaEntryTextView.");
+
+            MediaEntryTextView mediaEntryTextView = (MediaEntryTextView) view;
+            Media media = mediaEntryTextView.getMedia();
+
+            switch (mode) {
+
+                case SINGLE_SELECT_SHOW_DETAILS:
+
+                    selectedMedia.setValue(media);
+                    break;
+
+                case MULTI_SELECT_MARK_MEDIA:
+
+                    if (selectedMediaList.getValue().contains(media)) {
+
+                        selectedMediaList.getValue().remove(media);
+                        mediaEntryTextView.setTextColor(defaultTextColor);
+                        mediaEntryTextView.setTypeface(defaultTypeface);
+                    } else {
+
+                        selectedMediaList.getValue().add(media);
+                        mediaEntryTextView.setTextColor(Color.parseColor("#3700B3"));
+                        mediaEntryTextView.setTypeface(defaultTypeface, Typeface.BOLD);
+                    }
+
+                    break;
+
+                default:
+                    throw new SwitchCaseNotDefinedException("");
+            }
         }
     }
 }

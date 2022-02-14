@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 import com.example.tombolator.commons.PaginatedMediaList;
@@ -34,7 +34,9 @@ public class MediaListFragment2 extends Fragment {
         paginatedMediaList = view.findViewById(R.id.paginated_media_list);
 
         paginatedMediaList.configureView(this, mediaActivityViewModel.getAllMediaLiveData(),
-                v -> mediaActivity.finish(), new EnterCreationListener(this), new ShowDetailsListener(this));
+                v -> mediaActivity.finish(), new EnterCreationListener(this));
+
+        paginatedMediaList.getSelectedMedia().observe(this, new ShowDetailsObserver(this));
 
         return view;
     }
@@ -60,20 +62,18 @@ public class MediaListFragment2 extends Fragment {
         }
     }
 
-    private class ShowDetailsListener implements View.OnClickListener {
+    private class ShowDetailsObserver implements Observer<Media> {
 
         private final Fragment fragmentBefore;
 
-        public ShowDetailsListener(Fragment fragmentBefore) {
+        public ShowDetailsObserver(Fragment fragmentBefore) {
             this.fragmentBefore = fragmentBefore;
         }
 
         @Override
-        public void onClick(View view) {
+        public void onChanged(Media media) {
 
-            TextView textView = (TextView) view;
-            long mediaId = textView.getId();
-            mediaActivityViewModel.selectMedia(mediaId);
+            mediaActivityViewModel.selectMedia(media);
 
             mediaActivity.switchToMediaDetailsView(fragmentBefore);
         }

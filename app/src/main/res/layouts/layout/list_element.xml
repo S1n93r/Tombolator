@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-          android:background="@color/color_background"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:paddingTop="5dp"
-          android:paddingBottom="5dp"
-          android:textSize="@dimen/font_size_xl"
-          android:fontFamily="@font/comic_sans_ms"/>
+<com.example.tombolator.commons.MediaEntryTextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@color/color_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textSize="@dimen/font_size_xl"
+        android:fontFamily="@font/comic_sans_ms"/>
