@@ -10,7 +10,6 @@ public class MediaActivity extends AppCompatActivity {
     Bundle savedInstanceState;
 
     private MediaListFragment mediaListFragment;
-    private MediaListFragment2 mediaListFragment2;
     private MediaCreationStepOneTypesFragment mediaCreationStepOneTypesFragment;
     private MediaCreationStepTwoDescriptionsFragment mediaCreationStepTwoDescriptionsFragment;
     private MediaDetailsFragment mediaDetailsFragment;
@@ -21,7 +20,6 @@ public class MediaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         mediaListFragment = MediaListFragment.newInstance();
-        mediaListFragment2 = MediaListFragment2.newInstance();
 
         mediaDetailsFragment = MediaDetailsFragment.newInstance();
         mediaCreationStepOneTypesFragment = MediaCreationStepOneTypesFragment.newInstance();
@@ -58,7 +56,7 @@ public class MediaActivity extends AppCompatActivity {
     protected void switchToMediaList() {
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, mediaListFragment2)
+                .replace(R.id.container, mediaListFragment)
                 .commitNow();
     }
 
