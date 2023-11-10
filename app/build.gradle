@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    namespace 'com.example.tombolator'
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.example.tombolator"
-        minSdkVersion 24
-        targetSdkVersion 30
+        minSdk 30
+        targetSdk 33
 
         def versionCode_ = generateVersionCode()
 
@@ -15,17 +15,6 @@ android {
         versionName = generateVersionName(versionCode_)
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
-            }
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
     }
 
     buildTypes {
@@ -33,6 +22,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        viewBinding true
     }
 
     sourceSets {
@@ -54,6 +50,7 @@ android {
 }
 
 dependencies {
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
@@ -103,7 +100,7 @@ static int generateVersionCode() {
 
 static String generateVersionName(int versionCode) {
 
-    def String versionName = "0"
+    String versionName = "0"
 
     for(char digit : versionCode.toString().toCharArray()) {
         versionName += "." + digit

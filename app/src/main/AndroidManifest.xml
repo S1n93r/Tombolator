@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.tombolator">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application android:name=".TomboApplication"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher_bingo"
             android:label="@string/app_mame"
-            android:roundIcon="@mipmap/ic_launcher_round"
+            android:roundIcon="@mipmap/ic_launcher_bingo"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".RootActivity">
+        <activity android:name=".RootActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
