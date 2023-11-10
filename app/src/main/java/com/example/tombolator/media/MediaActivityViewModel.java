@@ -1,17 +1,24 @@
 package com.example.tombolator.media;
 
 import android.app.Application;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+
 import com.example.tombolator.TomboRepository;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
+
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
 
 public class MediaActivityViewModel extends AndroidViewModel {
 
@@ -47,7 +54,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
     public void selectMediaType(String mediaType) {
 
-        if(selectedMediaType.getValue() == null) {
+        if (selectedMediaType.getValue() == null) {
             /* Add logger entry.  */
             throw new NullPointerException();
         }
@@ -67,14 +74,14 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
     public Media getMedia(long mediaId) {
 
-        if(allMediaLiveData.getValue() == null) {
+        if (allMediaLiveData.getValue() == null) {
             /* TODO: Add log entry. */
             throw new NullPointerException();
         }
 
-        for(Media media : allMediaLiveData.getValue()) {
+        for (Media media : allMediaLiveData.getValue()) {
 
-            if(media.getId() == mediaId)
+            if (media.getId() == mediaId)
                 return media;
         }
 
@@ -88,14 +95,14 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
     public void selectMedia(long mediaId) {
 
-        if(allMediaLiveData.getValue() == null) {
+        if (allMediaLiveData.getValue() == null) {
             /* TODO: Add log entry. */
             throw new NullPointerException();
         }
 
-        for(Media media : allMediaLiveData.getValue()) {
+        for (Media media : allMediaLiveData.getValue()) {
 
-            if(media.getId() == mediaId) {
+            if (media.getId() == mediaId) {
 
                 selectedMedia.postValue(media);
                 return;
@@ -107,7 +114,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
     public void toggleSorting() {
 
-        switch(currentSortingMode) {
+        switch (currentSortingMode) {
 
             case SORTING_NONE:
                 currentSortingMode = SORTING_REGULAR;
@@ -135,12 +142,12 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
     public void applyMediaTypeFilterAndPopulate() {
 
-        if(allMediaLiveData.getValue() == null) {
+        if (allMediaLiveData.getValue() == null) {
             /* TODO: Add log entry. */
             throw new NullPointerException();
         }
 
-        if(allMediaFilteredAndSortedLiveData.getValue() == null) {
+        if (allMediaFilteredAndSortedLiveData.getValue() == null) {
             /* TODO: Add log entry. */
             throw new NullPointerException();
         }
@@ -155,14 +162,14 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
     private void applySorting() {
 
-        if(allMediaFilteredAndSortedLiveData.getValue() == null) {
+        if (allMediaFilteredAndSortedLiveData.getValue() == null) {
             /* TODO: Add log entry. */
             throw new NullPointerException();
         }
 
         allMediaFilteredAndSortedLiveData.getValue().sort(new MediaComparator());
 
-        switch(currentSortingMode) {
+        switch (currentSortingMode) {
 
             case SORTING_REGULAR:
                 allMediaFilteredAndSortedLiveData.getValue().sort(new MediaComparator());
@@ -209,7 +216,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
         return allMediaLiveData;
     }
 
-    public MutableLiveData<List<Media>> getAllMediaFilteredAndSortedLiveData() {
+    public LiveData<List<Media>> getAllMediaFilteredAndSortedLiveData() {
         return allMediaFilteredAndSortedLiveData;
     }
 
@@ -233,7 +240,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
                 throw new NullPointerException();
             }
 
-            if(mediaType.equals(FILTER_ALL_CATEGORIES))
+            if (mediaType.equals(FILTER_ALL_CATEGORIES))
                 return true;
 
             return mediaType.equals(media.getMediaType());

@@ -115,6 +115,8 @@ public class PaginatedMediaList extends ConstraintLayout {
 
         setUpBindings();
         setUpListener();
+
+        toggleSorting();
     }
 
     private void initView(@NonNull Context context, @Nullable AttributeSet attrs) {
