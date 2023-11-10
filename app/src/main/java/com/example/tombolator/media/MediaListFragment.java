@@ -34,8 +34,7 @@ public class MediaListFragment extends Fragment {
 
         PaginatedMediaList paginatedMediaList = view.findViewById(R.id.paginated_media_list);
 
-        paginatedMediaList.configureView(this, mediaActivityViewModel.getAllMediaLiveData(),
-                v -> mediaActivity.finish(), new EnterCreationListener(this));
+        paginatedMediaList.configureView(getActivity(), v -> mediaActivity.finish(), new EnterCreationListener(this));
 
         paginatedMediaList.getSelectedMedia().observe(getViewLifecycleOwner(), new ShowDetailsObserver(this));
 

@@ -19,12 +19,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.LifecycleOwner;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tombolator.R;
 import com.example.tombolator.media.Media;
+import com.example.tombolator.media.MediaActivityViewModel;
 import com.example.tombolator.media.MediaUtil;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
@@ -33,7 +35,6 @@ import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 
 public class PaginatedMediaList extends ConstraintLayout {
@@ -53,11 +54,11 @@ public class PaginatedMediaList extends ConstraintLayout {
 
     private final MutableLiveData<String> selectedMediaType = new MutableLiveData<>(FILTER_ALL_CATEGORIES);
 
-    private final MutableLiveData<List<Media>> filteredMediaList = new MutableLiveData<>(new ArrayList<>());
-
     private final MutableLiveData<Media> selectedMedia = new MutableLiveData<>();
 
     private final MutableLiveData<List<Media>> selectedMediaList = new MutableLiveData<>(new ArrayList<>());
+
+    private MediaActivityViewModel mediaActivityViewModel;
 
     private int mode = SINGLE_SELECT_SHOW_DETAILS;
 
@@ -67,7 +68,7 @@ public class PaginatedMediaList extends ConstraintLayout {
 
     private LiveData<List<Media>> mediaList;
 
-    private LifecycleOwner lifecycleOwner;
+    private FragmentActivity fragmentActivity;
 
     private TextView titleTextView;
 
@@ -103,11 +104,12 @@ public class PaginatedMediaList extends ConstraintLayout {
         initView(context, attrs);
     }
 
-    public void configureView(LifecycleOwner lifecycleOwner, LiveData<List<Media>> mediaList,
-                              OnClickListener backButtonListener, OnClickListener processMediaListButtonListener) {
+    public void configureView(FragmentActivity fragmentActivity, OnClickListener backButtonListener, OnClickListener processMediaListButtonListener) {
 
-        this.lifecycleOwner = lifecycleOwner;
-        this.mediaList = mediaList;
+        mediaActivityViewModel = new ViewModelProvider(fragmentActivity).get(MediaActivityViewModel.class);
+
+        this.fragmentActivity = fragmentActivity;
+        this.mediaList = mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData();
         this.backButtonListener = backButtonListener;
         this.processMediaListButtonListener = processMediaListButtonListener;
 
@@ -115,8 +117,6 @@ public class PaginatedMediaList extends ConstraintLayout {
 
         setUpBindings();
         setUpListener();
-
-        toggleSorting();
     }
 
     private void initView(@NonNull Context context, @Nullable AttributeSet attrs) {
@@ -184,7 +184,7 @@ public class PaginatedMediaList extends ConstraintLayout {
 
         checkConfiguration();
 
-        selectedMediaType.observe(lifecycleOwner, string -> {
+        selectedMediaType.observe(fragmentActivity, string -> {
 
             /* TODO: NPE because media was not yet loaded from room. Why? */
             if (mediaList.getValue() == null)
@@ -193,23 +193,23 @@ public class PaginatedMediaList extends ConstraintLayout {
             Collection<Media> filteredCollection = Collections2.filter(
                     mediaList.getValue(), new MediaTypeFilterPredicate(selectedMediaType.getValue()));
 
-            filteredMediaList.setValue(new ArrayList<>(filteredCollection));
+            showMediaOnCurrentPage(new ArrayList<>(filteredCollection));
         });
 
-        filteredMediaList.observe(lifecycleOwner, media -> {
+        mediaList.observe(fragmentActivity, media -> {
 
             int numberOfPages = MediaUtil.getTotalNumberOfPages(media, elementsPerPage);
 
             pageNumberMax.setText(NumberUtil.formatNumberFullDigitsLeadingZero(numberOfPages));
 
-            showMediaOnCurrentPage(filteredMediaList.getValue());
+            showMediaOnCurrentPage(media);
         });
 
-        currentPage.observe(lifecycleOwner, integer -> {
+        currentPage.observe(fragmentActivity, integer -> {
 
             pageNumberCurrent.setText(NumberUtil.formatNumberFullDigitsLeadingZero(integer));
 
-            showMediaOnCurrentPage(filteredMediaList.getValue());
+            showMediaOnCurrentPage(mediaList.getValue());
         });
     }
 
@@ -223,12 +223,11 @@ public class PaginatedMediaList extends ConstraintLayout {
                 throw new IllegalStateException("Value of live data \"currentPage\" is null." +
                         " That should never be the case.");
 
-            if (filteredMediaList.getValue() == null)
-                throw new IllegalStateException("Value of live data \"filteredMediaList\" is null. " +
-                        "That should never be the case.");
+            if (mediaList.getValue() == null)
+                throw new IllegalStateException("Media list should not be null.");
 
             if (currentPage.getValue() ==
-                    MediaUtil.getTotalNumberOfPages(filteredMediaList.getValue(), elementsPerPage))
+                    MediaUtil.getTotalNumberOfPages(mediaList.getValue(), elementsPerPage))
                 return;
 
             currentPage.setValue(currentPage.getValue() + 1);
@@ -246,7 +245,7 @@ public class PaginatedMediaList extends ConstraintLayout {
             currentPage.setValue(currentPage.getValue() - 1);
         });
 
-        sortButton.setOnClickListener(v -> toggleSorting());
+        sortButton.setOnClickListener(v -> mediaActivityViewModel.toggleSortingMode());
 
         processMediaListButton.setOnClickListener(processMediaListButtonListener);
     }
@@ -311,51 +310,6 @@ public class PaginatedMediaList extends ConstraintLayout {
         }
     }
 
-    private void toggleSorting() {
-
-        switch (currentSortingMode) {
-
-            case SORTING_NONE:
-                currentSortingMode = SORTING_REGULAR;
-                break;
-            case SORTING_REGULAR:
-                currentSortingMode = SORTING_REVERSED;
-                break;
-            case SORTING_REVERSED:
-            default:
-                currentSortingMode = SORTING_NONE;
-        }
-
-        applySorting();
-    }
-
-    private void applySorting() {
-
-        if (filteredMediaList.getValue() == null) {
-            /* TODO: Add log entry. */
-            throw new NullPointerException();
-        }
-
-        filteredMediaList.getValue().sort(new MediaComparator());
-
-        switch (currentSortingMode) {
-
-            case SORTING_REGULAR:
-                filteredMediaList.getValue().sort(new MediaComparator());
-                break;
-
-            case SORTING_REVERSED:
-                filteredMediaList.getValue().sort(new MediaComparator().reversed());
-                break;
-
-            case SORTING_NONE:
-            default: /* TODO: Implement default sorting. */
-        }
-
-        /* TODO: Re-set necessary? */
-        filteredMediaList.postValue(filteredMediaList.getValue());
-    }
-
     public MutableLiveData<Media> getSelectedMedia() {
         return selectedMedia;
     }
@@ -384,18 +338,6 @@ public class PaginatedMediaList extends ConstraintLayout {
                 return true;
 
             return mediaType.equals(media.getMediaType());
-        }
-    }
-
-    private static class MediaComparator implements Comparator<Media> {
-
-        @Override
-        public int compare(Media m1, Media m2) {
-
-            String titleAndName1 = m1.getName() + m1.getTitle();
-            String titleAndName2 = m2.getName() + m2.getTitle();
-
-            return titleAndName1.compareTo(titleAndName2);
         }
     }
 

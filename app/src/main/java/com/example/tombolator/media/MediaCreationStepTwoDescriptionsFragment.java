@@ -6,11 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.example.tombolator.R;
 
 public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
@@ -26,7 +28,8 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
     private Button backButton;
     private Button saveButton;
 
-    private MediaCreationStepTwoDescriptionsFragment() {}
+    private MediaCreationStepTwoDescriptionsFragment() {
+    }
 
     public static MediaCreationStepTwoDescriptionsFragment newInstance() {
         return new MediaCreationStepTwoDescriptionsFragment();
@@ -65,7 +68,7 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
     }
 
     private void registerObserver() {
-        mediaActivityViewModel.getSelectedMedia().observe(this, new SelectedMediaObserver());
+        mediaActivityViewModel.getSelectedMedia().observe(getViewLifecycleOwner(), new SelectedMediaObserver());
     }
 
     private void setVisibilitiesByMediaType() {

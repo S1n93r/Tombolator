@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 
 import com.example.tombolator.TomboRepository;
 import com.google.common.base.Predicate;
@@ -24,10 +23,6 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
     private static final String FILTER_ALL_CATEGORIES = "[show all categories]";
 
-    private static final int SORTING_NONE = 0;
-    private static final int SORTING_REGULAR = 1;
-    private static final int SORTING_REVERSED = 2;
-
     private final TomboRepository tomboRepository;
     private final LiveData<List<Media>> allMediaLiveData;
     private final MutableLiveData<List<Media>> allMediaFilteredAndSortedLiveData = new MutableLiveData<>(new ArrayList<>());
@@ -36,7 +31,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
     private final MutableLiveData<Media> selectedMedia = new MutableLiveData<>();
 
-    private int currentSortingMode = SORTING_NONE;
+    private final MutableLiveData<SortingMode> currentSortingMode = new MutableLiveData<>(SortingMode.A_TO_Z);
 
     public MediaActivityViewModel(@NonNull Application application) {
 
@@ -49,7 +44,12 @@ public class MediaActivityViewModel extends AndroidViewModel {
     }
 
     private void registerObserver() {
-        allMediaLiveData.observeForever(new AllMediaSortAndFilterObserver());
+
+        allMediaLiveData.observeForever(media -> applySortingAndFiltering(currentSortingMode.getValue(), selectedMediaType.getValue()));
+
+        currentSortingMode.observeForever(this::applySorting);
+
+        selectedMediaType.observeForever(this::applyMediaTypFilter);
     }
 
     public void selectMediaType(String mediaType) {
@@ -61,15 +61,10 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
         /* TODO: Move to background thread? */
         selectedMediaType.setValue(mediaType);
-
-        refreshFilteredAndSortedMediaLiveData();
     }
 
     public void clearMediaType() {
-
         selectedMediaType.setValue(FILTER_ALL_CATEGORIES);
-
-        refreshFilteredAndSortedMediaLiveData();
     }
 
     public Media getMedia(long mediaId) {
@@ -112,79 +107,57 @@ public class MediaActivityViewModel extends AndroidViewModel {
         System.err.println("Media with id " + mediaId + " was not found in " + this.getClass() + ".");
     }
 
-    public void toggleSorting() {
+    public void toggleSortingMode() {
 
-        switch (currentSortingMode) {
+        if (currentSortingMode.getValue() == SortingMode.A_TO_Z)
+            currentSortingMode.setValue(SortingMode.Z_TO_A);
+        else
+            currentSortingMode.setValue(SortingMode.A_TO_Z);
+    }
 
-            case SORTING_NONE:
-                currentSortingMode = SORTING_REGULAR;
+    private void applySortingAndFiltering(SortingMode sortingMode, String mediaType) {
+        applySorting(sortingMode);
+        applyMediaTypFilter(mediaType);
+    }
+
+    private void applySorting(SortingMode sortingMode) {
+
+        List<Media> mediaListSorted = allMediaLiveData.getValue();
+
+        if (mediaListSorted == null)
+            throw new IllegalStateException("Media list should not be null.");
+
+        switch (sortingMode) {
+
+            case A_TO_Z:
+                mediaListSorted.sort(new MediaComparator());
                 break;
-            case SORTING_REGULAR:
-                currentSortingMode = SORTING_REVERSED;
+
+            case Z_TO_A:
+                mediaListSorted.sort(new MediaComparator().reversed());
                 break;
-            case SORTING_REVERSED:
+
             default:
-                currentSortingMode = SORTING_NONE;
+                throw new IllegalStateException("Unexpected value: " + sortingMode);
         }
 
-        applySorting();
-
-        allMediaFilteredAndSortedLiveData.postValue(allMediaFilteredAndSortedLiveData.getValue());
+        allMediaFilteredAndSortedLiveData.setValue(mediaListSorted);
     }
 
-    private void refreshFilteredAndSortedMediaLiveData() {
-
-        applyMediaTypeFilterAndPopulate();
-        applySorting();
-
-        allMediaFilteredAndSortedLiveData.postValue(allMediaFilteredAndSortedLiveData.getValue());
-    }
-
-    public void applyMediaTypeFilterAndPopulate() {
-
-        if (allMediaLiveData.getValue() == null) {
-            /* TODO: Add log entry. */
-            throw new NullPointerException();
-        }
+    public void applyMediaTypFilter(String mediaType) {
 
         if (allMediaFilteredAndSortedLiveData.getValue() == null) {
-            /* TODO: Add log entry. */
-            throw new NullPointerException();
+            throw new IllegalStateException("Filtered media list should not be null");
         }
-
-        allMediaFilteredAndSortedLiveData.getValue().clear();
 
         Collection<Media> filteredCollection = Collections2.filter(
-                allMediaLiveData.getValue(), new MediaTypeFilterPredicate(selectedMediaType.getValue()));
+                allMediaFilteredAndSortedLiveData.getValue(), new MediaTypeFilterPredicate(mediaType));
 
-        allMediaFilteredAndSortedLiveData.getValue().addAll(filteredCollection);
-    }
-
-    private void applySorting() {
-
-        if (allMediaFilteredAndSortedLiveData.getValue() == null) {
-            /* TODO: Add log entry. */
-            throw new NullPointerException();
-        }
-
-        allMediaFilteredAndSortedLiveData.getValue().sort(new MediaComparator());
-
-        switch (currentSortingMode) {
-
-            case SORTING_REGULAR:
-                allMediaFilteredAndSortedLiveData.getValue().sort(new MediaComparator());
-                break;
-
-            case SORTING_REVERSED:
-                allMediaFilteredAndSortedLiveData.getValue().sort(new MediaComparator().reversed());
-                break;
-
-            case SORTING_NONE:
-            default: /* TODO: Implement default sorting. */
-        }
+        allMediaFilteredAndSortedLiveData.setValue(new ArrayList<>(filteredCollection));
     }
 
     public void insert(Media media) {
+//        Objects.requireNonNull(allMediaLiveData.getValue()).add(media);
         tomboRepository.insertMedia(media);
     }
 
@@ -256,14 +229,6 @@ public class MediaActivityViewModel extends AndroidViewModel {
             String titleAndName2 = m2.getName() + m2.getTitle();
 
             return titleAndName1.compareTo(titleAndName2);
-        }
-    }
-
-    private class AllMediaSortAndFilterObserver implements Observer<List<Media>> {
-
-        @Override
-        public void onChanged(List<Media> mediaList) {
-            refreshFilteredAndSortedMediaLiveData();
         }
     }
 }

@@ -6,11 +6,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.example.tombolator.R;
 import com.example.tombolator.commons.NumberUtil;
 import com.example.tombolator.media.Media;
@@ -44,7 +52,8 @@ public class TombolaCreationFragmentStepTwo extends Fragment {
     private Button backButton;
     private Button saveTombolaButton;
 
-    private TombolaCreationFragmentStepTwo() {}
+    private TombolaCreationFragmentStepTwo() {
+    }
 
     public static TombolaCreationFragmentStepTwo newInstance() {
         return new TombolaCreationFragmentStepTwo();
@@ -52,7 +61,7 @@ public class TombolaCreationFragmentStepTwo extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
 
         tombolasActivity = (TombolasActivity) getActivity();
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
@@ -97,25 +106,25 @@ public class TombolaCreationFragmentStepTwo extends Fragment {
 
     private void registerObserver() {
 
-        if(tombolasActivityViewModel.getSelectedTombola() == null) {
+        if (tombolasActivityViewModel.getSelectedTombola() == null) {
             /* TODO: Throw log... Clonk! */
             throw new NullPointerException();
         }
 
-        tombolasActivityViewModel.getSelectedTombola().observe(this, new TombolaObserver());
+        tombolasActivityViewModel.getSelectedTombola().observe(getViewLifecycleOwner(), new TombolaObserver());
 
-        mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().observe(this, new MediaListObserver());
+        mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().observe(getViewLifecycleOwner(), new MediaListObserver());
 
         currentPage.removeObservers(this);
 
-        currentPage.observe(this, new PageNumberCurrentObserver());
+        currentPage.observe(getViewLifecycleOwner(), new PageNumberCurrentObserver());
 
-        mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().observe(this, new PageNumberTotalObserver());
+        mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().observe(getViewLifecycleOwner(), new PageNumberTotalObserver());
     }
 
     private void registerOnClickListener() {
 
-        sortButton.setOnClickListener((View view) -> mediaActivityViewModel.toggleSorting());
+        sortButton.setOnClickListener((View view) -> mediaActivityViewModel.toggleSortingMode());
 
         backButton.setOnClickListener((View view) -> tombolasActivity.switchToCreationStepOne());
 
@@ -132,17 +141,17 @@ public class TombolaCreationFragmentStepTwo extends Fragment {
 
         nextPageButton.setOnClickListener((View view) -> {
 
-            if(currentPage.getValue() == null) {
+            if (currentPage.getValue() == null) {
                 /* TODO: Log NPE here. */
                 throw new NullPointerException();
             }
 
-            if(mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().getValue() == null) {
+            if (mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().getValue() == null) {
                 /* TODO: Log NPE here. */
                 throw new NullPointerException();
             }
 
-            if(currentPage.getValue() == MediaUtil.getTotalNumberOfPages(
+            if (currentPage.getValue() == MediaUtil.getTotalNumberOfPages(
                     mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().getValue(), ELEMENTS_PER_PAGE))
                 return;
 
@@ -151,26 +160,26 @@ public class TombolaCreationFragmentStepTwo extends Fragment {
 
         previousPageButton.setOnClickListener((View view) -> {
 
-            if(currentPage.getValue() == null) {
+            if (currentPage.getValue() == null) {
                 /* TODO: Log NPE here. */
                 throw new NullPointerException();
             }
 
-            if(currentPage.getValue() == 1)
+            if (currentPage.getValue() == 1)
                 return;
 
             currentPage.setValue(currentPage.getValue() - 1);
         });
     }
 
-    private void showMediaOnCurrentPage (List<Media> mediaList) {
+    private void showMediaOnCurrentPage(List<Media> mediaList) {
 
-        if(tombolasActivityViewModel.getSelectedTombola().getValue() == null) {
+        if (tombolasActivityViewModel.getSelectedTombola().getValue() == null) {
             /* TODO: Log NPE here. */
             throw new NullPointerException();
         }
 
-        if(currentPage.getValue() == null) {
+        if (currentPage.getValue() == null) {
             /* TODO: Log NPE here. */
             throw new NullPointerException();
         }
@@ -178,12 +187,12 @@ public class TombolaCreationFragmentStepTwo extends Fragment {
         int start = (currentPage.getValue() - 1) * ELEMENTS_PER_PAGE;
         int end = start + ELEMENTS_PER_PAGE;
 
-        if(end > mediaList.size())
+        if (end > mediaList.size())
             end = mediaList.size();
 
         linearLayoutMedia.removeAllViews();
 
-        for(int i=start; i<end; i++) {
+        for (int i = start; i < end; i++) {
 
             Media media = mediaList.get(i);
 
@@ -197,9 +206,9 @@ public class TombolaCreationFragmentStepTwo extends Fragment {
             Typeface defaultTypeface = textView.getTypeface();
             int defaultTextColor = textView.getCurrentTextColor();
 
-            for(Media mediaInTombola : tombolasActivityViewModel.getSelectedTombola().getValue().getAllMedia()) {
+            for (Media mediaInTombola : tombolasActivityViewModel.getSelectedTombola().getValue().getAllMedia()) {
 
-                if(id == mediaInTombola.getId()) {
+                if (id == mediaInTombola.getId()) {
 
                     textView.setTextColor(Color.parseColor("#3700B3"));
                     textView.setTypeface(defaultTypeface, Typeface.BOLD);
@@ -209,7 +218,7 @@ public class TombolaCreationFragmentStepTwo extends Fragment {
             textView.setText(text);
             textView.setOnClickListener((View view) -> {
 
-                if(tombolasActivityViewModel.getSelectedTombola().getValue().getAllMedia().contains(media)) {
+                if (tombolasActivityViewModel.getSelectedTombola().getValue().getAllMedia().contains(media)) {
 
                     tombolasActivityViewModel.getSelectedTombola().getValue().removeMedia(media);
                     textView.setTextColor(defaultTextColor);
@@ -273,7 +282,7 @@ public class TombolaCreationFragmentStepTwo extends Fragment {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-            if(i == 0)
+            if (i == 0)
                 mediaActivityViewModel.clearMediaType();
             else
                 mediaActivityViewModel.selectMediaType(Media.MediaType.getMediaType(i - 1));
