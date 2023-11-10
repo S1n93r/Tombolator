@@ -2,11 +2,15 @@ package com.example.tombolator.tombolas;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import androidx.room.*;
+
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaListConverter;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,40 +34,29 @@ public class Tombola implements Parcelable {
 
     @ColumnInfo
     @PrimaryKey
-    @Getter
-    @Setter
     private Long id;
 
     @ColumnInfo
-    @Getter
-    @Setter
     private long creationTimestamp;
 
     @ColumnInfo
-    @Getter
-    @Setter
     private String name;
 
     @TypeConverters({com.example.tombolator.tombolas.TombolaTypeConverter.class})
     @ColumnInfo
-    @Getter
-    @Setter
     private Type type;
 
     @TypeConverters({MediaListConverter.class})
     @ColumnInfo
-    @Getter
-    @Setter
     private List<Media> mediaAvailable = new ArrayList<>();
 
     @TypeConverters({MediaListConverter.class})
     @ColumnInfo
-    @Getter
-    @Setter
     private List<Media> mediaDrawn = new ArrayList<>();
 
     @Ignore
-    public Tombola() {}
+    public Tombola() {
+    }
 
     protected Tombola(String name) {
 
@@ -119,21 +112,23 @@ public class Tombola implements Parcelable {
 
     public Media drawRandomMedia() {
 
-        switch(type) {
+        switch (type) {
 
             default:
-            case REUSE: return drawRandomMediaAndReuse();
+            case REUSE:
+                return drawRandomMediaAndReuse();
             case REMOVE:
-            case DELETE: return drawRandomMediaAndRemove();
+            case DELETE:
+                return drawRandomMediaAndRemove();
         }
     }
 
     private Media drawRandomMediaAndReuse() {
 
-        if(mediaAvailable.isEmpty() && mediaDrawn.isEmpty())
+        if (mediaAvailable.isEmpty() && mediaDrawn.isEmpty())
             return null;
 
-        if(mediaAvailable.isEmpty())
+        if (mediaAvailable.isEmpty())
             resetMediaDrawnToMediaAvailable();
 
         List<Media> mediaAvailableShuffled = new ArrayList<>(mediaAvailable);
@@ -150,7 +145,7 @@ public class Tombola implements Parcelable {
 
     private Media drawRandomMediaAndRemove() {
 
-        if(mediaAvailable.isEmpty() && mediaDrawn.isEmpty())
+        if (mediaAvailable.isEmpty() && mediaDrawn.isEmpty())
             return null;
 
         List<Media> mediaAvailableShuffled = new ArrayList<>(mediaAvailable);
@@ -194,11 +189,60 @@ public class Tombola implements Parcelable {
         return id + ";" + creationTimestamp + ";" + name + ";" + type + ";" + mediaAvailable + ";" + mediaDrawn + ";";
     }
 
+    /* Getters & Setters*/
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public long getCreationTimestamp() {
+        return creationTimestamp;
+    }
+
+    public void setCreationTimestamp(long creationTimestamp) {
+        this.creationTimestamp = creationTimestamp;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public List<Media> getMediaAvailable() {
+        return mediaAvailable;
+    }
+
+    public void setMediaAvailable(List<Media> mediaAvailable) {
+        this.mediaAvailable = mediaAvailable;
+    }
+
+    public List<Media> getMediaDrawn() {
+        return mediaDrawn;
+    }
+
+    public void setMediaDrawn(List<Media> mediaDrawn) {
+        this.mediaDrawn = mediaDrawn;
+    }
+
     public enum Type {
 
-        REUSE ("wiederverwenden", "Medien verbleiben nach dem Ziehen in der Tombola."),
-        REMOVE ("entfernen", "Medien werden nach dem Ziehen aus der Tombola entfernt."),
-        DELETE ("löschen", "Medien werden nach dem Ziehen aus der Tombola entfernt und gelöscht.");
+        REUSE("wiederverwenden", "Medien verbleiben nach dem Ziehen in der Tombola."),
+        REMOVE("entfernen", "Medien werden nach dem Ziehen aus der Tombola entfernt."),
+        DELETE("löschen", "Medien werden nach dem Ziehen aus der Tombola entfernt und gelöscht.");
 
         final String description;
         final String toolTip;
@@ -210,9 +254,9 @@ public class Tombola implements Parcelable {
 
         public static Type getTypeByDescription(String description) {
 
-            if(description.equals(DELETE.description))
+            if (description.equals(DELETE.description))
                 return DELETE;
-            else if(description.equals(REMOVE.description))
+            else if (description.equals(REMOVE.description))
                 return REMOVE;
             else
                 return REUSE;

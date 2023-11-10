@@ -4,14 +4,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.example.tombolator.R;
-import lombok.Setter;
 
 import java.util.List;
 
@@ -20,7 +25,6 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
     private MediaActivity mediaActivity;
     private MediaActivityViewModel mediaActivityViewModel;
 
-    @Setter
     private Fragment fragmentBefore;
 
     private Spinner mediaTypesSpinner;
@@ -31,7 +35,8 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
     private Button continueButton;
     private Button backButton;
 
-    private MediaCreationStepOneTypesFragment() {}
+    private MediaCreationStepOneTypesFragment() {
+    }
 
     public static MediaCreationStepOneTypesFragment newInstance() {
         return new MediaCreationStepOneTypesFragment();
@@ -145,6 +150,10 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
     private void registerObserver() {
         mediaActivityViewModel.getSelectedMedia().observe(this, new SelectedMediaObserver());
+    }
+
+    public void setFragmentBefore(Fragment fragmentBefore) {
+        this.fragmentBefore = fragmentBefore;
     }
 
     private class SelectedMediaObserver implements Observer<Media> {

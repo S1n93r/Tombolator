@@ -6,16 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.example.tombolator.R;
 import com.example.tombolator.commons.CustomAlertDialog;
 import com.example.tombolator.tombolas.TombolasActivityViewModel;
 import com.example.tombolator.utils.DateUtil;
-import lombok.Setter;
 
 public class MediaDetailsFragment extends Fragment {
 
@@ -23,7 +24,6 @@ public class MediaDetailsFragment extends Fragment {
     private MediaActivityViewModel mediaActivityViewModel;
     private TombolasActivityViewModel tombolasActivityViewModel;
 
-    @Setter
     private Fragment fragmentBefore;
 
     private TextView idValue;
@@ -37,7 +37,8 @@ public class MediaDetailsFragment extends Fragment {
     private Button backButton;
     private Button deleteButton;
 
-    private MediaDetailsFragment() {}
+    private MediaDetailsFragment() {
+    }
 
     public static MediaDetailsFragment newInstance() {
         return new MediaDetailsFragment();
@@ -72,7 +73,7 @@ public class MediaDetailsFragment extends Fragment {
     }
 
     private void registerObserver() {
-        mediaActivityViewModel.getSelectedMedia().observe(this, new SelectedMediaObserver());
+        mediaActivityViewModel.getSelectedMedia().observe(getViewLifecycleOwner(), new SelectedMediaObserver());
     }
 
     private void registerOnClickListener() {
@@ -130,6 +131,10 @@ public class MediaDetailsFragment extends Fragment {
         mediaActivityViewModel.delete(media);
 
         mediaActivity.switchToMediaList();
+    }
+
+    public void setFragmentBefore(Fragment fragmentBefore) {
+        this.fragmentBefore = fragmentBefore;
     }
 
     private class SelectedMediaObserver implements Observer<Media> {

@@ -8,19 +8,27 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
 import com.example.tombolator.R;
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaUtil;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
-import lombok.Getter;
+
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 import java.util.ArrayList;
@@ -47,10 +55,8 @@ public class PaginatedMediaList extends ConstraintLayout {
 
     private final MutableLiveData<List<Media>> filteredMediaList = new MutableLiveData<>(new ArrayList<>());
 
-    @Getter
     private final MutableLiveData<Media> selectedMedia = new MutableLiveData<>();
 
-    @Getter
     private final MutableLiveData<List<Media>> selectedMediaList = new MutableLiveData<>(new ArrayList<>());
 
     private int mode = SINGLE_SELECT_SHOW_DETAILS;
@@ -346,6 +352,14 @@ public class PaginatedMediaList extends ConstraintLayout {
 
         /* TODO: Re-set necessary? */
         filteredMediaList.postValue(filteredMediaList.getValue());
+    }
+
+    public MutableLiveData<Media> getSelectedMedia() {
+        return selectedMedia;
+    }
+
+    public MutableLiveData<List<Media>> getSelectedMediaList() {
+        return selectedMediaList;
     }
 
     private static class MediaTypeFilterPredicate implements Predicate<Media> {

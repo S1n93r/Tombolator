@@ -2,13 +2,12 @@ package com.example.tombolator.media;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,47 +30,32 @@ public class Media implements Parcelable {
 
     @ColumnInfo
     @PrimaryKey
-    @Getter
-    @Setter
     private Long id;
 
     @ColumnInfo
-    @Getter
-    @Setter
     private long creationTimestamp;
 
     @ColumnInfo
-    @Getter
-    @Setter
     private String name;
 
     @ColumnInfo
-    @Getter
-    @Setter
     private String title;
 
     @ColumnInfo
-    @Getter
-    @Setter
     private int number;
 
     @ColumnInfo
-    @Getter
-    @Setter
     private String author;
 
     @ColumnInfo
-    @Getter
-    @Setter
     private String mediaType;
 
     @ColumnInfo
-    @Getter
-    @Setter
     private String contentType;
 
     @Ignore
-    public Media() {}
+    public Media() {
+    }
 
     public Media(String name, String title, int number, String author, String mediaType, String contentType) {
 
@@ -130,10 +114,10 @@ public class Media implements Parcelable {
 
     public String toLabel() {
 
-        if(number == -1)
+        if (number == -1)
             return name + "\n" + title;
 
-        return "(" + number + ") "+ name + "\n" + title;
+        return "(" + number + ") " + name + "\n" + title;
     }
 
     public String toCsv() {
@@ -148,7 +132,72 @@ public class Media implements Parcelable {
         String contenType = this.contentType != null ? this.contentType : "";
 
         return id + ";" + creationTimestamp + ";" + name + ";" + title + ";" + number + ";" + author + ";"
-                + mediaType +  ";" + contenType + ";";
+                + mediaType + ";" + contenType + ";";
+    }
+
+    /* Getters & Setters*/
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public long getCreationTimestamp() {
+        return creationTimestamp;
+    }
+
+    public void setCreationTimestamp(long creationTimestamp) {
+        this.creationTimestamp = creationTimestamp;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getMediaType() {
+        return mediaType;
+    }
+
+    public void setMediaType(String mediaType) {
+        this.mediaType = mediaType;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 
     public static final class MediaType {
@@ -172,31 +221,47 @@ public class Media implements Parcelable {
 
         public static int getIndex(String type) {
 
-            switch(type) {
+            switch (type) {
                 case CASSETTE:
-                default: return 0;
-                case CD: return 1;
-                case DVD: return 2;
-                case BLU_RAY: return 3;
-                case E_BOOK: return 4;
-                case BOOK: return 5;
-                case STREAMING: return 6;
-                case MEAL: return 7;
+                default:
+                    return 0;
+                case CD:
+                    return 1;
+                case DVD:
+                    return 2;
+                case BLU_RAY:
+                    return 3;
+                case E_BOOK:
+                    return 4;
+                case BOOK:
+                    return 5;
+                case STREAMING:
+                    return 6;
+                case MEAL:
+                    return 7;
             }
         }
 
         public static String getMediaType(int index) {
 
-            switch(index) {
+            switch (index) {
                 case 0:
-                default: return CASSETTE;
-                case 1: return CD;
-                case 2: return DVD;
-                case 3: return BLU_RAY;
-                case 4: return E_BOOK;
-                case 5: return BOOK;
-                case 6: return STREAMING;
-                case 7: return MEAL;
+                default:
+                    return CASSETTE;
+                case 1:
+                    return CD;
+                case 2:
+                    return DVD;
+                case 3:
+                    return BLU_RAY;
+                case 4:
+                    return E_BOOK;
+                case 5:
+                    return BOOK;
+                case 6:
+                    return STREAMING;
+                case 7:
+                    return MEAL;
             }
         }
     }
@@ -217,11 +282,14 @@ public class Media implements Parcelable {
 
         public static int getIndex(String type) {
 
-            switch(type) {
+            switch (type) {
                 case AUDIO_PLAY:
-                default: return 0;
-                case MOVIE: return 1;
-                case SERIES: return 2;
+                default:
+                    return 0;
+                case MOVIE:
+                    return 1;
+                case SERIES:
+                    return 2;
             }
         }
     }
