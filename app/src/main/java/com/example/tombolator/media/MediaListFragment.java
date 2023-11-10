@@ -15,8 +15,6 @@ public class MediaListFragment extends Fragment {
     private MediaActivity mediaActivity;
     private MediaActivityViewModel mediaActivityViewModel;
 
-    private PaginatedMediaList paginatedMediaList;
-
     private MediaListFragment() {}
 
     public static MediaListFragment newInstance() {
@@ -31,12 +29,12 @@ public class MediaListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.media_list_fragment, container, false);
 
-        paginatedMediaList = view.findViewById(R.id.paginated_media_list);
+        PaginatedMediaList paginatedMediaList = view.findViewById(R.id.paginated_media_list);
 
         paginatedMediaList.configureView(this, mediaActivityViewModel.getAllMediaLiveData(),
                 v -> mediaActivity.finish(), new EnterCreationListener(this));
 
-        paginatedMediaList.getSelectedMedia().observe(this, new ShowDetailsObserver(this));
+        paginatedMediaList.getSelectedMedia().observe(getViewLifecycleOwner(), new ShowDetailsObserver(this));
 
         return view;
     }
