@@ -16,7 +16,7 @@ import com.example.tombolator.R;
 import com.example.tombolator.TomboApplication;
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaDao;
-import com.example.tombolator.media.MediaTypeEnum;
+import com.example.tombolator.media.MediaType;
 import com.example.tombolator.tombolas.Tombola;
 import com.example.tombolator.tombolas.TombolaDao;
 import com.example.tombolator.utils.DateUtil;
@@ -190,7 +190,7 @@ public class ConfigMainFragment extends Fragment {
                     media.setName(name);
                     media.setTitle(title);
                     media.setNumber(Integer.parseInt(number));
-                    media.setMediaType(MediaTypeEnum.fromOldString(mediaType));
+                    media.setMediaType(MediaType.fromOldString(mediaType));
                     media.setContentType(contentType);
 
                     mediaList.add(media);

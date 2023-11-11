@@ -78,7 +78,7 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
             throw new NullPointerException();
         }
 
-        MediaTypeEnum mediaType = mediaActivityViewModel.getSelectedMedia().getValue().getMediaType();
+        MediaType mediaType = mediaActivityViewModel.getSelectedMedia().getValue().getMediaType();
 
         switch (mediaType) {
             case CASSETTE:

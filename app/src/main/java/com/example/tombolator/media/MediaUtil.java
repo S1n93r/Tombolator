@@ -6,7 +6,7 @@ import java.util.List;
 
 public final class MediaUtil {
 
-    public static int getMediaTypeIcon(MediaTypeEnum mediaType) {
+    public static int getMediaTypeIcon(MediaType mediaType) {
 
         switch (mediaType) {
 

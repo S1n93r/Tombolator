@@ -2,7 +2,7 @@ package com.example.tombolator.media;
 
 import java.util.Map;
 
-public enum MediaTypeEnum {
+public enum MediaType {
 
     ALL("Alle"),
     CASSETTE("Kassette"),
@@ -16,20 +16,20 @@ public enum MediaTypeEnum {
 
     private final String cleanName;
 
-    MediaTypeEnum(String cleanName) {
+    MediaType(String cleanName) {
         this.cleanName = cleanName;
     }
 
     /* TODO: Remove as soon as Susi has newest version. */
     @Deprecated
-    public static MediaTypeEnum fromOldString(String string) {
+    public static MediaType fromOldString(String string) {
 
         Map<String, String> matcher = MediaTypEnumHelper.getMatcher();
 
         if (matcher.containsKey(string))
-            return MediaTypeEnum.valueOf(matcher.get(string));
+            return MediaType.valueOf(matcher.get(string));
 
-        return MediaTypeEnum.valueOf(string);
+        return MediaType.valueOf(string);
     }
 
     public String getCleanName() {

@@ -50,7 +50,7 @@ public class Media implements Parcelable {
 
     @ColumnInfo
     @TypeConverters({MediaTypeConverter.class})
-    private MediaTypeEnum mediaType;
+    private MediaType mediaType;
 
     @ColumnInfo
     private String contentType;
@@ -59,7 +59,7 @@ public class Media implements Parcelable {
     public Media() {
     }
 
-    public Media(String name, String title, int number, String author, MediaTypeEnum mediaType, String contentType) {
+    public Media(String name, String title, int number, String author, MediaType mediaType, String contentType) {
 
         creationTimestamp = System.currentTimeMillis();
         this.name = name;
@@ -88,7 +88,7 @@ public class Media implements Parcelable {
         if (mediaTypeString == null)
             throw new IllegalStateException("Media type string should not be empty in media parcel.");
 
-        mediaType = MediaTypeEnum.valueOf(MediaTypeEnum.class, mediaTypeString);
+        mediaType = MediaType.valueOf(MediaType.class, mediaTypeString);
     }
 
     @NonNull
@@ -192,11 +192,11 @@ public class Media implements Parcelable {
         this.author = author;
     }
 
-    public MediaTypeEnum getMediaType() {
+    public MediaType getMediaType() {
         return mediaType;
     }
 
-    public void setMediaType(MediaTypeEnum mediaType) {
+    public void setMediaType(MediaType mediaType) {
         this.mediaType = mediaType;
     }
 

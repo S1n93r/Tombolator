@@ -74,8 +74,8 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
     private void setUpMediaTypeSpinner() {
 
-        List<String> mediaTypesForSpinner = StreamSupport.stream(Arrays.asList(MediaTypeEnum.values()))
-                .map(MediaTypeEnum::getCleanName)
+        List<String> mediaTypesForSpinner = StreamSupport.stream(Arrays.asList(MediaType.values()))
+                .map(MediaType::getCleanName)
                 .collect(Collectors.toList());
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
@@ -90,7 +90,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                if (i == MediaTypeEnum.MEAL.ordinal()) {
+                if (i == MediaType.MEAL.ordinal()) {
 
                     showContentSpinnerAndLabel(false);
                     return;
@@ -147,7 +147,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
             Media selectedMedia = mediaActivityViewModel.getSelectedMedia().getValue();
 
-            selectedMedia.setMediaType(MediaTypeEnum.valueOf(mediaTypeString));
+            selectedMedia.setMediaType(MediaType.valueOf(mediaTypeString));
             selectedMedia.setContentType(contentType);
 
             mediaActivity.switchToCreationStepTwo();

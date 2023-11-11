@@ -2,7 +2,7 @@ package com.example.tombolator;
 
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaDao;
-import com.example.tombolator.media.MediaTypeEnum;
+import com.example.tombolator.media.MediaType;
 import com.example.tombolator.tombolas.Tombola;
 import com.example.tombolator.tombolas.TombolaDao;
 
@@ -97,7 +97,7 @@ public class StashScript implements Runnable {
 
                 int number = numberAsString.isEmpty() ? 1 : Integer.parseInt(numberAsString);
 
-                Media media = new Media(name, title, number, author, MediaTypeEnum.valueOf(mediaType), contentType);
+                Media media = new Media(name, title, number, author, MediaType.valueOf(mediaType), contentType);
                 MEDIA_CACHE.add(media);
 
             } catch (ArrayIndexOutOfBoundsException e) {

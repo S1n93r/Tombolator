@@ -158,8 +158,8 @@ public class PaginatedMediaList extends ConstraintLayout {
 
     private void setUpMediaTypesSpinner() {
 
-        List<String> mediaTypesForSpinner = StreamSupport.stream(Arrays.asList(MediaTypeEnum.values()))
-                .map(MediaTypeEnum::getCleanName)
+        List<String> mediaTypesForSpinner = StreamSupport.stream(Arrays.asList(MediaType.values()))
+                .map(MediaType::getCleanName)
                 .collect(Collectors.toList());
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
@@ -311,9 +311,9 @@ public class PaginatedMediaList extends ConstraintLayout {
 
     private static class MediaTypeFilterPredicate implements Predicate<Media> {
 
-        private final MediaTypeEnum mediaType;
+        private final MediaType mediaType;
 
-        public MediaTypeFilterPredicate(MediaTypeEnum mediaType) {
+        public MediaTypeFilterPredicate(MediaType mediaType) {
             this.mediaType = mediaType;
         }
 
@@ -325,7 +325,7 @@ public class PaginatedMediaList extends ConstraintLayout {
                 throw new NullPointerException();
             }
 
-            if (mediaType == MediaTypeEnum.ALL)
+            if (mediaType == MediaType.ALL)
                 return true;
 
             return mediaType.equals(media.getMediaType());
@@ -338,9 +338,9 @@ public class PaginatedMediaList extends ConstraintLayout {
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
             if (i == 0)
-                mediaActivityViewModel.getSelectedMediaType().setValue(MediaTypeEnum.ALL);
+                mediaActivityViewModel.getSelectedMediaType().setValue(MediaType.ALL);
             else
-                mediaActivityViewModel.getSelectedMediaType().setValue(MediaTypeEnum.values()[i]);
+                mediaActivityViewModel.getSelectedMediaType().setValue(MediaType.values()[i]);
 
             currentPage.setValue(1);
         }

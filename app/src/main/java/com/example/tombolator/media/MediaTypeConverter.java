@@ -5,12 +5,12 @@ import androidx.room.TypeConverter;
 public class MediaTypeConverter {
 
     @TypeConverter
-    public static MediaTypeEnum fromJsonString(String json) {
-        return MediaTypeEnum.valueOf(json);
+    public static MediaType fromJsonString(String json) {
+        return MediaType.valueOf(json);
     }
 
     @TypeConverter
-    public static String toJsonString(MediaTypeEnum mediaList) {
+    public static String toJsonString(MediaType mediaList) {
         return mediaList.name();
     }
 }

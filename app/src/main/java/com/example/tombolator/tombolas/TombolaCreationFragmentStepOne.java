@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tombolator.R;
-import com.example.tombolator.media.MediaTypeEnum;
+import com.example.tombolator.media.MediaType;
 
 import java.util.Arrays;
 import java.util.List;
@@ -68,8 +68,8 @@ public class TombolaCreationFragmentStepOne extends Fragment {
 
     private void setUpMediaTypeSpinner() {
 
-        List<String> mediaTypesForSpinner = StreamSupport.stream(Arrays.asList(MediaTypeEnum.values()))
-                .map(MediaTypeEnum::getCleanName)
+        List<String> mediaTypesForSpinner = StreamSupport.stream(Arrays.asList(MediaType.values()))
+                .map(MediaType::getCleanName)
                 .collect(Collectors.toList());
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(

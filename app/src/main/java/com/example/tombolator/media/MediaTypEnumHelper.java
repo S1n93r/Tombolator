@@ -17,7 +17,7 @@ public final class MediaTypEnumHelper {
 
         Map<String, String> matcherMap = new HashMap<>();
 
-        for (MediaTypeEnum value : MediaTypeEnum.values()) {
+        for (MediaType value : MediaType.values()) {
             matcherMap.put(value.getCleanName(), value.name());
         }
 
