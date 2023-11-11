@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.tombolator.R;
 import com.example.tombolator.TomboApplication;
+import com.example.tombolator.media.ContentType;
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaDao;
 import com.example.tombolator.media.MediaType;
@@ -191,7 +192,7 @@ public class ConfigMainFragment extends Fragment {
                     media.setTitle(title);
                     media.setNumber(Integer.parseInt(number));
                     media.setMediaType(MediaType.fromOldString(mediaType));
-                    media.setContentType(contentType);
+                    media.setContentType(ContentType.fromOldString(contentType));
 
                     mediaList.add(media);
                 }

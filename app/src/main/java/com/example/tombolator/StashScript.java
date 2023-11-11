@@ -1,5 +1,6 @@
 package com.example.tombolator;
 
+import com.example.tombolator.media.ContentType;
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaDao;
 import com.example.tombolator.media.MediaType;
@@ -61,10 +62,9 @@ public class StashScript implements Runnable {
         tombola.setCreationTimestamp(System.currentTimeMillis());
         tombola.setType(Tombola.Type.REUSE);
 
-        for (Media media : mediaList) {
-            if (media.getContentType().equals(Media.ContentType.MOVIE))
+        for (Media media : mediaList)
+            if (media.getContentType().equals(ContentType.MOVIE))
                 tombola.addMedia(media);
-        }
 
         tombolaDao.insertTombola(tombola);
     }
@@ -97,7 +97,7 @@ public class StashScript implements Runnable {
 
                 int number = numberAsString.isEmpty() ? 1 : Integer.parseInt(numberAsString);
 
-                Media media = new Media(name, title, number, author, MediaType.valueOf(mediaType), contentType);
+                Media media = new Media(name, title, number, author, MediaType.valueOf(mediaType), ContentType.valueOf(contentType));
                 MEDIA_CACHE.add(media);
 
             } catch (ArrayIndexOutOfBoundsException e) {

@@ -10,10 +10,6 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 @Entity
 public class Media implements Parcelable {
 
@@ -53,13 +49,13 @@ public class Media implements Parcelable {
     private MediaType mediaType;
 
     @ColumnInfo
-    private String contentType;
+    private ContentType contentType;
 
     @Ignore
     public Media() {
     }
 
-    public Media(String name, String title, int number, String author, MediaType mediaType, String contentType) {
+    public Media(String name, String title, int number, String author, MediaType mediaType, ContentType contentType) {
 
         creationTimestamp = System.currentTimeMillis();
         this.name = name;
@@ -137,7 +133,7 @@ public class Media implements Parcelable {
         String number = String.valueOf(this.number);
         String author = this.author != null ? this.author : "";
         String mediaType = this.mediaType != null ? this.mediaType.name() : "";
-        String contenType = this.contentType != null ? this.contentType : "";
+        String contenType = this.contentType != null ? this.contentType.name() : "";
 
         return id + ";" + creationTimestamp + ";" + name + ";" + title + ";" + number + ";" + author + ";"
                 + mediaType + ";" + contenType + ";";
@@ -200,39 +196,11 @@ public class Media implements Parcelable {
         this.mediaType = mediaType;
     }
 
-    public String getContentType() {
+    public ContentType getContentType() {
         return contentType;
     }
 
-    public void setContentType(String contentType) {
+    public void setContentType(ContentType contentType) {
         this.contentType = contentType;
-    }
-
-    public static final class ContentType {
-
-        public static final String AUDIO_PLAY = "Hörspiel";
-        public static final String MOVIE = "Film";
-        public static final String SERIES = "Serie";
-
-        public static List<String> getContentTypes() {
-
-            List<String> mediaTypes = new ArrayList<>();
-            Collections.addAll(mediaTypes, AUDIO_PLAY, MOVIE, SERIES);
-
-            return mediaTypes;
-        }
-
-        public static int getIndex(String type) {
-
-            switch (type) {
-                case AUDIO_PLAY:
-                default:
-                    return 0;
-                case MOVIE:
-                    return 1;
-                case SERIES:
-                    return 2;
-            }
-        }
     }
 }

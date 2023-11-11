@@ -78,6 +78,8 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
                 .map(MediaType::getCleanName)
                 .collect(Collectors.toList());
 
+        mediaTypesForSpinner.remove(0);
+
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                 this.getActivity(), R.layout.media_type_spinner_item, mediaTypesForSpinner);
 
@@ -119,7 +121,9 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
     private void setUpContentTypeSpinner() {
 
-        List<String> contentTypeForSpinner = Media.ContentType.getContentTypes();
+        List<String> contentTypeForSpinner = StreamSupport.stream(Arrays.asList(ContentType.values()))
+                .map(ContentType::getCleanName)
+                .collect(Collectors.toList());
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                 this.getActivity(), R.layout.media_type_spinner_item, contentTypeForSpinner);
@@ -147,8 +151,8 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
             Media selectedMedia = mediaActivityViewModel.getSelectedMedia().getValue();
 
-            selectedMedia.setMediaType(MediaType.valueOf(mediaTypeString));
-            selectedMedia.setContentType(contentType);
+            selectedMedia.setMediaType(MediaType.fromOldString(mediaTypeString));
+            selectedMedia.setContentType(ContentType.fromOldString(contentType));
 
             mediaActivity.switchToCreationStepTwo();
         });
@@ -171,7 +175,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
                     ? 0 : media.getMediaType().ordinal();
 
             int contentTypeIndex = media.getContentType() == null
-                    ? 0 : Media.ContentType.getIndex(media.getContentType());
+                    ? 0 : media.getContentType().ordinal();
 
             mediaTypesSpinner.setSelection(mediaTypeIndex);
             contentTypeSpinner.setSelection(contentTypeIndex);

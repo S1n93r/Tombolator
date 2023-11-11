@@ -24,7 +24,7 @@ public enum MediaType {
     @Deprecated
     public static MediaType fromOldString(String string) {
 
-        Map<String, String> matcher = MediaTypEnumHelper.getMatcher();
+        Map<String, String> matcher = EnumHelper.getMediaTypeMatcher();
 
         if (matcher.containsKey(string))
             return MediaType.valueOf(matcher.get(string));
