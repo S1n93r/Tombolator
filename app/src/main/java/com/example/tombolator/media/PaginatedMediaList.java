@@ -72,12 +72,11 @@ public class PaginatedMediaList extends ConstraintLayout {
 
     private Button backButton;
 
-    private Button processMediaListButton;
+    private Button createNewMediaButton;
 
     private int elementsPerPage;
 
-    private OnClickListener backButtonListener;
-    private OnClickListener processMediaListButtonListener;
+    private Runnable openMediaDetailsFragment;
 
     public PaginatedMediaList(@NonNull Context context) {
 
@@ -93,14 +92,12 @@ public class PaginatedMediaList extends ConstraintLayout {
         initView(context, attrs);
     }
 
-    public void configureView(FragmentActivity fragmentActivity, OnClickListener backButtonListener, OnClickListener processMediaListButtonListener) {
+    public void configureView(FragmentActivity fragmentActivity) {
 
         mediaActivityViewModel = new ViewModelProvider(fragmentActivity).get(MediaActivityViewModel.class);
 
         this.fragmentActivity = fragmentActivity;
         this.mediaList = mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData();
-        this.backButtonListener = backButtonListener;
-        this.processMediaListButtonListener = processMediaListButtonListener;
 
         isConfigured = true;
 
@@ -127,7 +124,7 @@ public class PaginatedMediaList extends ConstraintLayout {
         backButton = view.findViewById(R.id.back_button);
         nextPageButton = view.findViewById(R.id.button_next_page);
         previousPageButton = view.findViewById(R.id.button_previous_page);
-        processMediaListButton = view.findViewById(R.id.button_process_media_list);
+        createNewMediaButton = view.findViewById(R.id.button_create_new_media);
 
         handleAttributes(context, attrs);
 
@@ -143,11 +140,11 @@ public class PaginatedMediaList extends ConstraintLayout {
 
             titleTextView.setText(a.getString(R.styleable.PaginatedMediaList_title));
             elementsPerPage = a.getInteger(R.styleable.PaginatedMediaList_elementsPerPage, DEFAULT_ELEMENTS_PER_PAGE);
-            processMediaListButton.setText(a.getString(R.styleable.PaginatedMediaList_processButtonText));
+            createNewMediaButton.setText(a.getString(R.styleable.PaginatedMediaList_processButtonText));
 
             Drawable drawable = a.getDrawable(R.styleable.PaginatedMediaList_processButtonIcon);
 
-            processMediaListButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawable);
+            createNewMediaButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawable);
 
             mode = a.getInteger(R.styleable.PaginatedMediaList_mode, SINGLE_SELECT_SHOW_DETAILS);
 
@@ -204,8 +201,6 @@ public class PaginatedMediaList extends ConstraintLayout {
 
     private void setUpListener() {
 
-        backButton.setOnClickListener(backButtonListener);
-
         nextPageButton.setOnClickListener(v -> {
 
             if (currentPage.getValue() == null)
@@ -235,8 +230,6 @@ public class PaginatedMediaList extends ConstraintLayout {
         });
 
         sortButton.setOnClickListener(v -> mediaActivityViewModel.toggleSortingMode());
-
-        processMediaListButton.setOnClickListener(processMediaListButtonListener);
     }
 
     private void checkConfiguration() {
@@ -297,6 +290,18 @@ public class PaginatedMediaList extends ConstraintLayout {
 
             linearLayoutMedia.addView(textView);
         }
+    }
+
+    public void registerOpenMediaDetails(Runnable openMediaDetailsFragment) {
+        this.openMediaDetailsFragment = openMediaDetailsFragment;
+    }
+
+    public void registerOpenMediaCreationListener(OnClickListener openMediaCreationListener) {
+        createNewMediaButton.setOnClickListener(openMediaCreationListener);
+    }
+
+    public void registerGoBackListener(OnClickListener onClickListener) {
+        backButton.setOnClickListener(onClickListener);
     }
 
     private static class MediaTypeFilterPredicate implements Predicate<Media> {
@@ -368,6 +373,7 @@ public class PaginatedMediaList extends ConstraintLayout {
                 case SINGLE_SELECT_SHOW_DETAILS:
 
                     mediaActivityViewModel.getSelectedMedia().setValue(media);
+                    openMediaDetailsFragment.run();
                     break;
 
                 case MULTI_SELECT_MARK_MEDIA:
