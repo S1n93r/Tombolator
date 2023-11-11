@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph">
+    <fragment
+        android:id="@+id/mediaCreationStepOneTypesFragment2"
+        android:name="com.example.tombolator.media.MediaCreationStepOneTypesFragment"
+        android:label="media_creation_step_one_types_fragment"
+        tools:layout="@layout/media_creation_step_one_types_fragment">
+        <action
+            android:id="@+id/action_mediaCreationStepOneTypesFragment2_to_mediaCreationStepTwoDescriptionsFragment"
+            app:destination="@id/mediaCreationStepTwoDescriptionsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mediaCreationStepTwoDescriptionsFragment"
+        android:name="com.example.tombolator.media.MediaCreationStepTwoDescriptionsFragment"
+        android:label="media_creation_step_two_descriptions_fragment"
+        tools:layout="@layout/media_creation_step_two_descriptions_fragment">
+        <action
+            android:id="@+id/action_mediaCreationStepTwoDescriptionsFragment_to_mediaListFragment"
+            app:destination="@id/mediaListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mediaListFragment"
+        android:name="com.example.tombolator.media.MediaListFragment"
+        android:label="media_list_fragment"
+        tools:layout="@layout/media_list_fragment">
+        <action
+            android:id="@+id/action_mediaListFragment_to_mediaCreationStepOneTypesFragment2"
+            app:destination="@id/mediaCreationStepOneTypesFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/tombolaMainFragment"
+        android:name="com.example.tombolator.tombolas.TombolaMainFragment"
+        android:label="tombola_list_fragment"
+        tools:layout="@layout/tombola_list_fragment">
+        <action
+            android:id="@+id/action_tombolaMainFragment_to_tombolaCreationFragmentStepOne"
+            app:destination="@id/tombolaCreationFragmentStepOne" />
+        <action
+            android:id="@+id/action_tombolaMainFragment_to_tombolaDetailsFragment"
+            app:destination="@id/tombolaDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tombolaCreationFragmentStepOne"
+        android:name="com.example.tombolator.tombolas.TombolaCreationFragmentStepOne"
+        android:label="tombolas_creation_fragment_step_one"
+        tools:layout="@layout/tombolas_creation_fragment_step_one">
+        <action
+            android:id="@+id/action_tombolaCreationFragmentStepOne_to_tombolaCreationFragmentStepTwo"
+            app:destination="@id/tombolaCreationFragmentStepTwo" />
+    </fragment>
+    <fragment
+        android:id="@+id/tombolaCreationFragmentStepTwo"
+        android:name="com.example.tombolator.tombolas.TombolaCreationFragmentStepTwo"
+        android:label="tombolas_creation_fragment_step_two"
+        tools:layout="@layout/tombolas_creation_fragment_step_two">
+        <action
+            android:id="@+id/action_tombolaCreationFragmentStepTwo_to_tombolaMainFragment"
+            app:destination="@id/tombolaMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tombolaDetailsFragment"
+        android:name="com.example.tombolator.tombolas.TombolaDetailsFragment"
+        android:label="tombolas_edit_fragment"
+        tools:layout="@layout/tombolas_edit_fragment">
+        <action
+            android:id="@+id/action_tombolaDetailsFragment_to_tombolaMainFragment"
+            app:destination="@id/tombolaMainFragment" />
+    </fragment>
+
+</navigation>
