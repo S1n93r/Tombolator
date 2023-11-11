@@ -12,7 +12,7 @@ android {
         def versionCode_ = generateVersionCode()
 
         versionCode = versionCode_
-        versionName = generateVersionName(versionCode_)
+        versionName = "1." + versionCode_
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -107,15 +107,4 @@ static int generateVersionCode() {
     if (revisions.empty) throw new RuntimeException("Could not generate versioncode on this platform? Cmd output: ${revisions.text}")
 
     return revisions.toInteger()
-}
-
-static String generateVersionName(int versionCode) {
-
-    String versionName = "0"
-
-    for (char digit : versionCode.toString().toCharArray()) {
-        versionName += "." + digit
-    }
-
-    return versionName
 }
