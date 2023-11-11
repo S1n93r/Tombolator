@@ -9,21 +9,27 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
+
 import com.example.tombolator.R;
 import com.example.tombolator.TomboApplication;
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaDao;
+import com.example.tombolator.media.MediaTypeEnum;
 import com.example.tombolator.tombolas.Tombola;
 import com.example.tombolator.tombolas.TombolaDao;
 import com.example.tombolator.utils.DateUtil;
 import com.example.tombolator.utils.ToasterUtil;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,25 +70,26 @@ public class ConfigMainFragment extends Fragment {
 
         exportDatabaseButton.setOnClickListener(view -> {
 
-                TomboApplication context = ((TomboApplication) Objects.requireNonNull(getActivity())
-                        .getApplicationContext());
+            TomboApplication context = ((TomboApplication) requireActivity()
+                    .getApplicationContext());
 
-                exportMedia(context);
-                exportTombolas(context);
+            exportMedia(context);
+            exportTombolas(context);
 
-                refreshExportedVersion();
+            /* FIXME: This call does not update. Check why. */
+            refreshExportedVersion();
         });
 
         importDatabaseButton.setOnClickListener((View view) -> AsyncTask.execute(() -> {
 
-            TomboApplication context = ((TomboApplication) Objects.requireNonNull(getActivity())
+            TomboApplication context = ((TomboApplication) requireActivity()
                     .getApplicationContext());
 
             importMedia(context);
             importTombolas(context);
         }));
 
-        backButton.setOnClickListener(view -> Objects.requireNonNull(getActivity()).finish());
+        backButton.setOnClickListener(view -> requireActivity().finish());
     }
 
     private void exportMedia(TomboApplication context) {
@@ -93,13 +100,13 @@ public class ConfigMainFragment extends Fragment {
 
             StringBuilder exportedMedia = new StringBuilder();
 
-            for(Media media : mediaDao.getAllMedia()) {
+            for (Media media : mediaDao.getAllMedia()) {
                 exportedMedia.append(media.toCsv()).append(System.lineSeparator());
             }
 
             try {
 
-                File file = new File(Objects.requireNonNull(getContext()).getExternalFilesDir(null),
+                File file = new File(requireContext().getExternalFilesDir(null),
                         FILE_NAME_EXPORT_MEDIA + FILE_EXTENSION);
 
                 OutputStream os = getContext().getContentResolver().openOutputStream(Uri.fromFile(file));
@@ -108,7 +115,7 @@ public class ConfigMainFragment extends Fragment {
                 os.flush();
                 os.close();
 
-                ToasterUtil.makeShortToast(Objects.requireNonNull(getActivity()), getContext(),
+                ToasterUtil.makeShortToast(requireActivity(), getContext(),
                         "Save to {0}", file.getAbsolutePath());
 
             } catch (IOException e) {
@@ -125,13 +132,13 @@ public class ConfigMainFragment extends Fragment {
 
             StringBuilder exportedTombolas = new StringBuilder();
 
-            for(Tombola tombola : tombolaDao.getAllTombolas()) {
+            for (Tombola tombola : tombolaDao.getAllTombolas()) {
                 exportedTombolas.append(tombola.toCsv()).append(System.lineSeparator());
             }
 
             try {
 
-                File file = new File(Objects.requireNonNull(getContext()).getExternalFilesDir(null),
+                File file = new File(requireContext().getExternalFilesDir(null),
                         FILE_NAME_EXPORT_TOMBOLAS + FILE_EXTENSION);
 
                 OutputStream os = getContext().getContentResolver().openOutputStream(Uri.fromFile(file));
@@ -140,7 +147,7 @@ public class ConfigMainFragment extends Fragment {
                 os.flush();
                 os.close();
 
-                Objects.requireNonNull(getActivity()).runOnUiThread(() -> Toast.makeText(getContext(),
+                requireActivity().runOnUiThread(() -> Toast.makeText(getContext(),
                         "Saved to " + file.getAbsolutePath(), Toast.LENGTH_SHORT).show());
 
             } catch (IOException e) {
@@ -157,14 +164,14 @@ public class ConfigMainFragment extends Fragment {
 
                 List<Media> mediaList = new ArrayList<>();
 
-                File file = new File(Objects.requireNonNull(getContext()).getExternalFilesDir(null),
+                File file = new File(requireContext().getExternalFilesDir(null),
                         FILE_NAME_EXPORT_MEDIA + FILE_EXTENSION);
 
                 BufferedReader csvReader = new BufferedReader(new FileReader(file.getAbsolutePath()));
 
                 String row;
 
-                while((row = csvReader.readLine()) != null) {
+                while ((row = csvReader.readLine()) != null) {
 
                     String[] data = row.split(";");
 
@@ -183,7 +190,7 @@ public class ConfigMainFragment extends Fragment {
                     media.setName(name);
                     media.setTitle(title);
                     media.setNumber(Integer.parseInt(number));
-                    media.setMediaType(mediaType);
+                    media.setMediaType(MediaTypeEnum.fromOldString(mediaType));
                     media.setContentType(contentType);
 
                     mediaList.add(media);
@@ -192,7 +199,7 @@ public class ConfigMainFragment extends Fragment {
                 MediaDao mediaDao = context.getTomboDb().mediaDao();
                 mediaDao.insertAllMedia(mediaList);
 
-                Objects.requireNonNull(getActivity()).runOnUiThread(() -> Toast.makeText(getContext(),
+                requireActivity().runOnUiThread(() -> Toast.makeText(getContext(),
                         "Medien aus " + file.getAbsolutePath() + " importiert.", Toast.LENGTH_SHORT).show());
 
             } catch (IOException e) {
@@ -209,7 +216,7 @@ public class ConfigMainFragment extends Fragment {
 
                 List<Tombola> tombolaList = new ArrayList<>();
 
-                File file = new File(Objects.requireNonNull(getContext()).getExternalFilesDir(null),
+                File file = new File(requireContext().getExternalFilesDir(null),
                         FILE_NAME_EXPORT_TOMBOLAS + FILE_EXTENSION);
 
                 BufferedReader csvReader = new BufferedReader(new FileReader(file.getAbsolutePath()));
@@ -218,7 +225,7 @@ public class ConfigMainFragment extends Fragment {
 
                 String row;
 
-                while((row = csvReader.readLine()) != null) {
+                while ((row = csvReader.readLine()) != null) {
 
                     String[] data = row.split(";");
 
@@ -232,7 +239,7 @@ public class ConfigMainFragment extends Fragment {
                     /* TODO: Seems a bit hacky. */
                     try {
                         mediaDrawn = data[5];
-                    }catch(ArrayIndexOutOfBoundsException e) {
+                    } catch (ArrayIndexOutOfBoundsException e) {
                         //
                     }
 
@@ -240,16 +247,16 @@ public class ConfigMainFragment extends Fragment {
 
                     List<Media> mediaAvailableList = new ArrayList<>();
 
-                    if(mediaAvailable != null) {
+                    if (mediaAvailable != null) {
 
                         Matcher mediaIdsAvailable = pattern.matcher(mediaAvailable);
 
-                        while(mediaIdsAvailable.find()) {
+                        while (mediaIdsAvailable.find()) {
 
                             int start = mediaIdsAvailable.start() + 1;
                             int end = mediaIdsAvailable.end() - 1;
 
-                            String mediaId =  mediaAvailable.substring(start, end);
+                            String mediaId = mediaAvailable.substring(start, end);
 
                             Media media = mediaDao.getMedia(Long.parseLong(mediaId));
                             mediaAvailableList.add(media);
@@ -258,16 +265,16 @@ public class ConfigMainFragment extends Fragment {
 
                     List<Media> mediaDrawnList = new ArrayList<>();
 
-                    if(mediaDrawn != null) {
+                    if (mediaDrawn != null) {
 
                         Matcher mediaIdsDrawn = pattern.matcher(mediaDrawn);
 
-                        while(mediaIdsDrawn.find()) {
+                        while (mediaIdsDrawn.find()) {
 
                             int start = mediaIdsDrawn.start() + 1;
                             int end = mediaIdsDrawn.end() - 1;
 
-                            String mediaId =  mediaDrawn.substring(start, end);
+                            String mediaId = mediaDrawn.substring(start, end);
 
                             Media media = mediaDao.getMedia(Long.parseLong(mediaId));
                             mediaDrawnList.add(media);
@@ -289,7 +296,7 @@ public class ConfigMainFragment extends Fragment {
                 TombolaDao tombolaDao = context.getTomboDb().tombolaDao();
                 tombolaDao.insertAllTombolas(tombolaList);
 
-                Objects.requireNonNull(getActivity()).runOnUiThread(() -> Toast.makeText(getContext(),
+                requireActivity().runOnUiThread(() -> Toast.makeText(getContext(),
                         "Tombolas aus " + file.getAbsolutePath() + " importiert.", Toast.LENGTH_SHORT).show());
 
             } catch (IOException e) {
@@ -300,7 +307,7 @@ public class ConfigMainFragment extends Fragment {
 
     private void refreshExportedVersion() {
 
-        File file = new File(Objects.requireNonNull(getContext()).getExternalFilesDir(null),
+        File file = new File(requireContext().getExternalFilesDir(null),
                 FILE_NAME_EXPORT_MEDIA + FILE_EXTENSION);
 
         long lastModified = file.lastModified();

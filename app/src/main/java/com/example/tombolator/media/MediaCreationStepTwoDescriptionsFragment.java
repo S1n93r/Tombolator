@@ -78,24 +78,26 @@ public class MediaCreationStepTwoDescriptionsFragment extends Fragment {
             throw new NullPointerException();
         }
 
-        String type = mediaActivityViewModel.getSelectedMedia().getValue().getMediaType();
+        MediaTypeEnum mediaType = mediaActivityViewModel.getSelectedMedia().getValue().getMediaType();
 
-        switch (type) {
-            case Media.MediaType.CASSETTE:
-            case Media.MediaType.CD:
-            case Media.ContentType.AUDIO_PLAY:
+        switch (mediaType) {
+            case CASSETTE:
+            case CD:
+                /* FIXME: Reacting to content type should happen separately and content type should be turned to enum first. */
+//            case Media.ContentType.AUDIO_PLAY:
                 editTextAuthor.setVisibility(View.GONE);
                 break;
 
-            case Media.MediaType.DVD:
-            case Media.MediaType.BLU_RAY:
-            case Media.ContentType.MOVIE:
+            case DVD:
+            case BLU_RAY:
+                /* FIXME: Reacting to content type should happen separately and content type should be turned to enum first. */
+//            case Media.ContentType.MOVIE:
                 editTextAuthor.setVisibility(View.GONE);
                 editTextNumber.setVisibility(View.GONE);
                 break;
 
-            case Media.MediaType.BOOK:
-            case Media.MediaType.E_BOOK:
+            case BOOK:
+            case E_BOOK:
                 editTextNumber.setVisibility(View.GONE);
                 break;
         }

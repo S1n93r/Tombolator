@@ -23,9 +23,14 @@ import com.example.tombolator.R;
 import com.example.tombolator.commons.NumberUtil;
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaActivityViewModel;
+import com.example.tombolator.media.MediaTypeEnum;
 import com.example.tombolator.media.MediaUtil;
 
+import java.util.Arrays;
 import java.util.List;
+
+import java8.util.stream.Collectors;
+import java8.util.stream.StreamSupport;
 
 public class TombolaCreationFragmentStepTwo extends Fragment {
 
@@ -92,8 +97,9 @@ public class TombolaCreationFragmentStepTwo extends Fragment {
 
     private void setUpMediaTypesSpinner() {
 
-        List<String> mediaTypesForSpinner = Media.MediaType.getMediaTypes();
-        mediaTypesForSpinner.add(0, "Alle");
+        List<String> mediaTypesForSpinner = StreamSupport.stream(Arrays.asList(MediaTypeEnum.values()))
+                .map(MediaTypeEnum::getCleanName)
+                .collect(Collectors.toList());
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                 this.getActivity(), R.layout.media_type_spinner_item, mediaTypesForSpinner);
@@ -285,7 +291,7 @@ public class TombolaCreationFragmentStepTwo extends Fragment {
             if (i == 0)
                 mediaActivityViewModel.clearMediaType();
             else
-                mediaActivityViewModel.selectMediaType(Media.MediaType.getMediaType(i - 1));
+                mediaActivityViewModel.selectMediaType(MediaTypeEnum.values()[i]);
 
             currentPage.setValue(1);
         }

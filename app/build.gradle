@@ -89,6 +89,8 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.google.guava/guava
     implementation group: 'com.google.guava', name: 'guava', version: '30.1-android'
+
+    implementation group: 'net.sourceforge.streamsupport', name: 'streamsupport', version: '1.7.4'
 }
 
 repositories {

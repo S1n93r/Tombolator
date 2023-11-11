@@ -6,28 +6,28 @@ import java.util.List;
 
 public final class MediaUtil {
 
-    public static int getMediaTypeIcon(String mediaType) {
+    public static int getMediaTypeIcon(MediaTypeEnum mediaType) {
 
-        switch(mediaType) {
+        switch (mediaType) {
 
-            case Media.MediaType.CD:
-            case Media.MediaType.DVD:
-            case Media.MediaType.BLU_RAY:
+            case CD:
+            case DVD:
+            case BLU_RAY:
                 return R.drawable.ic_cd_25;
 
-            case Media.MediaType.BOOK:
+            case BOOK:
                 return R.drawable.ic_book_25;
 
-            case Media.MediaType.E_BOOK:
+            case E_BOOK:
                 return R.drawable.ic_ebook_25;
 
-            case Media.MediaType.STREAMING:
+            case STREAMING:
                 return R.drawable.ic_online_streaming_25;
 
-            case Media.MediaType.MEAL:
+            case MEAL:
                 return R.drawable.ic_meal_25;
 
-            case Media.MediaType.CASSETTE:
+            case CASSETTE:
             default:
                 return R.drawable.ic_cassette_25;
         }

@@ -33,8 +33,12 @@ import com.google.common.collect.Collections2;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
+import java8.util.stream.Collectors;
+import java8.util.stream.StreamSupport;
 
 public class PaginatedMediaList extends ConstraintLayout {
 
@@ -154,8 +158,9 @@ public class PaginatedMediaList extends ConstraintLayout {
 
     private void setUpMediaTypesSpinner() {
 
-        List<String> mediaTypesForSpinner = Media.MediaType.getMediaTypes();
-        mediaTypesForSpinner.add(0, "Alle");
+        List<String> mediaTypesForSpinner = StreamSupport.stream(Arrays.asList(MediaTypeEnum.values()))
+                .map(MediaTypeEnum::getCleanName)
+                .collect(Collectors.toList());
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                 getContext(), R.layout.media_type_spinner_item, mediaTypesForSpinner);
@@ -306,9 +311,9 @@ public class PaginatedMediaList extends ConstraintLayout {
 
     private static class MediaTypeFilterPredicate implements Predicate<Media> {
 
-        private final String mediaType;
+        private final MediaTypeEnum mediaType;
 
-        public MediaTypeFilterPredicate(String mediaType) {
+        public MediaTypeFilterPredicate(MediaTypeEnum mediaType) {
             this.mediaType = mediaType;
         }
 
@@ -320,7 +325,7 @@ public class PaginatedMediaList extends ConstraintLayout {
                 throw new NullPointerException();
             }
 
-            if (mediaType.equals(FILTER_ALL_CATEGORIES))
+            if (mediaType == MediaTypeEnum.ALL)
                 return true;
 
             return mediaType.equals(media.getMediaType());
@@ -333,9 +338,9 @@ public class PaginatedMediaList extends ConstraintLayout {
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
             if (i == 0)
-                mediaActivityViewModel.getSelectedMediaType().setValue(FILTER_ALL_CATEGORIES);
+                mediaActivityViewModel.getSelectedMediaType().setValue(MediaTypeEnum.ALL);
             else
-                mediaActivityViewModel.getSelectedMediaType().setValue(Media.MediaType.getMediaType(i - 1));
+                mediaActivityViewModel.getSelectedMediaType().setValue(MediaTypeEnum.values()[i]);
 
             currentPage.setValue(1);
         }

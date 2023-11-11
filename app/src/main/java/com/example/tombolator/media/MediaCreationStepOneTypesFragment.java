@@ -18,7 +18,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tombolator.R;
 
+import java.util.Arrays;
 import java.util.List;
+
+import java8.util.stream.Collectors;
+import java8.util.stream.StreamSupport;
 
 public class MediaCreationStepOneTypesFragment extends Fragment {
 
@@ -70,7 +74,9 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
     private void setUpMediaTypeSpinner() {
 
-        List<String> mediaTypesForSpinner = Media.MediaType.getMediaTypes();
+        List<String> mediaTypesForSpinner = StreamSupport.stream(Arrays.asList(MediaTypeEnum.values()))
+                .map(MediaTypeEnum::getCleanName)
+                .collect(Collectors.toList());
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                 this.getActivity(), R.layout.media_type_spinner_item, mediaTypesForSpinner);
@@ -84,7 +90,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                if (i == Media.MediaType.getIndex(Media.MediaType.MEAL)) {
+                if (i == MediaTypeEnum.MEAL.ordinal()) {
 
                     showContentSpinnerAndLabel(false);
                     return;
@@ -129,7 +135,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
         continueButton.setOnClickListener(v -> {
 
-            String mediaType = mediaTypesSpinner.getSelectedItem() != null ?
+            String mediaTypeString = mediaTypesSpinner.getSelectedItem() != null ?
                     mediaTypesSpinner.getSelectedItem().toString() : "";
             String contentType = contentTypeSpinner.getSelectedItem() != null ?
                     contentTypeSpinner.getSelectedItem().toString() : "";
@@ -141,7 +147,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
             Media selectedMedia = mediaActivityViewModel.getSelectedMedia().getValue();
 
-            selectedMedia.setMediaType(mediaType);
+            selectedMedia.setMediaType(MediaTypeEnum.valueOf(mediaTypeString));
             selectedMedia.setContentType(contentType);
 
             mediaActivity.switchToCreationStepTwo();
@@ -149,7 +155,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
     }
 
     private void registerObserver() {
-        mediaActivityViewModel.getSelectedMedia().observe(this, new SelectedMediaObserver());
+        mediaActivityViewModel.getSelectedMedia().observe(getViewLifecycleOwner(), new SelectedMediaObserver());
     }
 
     public void setFragmentBefore(Fragment fragmentBefore) {
@@ -162,7 +168,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
         public void onChanged(Media media) {
 
             int mediaTypeIndex = media.getMediaType() == null
-                    ? 0 : Media.MediaType.getIndex(media.getMediaType());
+                    ? 0 : media.getMediaType().ordinal();
 
             int contentTypeIndex = media.getContentType() == null
                     ? 0 : Media.ContentType.getIndex(media.getContentType());

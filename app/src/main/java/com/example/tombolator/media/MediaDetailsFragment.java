@@ -146,7 +146,7 @@ public class MediaDetailsFragment extends Fragment {
             nameValue.setText(media.getName());
             numberValue.setText(String.valueOf(media.getNumber()));
             titleValue.setText(media.getTitle());
-            typeValue.setText(media.getMediaType());
+            typeValue.setText(media.getMediaType().getCleanName());
             createdAt.setText(DateUtil.formatDate(media.getCreationTimestamp()));
         }
     }

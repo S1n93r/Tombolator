@@ -2,6 +2,7 @@ package com.example.tombolator;
 
 import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaDao;
+import com.example.tombolator.media.MediaTypeEnum;
 import com.example.tombolator.tombolas.Tombola;
 import com.example.tombolator.tombolas.TombolaDao;
 
@@ -23,7 +24,7 @@ public class StashScript implements Runnable {
     @Override
     public void run() {
 
-        if(MEDIA_CACHE == null) {
+        if (MEDIA_CACHE == null) {
             setUpAndSaveMediaToDatabase();
             MEDIA_CACHE = getMediaFromDatabase();
         }
@@ -37,7 +38,7 @@ public class StashScript implements Runnable {
         mediaDao.nukeTable();
 
         try {
-            for(Media media : createMediaList())
+            for (Media media : createMediaList())
                 mediaDao.insertMedia(media);
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,8 +61,8 @@ public class StashScript implements Runnable {
         tombola.setCreationTimestamp(System.currentTimeMillis());
         tombola.setType(Tombola.Type.REUSE);
 
-        for(Media media : mediaList) {
-            if(media.getContentType().equals(Media.ContentType.MOVIE))
+        for (Media media : mediaList) {
+            if (media.getContentType().equals(Media.ContentType.MOVIE))
                 tombola.addMedia(media);
         }
 
@@ -71,7 +72,7 @@ public class StashScript implements Runnable {
     private List<Media> createMediaList() throws IOException {
 
         /* Loading from cache. */
-        if(MEDIA_CACHE != null)
+        if (MEDIA_CACHE != null)
             return MEDIA_CACHE;
 
         MEDIA_CACHE = new ArrayList<>();
@@ -80,7 +81,7 @@ public class StashScript implements Runnable {
 
         String[] lines = mediaContentString.split("\n");
 
-        for (int i=0; i<lines.length; i++) {
+        for (int i = 0; i < lines.length; i++) {
 
             String line = lines[i];
             String[] mediaValues = line.split(";");
@@ -91,15 +92,15 @@ public class StashScript implements Runnable {
                 String title = mediaValues[1];
                 String numberAsString = mediaValues[2];
                 String author = mediaValues[3];
-                String carrierType = mediaValues[4];
+                String mediaType = mediaValues[4];
                 String contentType = mediaValues[5];
 
                 int number = numberAsString.isEmpty() ? 1 : Integer.parseInt(numberAsString);
 
-                Media media = new Media(name, title, number, author ,carrierType, contentType);
+                Media media = new Media(name, title, number, author, MediaTypeEnum.valueOf(mediaType), contentType);
                 MEDIA_CACHE.add(media);
 
-            }catch (ArrayIndexOutOfBoundsException e) {
+            } catch (ArrayIndexOutOfBoundsException e) {
                 /* TODO: Add logger entry. */
                 System.err.println("On line " + i + " the number of elements does not match the" +
                         " variables fetched");
@@ -113,7 +114,7 @@ public class StashScript implements Runnable {
     private String createMediaContentAsString() {
 
         /* Loading from cache. */
-        if(mediaContentString != null)
+        if (mediaContentString != null)
             return mediaContentString;
 
         mediaContentString = "Bibi Blocksberg;Die Schloßgespenster;8;;CD;Hörspiel\n" +
@@ -359,7 +360,7 @@ public class StashScript implements Runnable {
                 "Lilo & Stitch;;;;Streaming;Film\n" +
                 "Der König der Löwen;;;;Streaming;Film\n" +
                 "Küss den Frosch;;;;Streaming;Film\n" +
-                "Alles steht Kopf;;;;Streaming;Film\n"+
+                "Alles steht Kopf;;;;Streaming;Film\n" +
                 "High School Musical 1, 2 & 3;;;;Streaming;Film\n" +
                 "Die Bücherdiebin;;;;Streaming;Film\n" +
                 "Pretty Women;;;;Streaming;Film\n" +

@@ -7,15 +7,20 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import com.example.tombolator.R;
-import com.example.tombolator.media.Media;
 
-import java.util.ArrayList;
+import com.example.tombolator.R;
+import com.example.tombolator.media.MediaTypeEnum;
+
+import java.util.Arrays;
 import java.util.List;
+
+import java8.util.stream.Collectors;
+import java8.util.stream.StreamSupport;
 
 public class TombolaCreationFragmentStepOne extends Fragment {
 
@@ -27,7 +32,8 @@ public class TombolaCreationFragmentStepOne extends Fragment {
     private Button continueButton;
     private Button backButton;
 
-    private TombolaCreationFragmentStepOne() {}
+    private TombolaCreationFragmentStepOne() {
+    }
 
     public static TombolaCreationFragmentStepOne newInstance() {
         return new TombolaCreationFragmentStepOne();
@@ -36,7 +42,7 @@ public class TombolaCreationFragmentStepOne extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
 
         tombolasActivity = (TombolasActivity) getActivity();
         tombolasActivityViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
@@ -62,13 +68,9 @@ public class TombolaCreationFragmentStepOne extends Fragment {
 
     private void setUpMediaTypeSpinner() {
 
-        List<String> mediaTypesForSpinner = new ArrayList<>();
-        mediaTypesForSpinner.add(Media.MediaType.CASSETTE);
-        mediaTypesForSpinner.add(Media.MediaType.CD);
-        mediaTypesForSpinner.add(Media.MediaType.BOOK);
-        mediaTypesForSpinner.add(Media.MediaType.E_BOOK);
-        mediaTypesForSpinner.add(Media.MediaType.DVD);
-        mediaTypesForSpinner.add(Media.MediaType.BLU_RAY);
+        List<String> mediaTypesForSpinner = StreamSupport.stream(Arrays.asList(MediaTypeEnum.values()))
+                .map(MediaTypeEnum::getCleanName)
+                .collect(Collectors.toList());
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                 this.getActivity(), R.layout.media_type_spinner_item, mediaTypesForSpinner);
@@ -85,7 +87,7 @@ public class TombolaCreationFragmentStepOne extends Fragment {
 
         continueButton.setOnClickListener(v -> {
 
-            if(tombolasActivityViewModel.getSelectedTombola().getValue() == null) {
+            if (tombolasActivityViewModel.getSelectedTombola().getValue() == null) {
                 /* TODO: Create log entry... Like a nice carving. */
                 throw new NullPointerException();
             }

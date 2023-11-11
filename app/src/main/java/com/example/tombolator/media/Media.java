@@ -8,6 +8,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,7 +49,8 @@ public class Media implements Parcelable {
     private String author;
 
     @ColumnInfo
-    private String mediaType;
+    @TypeConverters({MediaTypeConverter.class})
+    private MediaTypeEnum mediaType;
 
     @ColumnInfo
     private String contentType;
@@ -57,7 +59,7 @@ public class Media implements Parcelable {
     public Media() {
     }
 
-    public Media(String name, String title, int number, String author, String mediaType, String contentType) {
+    public Media(String name, String title, int number, String author, MediaTypeEnum mediaType, String contentType) {
 
         creationTimestamp = System.currentTimeMillis();
         this.name = name;
@@ -80,7 +82,13 @@ public class Media implements Parcelable {
         name = in.readString();
         title = in.readString();
         number = in.readInt();
-        mediaType = in.readString();
+
+        String mediaTypeString = in.readString();
+
+        if (mediaTypeString == null)
+            throw new IllegalStateException("Media type string should not be empty in media parcel.");
+
+        mediaType = MediaTypeEnum.valueOf(MediaTypeEnum.class, mediaTypeString);
     }
 
     @NonNull
@@ -109,7 +117,7 @@ public class Media implements Parcelable {
         parcel.writeString(name);
         parcel.writeString(title);
         parcel.writeInt(number);
-        parcel.writeString(mediaType);
+        parcel.writeString(mediaType.name());
     }
 
     public String toLabel() {
@@ -128,7 +136,7 @@ public class Media implements Parcelable {
         String title = this.title != null ? this.title : "";
         String number = String.valueOf(this.number);
         String author = this.author != null ? this.author : "";
-        String mediaType = this.mediaType != null ? this.mediaType : "";
+        String mediaType = this.mediaType != null ? this.mediaType.name() : "";
         String contenType = this.contentType != null ? this.contentType : "";
 
         return id + ";" + creationTimestamp + ";" + name + ";" + title + ";" + number + ";" + author + ";"
@@ -184,11 +192,11 @@ public class Media implements Parcelable {
         this.author = author;
     }
 
-    public String getMediaType() {
+    public MediaTypeEnum getMediaType() {
         return mediaType;
     }
 
-    public void setMediaType(String mediaType) {
+    public void setMediaType(MediaTypeEnum mediaType) {
         this.mediaType = mediaType;
     }
 
@@ -198,72 +206,6 @@ public class Media implements Parcelable {
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
-    }
-
-    public static final class MediaType {
-
-        public static final String CASSETTE = "Kassette";
-        public static final String CD = "CD";
-        public static final String DVD = "DVD";
-        public static final String BLU_RAY = "Blu-ray";
-        public static final String E_BOOK = "E-Book";
-        public static final String BOOK = "Buch";
-        public static final String STREAMING = "Streaming";
-        public static final String MEAL = "Essen";
-
-        public static List<String> getMediaTypes() {
-
-            List<String> mediaTypes = new ArrayList<>();
-            Collections.addAll(mediaTypes, CASSETTE, CD, DVD, BLU_RAY, E_BOOK, BOOK, STREAMING, MEAL);
-
-            return mediaTypes;
-        }
-
-        public static int getIndex(String type) {
-
-            switch (type) {
-                case CASSETTE:
-                default:
-                    return 0;
-                case CD:
-                    return 1;
-                case DVD:
-                    return 2;
-                case BLU_RAY:
-                    return 3;
-                case E_BOOK:
-                    return 4;
-                case BOOK:
-                    return 5;
-                case STREAMING:
-                    return 6;
-                case MEAL:
-                    return 7;
-            }
-        }
-
-        public static String getMediaType(int index) {
-
-            switch (index) {
-                case 0:
-                default:
-                    return CASSETTE;
-                case 1:
-                    return CD;
-                case 2:
-                    return DVD;
-                case 3:
-                    return BLU_RAY;
-                case 4:
-                    return E_BOOK;
-                case 5:
-                    return BOOK;
-                case 6:
-                    return STREAMING;
-                case 7:
-                    return MEAL;
-            }
-        }
     }
 
     public static final class ContentType {
