@@ -1,4 +1,4 @@
-package com.example.tombolator.commons;
+package com.example.tombolator.media;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -25,9 +25,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tombolator.R;
-import com.example.tombolator.media.Media;
-import com.example.tombolator.media.MediaActivityViewModel;
-import com.example.tombolator.media.MediaUtil;
+import com.example.tombolator.commons.MediaEntryTextView;
+import com.example.tombolator.commons.NumberUtil;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 
@@ -39,10 +38,6 @@ import java.util.List;
 
 public class PaginatedMediaList extends ConstraintLayout {
 
-    private static final int SORTING_NONE = 0;
-    private static final int SORTING_REGULAR = 1;
-    private static final int SORTING_REVERSED = 2;
-
     private static final int DEFAULT_ELEMENTS_PER_PAGE = 5;
 
     private static final int SINGLE_SELECT_SHOW_DETAILS = 0;
@@ -52,17 +47,11 @@ public class PaginatedMediaList extends ConstraintLayout {
 
     private final MutableLiveData<Integer> currentPage = new MutableLiveData<>(1);
 
-    private final MutableLiveData<String> selectedMediaType = new MutableLiveData<>(FILTER_ALL_CATEGORIES);
-
-    private final MutableLiveData<Media> selectedMedia = new MutableLiveData<>();
-
     private final MutableLiveData<List<Media>> selectedMediaList = new MutableLiveData<>(new ArrayList<>());
 
     private MediaActivityViewModel mediaActivityViewModel;
 
     private int mode = SINGLE_SELECT_SHOW_DETAILS;
-
-    private int currentSortingMode = SORTING_NONE;
 
     private boolean isConfigured = false;
 
@@ -184,14 +173,14 @@ public class PaginatedMediaList extends ConstraintLayout {
 
         checkConfiguration();
 
-        selectedMediaType.observe(fragmentActivity, string -> {
+        mediaActivityViewModel.getSelectedMediaType().observe(fragmentActivity, mediaType -> {
 
             /* TODO: NPE because media was not yet loaded from room. Why? */
             if (mediaList.getValue() == null)
                 return;
 
             Collection<Media> filteredCollection = Collections2.filter(
-                    mediaList.getValue(), new MediaTypeFilterPredicate(selectedMediaType.getValue()));
+                    mediaList.getValue(), new MediaTypeFilterPredicate(mediaType));
 
             showMediaOnCurrentPage(new ArrayList<>(filteredCollection));
         });
@@ -310,14 +299,6 @@ public class PaginatedMediaList extends ConstraintLayout {
         }
     }
 
-    public MutableLiveData<Media> getSelectedMedia() {
-        return selectedMedia;
-    }
-
-    public MutableLiveData<List<Media>> getSelectedMediaList() {
-        return selectedMediaList;
-    }
-
     private static class MediaTypeFilterPredicate implements Predicate<Media> {
 
         private final String mediaType;
@@ -347,9 +328,9 @@ public class PaginatedMediaList extends ConstraintLayout {
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
             if (i == 0)
-                selectedMediaType.setValue(FILTER_ALL_CATEGORIES);
+                mediaActivityViewModel.getSelectedMediaType().setValue(FILTER_ALL_CATEGORIES);
             else
-                selectedMediaType.setValue(Media.MediaType.getMediaType(i - 1));
+                mediaActivityViewModel.getSelectedMediaType().setValue(Media.MediaType.getMediaType(i - 1));
 
             currentPage.setValue(1);
         }
@@ -386,7 +367,7 @@ public class PaginatedMediaList extends ConstraintLayout {
 
                 case SINGLE_SELECT_SHOW_DETAILS:
 
-                    selectedMedia.setValue(media);
+                    mediaActivityViewModel.getSelectedMedia().setValue(media);
                     break;
 
                 case MULTI_SELECT_MARK_MEDIA:
@@ -406,7 +387,7 @@ public class PaginatedMediaList extends ConstraintLayout {
                     break;
 
                 default:
-                    throw new SwitchCaseNotDefinedException("");
+                    throw new IllegalStateException("Unexpected value: " + mode);
             }
         }
     }

@@ -27,7 +27,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
     private final LiveData<List<Media>> allMediaLiveData;
     private final MutableLiveData<List<Media>> allMediaFilteredAndSortedLiveData = new MutableLiveData<>(new ArrayList<>());
 
-    private final MutableLiveData<String> selectedMediaType = new MutableLiveData<>("");
+    private final MutableLiveData<String> selectedMediaType = new MutableLiveData<>(FILTER_ALL_CATEGORIES);
 
     private final MutableLiveData<Media> selectedMedia = new MutableLiveData<>();
 
@@ -47,9 +47,9 @@ public class MediaActivityViewModel extends AndroidViewModel {
 
         allMediaLiveData.observeForever(media -> applySortingAndFiltering(currentSortingMode.getValue(), selectedMediaType.getValue()));
 
-        currentSortingMode.observeForever(this::applySorting);
+        currentSortingMode.observeForever(sortingMode -> applySortingAndFiltering(sortingMode, selectedMediaType.getValue()));
 
-        selectedMediaType.observeForever(this::applyMediaTypFilter);
+        selectedMediaType.observeForever(mediaType -> applySortingAndFiltering(currentSortingMode.getValue(), mediaType));
     }
 
     public void selectMediaType(String mediaType) {
@@ -125,7 +125,7 @@ public class MediaActivityViewModel extends AndroidViewModel {
         List<Media> mediaListSorted = allMediaLiveData.getValue();
 
         if (mediaListSorted == null)
-            throw new IllegalStateException("Media list should not be null.");
+            mediaListSorted = new ArrayList<>();
 
         switch (sortingMode) {
 
@@ -157,7 +157,6 @@ public class MediaActivityViewModel extends AndroidViewModel {
     }
 
     public void insert(Media media) {
-//        Objects.requireNonNull(allMediaLiveData.getValue()).add(media);
         tomboRepository.insertMedia(media);
     }
 

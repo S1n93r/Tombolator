@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tombolator.R;
-import com.example.tombolator.commons.PaginatedMediaList;
 
 public class MediaListFragment extends Fragment {
 
@@ -36,7 +35,7 @@ public class MediaListFragment extends Fragment {
 
         paginatedMediaList.configureView(getActivity(), v -> mediaActivity.finish(), new EnterCreationListener(this));
 
-        paginatedMediaList.getSelectedMedia().observe(getViewLifecycleOwner(), new ShowDetailsObserver(this));
+        mediaActivityViewModel.getSelectedMedia().observe(getViewLifecycleOwner(), new ShowDetailsObserver(this));
 
         return view;
     }
