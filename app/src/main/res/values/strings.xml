@@ -72,4 +72,9 @@
     <string name="draw_media_on_empty_tombola">In dieser Tombola\ngibtes noch\nkeine Medien.</string>
     <string name="media_creation_question_media_type">Mediumstyp</string>
     <string name="media_creation_question_content_type">Inhaltstyp</string>
+    <!-- Toasts -->
+    <string name="toast_media_name_empty">Bitte gib einen Namen an</string>
+    <string name="toast_media_title_empty">Bitte gib einen Titel an</string>
+    <string name="toast_media_number_empty">Bitte gib eine Nummer an</string>
+    <string name="toast_media_author_empty">Bitte gib einen Author an</string>
 </resources>

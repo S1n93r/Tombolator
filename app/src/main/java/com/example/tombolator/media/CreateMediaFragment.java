@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -178,40 +179,55 @@ public class CreateMediaFragment extends Fragment {
         @Override
         public void onClick(View view) {
 
-            if (editTextName.getText().length() > 0) {
-
-                String mediaTypeString = mediaTypesSpinner.getSelectedItem() != null ?
-                        mediaTypesSpinner.getSelectedItem().toString() : "";
-                String contentType = contentTypeSpinner.getSelectedItem() != null ?
-                        contentTypeSpinner.getSelectedItem().toString() : "";
-
-                if (mediaActivityViewModel.getSelectedMedia().getValue() == null) {
-                    /* TODO: Add log entry. */
-                    throw new NullPointerException();
-                }
-
-                Media selectedMedia = mediaActivityViewModel.getSelectedMedia().getValue();
-
-                selectedMedia.setMediaType(MediaType.fromOldString(mediaTypeString));
-                selectedMedia.setContentType(ContentType.fromOldString(contentType));
-
-                String name = editTextName.getText() != null ? editTextName.getText().toString() : "";
-                String title = editTextTitle.getText() != null ? editTextTitle.getText().toString() : "";
-                String numberAsString = editTextNumber.getText() != null ? editTextNumber.getText().toString() : "";
-                String author = editTextAuthor.getText() != null ? editTextAuthor.getText().toString() : "";
-
-                int number = numberAsString.length() > 0 ? Integer.parseInt(numberAsString) : -1;
-
-                selectedMedia.setName(name);
-                selectedMedia.setTitle(title);
-                selectedMedia.setNumber(number);
-                selectedMedia.setAuthor(author);
-                selectedMedia.setCreationTimestamp(System.currentTimeMillis());
-
-                mediaActivityViewModel.insert(selectedMedia);
-
-                mediaActivity.switchToMediaList();
+            if (editTextName.getText().length() == 0) {
+                Toast.makeText(getContext(), R.string.toast_media_name_empty, Toast.LENGTH_LONG).show();
+                return;
             }
+
+            if (editTextTitle.getText().length() == 0) {
+                Toast.makeText(getContext(), R.string.toast_media_title_empty, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (editTextNumber.getText().length() == 0) {
+                Toast.makeText(getContext(), R.string.toast_media_number_empty, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (editTextAuthor.getText().length() == 0) {
+                Toast.makeText(getContext(), R.string.toast_media_author_empty, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (mediaActivityViewModel.getSelectedMedia().getValue() == null)
+                throw new NullPointerException();
+
+            String mediaTypeString = mediaTypesSpinner.getSelectedItem() != null ?
+                    mediaTypesSpinner.getSelectedItem().toString() : "";
+            String contentType = contentTypeSpinner.getSelectedItem() != null ?
+                    contentTypeSpinner.getSelectedItem().toString() : "";
+
+            Media selectedMedia = mediaActivityViewModel.getSelectedMedia().getValue();
+
+            selectedMedia.setMediaType(MediaType.fromOldString(mediaTypeString));
+            selectedMedia.setContentType(ContentType.fromOldString(contentType));
+
+            String name = editTextName.getText() != null ? editTextName.getText().toString() : "";
+            String title = editTextTitle.getText() != null ? editTextTitle.getText().toString() : "";
+            String numberAsString = editTextNumber.getText() != null ? editTextNumber.getText().toString() : "";
+            String author = editTextAuthor.getText() != null ? editTextAuthor.getText().toString() : "";
+
+            int number = numberAsString.length() > 0 ? Integer.parseInt(numberAsString) : -1;
+
+            selectedMedia.setName(name);
+            selectedMedia.setTitle(title);
+            selectedMedia.setNumber(number);
+            selectedMedia.setAuthor(author);
+            selectedMedia.setCreationTimestamp(System.currentTimeMillis());
+
+            mediaActivityViewModel.insert(selectedMedia);
+
+            mediaActivity.switchToMediaList();
         }
     }
 }
