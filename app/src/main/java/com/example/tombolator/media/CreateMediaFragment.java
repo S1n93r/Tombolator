@@ -25,7 +25,7 @@ import java.util.List;
 import java8.util.stream.Collectors;
 import java8.util.stream.StreamSupport;
 
-public class MediaCreationStepOneTypesFragment extends Fragment {
+public class CreateMediaFragment extends Fragment {
 
     private MediaActivity mediaActivity;
     private MediaActivityViewModel mediaActivityViewModel;
@@ -44,11 +44,11 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
     private Button saveButton;
     private Button backButton;
 
-    private MediaCreationStepOneTypesFragment() {
+    private CreateMediaFragment() {
     }
 
-    public static MediaCreationStepOneTypesFragment newInstance() {
-        return new MediaCreationStepOneTypesFragment();
+    public static CreateMediaFragment newInstance() {
+        return new CreateMediaFragment();
     }
 
     @Nullable
@@ -59,7 +59,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
         mediaActivity = (MediaActivity) getActivity();
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
 
-        View layout = inflater.inflate(R.layout.media_creation_step_one_types_fragment, container, false);
+        View layout = inflater.inflate(R.layout.create_media_fragment, container, false);
 
         mediaTypesSpinner = layout.findViewById(R.id.spinner_media_types);
         contentTypeSpinner = layout.findViewById(R.id.spinner_content_types);

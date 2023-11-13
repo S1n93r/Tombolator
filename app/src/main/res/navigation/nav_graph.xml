@@ -5,9 +5,9 @@
     android:id="@+id/nav_graph">
     <fragment
         android:id="@+id/mediaCreationStepOneTypesFragment2"
-        android:name="com.example.tombolator.media.MediaCreationStepOneTypesFragment"
+        android:name="com.example.tombolator.media.CreateMediaFragment"
         android:label="media_creation_step_one_types_fragment"
-        tools:layout="@layout/media_creation_step_one_types_fragment">
+        tools:layout="@layout/create_media_fragment">
         <action
             android:id="@+id/action_mediaCreationStepOneTypesFragment2_to_mediaCreationStepTwoDescriptionsFragment"
             app:destination="@id/mediaCreationStepTwoDescriptionsFragment" />

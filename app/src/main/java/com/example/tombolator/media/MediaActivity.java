@@ -12,7 +12,7 @@ public class MediaActivity extends AppCompatActivity {
     Bundle savedInstanceState;
 
     private MediaListFragment mediaListFragment;
-    private MediaCreationStepOneTypesFragment mediaCreationStepOneTypesFragment;
+    private CreateMediaFragment createMediaFragment;
     private MediaDetailsFragment mediaDetailsFragment;
 
     @Override
@@ -23,7 +23,7 @@ public class MediaActivity extends AppCompatActivity {
         mediaListFragment = MediaListFragment.newInstance();
 
         mediaDetailsFragment = MediaDetailsFragment.newInstance();
-        mediaCreationStepOneTypesFragment = MediaCreationStepOneTypesFragment.newInstance();
+        createMediaFragment = CreateMediaFragment.newInstance();
         setContentView(R.layout.media_activity);
 
         this.savedInstanceState = savedInstanceState;
@@ -62,10 +62,10 @@ public class MediaActivity extends AppCompatActivity {
 
     protected void switchToCreationStepOne(Fragment fragmentBefore) {
 
-        mediaCreationStepOneTypesFragment.setFragmentBefore(fragmentBefore);
+        createMediaFragment.setFragmentBefore(fragmentBefore);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, mediaCreationStepOneTypesFragment)
+                .replace(R.id.container, createMediaFragment)
                 .commitNow();
     }
 
