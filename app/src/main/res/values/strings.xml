@@ -70,6 +70,6 @@
     <string name="content_type_book">Buch</string>
     <string name="content_type_ebook">E-Book</string>
     <string name="draw_media_on_empty_tombola">In dieser Tombola\ngibtes noch\nkeine Medien.</string>
-    <string name="media_creation_question_media_type">Welche Art von Medium\nsoll angelegt werden?</string>
-    <string name="media_creation_question_content_type">Was befindet sich auf dem Medium?</string>
+    <string name="media_creation_question_media_type">Mediumstyp</string>
+    <string name="media_creation_question_content_type">Inhaltstyp</string>
 </resources>

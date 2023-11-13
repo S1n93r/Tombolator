@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -33,10 +34,14 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
     private Spinner mediaTypesSpinner;
     private Spinner contentTypeSpinner;
-
     private TextView contentTypeTextView;
 
-    private Button continueButton;
+    private EditText editTextName;
+    private EditText editTextTitle;
+    private EditText editTextNumber;
+    private EditText editTextAuthor;
+
+    private Button saveButton;
     private Button backButton;
 
     private MediaCreationStepOneTypesFragment() {
@@ -58,10 +63,14 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
         mediaTypesSpinner = layout.findViewById(R.id.spinner_media_types);
         contentTypeSpinner = layout.findViewById(R.id.spinner_content_types);
-
         contentTypeTextView = layout.findViewById(R.id.text_view_content_type);
 
-        continueButton = layout.findViewById(R.id.button_continue);
+        editTextName = layout.findViewById(R.id.edit_text_name);
+        editTextTitle = layout.findViewById(R.id.edit_text_title);
+        editTextNumber = layout.findViewById(R.id.edit_text_number);
+        editTextAuthor = layout.findViewById(R.id.edit_text_author);
+
+        saveButton = layout.findViewById(R.id.button_save);
         backButton = layout.findViewById(R.id.back_button);
 
         setUpMediaTypeSpinner();
@@ -81,7 +90,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
         mediaTypesForSpinner.remove(0);
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
-                this.getActivity(), R.layout.media_type_spinner_item, mediaTypesForSpinner);
+                this.requireActivity(), R.layout.media_type_spinner_item, mediaTypesForSpinner);
 
         arrayAdapter.setDropDownViewResource(R.layout.media_type_spinner_dropdown);
 
@@ -126,7 +135,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
                 .collect(Collectors.toList());
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
-                this.getActivity(), R.layout.media_type_spinner_item, contentTypeForSpinner);
+                this.requireActivity(), R.layout.media_type_spinner_item, contentTypeForSpinner);
 
         arrayAdapter.setDropDownViewResource(R.layout.media_type_spinner_dropdown);
 
@@ -137,25 +146,7 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
         backButton.setOnClickListener((View v) -> mediaActivity.switchToView(fragmentBefore));
 
-        continueButton.setOnClickListener(v -> {
-
-            String mediaTypeString = mediaTypesSpinner.getSelectedItem() != null ?
-                    mediaTypesSpinner.getSelectedItem().toString() : "";
-            String contentType = contentTypeSpinner.getSelectedItem() != null ?
-                    contentTypeSpinner.getSelectedItem().toString() : "";
-
-            if (mediaActivityViewModel.getSelectedMedia().getValue() == null) {
-                /* TODO: Add log entry. */
-                throw new NullPointerException();
-            }
-
-            Media selectedMedia = mediaActivityViewModel.getSelectedMedia().getValue();
-
-            selectedMedia.setMediaType(MediaType.fromOldString(mediaTypeString));
-            selectedMedia.setContentType(ContentType.fromOldString(contentType));
-
-            mediaActivity.switchToCreationStepTwo();
-        });
+        saveButton.setOnClickListener(new SaveMediaListener());
     }
 
     private void registerObserver() {
@@ -179,6 +170,48 @@ public class MediaCreationStepOneTypesFragment extends Fragment {
 
             mediaTypesSpinner.setSelection(mediaTypeIndex);
             contentTypeSpinner.setSelection(contentTypeIndex);
+        }
+    }
+
+    private class SaveMediaListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+
+            if (editTextName.getText().length() > 0) {
+
+                String mediaTypeString = mediaTypesSpinner.getSelectedItem() != null ?
+                        mediaTypesSpinner.getSelectedItem().toString() : "";
+                String contentType = contentTypeSpinner.getSelectedItem() != null ?
+                        contentTypeSpinner.getSelectedItem().toString() : "";
+
+                if (mediaActivityViewModel.getSelectedMedia().getValue() == null) {
+                    /* TODO: Add log entry. */
+                    throw new NullPointerException();
+                }
+
+                Media selectedMedia = mediaActivityViewModel.getSelectedMedia().getValue();
+
+                selectedMedia.setMediaType(MediaType.fromOldString(mediaTypeString));
+                selectedMedia.setContentType(ContentType.fromOldString(contentType));
+
+                String name = editTextName.getText() != null ? editTextName.getText().toString() : "";
+                String title = editTextTitle.getText() != null ? editTextTitle.getText().toString() : "";
+                String numberAsString = editTextNumber.getText() != null ? editTextNumber.getText().toString() : "";
+                String author = editTextAuthor.getText() != null ? editTextAuthor.getText().toString() : "";
+
+                int number = numberAsString.length() > 0 ? Integer.parseInt(numberAsString) : -1;
+
+                selectedMedia.setName(name);
+                selectedMedia.setTitle(title);
+                selectedMedia.setNumber(number);
+                selectedMedia.setAuthor(author);
+                selectedMedia.setCreationTimestamp(System.currentTimeMillis());
+
+                mediaActivityViewModel.insert(selectedMedia);
+
+                mediaActivity.switchToMediaList();
+            }
         }
     }
 }

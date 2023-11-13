@@ -1,8 +1,10 @@
 package com.example.tombolator.media;
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
 import com.example.tombolator.R;
 
 public class MediaActivity extends AppCompatActivity {
@@ -11,7 +13,6 @@ public class MediaActivity extends AppCompatActivity {
 
     private MediaListFragment mediaListFragment;
     private MediaCreationStepOneTypesFragment mediaCreationStepOneTypesFragment;
-    private MediaCreationStepTwoDescriptionsFragment mediaCreationStepTwoDescriptionsFragment;
     private MediaDetailsFragment mediaDetailsFragment;
 
     @Override
@@ -23,7 +24,6 @@ public class MediaActivity extends AppCompatActivity {
 
         mediaDetailsFragment = MediaDetailsFragment.newInstance();
         mediaCreationStepOneTypesFragment = MediaCreationStepOneTypesFragment.newInstance();
-        mediaCreationStepTwoDescriptionsFragment = MediaCreationStepTwoDescriptionsFragment.newInstance();
         setContentView(R.layout.media_activity);
 
         this.savedInstanceState = savedInstanceState;
@@ -62,20 +62,10 @@ public class MediaActivity extends AppCompatActivity {
 
     protected void switchToCreationStepOne(Fragment fragmentBefore) {
 
-        /* If the "fragment before" would be step two, because you returned from it, the reference is not overridden.
-         This way the original "before" like media details or creation steps remains intact. */
-        if (!fragmentBefore.equals(mediaCreationStepTwoDescriptionsFragment))
-            mediaCreationStepOneTypesFragment.setFragmentBefore(fragmentBefore);
+        mediaCreationStepOneTypesFragment.setFragmentBefore(fragmentBefore);
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, mediaCreationStepOneTypesFragment)
-                .commitNow();
-    }
-
-    protected void switchToCreationStepTwo() {
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, mediaCreationStepTwoDescriptionsFragment)
                 .commitNow();
     }
 
