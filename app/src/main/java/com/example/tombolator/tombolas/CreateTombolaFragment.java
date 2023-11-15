@@ -134,6 +134,8 @@ public class CreateTombolaFragment extends Fragment {
 
         arrayAdapter.setDropDownViewResource(R.layout.media_type_spinner_dropdown);
         mediaTypesSpinner.setAdapter(arrayAdapter);
+
+        mediaTypesSpinner.setOnItemSelectedListener(new MediaTypeItemSelectedListener());
     }
 
 
