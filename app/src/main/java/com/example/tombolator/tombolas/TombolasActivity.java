@@ -1,14 +1,15 @@
 package com.example.tombolator.tombolas;
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.tombolator.R;
 
 public class TombolasActivity extends AppCompatActivity {
 
     private TombolaMainFragment tombolaMainFragment;
-    private TombolaCreationFragmentStepOne tombolaCreationFragmentStepOne;
-    private TombolaCreationFragmentStepTwo tombolaCreationFragmentStepTwo;
+    private CreateTombolaFragment createTombolaFragment;
     private TombolaDetailsFragment tombolaDetailsFragment;
 
     @Override
@@ -17,8 +18,7 @@ public class TombolasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         tombolaMainFragment = TombolaMainFragment.newInstance();
-        tombolaCreationFragmentStepOne = TombolaCreationFragmentStepOne.newInstance();
-        tombolaCreationFragmentStepTwo = TombolaCreationFragmentStepTwo.newInstance();
+        createTombolaFragment = CreateTombolaFragment.newInstance();
         tombolaDetailsFragment = TombolaDetailsFragment.newInstance();
 
         setContentView(R.layout.tombolas_activity);
@@ -37,14 +37,7 @@ public class TombolasActivity extends AppCompatActivity {
     protected void switchToCreationStepOne() {
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, tombolaCreationFragmentStepOne)
-                .commitNow();
-    }
-
-    protected void switchToCreationStepTwo() {
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, tombolaCreationFragmentStepTwo)
+                .replace(R.id.container, createTombolaFragment)
                 .commitNow();
     }
 

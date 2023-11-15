@@ -35,7 +35,7 @@ import java.util.List;
 import java8.util.stream.Collectors;
 import java8.util.stream.StreamSupport;
 
-public class TombolaCreationFragmentStepOne extends Fragment {
+public class CreateTombolaFragment extends Fragment {
 
     private static final int ELEMENTS_PER_PAGE = 6;
 
@@ -64,11 +64,11 @@ public class TombolaCreationFragmentStepOne extends Fragment {
     private Button saveButton;
     private Button backButton;
 
-    private TombolaCreationFragmentStepOne() {
+    private CreateTombolaFragment() {
     }
 
-    public static TombolaCreationFragmentStepOne newInstance() {
-        return new TombolaCreationFragmentStepOne();
+    public static CreateTombolaFragment newInstance() {
+        return new CreateTombolaFragment();
     }
 
     @Nullable
@@ -81,7 +81,7 @@ public class TombolaCreationFragmentStepOne extends Fragment {
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
         tombolasActivityViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
 
-        View layout = inflater.inflate(R.layout.tombolas_creation_fragment_step_one, container, false);
+        View layout = inflater.inflate(R.layout.create_tombola_fragment, container, false);
 
         nameEditText = layout.findViewById(R.id.edit_text_name);
 
@@ -201,7 +201,11 @@ public class TombolaCreationFragmentStepOne extends Fragment {
             selectedTombola.setType(Tombola.Type.REUSE);
             selectedTombola.setName(nameEditText.getText().toString());
 
-            tombolasActivity.switchToCreationStepTwo();
+            /*  TODO: Insert media list content of this view here.*/
+
+            tombolasActivityViewModel.insertTombola(selectedTombola);
+
+            tombolasActivity.switchToTombolasMainView();
         });
     }
 

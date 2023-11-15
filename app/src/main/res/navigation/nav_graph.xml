@@ -44,9 +44,9 @@
     </fragment>
     <fragment
         android:id="@+id/tombolaCreationFragmentStepOne"
-        android:name="com.example.tombolator.tombolas.TombolaCreationFragmentStepOne"
+        android:name="com.example.tombolator.tombolas.CreateTombolaFragment"
         android:label="tombolas_creation_fragment_step_one"
-        tools:layout="@layout/tombolas_creation_fragment_step_one">
+        tools:layout="@layout/create_tombola_fragment">
         <action
             android:id="@+id/action_tombolaCreationFragmentStepOne_to_tombolaCreationFragmentStepTwo"
             app:destination="@id/tombolaCreationFragmentStepTwo" />
