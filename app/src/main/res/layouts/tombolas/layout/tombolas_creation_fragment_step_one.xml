@@ -1,71 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:background="@color/color_background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".tombolas.TombolaCreationFragmentStepOne">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background"
+    tools:context=".tombolas.TombolaCreationFragmentStepOne">
+
+    <TextView
+        android:id="@+id/text_view_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comic_sans_ms"
+        android:text="@string/title_new_Tombola"
+        android:textSize="@dimen/font_size_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.05" />
+
 
     <EditText
+        android:id="@+id/edit_text_name"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:autofillHints="@string/label_name"
+        android:ems="10"
+        android:fontFamily="@font/comic_sans_ms"
+        android:hint="@string/label_name"
+        android:inputType="textPersonName"
+        android:textSize="@dimen/font_size_labels"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_title" />
+
+
+    <LinearLayout
+        android:id="@+id/media_filter_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_name">
+
+        <ImageView
+            android:id="@+id/button_sort_by"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="@string/icon_sort_media_content_description"
+            android:src="@drawable/ic_sort_by_desc"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_name"
+            tools:layout_editor_absoluteX="95dp" />
+
+        <Spinner
+            android:id="@+id/spinner_media_types"
+            android:layout_width="280dp"
+            android:layout_height="40dp"
             android:fontFamily="@font/comic_sans_ms"
+            android:gravity="center_horizontal"
             android:textSize="@dimen/font_size_labels"
-            android:layout_width="350dp"
-            android:layout_height="60dp"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/edit_text_name"
-            android:autofillHints="@string/label_name"
-            android:hint="@string/label_name"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_title"
-            android:layout_marginTop="32dp" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-    <TextView
-            android:layout_width="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_name"
+            tools:layout_editor_absoluteX="171dp" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scroll_view_list"
+        android:layout_width="330dp"
+        android:layout_height="360dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/media_filter_box">
+
+        <LinearLayout
+            android:id="@+id/linear_layout_media"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/title_new_Tombola"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:fontFamily="@font/comic_sans_ms"
-            android:textSize="@dimen/font_size_title"
-            android:id="@+id/text_view_title"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_bias="0.05"/>
+            android:orientation="vertical" />
+    </ScrollView>
+
     <Button
-            android:text="@string/button_back"
-            android:drawableBottom="@drawable/ic_arrow_left_35"
-            android:padding="25dp"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="@dimen/button_height"
-            android:id="@+id/back_button"
-            android:background="@drawable/button_selector_purple"
-            android:fontFamily="@font/comic_sans_ms"
-            android:textSize="@dimen/font_size_s"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.975"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.05"
-    />
+        android:id="@+id/button_previous_page"
+        android:layout_width="@dimen/button_extra_small_width"
+        android:layout_height="@dimen/button_extra_small_height"
+        android:background="@drawable/button_selector_purple"
+        android:drawableBottom="@drawable/ic_arrow_left_25"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9" />
+
     <Button
-            android:text="@string/button_continue"
-            android:drawableBottom="@drawable/ic_arrow_right_25"
-            android:padding="25dp"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="@dimen/button_height"
-            android:id="@+id/continue_button"
-            android:background="@drawable/button_selector_purple"
-            android:fontFamily="@font/comic_sans_ms"
-            android:textSize="@dimen/font_size_s"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.95"
-            app:layout_constraintVertical_bias="0.975"
-    />
+        android:id="@+id/button_next_page"
+        android:layout_width="@dimen/button_extra_small_width"
+        android:layout_height="@dimen/button_extra_small_height"
+        android:background="@drawable/button_selector_purple"
+        android:drawableBottom="@drawable/ic_arrow_right_25"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9" />
+
+    <TextView
+        android:id="@+id/label_page_number_current"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:fontFamily="@font/comic_sans_ms"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textSize="@dimen/font_size_labels"
+        app:layout_constraintEnd_toStartOf="@+id/label_page_number_separator"
+        app:layout_constraintTop_toBottomOf="@+id/button_previous_page" />
+
+    <TextView
+        android:id="@+id/label_page_number_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:fontFamily="@font/comic_sans_ms"
+        android:gravity="center"
+        android:text="@string/label_separator_slash"
+        android:textAlignment="center"
+        android:textSize="@dimen/font_size_labels"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_previous_page" />
+
+    <TextView
+        android:id="@+id/label_page_number_total"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:fontFamily="@font/comic_sans_ms"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textSize="@dimen/font_size_labels"
+        app:layout_constraintStart_toEndOf="@+id/label_page_number_separator"
+        app:layout_constraintTop_toBottomOf="@+id/button_previous_page" />
+
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:background="@drawable/button_selector_purple"
+        android:drawableBottom="@drawable/ic_arrow_left_35"
+        android:fontFamily="@font/comic_sans_ms"
+        android:padding="25dp"
+        android:textSize="@dimen/font_size_s"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.975" />
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:background="@drawable/button_selector_purple"
+        android:drawableBottom="@drawable/ic_floppy_disk_35"
+        android:fontFamily="@font/comic_sans_ms"
+        android:padding="25dp"
+        android:textSize="@dimen/font_size_s"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.975" />
 </androidx.constraintlayout.widget.ConstraintLayout>
