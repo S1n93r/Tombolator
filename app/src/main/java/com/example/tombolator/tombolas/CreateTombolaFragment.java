@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -188,25 +189,7 @@ public class CreateTombolaFragment extends Fragment {
             tombolasActivity.switchToTombolasMainView();
         });
 
-        saveButton.setOnClickListener(v -> {
-
-            if (tombolasActivityViewModel.getSelectedTombola().getValue() == null) {
-                /* TODO: Create log entry... Like a nice carving. */
-                throw new NullPointerException();
-            }
-
-            Tombola selectedTombola = tombolasActivityViewModel.getSelectedTombola().getValue();
-
-            /* TODO: Type should be asked by spinner. */
-            selectedTombola.setType(Tombola.Type.REUSE);
-            selectedTombola.setName(nameEditText.getText().toString());
-
-            /*  TODO: Insert media list content of this view here.*/
-
-            tombolasActivityViewModel.insertTombola(selectedTombola);
-
-            tombolasActivity.switchToTombolasMainView();
-        });
+        saveButton.setOnClickListener(new SaveTombolaListener());
     }
 
     private void resetForm() {
@@ -334,6 +317,35 @@ public class CreateTombolaFragment extends Fragment {
             int numberOfPages = MediaUtil.getTotalNumberOfPages(mediaList, ELEMENTS_PER_PAGE);
 
             pageNumberMax.setText(NumberUtil.formatNumberFullDigitsLeadingZero(numberOfPages));
+        }
+    }
+
+    private class SaveTombolaListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+
+            if (nameEditText.getText().length() == 0) {
+                Toast.makeText(getContext(), R.string.toast_media_name_empty, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (tombolasActivityViewModel.getSelectedTombola().getValue() == null) {
+                /* TODO: Create log entry... Like a nice carving. */
+                throw new NullPointerException();
+            }
+
+            Tombola selectedTombola = tombolasActivityViewModel.getSelectedTombola().getValue();
+
+            /* TODO: Type should be asked by spinner. */
+            selectedTombola.setType(Tombola.Type.REUSE);
+            selectedTombola.setName(nameEditText.getText().toString());
+
+            /*  TODO: Insert media list content of this view here.*/
+
+            tombolasActivityViewModel.insertTombola(selectedTombola);
+
+            tombolasActivity.switchToTombolasMainView();
         }
     }
 }
