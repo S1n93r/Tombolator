@@ -153,13 +153,12 @@
 
     <Button
         android:id="@+id/back_button"
-        android:layout_width="88dp"
-        android:layout_height="88dp"
+        android:layout_width="@dimen/button_small_width"
+        android:layout_height="@dimen/button_small_height"
         android:background="@drawable/button_selector_purple"
         android:drawableBottom="@drawable/ic_arrow_left_35"
         android:fontFamily="@font/comic_sans_ms"
         android:padding="25dp"
-        android:textSize="@dimen/font_size_s"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
@@ -169,13 +168,12 @@
 
     <Button
         android:id="@+id/save_button"
-        android:layout_width="88dp"
-        android:layout_height="88dp"
+        android:layout_width="@dimen/button_small_width"
+        android:layout_height="@dimen/button_small_height"
         android:background="@drawable/button_selector_purple"
         android:drawableBottom="@drawable/ic_floppy_disk_35"
         android:fontFamily="@font/comic_sans_ms"
         android:padding="25dp"
-        android:textSize="@dimen/font_size_s"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"
