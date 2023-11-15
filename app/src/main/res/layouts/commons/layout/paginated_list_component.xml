@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/media_filter_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/button_sort_by"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="@string/icon_sort_media_content_description"
+            android:src="@drawable/ic_sort_by_desc" />
+
+        <Spinner
+            android:id="@+id/spinner_media_types"
+            android:layout_width="240dp"
+            android:layout_height="40dp"
+            android:fontFamily="@font/comic_sans_ms"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/font_size_labels" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/item_list"
+        android:layout_width="280dp"
+        android:layout_height="360dp"
+        android:orientation="horizontal">
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/button_previous_page"
+            android:layout_width="@dimen/button_extra_small_width"
+            android:layout_height="@dimen/button_extra_small_height"
+            android:background="@drawable/button_selector_purple"
+            android:drawableBottom="@drawable/ic_arrow_left_25"
+            android:padding="12dp" />
+
+        <TextView
+            android:id="@+id/label_current_page"
+            android:layout_width="16dp"
+            android:layout_height="40dp"
+            android:fontFamily="@font/comic_sans_ms"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="@dimen/font_size_labels" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:fontFamily="@font/comic_sans_ms"
+            android:gravity="center"
+            android:text="@string/label_separator_slash"
+            android:textAlignment="center"
+            android:textSize="@dimen/font_size_labels" />
+
+        <TextView
+            android:id="@+id/label_max_page"
+            android:layout_width="16dp"
+            android:layout_height="40dp"
+            android:fontFamily="@font/comic_sans_ms"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="@dimen/font_size_labels" />
+
+        <Button
+            android:id="@+id/button_next_page"
+            android:layout_width="@dimen/button_extra_small_width"
+            android:layout_height="@dimen/button_extra_small_height"
+            android:background="@drawable/button_selector_purple"
+            android:drawableBottom="@drawable/ic_arrow_right_25"
+            android:padding="12dp" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

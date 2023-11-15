@@ -91,7 +91,7 @@ public class CreateTombolaFragment extends Fragment {
         sortButton = layout.findViewById(R.id.button_sort_by);
         mediaTypesSpinner = layout.findViewById(R.id.spinner_media_types);
 
-        pageNumberCurrent = layout.findViewById(R.id.label_page_number_current);
+        pageNumberCurrent = layout.findViewById(R.id.current_page);
         pageNumberMax = layout.findViewById(R.id.label_page_number_total);
         nextPageButton = layout.findViewById(R.id.button_next_page);
         previousPageButton = layout.findViewById(R.id.button_previous_page);

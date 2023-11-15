@@ -121,7 +121,7 @@ public class PaginatedMediaList extends ConstraintLayout {
 
         mediaTypesSpinner = view.findViewById(R.id.spinner_media_types);
 
-        pageNumberCurrent = view.findViewById(R.id.label_page_number_current);
+        pageNumberCurrent = view.findViewById(R.id.current_page);
         pageNumberMax = view.findViewById(R.id.label_page_number_total);
 
         sortButton = view.findViewById(R.id.button_sort_by);

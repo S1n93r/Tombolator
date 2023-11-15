@@ -69,7 +69,7 @@
         app:layout_constraintVertical_bias="0.85" />
 
     <TextView
-        android:id="@+id/label_page_number_current"
+        android:id="@+id/current_page"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:fontFamily="@font/comic_sans_ms"
