@@ -27,7 +27,6 @@
         android:layout_width="@dimen/button_small_width"
         android:layout_height="@dimen/button_small_height"
         android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/button_selector_purple"
         android:drawableBottom="@drawable/ic_arrow_left_35"
@@ -41,7 +40,6 @@
         android:layout_width="@dimen/button_small_width"
         android:layout_height="@dimen/button_small_height"
         android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/button_selector_purple"
         android:drawableBottom="@drawable/ic_add_35"
@@ -50,19 +48,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <ScrollView
-        android:layout_width="330dp"
-        android:layout_height="410dp"
+    <com.example.tombolator.commons.PaginatedListComponent
+        android:id="@+id/paginated_tombola_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_title">
-
-        <LinearLayout
-            android:id="@+id/linear_layout_tombolas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+        app:layout_constraintTop_toBottomOf="@+id/text_view_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

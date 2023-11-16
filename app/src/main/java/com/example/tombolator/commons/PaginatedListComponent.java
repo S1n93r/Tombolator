@@ -1,9 +1,13 @@
 package com.example.tombolator.commons;
 
+import static com.example.tombolator.media.SortingMode.A_TO_Z;
+import static com.example.tombolator.media.SortingMode.Z_TO_A;
+
 import android.content.Context;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -18,28 +22,38 @@ import androidx.lifecycle.Observer;
 
 import com.example.tombolator.R;
 import com.example.tombolator.media.MediaUtil;
+import com.example.tombolator.media.SortingMode;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
-/* TODO: Implement Sorting */
-/* TODO: Implement Filtering */
 public class PaginatedListComponent<T> extends ConstraintLayout {
 
     private static final int ELEMENTS_PER_PAGE = 6;
 
     private final MutableLiveData<Integer> currentPage = new MutableLiveData<>(1);
 
-    private LifecycleOwner lifecycleOwner;
+    private final MutableLiveData<SortingMode> sortingMode = new MutableLiveData<>(A_TO_Z);
 
-    private LiveData<List<T>> items;
+    private final MutableLiveData<String> selectedFilter = new MutableLiveData<>(null);
 
-    private Function<T, String> itemToStringConverter;
+    private Function<T, String> filterValueExtractor;
+
+    private List<String> filterValues = new ArrayList<>();
+
+    private MutableLiveData<List<T>> items = new MutableLiveData(new ArrayList<>());
+    private MutableLiveData<List<T>> itemsSortedAndFiltered = new MutableLiveData<>(new ArrayList<>());
+
+    private Function<T, String> itemSortingStringConverter;
+    private Function<T, View> itemToViewConverter;
     private OnClickListener itemOnClickListener;
 
     private ImageView sortButton;
 
-    private Spinner mediaTypesSpinner;
+    private Spinner itemFilterSpinner;
 
     private LinearLayout itemList;
 
@@ -83,7 +97,7 @@ public class PaginatedListComponent<T> extends ConstraintLayout {
 
         sortButton = innerView.findViewById(R.id.button_sort_by);
 
-        mediaTypesSpinner = innerView.findViewById(R.id.spinner_media_types);
+        itemFilterSpinner = innerView.findViewById(R.id.spinner_media_types);
 
         itemList = innerView.findViewById(R.id.item_list);
 
@@ -98,19 +112,71 @@ public class PaginatedListComponent<T> extends ConstraintLayout {
         registerButtonListener();
     }
 
-    private void setItems(LifecycleOwner lifecycleOwner, LiveData<List<T>> items) {
+    public void setItems(LifecycleOwner lifecycleOwner, LiveData<List<T>> items) {
 
-        this.lifecycleOwner = lifecycleOwner;
-        this.items = items;
-
-        registerObserver(this.lifecycleOwner, this.items);
+        registerObserver(lifecycleOwner, items);
     }
 
     private void registerObserver(LifecycleOwner lifecycleOwner, LiveData<List<T>> items) {
 
-        items.observe(lifecycleOwner, this::showMediaOnCurrentPage);
+        items.observe(lifecycleOwner, newItems -> this.items.setValue(newItems));
+        items.observe(lifecycleOwner, newItems -> applySortingAndFiltering());
 
-        currentPage.observe(lifecycleOwner, new PageNumberCurrentObserver(items));
+        currentPage.observe(lifecycleOwner, new PageNumberCurrentObserver());
+        itemsSortedAndFiltered.observe(lifecycleOwner, this::showMediaOnCurrentPage);
+
+        sortingMode.observe(lifecycleOwner, newSortingMode -> applySortingAndFiltering());
+        selectedFilter.observe(lifecycleOwner, newSelectedFilter -> applySortingAndFiltering());
+    }
+
+    private void toggleSorting() {
+
+        if (sortingMode.getValue() == A_TO_Z)
+            sortingMode.setValue(Z_TO_A);
+        else
+            sortingMode.setValue(A_TO_Z);
+    }
+
+    private void applySortingAndFiltering() {
+        itemsSortedAndFiltered.setValue(filter(sort(items.getValue())));
+    }
+
+    private List<T> sort(List<T> items) {
+
+        List<T> itemsToSort = new ArrayList<>(items);
+
+        if (sortingMode.getValue() == null)
+            return itemsToSort;
+
+        switch (sortingMode.getValue()) {
+
+            case A_TO_Z:
+                itemsToSort.sort(new ItemComparator());
+                break;
+
+            case Z_TO_A:
+                itemsToSort.sort(new ItemComparator().reversed());
+                break;
+
+            default:
+                throw new IllegalStateException("Unexpected value: " + sortingMode);
+        }
+
+        return itemsToSort;
+    }
+
+    private List<T> filter(List<T> items) {
+
+        List<T> itemsToFilter = new ArrayList<>(items);
+
+        if (filterValueExtractor == null || filterValues.isEmpty())
+            return itemsToFilter;
+
+        itemsToFilter = itemsToFilter.stream()
+                .filter(t -> (filterValueExtractor.apply(t).equals(selectedFilter.getValue())))
+                .collect(Collectors.toList());
+
+        return itemsToFilter;
     }
 
     private void registerButtonListener() {
@@ -120,10 +186,10 @@ public class PaginatedListComponent<T> extends ConstraintLayout {
             if (currentPage.getValue() == null)
                 throw new IllegalStateException("Current page field should never be null!");
 
-            if (items.getValue() == null)
+            if (itemsSortedAndFiltered.getValue() == null)
                 return;
 
-            if (currentPage.getValue() == MediaUtil.getTotalNumberOfPages(items.getValue(), ELEMENTS_PER_PAGE))
+            if (currentPage.getValue() == MediaUtil.getTotalNumberOfPages(itemsSortedAndFiltered.getValue(), ELEMENTS_PER_PAGE))
                 return;
 
             currentPage.setValue(currentPage.getValue() + 1);
@@ -139,6 +205,10 @@ public class PaginatedListComponent<T> extends ConstraintLayout {
 
             currentPage.setValue(currentPage.getValue() - 1);
         });
+
+        sortButton.setOnClickListener((View view) -> toggleSorting());
+
+        itemFilterSpinner.setOnItemSelectedListener(new ItemFilterSelectedListener());
     }
 
     private void showMediaOnCurrentPage(List<T> items) {
@@ -158,53 +228,84 @@ public class PaginatedListComponent<T> extends ConstraintLayout {
 
             T item = items.get(i);
 
-            TextView textView = (TextView) View.inflate(getContext(), R.layout.list_element, null);
-
-            String text = itemToStringConverter == null ? item.toString() : itemToStringConverter.apply(item);
-
-            Typeface defaultTypeface = textView.getTypeface();
-            int defaultTextColor = textView.getCurrentTextColor();
-
-            /* TODO: Implement here possibility to mark items that are used for anything. */
-//            for (Media mediaInTombola : tombolasActivityViewModel.getSelectedTombola().getValue().getAllMedia()) {
-//
-//                if (id == mediaInTombola.getId()) {
-//
-//                    textView.setTextColor(Color.parseColor("#3700B3"));
-//                    textView.setTypeface(defaultTypeface, Typeface.BOLD);
-//                }
-//            }
-
-            textView.setText(text);
+            View view = itemToViewConverter == null ? createDefaultTextView(item.toString()) : itemToViewConverter.apply(item);
 
             if (itemOnClickListener != null)
-                textView.setOnClickListener(itemOnClickListener);
+                view.setOnClickListener(itemOnClickListener);
 
-            itemList.addView(textView);
+            itemList.addView(view);
         }
     }
 
-    private void setItemToStringConverter(Function<T, String> itemToStringConverter) {
-        this.itemToStringConverter = itemToStringConverter;
+    private TextView createDefaultTextView(String text) {
+
+        TextView textView = (TextView) View.inflate(getContext(), R.layout.list_element, null);
+        textView.setText(text);
+
+        return textView;
+    }
+
+    private void setItemSortingStringConverter(Function<T, String> itemSortingStringConverter) {
+        this.itemSortingStringConverter = itemSortingStringConverter;
     }
 
     private void setItemOnClickListener(OnClickListener itemOnClickListener) {
         this.itemOnClickListener = itemOnClickListener;
     }
 
+    public void setUpFilter(List<String> filterValues, Function<T, String> filterValueExtractor) {
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.media_type_spinner_item, filterValues);
+
+        arrayAdapter.setDropDownViewResource(R.layout.media_type_spinner_dropdown);
+        itemFilterSpinner.setAdapter(arrayAdapter);
+
+        this.filterValues = filterValues;
+        this.filterValueExtractor = filterValueExtractor;
+    }
+
+    public void setItemToViewConverter(Function<T, View> itemToViewConverter) {
+        this.itemToViewConverter = itemToViewConverter;
+    }
+
     private class PageNumberCurrentObserver implements Observer<Integer> {
-
-        private final LiveData<List<T>> items;
-
-        public PageNumberCurrentObserver(LiveData<List<T>> items) {
-            this.items = items;
-        }
 
         @Override
         public void onChanged(Integer pageNumber) {
 
             currentPageLabel.setText(NumberUtil.formatNumberFullDigitsLeadingZero(pageNumber));
             showMediaOnCurrentPage(items.getValue());
+        }
+    }
+
+    private class ItemComparator implements Comparator<T> {
+
+        @Override
+        public int compare(T item1, T item2) {
+
+            String stringItem1 = itemSortingStringConverter == null ? item1.toString() : itemSortingStringConverter.apply(item1);
+            String stringItem2 = itemSortingStringConverter == null ? item2.toString() : itemSortingStringConverter.apply(item2);
+
+            return stringItem1.compareTo(stringItem2);
+        }
+    }
+
+    private class ItemFilterSelectedListener implements AdapterView.OnItemSelectedListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+            if (i == 0)
+                selectedFilter.setValue(null);
+            else
+                selectedFilter.setValue(filterValues.get(i));
+
+            currentPage.setValue(1);
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+            /* TODO: When is this triggered? */
         }
     }
 }

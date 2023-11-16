@@ -5,22 +5,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tombolator.R;
-
-import java.util.List;
+import com.example.tombolator.commons.PaginatedListComponent;
 
 public class TombolaMainFragment extends Fragment {
 
     private TombolasActivity tombolasActivity;
     private TombolasActivityViewModel tombolasActivityViewModel;
-    private LinearLayout availableTombolas;
+    private PaginatedListComponent<Tombola> paginatedTombolaList;
     private Button backButton;
     private Button newTombolaButton;
 
@@ -41,19 +38,37 @@ public class TombolaMainFragment extends Fragment {
 
         View layout = inflater.inflate(R.layout.tombola_list_fragment, container, false);
 
-        availableTombolas = layout.findViewById(R.id.linear_layout_tombolas);
+        paginatedTombolaList = layout.findViewById(R.id.paginated_tombola_list);
 
         backButton = layout.findViewById(R.id.back_button);
         newTombolaButton = layout.findViewById(R.id.button_new_tombola);
 
-        registerObserver();
+        configurePaginatedTombolaList();
         registerOnClickListener();
+        registerObserver();
 
         return layout;
     }
 
+    private void configurePaginatedTombolaList() {
+        paginatedTombolaList.setItemToViewConverter(tombola -> {
+
+            TextView textView = (TextView) View.inflate(
+                    tombolasActivity.getApplicationContext(), R.layout.list_element, null);
+
+            textView.setText(tombola.toLabel());
+            textView.setOnClickListener(new ShowDetailsListener());
+            textView.setId(tombola.getId().intValue());
+
+            return textView;
+        });
+    }
+
     private void registerObserver() {
-        tombolasActivityViewModel.getAllTombolas().observe(getViewLifecycleOwner(), new TombolaListChangedObserver());
+        tombolasActivityViewModel.getAllTombolas().observe(getViewLifecycleOwner(), tombolas -> {
+            if (tombolasActivityViewModel.getAllTombolas() != null)
+                paginatedTombolaList.setItems(getViewLifecycleOwner(), tombolasActivityViewModel.getAllTombolas());
+        });
     }
 
     private void registerOnClickListener() {
@@ -64,29 +79,6 @@ public class TombolaMainFragment extends Fragment {
             tombolasActivityViewModel.selectTombola(new Tombola());
             tombolasActivity.switchToCreationStepOne();
         });
-    }
-
-    private class TombolaListChangedObserver implements Observer<List<Tombola>> {
-
-        @Override
-        public void onChanged(List<Tombola> tombolaList) {
-
-            availableTombolas.removeAllViews();
-
-            for (Tombola tombola : tombolaList) {
-
-                long id = tombola.getId();
-
-                TextView textView = (TextView) View.inflate(
-                        tombolasActivity.getApplicationContext(), R.layout.list_element, null);
-
-                textView.setText(tombola.toLabel());
-                textView.setOnClickListener(new ShowDetailsListener());
-                textView.setId((int) id);
-
-                availableTombolas.addView(textView);
-            }
-        }
     }
 
     private class ShowDetailsListener implements View.OnClickListener {

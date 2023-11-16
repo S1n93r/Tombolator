@@ -1,10 +1,12 @@
 package com.example.tombolator.tombolas;
 
 import android.app.Application;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
 import com.example.tombolator.TomboRepository;
 import com.example.tombolator.media.Media;
 
@@ -45,7 +47,7 @@ public class TombolasActivityViewModel extends AndroidViewModel {
         tomboRepository.deleteTombola(tombola);
     }
 
-    public void deletAllTombolas() {
+    public void deleteAllTombolas() {
         tomboRepository.deleteAllTombolas();
     }
 
@@ -60,14 +62,14 @@ public class TombolasActivityViewModel extends AndroidViewModel {
 
     public void selectTombola(long tombolaId) {
 
-        if(allTombolas.getValue() == null) {
+        if (allTombolas.getValue() == null) {
             /* TODO: Add log entry. */
             throw new NullPointerException();
         }
 
-        for(Tombola tombola : allTombolas.getValue()) {
+        for (Tombola tombola : allTombolas.getValue()) {
 
-            if(tombola.getId() == tombolaId) {
+            if (tombola.getId() == tombolaId) {
 
                 selectedTombola.setValue(tombola);
                 selectedTombola.postValue(selectedTombola.getValue());

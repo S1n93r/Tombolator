@@ -77,4 +77,7 @@
     <string name="toast_media_title_empty">Bitte gib einen Titel an</string>
     <string name="toast_media_number_empty">Bitte gib eine Nummer an</string>
     <string name="toast_media_author_empty">Bitte gib einen Author an</string>
+    <!-- Content description -->
+    <string name="previous_page_description">Zur vorherigen Seite</string>
+    <string name="next_page_description">Zur nächsten Seite</string>
 </resources>
