@@ -33,15 +33,15 @@
     <LinearLayout
         android:id="@+id/item_list"
         android:layout_width="280dp"
-        android:layout_height="400dp"
+        android:layout_height="480dp"
         android:orientation="vertical">
-
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:gravity="center"
         android:orientation="horizontal">
 
