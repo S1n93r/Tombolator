@@ -13,23 +13,23 @@ public final class MediaUtil {
             case CD:
             case DVD:
             case BLU_RAY:
-                return R.drawable.ic_cd_25;
+                return R.drawable.ic_cd;
 
             case BOOK:
-                return R.drawable.ic_book_25;
+                return R.drawable.ic_book;
 
             case E_BOOK:
-                return R.drawable.ic_ebook_25;
+                return R.drawable.ic_ebook;
 
             case STREAMING:
                 return R.drawable.ic_online_streaming_25;
 
             case MEAL:
-                return R.drawable.ic_meal_25;
+                return R.drawable.ic_meal;
 
             case CASSETTE:
             default:
-                return R.drawable.ic_cassette_25;
+                return R.drawable.ic_cassette;
         }
     }
 

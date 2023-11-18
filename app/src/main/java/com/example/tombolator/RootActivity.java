@@ -2,8 +2,10 @@ package com.example.tombolator;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.widget.ImageView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.tombolator.config.ConfigActivity;
 import com.example.tombolator.media.MediaActivity;
 import com.example.tombolator.tombolas.TombolasActivity;
@@ -11,9 +13,9 @@ import com.example.tombolator.tombolas.TombolasActivity;
 public class RootActivity extends AppCompatActivity {
 
 
-    private Button tombolasButton;
-    private Button mediaButton;
-    private Button configButton;
+    private ImageView tombolasButton;
+    private ImageView mediaButton;
+    private ImageView configButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

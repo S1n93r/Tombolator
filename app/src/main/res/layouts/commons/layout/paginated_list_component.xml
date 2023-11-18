@@ -53,7 +53,7 @@
             android:background="@drawable/button_selector_purple"
             android:contentDescription="@string/previous_page_description"
             android:padding="12dp"
-            android:src="@drawable/ic_arrow_left_25" />
+            android:src="@drawable/ic_arrow_left" />
 
         <TextView
             android:id="@+id/label_current_page"
@@ -89,7 +89,7 @@
             android:background="@drawable/button_selector_purple"
             android:contentDescription="@string/next_page_description"
             android:padding="12dp"
-            android:src="@drawable/ic_arrow_right_25" />
+            android:src="@drawable/ic_arrow_right" />
 
     </LinearLayout>
 

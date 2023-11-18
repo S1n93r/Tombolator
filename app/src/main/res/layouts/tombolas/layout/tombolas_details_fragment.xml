@@ -54,7 +54,7 @@
         android:layout_marginBottom="15dp"
         android:background="@drawable/button_selector_purple"
         android:padding="25dp"
-        android:src="@drawable/ic_arrow_left_35"
+        android:src="@drawable/ic_arrow_left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -67,7 +67,7 @@
         android:layout_marginBottom="15dp"
         android:background="@drawable/button_selector_purple"
         android:padding="25dp"
-        android:src="@drawable/ic_delete_35"
+        android:src="@drawable/ic_delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

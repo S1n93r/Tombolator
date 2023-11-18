@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         app:elementsPerPage="6"
         app:mode="single_select_show_details"
-        app:processButtonIcon="@drawable/ic_floppy_disk_35"
+        app:processButtonIcon="@drawable/ic_floppy_disk"
         app:processButtonText="@string/button_new"
         app:title="@string/title_media" />
 
