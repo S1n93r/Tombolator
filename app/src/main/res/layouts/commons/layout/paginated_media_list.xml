@@ -40,13 +40,13 @@
         app:layout_constraintBottom_toTopOf="@+id/scroll_view_list"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
+    <ImageView
         android:id="@+id/button_previous_page"
         android:layout_width="@dimen/button_extra_small_width"
         android:layout_height="@dimen/button_extra_small_height"
         android:background="@drawable/button_selector_purple"
-        android:drawableBottom="@drawable/ic_arrow_left_25"
         android:padding="12dp"
+        android:src="@drawable/ic_arrow_left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
@@ -54,13 +54,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.85" />
 
-    <Button
+    <ImageView
         android:id="@+id/button_next_page"
         android:layout_width="@dimen/button_extra_small_width"
         android:layout_height="@dimen/button_extra_small_height"
         android:background="@drawable/button_selector_purple"
-        android:drawableBottom="@drawable/ic_arrow_right_25"
         android:padding="12dp"
+        android:src="@drawable/ic_arrow_right"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
@@ -104,31 +104,31 @@
         app:layout_constraintStart_toEndOf="@+id/label_page_number_separator"
         app:layout_constraintTop_toBottomOf="@+id/button_previous_page" />
 
-    <Button
+    <ImageView
         android:id="@+id/back_button"
-        android:layout_width="@dimen/button_width"
-        android:layout_height="@dimen/button_height"
+        android:layout_width="@dimen/button_small_width"
+        android:layout_height="@dimen/button_small_height"
         android:layout_marginStart="15dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/button_selector_purple"
-        android:drawableBottom="@drawable/ic_arrow_left_35"
         android:fontFamily="@font/comic_sans_ms"
         android:padding="25dp"
+        android:src="@drawable/ic_arrow_left"
         android:text="@string/button_back"
         android:textSize="@dimen/font_size_s"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <ImageView
         android:id="@+id/button_create_new_media"
-        android:layout_width="@dimen/button_width"
-        android:layout_height="@dimen/button_height"
+        android:layout_width="@dimen/button_small_width"
+        android:layout_height="@dimen/button_small_height"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/button_selector_purple"
-        android:drawableBottom="@drawable/ic_add_35"
         android:fontFamily="@font/comic_sans_ms"
         android:padding="25dp"
+        android:src="@drawable/ic_add"
         android:text="@string/process_button_text"
         android:textSize="@dimen/font_size_s"
         app:layout_constraintBottom_toBottomOf="parent"

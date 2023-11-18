@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,9 +33,9 @@ public class MediaDetailsFragment extends Fragment {
     private TextView typeValue;
     private TextView createdAt;
 
-    private Button editMediaButton;
-    private Button backButton;
-    private Button deleteButton;
+    private ImageView editMediaButton;
+    private ImageView backButton;
+    private ImageView deleteButton;
 
     private MediaDetailsFragment() {
     }

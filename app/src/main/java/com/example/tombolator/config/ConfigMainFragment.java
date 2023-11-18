@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +43,7 @@ public class ConfigMainFragment extends Fragment {
     private TextView exportVersionTextView;
     private Button exportDatabaseButton;
     private Button importDatabaseButton;
-    private Button backButton;
+    private ImageView backButton;
 
     public static ConfigMainFragment newInstance() {
         return new ConfigMainFragment();

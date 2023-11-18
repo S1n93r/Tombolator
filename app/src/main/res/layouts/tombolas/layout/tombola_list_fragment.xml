@@ -22,32 +22,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.025" />
 
-    <Button
-        android:id="@+id/back_button"
-        android:layout_width="@dimen/button_small_width"
-        android:layout_height="@dimen/button_small_height"
-        android:layout_marginStart="15dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/button_selector_purple"
-        android:drawableBottom="@drawable/ic_arrow_left_35"
-        android:fontFamily="@font/comic_sans_ms"
-        android:padding="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/button_new_tombola"
-        android:layout_width="@dimen/button_small_width"
-        android:layout_height="@dimen/button_small_height"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/button_selector_purple"
-        android:drawableBottom="@drawable/ic_add_35"
-        android:fontFamily="@font/comic_sans_ms"
-        android:padding="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <com.example.tombolator.commons.PaginatedListComponent
         android:id="@+id/paginated_tombola_list"
         android:layout_width="wrap_content"
@@ -56,5 +30,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_title" />
+
+    <ImageView
+        android:id="@+id/back_button"
+        android:layout_width="@dimen/button_small_width"
+        android:layout_height="@dimen/button_small_height"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/button_selector_purple"
+        android:fontFamily="@font/comic_sans_ms"
+        android:padding="25dp"
+        android:src="@drawable/ic_arrow_left"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/button_new_tombola"
+        android:layout_width="@dimen/button_small_width"
+        android:layout_height="@dimen/button_small_height"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/button_selector_purple"
+        android:fontFamily="@font/comic_sans_ms"
+        android:padding="25dp"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,13 +4,11 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -69,14 +67,14 @@ public class PaginatedMediaList extends ConstraintLayout {
     private Spinner mediaTypesSpinner;
     private LinearLayout linearLayoutMedia;
 
-    private Button nextPageButton;
+    private ImageView nextPageButton;
     private TextView pageNumberCurrent;
     private TextView pageNumberMax;
-    private Button previousPageButton;
+    private ImageView previousPageButton;
 
-    private Button backButton;
+    private ImageView backButton;
 
-    private Button createNewMediaButton;
+    private ImageView createNewMediaButton;
 
     private int elementsPerPage;
 
@@ -144,11 +142,6 @@ public class PaginatedMediaList extends ConstraintLayout {
 
             titleTextView.setText(a.getString(R.styleable.PaginatedMediaList_title));
             elementsPerPage = a.getInteger(R.styleable.PaginatedMediaList_elementsPerPage, DEFAULT_ELEMENTS_PER_PAGE);
-            createNewMediaButton.setText(a.getString(R.styleable.PaginatedMediaList_processButtonText));
-
-            Drawable drawable = a.getDrawable(R.styleable.PaginatedMediaList_processButtonIcon);
-
-            createNewMediaButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawable);
 
             mode = a.getInteger(R.styleable.PaginatedMediaList_mode, SINGLE_SELECT_SHOW_DETAILS);
 

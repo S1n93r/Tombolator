@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -58,12 +57,12 @@ public class CreateTombolaFragment extends Fragment {
     /* Pagination */
     private TextView pageNumberCurrent;
     private TextView pageNumberMax;
-    private Button nextPageButton;
-    private Button previousPageButton;
+    private ImageView nextPageButton;
+    private ImageView previousPageButton;
 
     /* Main actions */
-    private Button saveButton;
-    private Button backButton;
+    private ImageView saveButton;
+    private ImageView backButton;
 
     private CreateTombolaFragment() {
     }

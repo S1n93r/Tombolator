@@ -87,13 +87,13 @@
             android:orientation="vertical" />
     </ScrollView>
 
-    <Button
+    <ImageView
         android:id="@+id/button_previous_page"
         android:layout_width="@dimen/button_extra_small_width"
         android:layout_height="@dimen/button_extra_small_height"
         android:background="@drawable/button_selector_purple"
-        android:drawableBottom="@drawable/ic_arrow_left_25"
         android:padding="12dp"
+        android:src="@drawable/ic_arrow_left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
@@ -101,13 +101,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.9" />
 
-    <Button
+    <ImageView
         android:id="@+id/button_next_page"
         android:layout_width="@dimen/button_extra_small_width"
         android:layout_height="@dimen/button_extra_small_height"
         android:background="@drawable/button_selector_purple"
-        android:drawableBottom="@drawable/ic_arrow_right_25"
         android:padding="12dp"
+        android:src="@drawable/ic_arrow_right"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
@@ -151,13 +151,13 @@
         app:layout_constraintStart_toEndOf="@+id/label_page_number_separator"
         app:layout_constraintTop_toBottomOf="@+id/button_previous_page" />
 
-    <Button
+    <ImageView
         android:id="@+id/back_button"
         android:layout_width="@dimen/button_small_width"
         android:layout_height="@dimen/button_small_height"
         android:background="@drawable/button_selector_purple"
-        android:drawableBottom="@drawable/ic_arrow_left_35"
         android:padding="25dp"
+        android:src="@drawable/ic_arrow_left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
@@ -165,13 +165,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.975" />
 
-    <Button
+    <ImageView
         android:id="@+id/save_button"
         android:layout_width="@dimen/button_small_width"
         android:layout_height="@dimen/button_small_height"
         android:background="@drawable/button_selector_purple"
-        android:drawableBottom="@drawable/ic_floppy_disk_35"
         android:padding="25dp"
+        android:src="@drawable/ic_floppy_disk"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"

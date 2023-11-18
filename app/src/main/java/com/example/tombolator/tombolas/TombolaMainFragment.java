@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -18,8 +18,8 @@ public class TombolaMainFragment extends Fragment {
     private TombolasActivity tombolasActivity;
     private TombolasActivityViewModel tombolasActivityViewModel;
     private PaginatedListComponent<Tombola> paginatedTombolaList;
-    private Button backButton;
-    private Button newTombolaButton;
+    private ImageView backButton;
+    private ImageView newTombolaButton;
 
     private TombolaMainFragment() {
 

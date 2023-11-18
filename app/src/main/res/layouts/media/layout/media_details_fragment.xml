@@ -7,14 +7,14 @@
     android:background="@color/color_background"
     tools:context=".media.MediaDetailsFragment">
 
-    <Button
+    <ImageView
         android:id="@+id/button_edit_media"
         android:layout_width="@dimen/button_small_width"
         android:layout_height="@dimen/button_small_height"
         android:layout_marginBottom="56dp"
         android:background="@drawable/button_selector_purple"
-        android:drawableBottom="@drawable/ic_pencil_35"
         android:padding="25dp"
+        android:src="@drawable/ic_pencil"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -33,29 +33,27 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.025" />
 
-    <Button
+    <ImageView
         android:id="@+id/back_button"
         android:layout_width="@dimen/button_small_width"
         android:layout_height="@dimen/button_small_height"
         android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/button_selector_purple"
-        android:drawableBottom="@drawable/ic_arrow_left_35"
         android:padding="25dp"
+        android:src="@drawable/ic_arrow_left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <ImageView
         android:id="@+id/button_delete"
         android:layout_width="@dimen/button_small_width"
         android:layout_height="@dimen/button_small_height"
         android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/button_selector_purple"
-        android:drawableBottom="@drawable/ic_delete_35"
         android:padding="25dp"
+        android:src="@drawable/ic_delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

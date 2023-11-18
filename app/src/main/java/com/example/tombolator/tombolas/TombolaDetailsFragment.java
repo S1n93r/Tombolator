@@ -5,12 +5,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.example.tombolator.R;
 import com.example.tombolator.commons.CustomAlertDialog;
 import com.example.tombolator.media.Media;
@@ -38,12 +44,13 @@ public class TombolaDetailsFragment extends Fragment {
 
     private Spinner tombolaTypeSpinner;
 
-    private Button backButton;
-    private Button drawButton;
-    private Button editTombolaButton;
-    private Button deleteButton;
+    private ImageView backButton;
+    private ImageView drawButton;
+    private ImageView editTombolaButton;
+    private ImageView deleteButton;
 
-    private TombolaDetailsFragment() {}
+    private TombolaDetailsFragment() {
+    }
 
     public static TombolaDetailsFragment newInstance() {
         return new TombolaDetailsFragment();
@@ -52,7 +59,7 @@ public class TombolaDetailsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
 
         tombolasActivity = (TombolasActivity) getActivity();
         tombolaViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
@@ -82,14 +89,14 @@ public class TombolaDetailsFragment extends Fragment {
 
     private void setUpSpinner() {
 
-        if(tombolaViewModel.getSelectedTombola().getValue() == null) {
+        if (tombolaViewModel.getSelectedTombola().getValue() == null) {
             /* TODO: Add log entry. */
             throw new NullPointerException();
         }
 
         List<String> typesAsStrings = new ArrayList<>();
 
-        for(Tombola.Type type : Tombola.Type.values()) {
+        for (Tombola.Type type : Tombola.Type.values()) {
             typesAsStrings.add(type.description);
         }
 
@@ -106,7 +113,7 @@ public class TombolaDetailsFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                if(view == null)
+                if (view == null)
                     return;
 
                 Tombola selectedTombola = tombolaViewModel.getSelectedTombola().getValue();
@@ -123,7 +130,7 @@ public class TombolaDetailsFragment extends Fragment {
     }
 
     private void registerObserver() {
-        tombolaViewModel.getSelectedTombola().observe(this, new SelectedTombolaObserver());
+        tombolaViewModel.getSelectedTombola().observe(getViewLifecycleOwner(), new SelectedTombolaObserver());
     }
 
     private void registerOnClickListener() {
@@ -137,12 +144,12 @@ public class TombolaDetailsFragment extends Fragment {
             Media drawnMedia = Objects.requireNonNull(selectedTombola).drawRandomMedia();
 
             /* TODO: A little bite hacky. Maybe I can find something better? */
-            if(selectedTombola.getType().equals(Tombola.Type.DELETE))
+            if (selectedTombola.getType().equals(Tombola.Type.DELETE))
                 mediaActivityViewModel.delete(drawnMedia);
 
             Context context = getContext();
 
-            if(context == null)
+            if (context == null)
                 throw new NullPointerException();
 
             DrawDialog drawDialog = DrawFialogFactory.createRandomDialog(context);
@@ -150,7 +157,7 @@ public class TombolaDetailsFragment extends Fragment {
             /* Has to be called before setContent() and setIcon() so onCreate() was fired*/
             drawDialog.show();
 
-            if(drawnMedia == null) {
+            if (drawnMedia == null) {
                 drawDialog.getContentText().setText(R.string.draw_media_on_empty_tombola);
                 return;
             }
@@ -167,7 +174,7 @@ public class TombolaDetailsFragment extends Fragment {
 
         deleteButton.setOnClickListener((View view) -> {
 
-            if(getActivity() == null) {
+            if (getActivity() == null) {
                 /* TODO: Throw log entry. */
                 throw new NullPointerException();
             }
@@ -213,7 +220,7 @@ public class TombolaDetailsFragment extends Fragment {
         @Override
         public void onChanged(Tombola tombola) {
 
-            if(tombolaViewModel.getSelectedTombola().getValue() == null) {
+            if (tombolaViewModel.getSelectedTombola().getValue() == null) {
                 /* TODO: Add log entry. */
                 throw new NullPointerException();
             }
