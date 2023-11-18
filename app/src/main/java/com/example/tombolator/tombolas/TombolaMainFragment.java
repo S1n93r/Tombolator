@@ -51,6 +51,9 @@ public class TombolaMainFragment extends Fragment {
     }
 
     private void configurePaginatedTombolaList() {
+
+        paginatedTombolaList.setItemSortingStringConverter(Tombola::getName);
+
         paginatedTombolaList.setItemToViewConverter(tombola -> {
 
             TextView textView = (TextView) View.inflate(

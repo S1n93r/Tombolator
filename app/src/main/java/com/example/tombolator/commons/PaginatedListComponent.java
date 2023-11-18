@@ -242,7 +242,7 @@ public class PaginatedListComponent<T> extends ConstraintLayout {
         return textView;
     }
 
-    private void setItemSortingStringConverter(Function<T, String> itemSortingStringConverter) {
+    public void setItemSortingStringConverter(Function<T, String> itemSortingStringConverter) {
         this.itemSortingStringConverter = itemSortingStringConverter;
     }
 
