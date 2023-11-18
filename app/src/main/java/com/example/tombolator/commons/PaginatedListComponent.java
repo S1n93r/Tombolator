@@ -39,14 +39,10 @@ public class PaginatedListComponent<T> extends ConstraintLayout {
     private final MutableLiveData<SortingMode> sortingMode = new MutableLiveData<>(A_TO_Z);
 
     private final MutableLiveData<String> selectedFilter = new MutableLiveData<>(null);
-
+    private final MutableLiveData<List<T>> items = new MutableLiveData(new ArrayList<>());
+    private final MutableLiveData<List<T>> itemsSortedAndFiltered = new MutableLiveData<>(new ArrayList<>());
     private Function<T, String> filterValueExtractor;
-
     private List<String> filterValues = new ArrayList<>();
-
-    private MutableLiveData<List<T>> items = new MutableLiveData(new ArrayList<>());
-    private MutableLiveData<List<T>> itemsSortedAndFiltered = new MutableLiveData<>(new ArrayList<>());
-
     private Function<T, String> itemSortingStringConverter;
     private Function<T, View> itemToViewConverter;
     private OnClickListener itemOnClickListener;
@@ -119,11 +115,12 @@ public class PaginatedListComponent<T> extends ConstraintLayout {
 
     private void registerObserver(LifecycleOwner lifecycleOwner, LiveData<List<T>> items) {
 
-        items.observe(lifecycleOwner, newItems -> this.items.setValue(newItems));
+        items.observe(lifecycleOwner, this.items::setValue);
         items.observe(lifecycleOwner, newItems -> applySortingAndFiltering());
 
         currentPage.observe(lifecycleOwner, new PageNumberCurrentObserver());
         itemsSortedAndFiltered.observe(lifecycleOwner, this::showMediaOnCurrentPage);
+        itemsSortedAndFiltered.observe(lifecycleOwner, new PageNumberTotalObserver());
 
         sortingMode.observe(lifecycleOwner, newSortingMode -> applySortingAndFiltering());
         selectedFilter.observe(lifecycleOwner, newSelectedFilter -> applySortingAndFiltering());
@@ -306,6 +303,17 @@ public class PaginatedListComponent<T> extends ConstraintLayout {
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {
             /* TODO: When is this triggered? */
+        }
+    }
+
+    private class PageNumberTotalObserver implements Observer<List<T>> {
+
+        @Override
+        public void onChanged(List<T> mediaList) {
+
+            int numberOfPages = MediaUtil.getTotalNumberOfPages(mediaList, ELEMENTS_PER_PAGE);
+
+            maxPageLabel.setText(NumberUtil.formatNumberFullDigitsLeadingZero(numberOfPages));
         }
     }
 }
