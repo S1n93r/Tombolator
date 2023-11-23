@@ -60,7 +60,7 @@ public class MediaActivity extends AppCompatActivity {
                 .commitNow();
     }
 
-    protected void switchToCreationStepOne(Fragment fragmentBefore) {
+    protected void switchToCreationFragment(Fragment fragmentBefore) {
 
         createMediaFragment.setFragmentBefore(fragmentBefore);
 

@@ -78,7 +78,7 @@ public class MediaDetailsFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        editMediaButton.setOnClickListener((View v) -> mediaActivity.switchToCreationStepOne(this));
+        editMediaButton.setOnClickListener((View v) -> mediaActivity.switchToCreationFragment(this));
 
         backButton.setOnClickListener((View v) -> mediaActivity.switchToView(fragmentBefore));
 

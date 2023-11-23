@@ -164,13 +164,18 @@ public class CreateMediaFragment extends Fragment {
         public void onChanged(Media media) {
 
             int mediaTypeIndex = media.getMediaType() == null
-                    ? 0 : media.getMediaType().ordinal();
+                    ? 0 : media.getMediaType().ordinal() - 1;
 
             int contentTypeIndex = media.getContentType() == null
                     ? 0 : media.getContentType().ordinal();
 
             mediaTypesSpinner.setSelection(mediaTypeIndex);
             contentTypeSpinner.setSelection(contentTypeIndex);
+
+            editTextName.setText(media.getName() == null ? "" : media.getName());
+            editTextTitle.setText(media.getTitle() == null ? "" : media.getTitle());
+            editTextAuthor.setText(media.getAuthor() == null ? "" : media.getAuthor());
+            editTextNumber.setText(String.valueOf(media.getNumber()));
         }
     }
 

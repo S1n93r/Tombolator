@@ -53,20 +53,20 @@ public class CreateTombolaFragment extends Fragment {
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
         tombolasActivityViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
 
-        View layout = inflater.inflate(R.layout.create_tombola_fragment, container, false);
+        View view = inflater.inflate(R.layout.create_tombola_fragment, container, false);
 
-        nameEditText = layout.findViewById(R.id.edit_text_name);
+        nameEditText = view.findViewById(R.id.edit_text_name);
 
-        paginatedMediaList = layout.findViewById(R.id.paginated_media_list);
+        paginatedMediaList = view.findViewById(R.id.paginated_media_list);
 
-        backButton = layout.findViewById(R.id.back_button);
-        saveButton = layout.findViewById(R.id.save_button);
+        backButton = view.findViewById(R.id.back_button);
+        saveButton = view.findViewById(R.id.save_button);
 
         configurePaginatedTombolaList();
         registerOnClickListener();
         registerObserver();
 
-        return layout;
+        return view;
     }
 
     private void configurePaginatedTombolaList() {

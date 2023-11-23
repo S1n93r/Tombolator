@@ -28,8 +28,6 @@ import com.example.tombolator.commons.NumberUtil;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 
-import org.checkerframework.checker.nullness.compatqual.NullableDecl;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -311,7 +309,7 @@ public class PaginatedMediaList extends ConstraintLayout {
         }
 
         @Override
-        public boolean apply(@NullableDecl Media media) {
+        public boolean apply(Media media) {
 
             if (media == null) {
                 /* TODO: Add error log here */

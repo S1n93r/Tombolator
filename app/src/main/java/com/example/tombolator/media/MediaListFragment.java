@@ -4,16 +4,24 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tombolator.R;
+import com.example.tombolator.commons.PaginatedListComponent;
+import com.example.tombolator.commons.PaginatedListEntry;
 
 public class MediaListFragment extends Fragment {
 
     private MediaActivity mediaActivity;
     private MediaActivityViewModel mediaActivityViewModel;
+
+    private PaginatedListComponent<Media> paginatedMediaList;
+
+    private ImageView backButton;
+    private ImageView createMediaButton;
 
     private MediaListFragment() {
     }
@@ -30,35 +38,55 @@ public class MediaListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.media_list_fragment, container, false);
 
-        PaginatedMediaList paginatedMediaList = view.findViewById(R.id.paginated_media_list);
+        paginatedMediaList = view.findViewById(R.id.paginated_media_list);
 
-        paginatedMediaList.configureView(getActivity());
+        backButton = view.findViewById(R.id.back_button);
+        createMediaButton = view.findViewById(R.id.create_media_button);
 
-        paginatedMediaList.registerGoBackListener(v -> mediaActivity.finish());
-        paginatedMediaList.registerOpenMediaDetails(() -> mediaActivity.switchToMediaDetailsView(this));
-        paginatedMediaList.registerOpenMediaCreationListener(new EnterCreationListener(this));
+        configurePaginatedTombolaList();
+        registerOnClickListener();
+        registerObserver();
 
         return view;
     }
 
-    private class EnterCreationListener implements View.OnClickListener {
+    private void configurePaginatedTombolaList() {
 
-        private final Fragment fragmentBefore;
+        paginatedMediaList.setItemSortingStringConverter(Media::getName);
 
-        public EnterCreationListener(Fragment fragmentBefore) {
-            this.fragmentBefore = fragmentBefore;
-        }
+        paginatedMediaList.setItemToViewConverter(media -> {
 
-        @Override
-        public void onClick(View v) {
+            @SuppressWarnings("unchecked")
+            PaginatedListEntry<Media> paginatedListEntry = (PaginatedListEntry<Media>) View.inflate(
+                    getContext(), R.layout.paginated_list_entry, null);
 
-            Media createdMedia = new Media();
+            paginatedListEntry.setText(media.toLabel());
+            paginatedListEntry.setId(media.getId().intValue());
 
-            createdMedia.setCreationTimestamp(System.currentTimeMillis());
+            paginatedListEntry.setOnClickListener(view -> {
+                mediaActivityViewModel.selectMedia(media);
+                mediaActivity.switchToMediaDetailsView(this);
+            });
 
-            mediaActivityViewModel.selectMedia(createdMedia);
+            return paginatedListEntry;
+        });
+    }
 
-            mediaActivity.switchToCreationStepOne(fragmentBefore);
-        }
+    private void registerObserver() {
+
+        mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().observe(getViewLifecycleOwner(), mediaList -> {
+            if (mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData() != null)
+                paginatedMediaList.setItems(getViewLifecycleOwner(), mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData());
+        });
+    }
+
+    private void registerOnClickListener() {
+
+        backButton.setOnClickListener(view -> mediaActivity.finish());
+
+        createMediaButton.setOnClickListener(view -> {
+            mediaActivityViewModel.selectMedia(new Media());
+            mediaActivity.switchToCreationFragment(this);
+        });
     }
 }
