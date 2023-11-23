@@ -31,7 +31,7 @@ public class CreateTombolaFragment extends Fragment {
 
     private EditText nameEditText;
 
-    private PaginatedListComponent<Media> paginatedTombolaList;
+    private PaginatedListComponent<Media> paginatedMediaList;
 
     private ImageView saveButton;
     private ImageView backButton;
@@ -57,7 +57,7 @@ public class CreateTombolaFragment extends Fragment {
 
         nameEditText = layout.findViewById(R.id.edit_text_name);
 
-        paginatedTombolaList = layout.findViewById(R.id.paginated_media_list);
+        paginatedMediaList = layout.findViewById(R.id.paginated_media_list);
 
         backButton = layout.findViewById(R.id.back_button);
         saveButton = layout.findViewById(R.id.save_button);
@@ -71,9 +71,9 @@ public class CreateTombolaFragment extends Fragment {
 
     private void configurePaginatedTombolaList() {
 
-        paginatedTombolaList.setItemSortingStringConverter(Media::getName);
+        paginatedMediaList.setItemSortingStringConverter(Media::getName);
 
-        paginatedTombolaList.setItemToViewConverter(media -> {
+        paginatedMediaList.setItemToViewConverter(media -> {
 
             if (tombolasActivityViewModel.getSelectedTombola().getValue() == null)
                 throw new IllegalStateException("Selected tombola should not be null!");
@@ -112,7 +112,7 @@ public class CreateTombolaFragment extends Fragment {
 
         mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().observe(getViewLifecycleOwner(), mediaList -> {
             if (mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData() != null)
-                paginatedTombolaList.setItems(getViewLifecycleOwner(), mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData());
+                paginatedMediaList.setItems(getViewLifecycleOwner(), mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData());
         });
     }
 
