@@ -58,11 +58,10 @@
 
         <TextView
             android:id="@+id/label_current_page"
-            android:layout_width="16dp"
-            android:layout_height="40dp"
+            android:layout_width="48dp"
+            android:layout_height="32dp"
             android:fontFamily="@font/comic_sans_ms"
-            android:gravity="center"
-            android:textAlignment="center"
+            android:gravity="end"
             android:textSize="@dimen/font_size_labels" />
 
         <TextView
@@ -76,11 +75,10 @@
 
         <TextView
             android:id="@+id/label_max_page"
-            android:layout_width="16dp"
-            android:layout_height="40dp"
+            android:layout_width="48dp"
+            android:layout_height="32dp"
             android:fontFamily="@font/comic_sans_ms"
-            android:gravity="center"
-            android:textAlignment="center"
+            android:gravity="start"
             android:textSize="@dimen/font_size_labels" />
 
         <ImageView
