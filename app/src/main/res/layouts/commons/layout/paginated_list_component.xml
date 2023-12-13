@@ -52,7 +52,7 @@
             android:layout_width="@dimen/button_extra_small_width"
             android:layout_height="@dimen/button_extra_small_height"
             android:background="@drawable/button_selector_purple"
-            android:contentDescription="@string/previous_page_description"
+            android:contentDescription="@string/description_button_back"
             android:padding="12dp"
             android:src="@drawable/ic_arrow_left" />
 
@@ -88,7 +88,7 @@
             android:layout_width="@dimen/button_extra_small_width"
             android:layout_height="@dimen/button_extra_small_height"
             android:background="@drawable/button_selector_purple"
-            android:contentDescription="@string/next_page_description"
+            android:contentDescription="@string/description_button_next"
             android:padding="12dp"
             android:src="@drawable/ic_arrow_right" />
 

@@ -78,6 +78,7 @@
     <string name="toast_media_number_empty">Bitte gib eine Nummer an</string>
     <string name="toast_media_author_empty">Bitte gib einen Author an</string>
     <!-- Content description -->
-    <string name="previous_page_description">Zur vorherigen Seite</string>
-    <string name="next_page_description">Zur nächsten Seite</string>
+    <string name="description_button_next">Zur nächsten Seite</string>
+    <string name="description_button_back">Zurück zu vorherigen Sicht</string>
+    <string name="description_button_save">Tombola speichern</string>
 </resources>
