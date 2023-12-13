@@ -14,7 +14,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tombolator.R;
+import com.example.tombolator.commons.PaginatedListComponent;
+import com.example.tombolator.commons.PaginatedListEntry;
+import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaActivityViewModel;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class CreateTombolaFragment extends Fragment {
 
@@ -24,6 +30,8 @@ public class CreateTombolaFragment extends Fragment {
     private TombolasActivityViewModel tombolasActivityViewModel;
 
     private EditText nameEditText;
+
+    private PaginatedListComponent<Media> paginatedMediaList;
 
     private ImageView saveButton;
     private ImageView backButton;
@@ -49,17 +57,63 @@ public class CreateTombolaFragment extends Fragment {
 
         nameEditText = view.findViewById(R.id.edit_text_name);
 
+        paginatedMediaList = view.findViewById(R.id.paginated_media_list);
+
         backButton = view.findViewById(R.id.back_button);
         saveButton = view.findViewById(R.id.save_button);
 
+        configurePaginatedTombolaList();
         registerOnClickListener();
         registerObserver();
 
         return view;
     }
 
+    private void configurePaginatedTombolaList() {
+
+        paginatedMediaList.setItemSortingStringConverter(Media::getName);
+
+        paginatedMediaList.setItemToViewConverter(media -> {
+
+            if (tombolasActivityViewModel.getSelectedTombola().getValue() == null)
+                throw new IllegalStateException("Selected tombola should not be null!");
+
+            @SuppressWarnings("unchecked")
+            PaginatedListEntry<Media> paginatedListEntry = (PaginatedListEntry<Media>) View.inflate(
+                    getContext(), R.layout.paginated_list_entry, null);
+
+            paginatedListEntry.initialize(getViewLifecycleOwner());
+
+            paginatedListEntry.setText(media.toLabel());
+            paginatedListEntry.setId(media.getId().intValue());
+
+            Set<Media> selectedMedia = new HashSet<>(tombolasActivityViewModel.getSelectedTombola().getValue().getAllMedia());
+
+            if (selectedMedia.contains(media))
+                paginatedListEntry.select();
+
+            paginatedListEntry.getSelected().observe(getViewLifecycleOwner(), selected -> {
+
+                Set<Media> selectedMediaLive = new HashSet<>(tombolasActivityViewModel.getSelectedTombola().getValue().getAllMedia());
+
+                if (selected && !selectedMediaLive.contains(media))
+                    tombolasActivityViewModel.getSelectedTombola().getValue().addMedia(media);
+                else if (!selected)
+                    tombolasActivityViewModel.getSelectedTombola().getValue().removeMedia(media);
+            });
+
+            return paginatedListEntry;
+        });
+    }
+
     private void registerObserver() {
+
         tombolasActivityViewModel.getSelectedTombola().observe(getViewLifecycleOwner(), (Tombola tombola) -> nameEditText.setText(tombola.getName()));
+
+        mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().observe(getViewLifecycleOwner(), mediaList -> {
+            if (mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData() != null)
+                paginatedMediaList.setItems(getViewLifecycleOwner(), mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData());
+        });
     }
 
     private void registerOnClickListener() {
