@@ -34,7 +34,7 @@
     <LinearLayout
         android:id="@+id/item_list"
         android:layout_width="280dp"
-        android:layout_height="408dp"
+        android:layout_height="432dp"
         android:orientation="vertical">
 
     </LinearLayout>

@@ -6,4 +6,5 @@
     android:fontFamily="@font/comic_sans_ms"
     android:paddingTop="5dp"
     android:paddingBottom="5dp"
-    android:textSize="@dimen/font_size_xl" />
+    android:text="[placeholder]"
+    android:textSize="@dimen/font_size" />

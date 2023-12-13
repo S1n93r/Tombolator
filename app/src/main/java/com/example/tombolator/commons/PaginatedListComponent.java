@@ -32,7 +32,8 @@ import java.util.stream.Collectors;
 
 public class PaginatedListComponent<T> extends ConstraintLayout {
 
-    private static final int ELEMENTS_PER_PAGE = 6;
+    /* FIXME: Not working as component does not expand if there are more items. */
+    private static final int ELEMENTS_PER_PAGE = 8;
 
     private final MutableLiveData<Integer> currentPage = new MutableLiveData<>(1);
 
