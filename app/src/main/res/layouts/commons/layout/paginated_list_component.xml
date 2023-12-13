@@ -15,8 +15,9 @@
 
         <ImageView
             android:id="@+id/button_sort_by"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="8dp"
             android:contentDescription="@string/icon_sort_media_content_description"
             android:src="@drawable/ic_sort_by_desc" />
 
@@ -58,28 +59,28 @@
 
         <TextView
             android:id="@+id/label_current_page"
-            android:layout_width="48dp"
-            android:layout_height="32dp"
+            android:layout_width="32dp"
+            android:layout_height="20dp"
             android:fontFamily="@font/comic_sans_ms"
             android:gravity="end"
-            android:textSize="@dimen/font_size_labels" />
+            android:textSize="@dimen/font_size" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="20dp"
             android:fontFamily="@font/comic_sans_ms"
             android:gravity="center"
             android:text="@string/label_separator_slash"
             android:textAlignment="center"
-            android:textSize="@dimen/font_size_labels" />
+            android:textSize="@dimen/font_size" />
 
         <TextView
             android:id="@+id/label_max_page"
-            android:layout_width="48dp"
-            android:layout_height="32dp"
+            android:layout_width="32dp"
+            android:layout_height="20dp"
             android:fontFamily="@font/comic_sans_ms"
             android:gravity="start"
-            android:textSize="@dimen/font_size_labels" />
+            android:textSize="@dimen/font_size" />
 
         <ImageView
             android:id="@+id/button_next_page"
