@@ -39,13 +39,12 @@ public class PaginatedListComponent<T> extends ConstraintLayout {
     private final MutableLiveData<SortingMode> sortingMode = new MutableLiveData<>(A_TO_Z);
 
     private final MutableLiveData<String> selectedFilter = new MutableLiveData<>(null);
-    private final MutableLiveData<List<T>> items = new MutableLiveData(new ArrayList<>());
+    private final MutableLiveData<List<T>> items = new MutableLiveData<>(new ArrayList<>());
     private final MutableLiveData<List<T>> itemsSortedAndFiltered = new MutableLiveData<>(new ArrayList<>());
     private Function<T, String> filterValueExtractor;
     private List<String> filterValues = new ArrayList<>();
     private Function<T, String> itemSortingStringConverter;
     private Function<T, View> itemToViewConverter;
-    private OnClickListener itemOnClickListener;
 
     private ImageView sortButton;
 
@@ -227,9 +226,6 @@ public class PaginatedListComponent<T> extends ConstraintLayout {
 
             View view = itemToViewConverter == null ? createDefaultTextView(item.toString()) : itemToViewConverter.apply(item);
 
-            if (itemOnClickListener != null)
-                view.setOnClickListener(itemOnClickListener);
-
             itemList.addView(view);
         }
     }
@@ -244,10 +240,6 @@ public class PaginatedListComponent<T> extends ConstraintLayout {
 
     public void setItemSortingStringConverter(Function<T, String> itemSortingStringConverter) {
         this.itemSortingStringConverter = itemSortingStringConverter;
-    }
-
-    private void setItemOnClickListener(OnClickListener itemOnClickListener) {
-        this.itemOnClickListener = itemOnClickListener;
     }
 
     public void setUpFilter(List<String> filterValues, Function<T, String> filterValueExtractor) {
