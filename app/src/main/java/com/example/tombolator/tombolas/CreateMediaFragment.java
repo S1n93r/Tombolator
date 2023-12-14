@@ -35,8 +35,6 @@ public class CreateMediaFragment extends Fragment {
     private TombolasActivity tombolasActivity;
     private MediaActivityViewModel mediaActivityViewModel;
 
-    private Fragment fragmentBefore;
-
     private Spinner mediaTypesSpinner;
     private Spinner contentTypeSpinner;
     private TextView contentTypeTextView;
@@ -149,17 +147,13 @@ public class CreateMediaFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        backButton.setOnClickListener((View v) -> tombolasActivity.switchToCreateTombolaView());
+        backButton.setOnClickListener((View v) -> tombolasActivity.switchToCreateTombola());
 
         saveButton.setOnClickListener(new SaveMediaListener());
     }
 
     private void registerObserver() {
         mediaActivityViewModel.getSelectedMedia().observe(getViewLifecycleOwner(), new SelectedMediaObserver());
-    }
-
-    public void setFragmentBefore(Fragment fragmentBefore) {
-        this.fragmentBefore = fragmentBefore;
     }
 
     private class SelectedMediaObserver implements Observer<Media> {
@@ -236,7 +230,7 @@ public class CreateMediaFragment extends Fragment {
 
             mediaActivityViewModel.insert(selectedMedia);
 
-            tombolasActivity.switchToCreateTombolaView();
+            tombolasActivity.switchToCreateTombola();
         }
     }
 }

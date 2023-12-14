@@ -80,7 +80,7 @@ public class TombolaMainFragment extends Fragment {
         newTombolaButton.setOnClickListener(view -> {
 
             tombolasActivityViewModel.selectTombola(new Tombola());
-            tombolasActivity.switchToCreateTombolaView();
+            tombolasActivity.switchToCreateTombola();
         });
     }
 
@@ -93,7 +93,7 @@ public class TombolaMainFragment extends Fragment {
             long tombolaId = textView.getId();
             tombolasActivityViewModel.selectTombola(tombolaId);
 
-            tombolasActivity.switchToTombolaDetailsView();
+            tombolasActivity.switchToTombolaDetails();
         }
     }
 }

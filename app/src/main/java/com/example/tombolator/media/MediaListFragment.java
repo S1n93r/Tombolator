@@ -86,7 +86,7 @@ public class MediaListFragment extends Fragment {
 
         createMediaButton.setOnClickListener(view -> {
             mediaActivityViewModel.selectMedia(new Media());
-            mediaActivity.switchToCreationFragment(this);
+            mediaActivity.switchToCreationFragment();
         });
     }
 }

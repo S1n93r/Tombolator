@@ -25,32 +25,32 @@ public class TombolasActivity extends AppCompatActivity {
 
         setContentView(R.layout.tombolas_activity);
         if (savedInstanceState == null) {
-            switchToTombolasMainView();
+            switchToTombolaList();
         }
     }
 
-    protected void switchToTombolasMainView() {
+    protected void switchToTombolaList() {
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, tombolaMainFragment)
                 .commitNow();
     }
 
-    protected void switchToCreateTombolaView() {
+    protected void switchToCreateTombola() {
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, createTombolaFragment)
                 .commitNow();
     }
 
-    protected void switchToTombolaDetailsView() {
+    protected void switchToTombolaDetails() {
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, tombolaDetailsFragment)
                 .commitNow();
     }
 
-    protected void switchToMediaCreationView() {
+    protected void switchToCreateMedia() {
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, createMediaFragment)

@@ -1,4 +1,4 @@
-package com.example.tombolator.media;
+package com.example.tombolator.tombolas;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,12 +15,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tombolator.R;
 import com.example.tombolator.commons.CustomAlertDialog;
-import com.example.tombolator.tombolas.TombolasActivityViewModel;
+import com.example.tombolator.media.Media;
+import com.example.tombolator.media.MediaActivityViewModel;
 import com.example.tombolator.utils.DateUtil;
 
 public class MediaDetailsFragment extends Fragment {
 
-    private MediaActivity mediaActivity;
+    private TombolasActivity tombolasActivity;
     private MediaActivityViewModel mediaActivityViewModel;
     private TombolasActivityViewModel tombolasActivityViewModel;
 
@@ -49,7 +50,7 @@ public class MediaDetailsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        mediaActivity = (MediaActivity) getActivity();
+        tombolasActivity = (TombolasActivity) getActivity();
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
         tombolasActivityViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
 
@@ -78,9 +79,9 @@ public class MediaDetailsFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        editMediaButton.setOnClickListener((View v) -> mediaActivity.switchToCreationFragment(this));
+        editMediaButton.setOnClickListener((View v) -> tombolasActivity.switchToCreateMedia());
 
-        backButton.setOnClickListener((View v) -> mediaActivity.switchToView(fragmentBefore));
+        backButton.setOnClickListener((View v) -> tombolasActivity.switchToCreateTombola());
 
         deleteButton.setOnClickListener((View v) -> {
 
@@ -130,7 +131,7 @@ public class MediaDetailsFragment extends Fragment {
         tombolasActivityViewModel.deleteMediaFromAllTombolas(media);
         mediaActivityViewModel.delete(media);
 
-        mediaActivity.switchToMediaList();
+        tombolasActivity.switchToCreateMedia();
     }
 
     public void setFragmentBefore(Fragment fragmentBefore) {

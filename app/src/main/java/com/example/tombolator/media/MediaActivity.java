@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.tombolator.R;
 import com.example.tombolator.tombolas.CreateMediaFragment;
+import com.example.tombolator.tombolas.MediaDetailsFragment;
 
 public class MediaActivity extends AppCompatActivity {
 
@@ -61,9 +62,7 @@ public class MediaActivity extends AppCompatActivity {
                 .commitNow();
     }
 
-    protected void switchToCreationFragment(Fragment fragmentBefore) {
-
-        createMediaFragment.setFragmentBefore(fragmentBefore);
+    protected void switchToCreationFragment() {
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, createMediaFragment)

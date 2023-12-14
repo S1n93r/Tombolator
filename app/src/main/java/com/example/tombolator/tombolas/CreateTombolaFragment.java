@@ -140,14 +140,14 @@ public class CreateTombolaFragment extends Fragment {
 
             tombolasActivityViewModel.insertTombola(selectedTombola);
 
-            tombolasActivity.switchToTombolasMainView();
+            tombolasActivity.switchToTombolaList();
         });
 
-        addMediaButton.setOnClickListener(view -> tombolasActivity.switchToMediaCreationView());
+        addMediaButton.setOnClickListener(view -> tombolasActivity.switchToCreateMedia());
 
         backButton.setOnClickListener(view -> {
             resetForm();
-            tombolasActivity.switchToTombolasMainView();
+            tombolasActivity.switchToTombolaList();
         });
 
         saveButton.setOnClickListener(new SaveTombolaListener());
@@ -182,7 +182,7 @@ public class CreateTombolaFragment extends Fragment {
 
             tombolasActivityViewModel.insertTombola(selectedTombola);
 
-            tombolasActivity.switchToTombolasMainView();
+            tombolasActivity.switchToTombolaList();
         }
     }
 }

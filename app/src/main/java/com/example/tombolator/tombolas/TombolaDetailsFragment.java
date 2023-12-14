@@ -135,7 +135,7 @@ public class TombolaDetailsFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        backButton.setOnClickListener((View view) -> tombolasActivity.switchToTombolasMainView());
+        backButton.setOnClickListener((View view) -> tombolasActivity.switchToTombolaList());
 
         drawButton.setOnClickListener((View view) -> {
 
@@ -170,7 +170,7 @@ public class TombolaDetailsFragment extends Fragment {
             tombolaViewModel.insertTombola(selectedTombola);
         });
 
-        editTombolaButton.setOnClickListener((View view) -> tombolasActivity.switchToCreateTombolaView());
+        editTombolaButton.setOnClickListener((View view) -> tombolasActivity.switchToCreateTombola());
 
         deleteButton.setOnClickListener((View view) -> {
 
@@ -191,7 +191,7 @@ public class TombolaDetailsFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     tombolaViewModel.deleteTombola(tombola);
-                    tombolasActivity.switchToTombolasMainView();
+                    tombolasActivity.switchToTombolaList();
                     customAlert.dismiss();
                 }
             });
