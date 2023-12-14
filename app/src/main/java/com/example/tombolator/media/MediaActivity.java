@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.tombolator.R;
+import com.example.tombolator.tombolas.CreateMediaFragment;
 
 public class MediaActivity extends AppCompatActivity {
 

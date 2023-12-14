@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tombolator.R;
@@ -20,9 +21,12 @@ import com.example.tombolator.media.Media;
 import com.example.tombolator.media.MediaActivityViewModel;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class CreateTombolaFragment extends Fragment {
+
+    private final MutableLiveData<List<Media>> mediaCurrentTombola = new MutableLiveData<>();
 
     private TombolasActivity tombolasActivity;
 
@@ -34,6 +38,7 @@ public class CreateTombolaFragment extends Fragment {
     private PaginatedListComponent<Media> paginatedMediaList;
 
     private ImageView saveButton;
+    private ImageView addMediaButton;
     private ImageView backButton;
 
     private CreateTombolaFragment() {
@@ -60,6 +65,7 @@ public class CreateTombolaFragment extends Fragment {
         paginatedMediaList = view.findViewById(R.id.paginated_media_list);
 
         backButton = view.findViewById(R.id.back_button);
+        addMediaButton = view.findViewById(R.id.add_media_button);
         saveButton = view.findViewById(R.id.save_button);
 
         configurePaginatedTombolaList();
@@ -108,7 +114,15 @@ public class CreateTombolaFragment extends Fragment {
 
     private void registerObserver() {
 
-        tombolasActivityViewModel.getSelectedTombola().observe(getViewLifecycleOwner(), (Tombola tombola) -> nameEditText.setText(tombola.getName()));
+        paginatedMediaList.setItems(getViewLifecycleOwner(), mediaCurrentTombola);
+
+        tombolasActivityViewModel.getSelectedTombola().observe(getViewLifecycleOwner(), (Tombola tombola) -> {
+
+            nameEditText.setText(tombola.getName());
+
+            if (tombola.getAllMedia() != null)
+                mediaCurrentTombola.setValue(tombola.getAllMedia());
+        });
 
         mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().observe(getViewLifecycleOwner(), mediaList -> {
             if (mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData() != null)
@@ -118,7 +132,7 @@ public class CreateTombolaFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        saveButton.setOnClickListener((View view) -> {
+        saveButton.setOnClickListener(view -> {
 
             Tombola selectedTombola = tombolasActivityViewModel.getSelectedTombola().getValue();
 
@@ -129,8 +143,9 @@ public class CreateTombolaFragment extends Fragment {
             tombolasActivity.switchToTombolasMainView();
         });
 
+        addMediaButton.setOnClickListener(view -> tombolasActivity.switchToMediaCreationView());
 
-        backButton.setOnClickListener(v -> {
+        backButton.setOnClickListener(view -> {
             resetForm();
             tombolasActivity.switchToTombolasMainView();
         });

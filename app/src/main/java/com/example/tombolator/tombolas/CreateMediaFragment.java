@@ -1,4 +1,4 @@
-package com.example.tombolator.media;
+package com.example.tombolator.tombolas;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +19,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tombolator.R;
+import com.example.tombolator.media.ContentType;
+import com.example.tombolator.media.Media;
+import com.example.tombolator.media.MediaActivityViewModel;
+import com.example.tombolator.media.MediaType;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +32,7 @@ import java8.util.stream.StreamSupport;
 
 public class CreateMediaFragment extends Fragment {
 
-    private MediaActivity mediaActivity;
+    private TombolasActivity tombolasActivity;
     private MediaActivityViewModel mediaActivityViewModel;
 
     private Fragment fragmentBefore;
@@ -57,7 +61,7 @@ public class CreateMediaFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        mediaActivity = (MediaActivity) getActivity();
+        tombolasActivity = (TombolasActivity) getActivity();
         mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
 
         View layout = inflater.inflate(R.layout.create_media_fragment, container, false);
@@ -145,7 +149,7 @@ public class CreateMediaFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        backButton.setOnClickListener((View v) -> mediaActivity.switchToView(fragmentBefore));
+        backButton.setOnClickListener((View v) -> tombolasActivity.switchToCreateTombolaView());
 
         saveButton.setOnClickListener(new SaveMediaListener());
     }
@@ -232,7 +236,7 @@ public class CreateMediaFragment extends Fragment {
 
             mediaActivityViewModel.insert(selectedMedia);
 
-            mediaActivity.switchToMediaList();
+            tombolasActivity.switchToCreateTombolaView();
         }
     }
 }

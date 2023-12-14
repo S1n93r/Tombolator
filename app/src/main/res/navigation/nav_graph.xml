@@ -5,7 +5,7 @@
     android:id="@+id/nav_graph">
     <fragment
         android:id="@+id/mediaCreationStepOneTypesFragment2"
-        android:name="com.example.tombolator.media.CreateMediaFragment"
+        android:name="com.example.tombolator.tombolas.CreateMediaFragment"
         android:label="media_creation_step_one_types_fragment"
         tools:layout="@layout/create_media_fragment">
         <action
