@@ -21,6 +21,7 @@ import com.example.tombolator.media.Media;
 
 import java.util.List;
 
+/* FIXME: Name is empty when coming back from media creation on tombola creation. On tombola editing it works. */
 public class CreateTombolaFragment extends Fragment {
 
     private final MutableLiveData<List<Media>> mediaCurrentTombola = new MutableLiveData<>();
