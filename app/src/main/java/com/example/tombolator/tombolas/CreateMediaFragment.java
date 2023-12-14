@@ -21,7 +21,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.tombolator.R;
 import com.example.tombolator.media.ContentType;
 import com.example.tombolator.media.Media;
-import com.example.tombolator.media.MediaActivityViewModel;
 import com.example.tombolator.media.MediaType;
 
 import java.util.Arrays;
@@ -33,7 +32,7 @@ import java8.util.stream.StreamSupport;
 public class CreateMediaFragment extends Fragment {
 
     private TombolasActivity tombolasActivity;
-    private MediaActivityViewModel mediaActivityViewModel;
+    private TombolasActivityViewModel viewModel;
 
     private Spinner mediaTypesSpinner;
     private Spinner contentTypeSpinner;
@@ -60,7 +59,7 @@ public class CreateMediaFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         tombolasActivity = (TombolasActivity) getActivity();
-        mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
 
         View layout = inflater.inflate(R.layout.create_media_fragment, container, false);
 
@@ -153,7 +152,7 @@ public class CreateMediaFragment extends Fragment {
     }
 
     private void registerObserver() {
-        mediaActivityViewModel.getSelectedMedia().observe(getViewLifecycleOwner(), new SelectedMediaObserver());
+        viewModel.getSelectedMedia().observe(getViewLifecycleOwner(), new SelectedMediaObserver());
     }
 
     private class SelectedMediaObserver implements Observer<Media> {
@@ -202,15 +201,14 @@ public class CreateMediaFragment extends Fragment {
                 return;
             }
 
-            if (mediaActivityViewModel.getSelectedMedia().getValue() == null)
-                throw new NullPointerException();
-
             String mediaTypeString = mediaTypesSpinner.getSelectedItem() != null ?
                     mediaTypesSpinner.getSelectedItem().toString() : "";
             String contentType = contentTypeSpinner.getSelectedItem() != null ?
                     contentTypeSpinner.getSelectedItem().toString() : "";
 
-            Media selectedMedia = mediaActivityViewModel.getSelectedMedia().getValue();
+            Media selectedMedia = viewModel.getSelectedMedia().getValue();
+
+            assert selectedMedia != null;
 
             selectedMedia.setMediaType(MediaType.fromOldString(mediaTypeString));
             selectedMedia.setContentType(ContentType.fromOldString(contentType));
@@ -228,7 +226,11 @@ public class CreateMediaFragment extends Fragment {
             selectedMedia.setAuthor(author);
             selectedMedia.setCreationTimestamp(System.currentTimeMillis());
 
-            mediaActivityViewModel.insert(selectedMedia);
+            Tombola selectedTombola = viewModel.getSelectedTombola().getValue();
+
+            assert selectedTombola != null;
+
+            selectedTombola.addMedia(selectedMedia);
 
             tombolasActivity.switchToCreateTombola();
         }

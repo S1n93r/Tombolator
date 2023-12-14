@@ -62,13 +62,6 @@ public class MediaActivity extends AppCompatActivity {
                 .commitNow();
     }
 
-    protected void switchToCreationFragment() {
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, createMediaFragment)
-                .commitNow();
-    }
-
     protected void switchToMediaDetailsView(Fragment fragmentBefore) {
 
         mediaDetailsFragment.setFragmentBefore(fragmentBefore);

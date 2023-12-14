@@ -44,7 +44,6 @@ public class MediaListFragment extends Fragment {
         createMediaButton = view.findViewById(R.id.create_media_button);
 
         configurePaginatedTombolaList();
-        registerOnClickListener();
         registerObserver();
 
         return view;
@@ -77,16 +76,6 @@ public class MediaListFragment extends Fragment {
         mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().observe(getViewLifecycleOwner(), mediaList -> {
             if (mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData() != null)
                 paginatedMediaList.setItems(getViewLifecycleOwner(), mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData());
-        });
-    }
-
-    private void registerOnClickListener() {
-
-        backButton.setOnClickListener(view -> mediaActivity.finish());
-
-        createMediaButton.setOnClickListener(view -> {
-            mediaActivityViewModel.selectMedia(new Media());
-            mediaActivity.switchToCreationFragment();
         });
     }
 }

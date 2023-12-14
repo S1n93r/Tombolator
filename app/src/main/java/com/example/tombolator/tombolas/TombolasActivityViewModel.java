@@ -19,6 +19,8 @@ public class TombolasActivityViewModel extends AndroidViewModel {
 
     private final MutableLiveData<Tombola> selectedTombola = new MutableLiveData<>();
 
+    private final MutableLiveData<Media> selectedMedia = new MutableLiveData<>();
+
     public TombolasActivityViewModel(@NonNull Application application) {
 
         super(application);
@@ -56,8 +58,11 @@ public class TombolasActivityViewModel extends AndroidViewModel {
     }
 
     public void selectTombola(Tombola tombola) {
-        selectedTombola.setValue(tombola);
-        selectedTombola.postValue(selectedTombola.getValue());
+        selectedTombola.postValue(tombola);
+    }
+
+    public void selectMedia(Media media) {
+        selectedMedia.postValue(media);
     }
 
     public void selectTombola(long tombolaId) {
@@ -80,11 +85,39 @@ public class TombolasActivityViewModel extends AndroidViewModel {
         System.err.println("Tombola with id " + tombolaId + " was not found in " + this.getClass() + ".");
     }
 
-    public MutableLiveData<Tombola> getSelectedTombola() {
+    public LiveData<Tombola> getSelectedTombola() {
         return selectedTombola;
     }
 
     public LiveData<List<Tombola>> getAllTombolas() {
         return allTombolas;
+    }
+
+    public LiveData<Media> getSelectedMedia() {
+        return selectedMedia;
+    }
+
+    public void insert(Media media) {
+        tomboRepository.insertMedia(media);
+    }
+
+    public void insertAll(List<Media> mediaList) {
+        tomboRepository.insertAllMedia(mediaList);
+    }
+
+    public void update(Media media) {
+        tomboRepository.updateMedia(media);
+    }
+
+    public void updateAll(List<Media> mediaList) {
+        tomboRepository.updateAllMedia(mediaList);
+    }
+
+    public void delete(Media media) {
+        tomboRepository.deleteMedia(media);
+    }
+
+    public void deleteAllMedia() {
+        tomboRepository.deleteAllMedia();
     }
 }

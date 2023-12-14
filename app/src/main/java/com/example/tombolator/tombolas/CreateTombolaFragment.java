@@ -18,11 +18,8 @@ import com.example.tombolator.R;
 import com.example.tombolator.commons.PaginatedListComponent;
 import com.example.tombolator.commons.PaginatedListEntry;
 import com.example.tombolator.media.Media;
-import com.example.tombolator.media.MediaActivityViewModel;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class CreateTombolaFragment extends Fragment {
 
@@ -30,7 +27,6 @@ public class CreateTombolaFragment extends Fragment {
 
     private TombolasActivity tombolasActivity;
 
-    private MediaActivityViewModel mediaActivityViewModel;
     private TombolasActivityViewModel tombolasActivityViewModel;
 
     private EditText nameEditText;
@@ -55,7 +51,6 @@ public class CreateTombolaFragment extends Fragment {
 
         tombolasActivity = (TombolasActivity) getActivity();
 
-        mediaActivityViewModel = new ViewModelProvider(requireActivity()).get(MediaActivityViewModel.class);
         tombolasActivityViewModel = new ViewModelProvider(requireActivity()).get(TombolasActivityViewModel.class);
 
         View view = inflater.inflate(R.layout.create_tombola_fragment, container, false);
@@ -91,21 +86,15 @@ public class CreateTombolaFragment extends Fragment {
             paginatedListEntry.initialize(getViewLifecycleOwner());
 
             paginatedListEntry.setText(media.toLabel());
+
+            /* FIXME: When freshly created media id is 'null'. */
             paginatedListEntry.setId(media.getId().intValue());
 
-            Set<Media> selectedMedia = new HashSet<>(tombolasActivityViewModel.getSelectedTombola().getValue().getAllMedia());
-
-            if (selectedMedia.contains(media))
-                paginatedListEntry.select();
-
             paginatedListEntry.getSelected().observe(getViewLifecycleOwner(), selected -> {
-
-                Set<Media> selectedMediaLive = new HashSet<>(tombolasActivityViewModel.getSelectedTombola().getValue().getAllMedia());
-
-                if (selected && !selectedMediaLive.contains(media))
-                    tombolasActivityViewModel.getSelectedTombola().getValue().addMedia(media);
-                else if (!selected)
-                    tombolasActivityViewModel.getSelectedTombola().getValue().removeMedia(media);
+                if (selected) {
+                    tombolasActivityViewModel.selectMedia(media);
+                    tombolasActivity.switchToCreateMedia();
+                }
             });
 
             return paginatedListEntry;
@@ -123,11 +112,6 @@ public class CreateTombolaFragment extends Fragment {
             if (tombola.getAllMedia() != null)
                 mediaCurrentTombola.setValue(tombola.getAllMedia());
         });
-
-        mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData().observe(getViewLifecycleOwner(), mediaList -> {
-            if (mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData() != null)
-                paginatedMediaList.setItems(getViewLifecycleOwner(), mediaActivityViewModel.getAllMediaFilteredAndSortedLiveData());
-        });
     }
 
     private void registerOnClickListener() {
@@ -143,7 +127,24 @@ public class CreateTombolaFragment extends Fragment {
             tombolasActivity.switchToTombolaList();
         });
 
-        addMediaButton.setOnClickListener(view -> tombolasActivity.switchToCreateMedia());
+        addMediaButton.setOnClickListener(view -> {
+
+            Tombola selectedTombola = tombolasActivityViewModel.getSelectedTombola().getValue();
+
+            assert selectedTombola != null;
+
+            long id = 0;
+
+            for (Media media : selectedTombola.getAllMedia())
+                if (media.getId() > id)
+                    id = media.getId();
+
+            Media newMedia = new Media();
+            newMedia.setId(id + 1);
+
+            tombolasActivityViewModel.selectMedia(newMedia);
+            tombolasActivity.switchToCreateMedia();
+        });
 
         backButton.setOnClickListener(view -> {
             resetForm();
