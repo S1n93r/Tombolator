@@ -87,7 +87,6 @@ public class CreateTombolaFragment extends Fragment {
 
             paginatedListEntry.setText(media.toLabel());
 
-            /* FIXME: When freshly created media id is 'null'. */
             paginatedListEntry.setId(media.getId().intValue());
 
             paginatedListEntry.getSelected().observe(getViewLifecycleOwner(), selected -> {
