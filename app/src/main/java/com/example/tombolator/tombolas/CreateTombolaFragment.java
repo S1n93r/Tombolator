@@ -21,7 +21,6 @@ import com.example.tombolator.media.Media;
 
 import java.util.List;
 
-/* FIXME: Name is empty when coming back from media creation on tombola creation. On tombola editing it works. */
 public class CreateTombolaFragment extends Fragment {
 
     private final MutableLiveData<List<Media>> mediaCurrentTombola = new MutableLiveData<>();
@@ -133,6 +132,11 @@ public class CreateTombolaFragment extends Fragment {
 
             assert selectedTombola != null;
 
+            String tombolaName = nameEditText.getText().toString();
+
+            if (!tombolaName.isEmpty())
+                selectedTombola.setName(tombolaName);
+
             long id = 0;
 
             for (Media media : selectedTombola.getAllMedia())
@@ -163,21 +167,21 @@ public class CreateTombolaFragment extends Fragment {
         @Override
         public void onClick(View v) {
 
-            if (nameEditText.getText().length() == 0) {
+            String tombolaName = nameEditText.getText().toString();
+
+            if (tombolaName.length() == 0) {
                 Toast.makeText(getContext(), R.string.toast_media_name_empty, Toast.LENGTH_LONG).show();
                 return;
             }
 
-            if (tombolasActivityViewModel.getSelectedTombola().getValue() == null) {
-                /* TODO: Create log entry... Like a nice carving. */
-                throw new NullPointerException();
-            }
-
             Tombola selectedTombola = tombolasActivityViewModel.getSelectedTombola().getValue();
+
+            assert selectedTombola != null;
 
             /* TODO: Type should be asked by spinner. */
             selectedTombola.setType(Tombola.Type.REUSE);
-            selectedTombola.setName(nameEditText.getText().toString());
+
+            selectedTombola.setName(tombolaName);
             selectedTombola.setCreationTimestamp(System.currentTimeMillis());
 
             /*  TODO: Insert media list content of this view here.*/
