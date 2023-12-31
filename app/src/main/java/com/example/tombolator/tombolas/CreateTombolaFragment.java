@@ -178,6 +178,7 @@ public class CreateTombolaFragment extends Fragment {
             /* TODO: Type should be asked by spinner. */
             selectedTombola.setType(Tombola.Type.REUSE);
             selectedTombola.setName(nameEditText.getText().toString());
+            selectedTombola.setCreationTimestamp(System.currentTimeMillis());
 
             /*  TODO: Insert media list content of this view here.*/
 
