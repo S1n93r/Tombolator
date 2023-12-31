@@ -29,7 +29,6 @@ import java.util.List;
 import java8.util.stream.Collectors;
 import java8.util.stream.StreamSupport;
 
-/* FIXME: When editing a media, a new entry is created instead of updating the existing one. */
 public class CreateMediaFragment extends Fragment {
 
     private TombolasActivity tombolasActivity;
@@ -231,7 +230,8 @@ public class CreateMediaFragment extends Fragment {
 
             assert selectedTombola != null;
 
-            selectedTombola.addMedia(selectedMedia);
+            if (!selectedTombola.containsMediaId(selectedMedia.getId()))
+                selectedTombola.addMedia(selectedMedia);
 
             tombolasActivity.switchToCreateTombola();
         }

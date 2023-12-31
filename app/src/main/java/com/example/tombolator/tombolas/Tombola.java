@@ -17,6 +17,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
+import java8.util.stream.Collectors;
+import java8.util.stream.StreamSupport;
+
 @Entity
 public class Tombola implements Parcelable {
 
@@ -236,6 +239,10 @@ public class Tombola implements Parcelable {
 
     public void setMediaDrawn(List<Media> mediaDrawn) {
         this.mediaDrawn = mediaDrawn;
+    }
+
+    public boolean containsMediaId(long id) {
+        return StreamSupport.stream(getAllMedia()).map(Media::getId).collect(Collectors.toSet()).contains(id);
     }
 
     public enum Type {
