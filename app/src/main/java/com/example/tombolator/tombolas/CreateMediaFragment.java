@@ -186,21 +186,6 @@ public class CreateMediaFragment extends Fragment {
                 return;
             }
 
-            if (editTextTitle.getText().length() == 0) {
-                Toast.makeText(getContext(), R.string.toast_media_title_empty, Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            if (editTextNumber.getText().length() == 0) {
-                Toast.makeText(getContext(), R.string.toast_media_number_empty, Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            if (editTextAuthor.getText().length() == 0) {
-                Toast.makeText(getContext(), R.string.toast_media_author_empty, Toast.LENGTH_LONG).show();
-                return;
-            }
-
             String mediaTypeString = mediaTypesSpinner.getSelectedItem() != null ?
                     mediaTypesSpinner.getSelectedItem().toString() : "";
             String contentType = contentTypeSpinner.getSelectedItem() != null ?
