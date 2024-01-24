@@ -147,7 +147,7 @@ public class CreateTombolaFragment extends Fragment {
             newMedia.setId(id + 1);
 
             tombolasActivityViewModel.selectMedia(newMedia);
-            tombolasActivity.switchToCreateMedia();
+            tombolasActivity.switchToChooseMedia();
         });
 
         backButton.setOnClickListener(view -> {

@@ -16,51 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_title">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/text_view_title2"
-                android:layout_width="128dp"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/comic_sans_ms"
-                android:text="@string/media_creation_question_media_type"
-                android:textSize="@dimen/font_size_labels" />
-
-            <Spinner
-                android:id="@+id/spinner_media_types"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/comic_sans_ms"
-                android:textSize="@dimen/font_size_labels" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/text_view_content_type"
-                android:layout_width="128dp"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/comic_sans_ms"
-                android:text="@string/media_creation_question_content_type"
-                android:textSize="@dimen/font_size_labels" />
-
-            <Spinner
-                android:id="@+id/spinner_content_types"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/comic_sans_ms"
-                android:textSize="@dimen/font_size_labels" />
-
-        </LinearLayout>
-
 
         <EditText
             android:id="@+id/edit_text_name"

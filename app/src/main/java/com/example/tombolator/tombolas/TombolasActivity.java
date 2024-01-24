@@ -12,6 +12,7 @@ public class TombolasActivity extends AppCompatActivity {
     private CreateTombolaFragment createTombolaFragment;
     private TombolaDetailsFragment tombolaDetailsFragment;
     private CreateMediaFragment createMediaFragment;
+    private ChooseMediaTypeFragment chooseMediaTypeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,7 @@ public class TombolasActivity extends AppCompatActivity {
         createTombolaFragment = CreateTombolaFragment.newInstance();
         tombolaDetailsFragment = TombolaDetailsFragment.newInstance();
         createMediaFragment = CreateMediaFragment.newInstance();
+        chooseMediaTypeFragment = ChooseMediaTypeFragment.newInstance();
 
         setContentView(R.layout.tombolas_activity);
         if (savedInstanceState == null) {
@@ -54,6 +56,13 @@ public class TombolasActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, createMediaFragment)
+                .commitNow();
+    }
+
+    protected void switchToChooseMedia() {
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, chooseMediaTypeFragment)
                 .commitNow();
     }
 }
