@@ -92,7 +92,7 @@ public class CreateTombolaFragment extends Fragment {
             paginatedListEntry.getSelected().observe(getViewLifecycleOwner(), selected -> {
                 if (selected) {
                     tombolasActivityViewModel.selectMedia(media);
-                    tombolasActivity.switchToCreateMedia();
+                    tombolasActivity.switchToCreateBook();
                 }
             });
 

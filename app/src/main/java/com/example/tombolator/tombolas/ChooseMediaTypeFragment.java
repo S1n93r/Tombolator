@@ -62,17 +62,17 @@ public class ChooseMediaTypeFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        cdButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.CD));
-        cassetteButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.CASSETTE));
-        movieButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.DVD));
-        bookButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.BOOK));
-        ebookButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.E_BOOK));
-        streamingButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.STREAMING));
+        cdButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.CD, () -> tombolasActivity.switchToCreateCassette()));
+        cassetteButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.CASSETTE, () -> tombolasActivity.switchToCreateCassette()));
+        movieButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.DVD, () -> tombolasActivity.switchToCreateCassette()));
+        bookButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.BOOK, () -> tombolasActivity.switchToCreateBook()));
+        ebookButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.E_BOOK, () -> tombolasActivity.switchToCreateBook()));
+        streamingButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.STREAMING, () -> tombolasActivity.switchToCreateCassette()));
 
         backButton.setOnClickListener((View v) -> tombolasActivity.switchToCreateTombola());
     }
 
-    private void chooseAndSwitch(MediaType mediaType) {
+    private void chooseAndSwitch(MediaType mediaType, Runnable switchRunner) {
 
         Media selectedMedia = viewModel.getSelectedMedia().getValue();
 
@@ -81,6 +81,6 @@ public class ChooseMediaTypeFragment extends Fragment {
 
         selectedMedia.setMediaType(mediaType);
 
-        tombolasActivity.switchToCreateMedia();
+        switchRunner.run();
     }
 }

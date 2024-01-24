@@ -11,8 +11,9 @@ public class TombolasActivity extends AppCompatActivity {
     private TombolaMainFragment tombolaMainFragment;
     private CreateTombolaFragment createTombolaFragment;
     private TombolaDetailsFragment tombolaDetailsFragment;
-    private CreateMediaFragment createMediaFragment;
     private ChooseMediaTypeFragment chooseMediaTypeFragment;
+    private CreateBookFragment createBookFragment;
+    private CreateCassetteFragment createCassetteFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +23,9 @@ public class TombolasActivity extends AppCompatActivity {
         tombolaMainFragment = TombolaMainFragment.newInstance();
         createTombolaFragment = CreateTombolaFragment.newInstance();
         tombolaDetailsFragment = TombolaDetailsFragment.newInstance();
-        createMediaFragment = CreateMediaFragment.newInstance();
         chooseMediaTypeFragment = ChooseMediaTypeFragment.newInstance();
+        createBookFragment = CreateBookFragment.newInstance();
+        createCassetteFragment = CreateCassetteFragment.newInstance();
 
         setContentView(R.layout.tombolas_activity);
         if (savedInstanceState == null) {
@@ -52,17 +54,24 @@ public class TombolasActivity extends AppCompatActivity {
                 .commitNow();
     }
 
-    protected void switchToCreateMedia() {
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, createMediaFragment)
-                .commitNow();
-    }
-
     protected void switchToChooseMedia() {
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, chooseMediaTypeFragment)
+                .commitNow();
+    }
+
+    protected void switchToCreateBook() {
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, createBookFragment)
+                .commitNow();
+    }
+
+    protected void switchToCreateCassette() {
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, createCassetteFragment)
                 .commitNow();
     }
 }

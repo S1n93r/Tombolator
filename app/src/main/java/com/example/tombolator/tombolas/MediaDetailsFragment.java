@@ -79,7 +79,7 @@ public class MediaDetailsFragment extends Fragment {
 
     private void registerOnClickListener() {
 
-        editMediaButton.setOnClickListener((View v) -> tombolasActivity.switchToCreateMedia());
+        editMediaButton.setOnClickListener((View v) -> tombolasActivity.switchToCreateBook());
 
         backButton.setOnClickListener((View v) -> tombolasActivity.switchToCreateTombola());
 
@@ -131,7 +131,7 @@ public class MediaDetailsFragment extends Fragment {
         tombolasActivityViewModel.deleteMediaFromAllTombolas(media);
         mediaActivityViewModel.delete(media);
 
-        tombolasActivity.switchToCreateMedia();
+        tombolasActivity.switchToCreateBook();
     }
 
     public void setFragmentBefore(Fragment fragmentBefore) {

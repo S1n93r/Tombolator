@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.tombolator.R;
-import com.example.tombolator.tombolas.CreateMediaFragment;
+import com.example.tombolator.tombolas.CreateBookFragment;
 import com.example.tombolator.tombolas.MediaDetailsFragment;
 
 public class MediaActivity extends AppCompatActivity {
@@ -14,7 +14,7 @@ public class MediaActivity extends AppCompatActivity {
     Bundle savedInstanceState;
 
     private MediaListFragment mediaListFragment;
-    private CreateMediaFragment createMediaFragment;
+    private CreateBookFragment createBookFragment;
     private MediaDetailsFragment mediaDetailsFragment;
 
     @Override
@@ -25,7 +25,7 @@ public class MediaActivity extends AppCompatActivity {
         mediaListFragment = MediaListFragment.newInstance();
 
         mediaDetailsFragment = MediaDetailsFragment.newInstance();
-        createMediaFragment = CreateMediaFragment.newInstance();
+        createBookFragment = CreateBookFragment.newInstance();
         setContentView(R.layout.media_activity);
 
         this.savedInstanceState = savedInstanceState;

@@ -30,6 +30,7 @@
     <string name="title_tombolas">Deine Tombolas</string>
     <string name="title_media">Deine Medien</string>
     <string name="title_new_media">Neues Medium</string>
+    <string name="title_new_book">Neues Buch/E-Book</string>
     <string name="title_choose_media_type">Wähle Medium</string>
     <string name="title_new_Tombola">Neue Tombola</string>
     <string name="title_media_details">Medium Details</string>
@@ -77,7 +78,7 @@
     <string name="toast_media_name_empty">Bitte gib einen Namen an</string>
     <string name="toast_media_title_empty">Bitte gib einen Titel an</string>
     <string name="toast_media_number_empty">Bitte gib eine Nummer an</string>
-    <string name="toast_media_author_empty">Bitte gib einen Author an</string>
+    <string name="toast_book_author_empty">Bitte gib einen Author an</string>
     <!-- Content description -->
     <string name="description_button_next">Zur nächsten Seite</string>
     <string name="description_button_back">Zurück zu vorherigen Sicht</string>
