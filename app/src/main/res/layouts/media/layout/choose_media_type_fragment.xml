@@ -74,13 +74,14 @@
                 android:src="@drawable/ic_book" />
 
             <ImageView
-                android:id="@+id/movie_button"
+                android:id="@+id/ebook_button"
                 android:layout_width="@dimen/button_width"
                 android:layout_height="@dimen/button_height"
                 android:background="@drawable/button_selector_purple"
                 android:fontFamily="@font/comic_sans_ms"
                 android:padding="25dp"
-                android:src="@drawable/ic_film" />
+                android:src="@drawable/ic_ebook" />
+
         </TableRow>
 
         <TableRow
@@ -90,14 +91,14 @@
             android:gravity="center">
 
             <ImageView
-                android:id="@+id/ebook_button"
+                android:id="@+id/movie_button"
                 android:layout_width="@dimen/button_width"
                 android:layout_height="@dimen/button_height"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/button_selector_purple"
                 android:fontFamily="@font/comic_sans_ms"
                 android:padding="25dp"
-                android:src="@drawable/ic_ebook" />
+                android:src="@drawable/ic_film" />
 
             <ImageView
                 android:id="@+id/streaming_button"

@@ -64,10 +64,12 @@ public class ChooseMediaTypeFragment extends Fragment {
 
         cdButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.CD, () -> tombolasActivity.switchToCreateCassette()));
         cassetteButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.CASSETTE, () -> tombolasActivity.switchToCreateCassette()));
-        movieButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.DVD, () -> tombolasActivity.switchToCreateCassette()));
+
+        movieButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.DVD, () -> tombolasActivity.switchToCreateMovie()));
+        streamingButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.STREAMING, () -> tombolasActivity.switchToCreateMovie()));
+
         bookButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.BOOK, () -> tombolasActivity.switchToCreateBook()));
         ebookButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.E_BOOK, () -> tombolasActivity.switchToCreateBook()));
-        streamingButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.STREAMING, () -> tombolasActivity.switchToCreateCassette()));
 
         backButton.setOnClickListener((View v) -> tombolasActivity.switchToCreateTombola());
     }

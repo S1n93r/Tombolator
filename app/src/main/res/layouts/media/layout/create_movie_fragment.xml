@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_background"
-    tools:context=".tombolas.CreateCassetteFragment">
+    tools:context=".tombolas.CreateBookFragment">
 
     <LinearLayout
         android:layout_width="300dp"
@@ -28,17 +28,6 @@
             android:inputType="textCapWords"
             android:textSize="@dimen/font_size_labels" />
 
-        <EditText
-            android:id="@+id/edit_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:autofillHints="@string/label_number"
-            android:ems="10"
-            android:fontFamily="@font/comic_sans_ms"
-            android:hint="@string/label_number"
-            android:inputType="number"
-            android:textSize="@dimen/font_size_labels" />
     </LinearLayout>
 
     <TextView
@@ -46,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/comic_sans_ms"
-        android:text="@string/title_new_audioplay"
+        android:text="@string/title_new_movie"
         android:textSize="@dimen/font_size_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -71,7 +60,7 @@
         app:layout_constraintVertical_bias="0.975" />
 
     <ImageView
-        android:id="@+id/save_cassette_button"
+        android:id="@+id/save_button"
         android:layout_width="@dimen/button_small_width"
         android:layout_height="@dimen/button_small_height"
         android:background="@drawable/button_selector_purple"

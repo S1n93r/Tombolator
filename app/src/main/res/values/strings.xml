@@ -30,7 +30,9 @@
     <string name="title_tombolas">Deine Tombolas</string>
     <string name="title_media">Deine Medien</string>
     <string name="title_new_media">Neues Medium</string>
-    <string name="title_new_book">Neues Buch/E-Book</string>
+    <string name="title_new_book">Buch/E-Book</string>
+    <string name="title_new_audioplay">CD/Kassette</string>
+    <string name="title_new_movie">DVD/Blu-Ray</string>
     <string name="title_choose_media_type">Wähle Medium</string>
     <string name="title_new_Tombola">Neue Tombola</string>
     <string name="title_media_details">Medium Details</string>
