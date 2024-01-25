@@ -123,7 +123,7 @@ public class Media implements Parcelable {
         if (number == -1)
             return name + "\n" + title;
 
-        return "(" + number + ") " + name + "\n" + title;
+        return "(" + number + ") " + name;
     }
 
     public String toCsv() {
