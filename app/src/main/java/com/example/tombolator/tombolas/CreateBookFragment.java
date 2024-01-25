@@ -84,7 +84,7 @@ public class CreateBookFragment extends Fragment {
             String title = editTextTitle.getText() != null ? editTextTitle.getText().toString() : "";
             String author = editTextAuthor.getText() != null ? editTextAuthor.getText().toString() : "";
 
-            selectedMedia.setTitle(title);
+            selectedMedia.setName(title);
             selectedMedia.setAuthor(author);
             selectedMedia.setCreationTimestamp(System.currentTimeMillis());
 

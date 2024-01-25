@@ -86,7 +86,7 @@ public class CreateCassetteFragment extends Fragment {
 
             int number = numberAsString.length() > 0 ? Integer.parseInt(numberAsString) : -1;
 
-            selectedMedia.setTitle(title);
+            selectedMedia.setName(title);
             selectedMedia.setNumber(number);
             selectedMedia.setCreationTimestamp(System.currentTimeMillis());
 

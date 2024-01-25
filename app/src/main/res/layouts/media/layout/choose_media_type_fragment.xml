@@ -39,8 +39,8 @@
 
             <ImageView
                 android:id="@+id/cassette_button"
-                android:layout_width="@dimen/button_width"
-                android:layout_height="@dimen/button_height"
+                android:layout_width="@dimen/button_medium_width"
+                android:layout_height="@dimen/button_medium_height"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/button_selector_purple"
                 android:fontFamily="@font/comic_sans_ms"
@@ -49,8 +49,8 @@
 
             <ImageView
                 android:id="@+id/cd_button"
-                android:layout_width="@dimen/button_width"
-                android:layout_height="@dimen/button_height"
+                android:layout_width="@dimen/button_medium_width"
+                android:layout_height="@dimen/button_medium_height"
                 android:background="@drawable/button_selector_purple"
                 android:fontFamily="@font/comic_sans_ms"
                 android:padding="25dp"
@@ -65,8 +65,8 @@
 
             <ImageView
                 android:id="@+id/book_button"
-                android:layout_width="@dimen/button_width"
-                android:layout_height="@dimen/button_height"
+                android:layout_width="@dimen/button_medium_width"
+                android:layout_height="@dimen/button_medium_height"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/button_selector_purple"
                 android:fontFamily="@font/comic_sans_ms"
@@ -75,8 +75,8 @@
 
             <ImageView
                 android:id="@+id/ebook_button"
-                android:layout_width="@dimen/button_width"
-                android:layout_height="@dimen/button_height"
+                android:layout_width="@dimen/button_medium_width"
+                android:layout_height="@dimen/button_medium_height"
                 android:background="@drawable/button_selector_purple"
                 android:fontFamily="@font/comic_sans_ms"
                 android:padding="25dp"
@@ -91,29 +91,50 @@
             android:gravity="center">
 
             <ImageView
-                android:id="@+id/movie_button"
-                android:layout_width="@dimen/button_width"
-                android:layout_height="@dimen/button_height"
+                android:id="@+id/dvd_button"
+                android:layout_width="@dimen/button_medium_width"
+                android:layout_height="@dimen/button_medium_height"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/button_selector_purple"
                 android:fontFamily="@font/comic_sans_ms"
                 android:padding="25dp"
-                android:src="@drawable/ic_film" />
+                android:src="@drawable/ic_dvd" />
 
             <ImageView
-                android:id="@+id/streaming_button"
-                android:layout_width="@dimen/button_width"
-                android:layout_height="@dimen/button_height"
+                android:id="@+id/blu_ray_button"
+                android:layout_width="@dimen/button_medium_width"
+                android:layout_height="@dimen/button_medium_height"
                 android:background="@drawable/button_selector_purple"
                 android:fontFamily="@font/comic_sans_ms"
                 android:padding="25dp"
-                android:src="@drawable/ic_online_streaming_25" />
+                android:src="@drawable/ic_bluray" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center" />
+            android:layout_marginBottom="16dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/streaming_button"
+                android:layout_width="@dimen/button_medium_width"
+                android:layout_height="@dimen/button_medium_height"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/button_selector_purple"
+                android:fontFamily="@font/comic_sans_ms"
+                android:padding="25dp"
+                android:src="@drawable/ic_online_streaming_25" />
+
+            <ImageView
+                android:id="@+id/emty_button"
+                android:layout_width="@dimen/button_medium_width"
+                android:layout_height="@dimen/button_medium_height"
+                android:background="@drawable/button_selector_purple"
+                android:fontFamily="@font/comic_sans_ms"
+                android:padding="25dp"
+                android:visibility="invisible" />
+        </TableRow>
     </TableLayout>
 
     <ImageView

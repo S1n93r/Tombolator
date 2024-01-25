@@ -76,7 +76,7 @@ public class CreateMovieFragment extends Fragment {
 
             String title = editTextTitle.getText() != null ? editTextTitle.getText().toString() : "";
 
-            selectedMedia.setTitle(title);
+            selectedMedia.setName(title);
             selectedMedia.setCreationTimestamp(System.currentTimeMillis());
 
             Tombola selectedTombola = viewModel.getSelectedTombola().getValue();

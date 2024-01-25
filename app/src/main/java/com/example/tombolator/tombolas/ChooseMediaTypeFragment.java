@@ -25,7 +25,8 @@ public class ChooseMediaTypeFragment extends Fragment {
     private ImageView bookButton;
     private ImageView ebookButton;
     private ImageView streamingButton;
-    private ImageView movieButton;
+    private ImageView dvdButton;
+    private ImageView bluRayButton;
 
     private ImageView backButton;
 
@@ -49,7 +50,8 @@ public class ChooseMediaTypeFragment extends Fragment {
         cdButton = layout.findViewById(R.id.cd_button);
         bookButton = layout.findViewById(R.id.book_button);
         ebookButton = layout.findViewById(R.id.ebook_button);
-        movieButton = layout.findViewById(R.id.movie_button);
+        dvdButton = layout.findViewById(R.id.dvd_button);
+        bluRayButton = layout.findViewById(R.id.blu_ray_button);
         streamingButton = layout.findViewById(R.id.streaming_button);
         cassetteButton = layout.findViewById(R.id.cassette_button);
 
@@ -65,7 +67,8 @@ public class ChooseMediaTypeFragment extends Fragment {
         cdButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.CD, () -> tombolasActivity.switchToCreateCassette()));
         cassetteButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.CASSETTE, () -> tombolasActivity.switchToCreateCassette()));
 
-        movieButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.DVD, () -> tombolasActivity.switchToCreateMovie()));
+        dvdButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.DVD, () -> tombolasActivity.switchToCreateMovie()));
+        bluRayButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.BLU_RAY, () -> tombolasActivity.switchToCreateMovie()));
         streamingButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.STREAMING, () -> tombolasActivity.switchToCreateMovie()));
 
         bookButton.setOnClickListener((View v) -> chooseAndSwitch(MediaType.BOOK, () -> tombolasActivity.switchToCreateBook()));
