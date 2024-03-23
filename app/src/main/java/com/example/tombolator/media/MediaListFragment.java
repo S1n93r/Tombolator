@@ -55,17 +55,17 @@ public class MediaListFragment extends Fragment {
 
         paginatedMediaList.setItemToViewConverter(media -> {
 
-            @SuppressWarnings("unchecked")
-            PaginatedListEntry<Media> paginatedListEntry = (PaginatedListEntry<Media>) View.inflate(
-                    getContext(), R.layout.paginated_list_entry, null);
+            PaginatedListEntry<Media> paginatedListEntry = new PaginatedListEntry<>(getContext());
 
             paginatedListEntry.setText(media.toLabel());
             paginatedListEntry.setId(media.getId().intValue());
 
-            paginatedListEntry.setOnClickListener(view -> {
+            paginatedListEntry.setClickTextRunnable(() -> {
                 mediaActivityViewModel.selectMedia(media);
                 mediaActivity.switchToMediaDetailsView(this);
             });
+
+            paginatedListEntry.setDeleteRunnable(() -> mediaActivityViewModel.delete(media));
 
             return paginatedListEntry;
         });

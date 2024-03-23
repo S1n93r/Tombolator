@@ -79,9 +79,7 @@ public class CreateTombolaFragment extends Fragment {
             if (tombolasActivityViewModel.getSelectedTombola().getValue() == null)
                 throw new IllegalStateException("Selected tombola should not be null!");
 
-            @SuppressWarnings("unchecked")
-            PaginatedListEntry<Media> paginatedListEntry = (PaginatedListEntry<Media>) View.inflate(
-                    getContext(), R.layout.paginated_list_entry, null);
+            PaginatedListEntry<Media> paginatedListEntry = new PaginatedListEntry<>(getContext());
 
             paginatedListEntry.initialize(getViewLifecycleOwner());
 
@@ -89,11 +87,22 @@ public class CreateTombolaFragment extends Fragment {
 
             paginatedListEntry.setId(media.getId().intValue());
 
-            paginatedListEntry.getSelected().observe(getViewLifecycleOwner(), selected -> {
-                if (selected) {
-                    tombolasActivityViewModel.selectMedia(media);
-                    tombolasActivity.switchToCreateBook();
-                }
+            paginatedListEntry.setClickTextRunnable(() -> {
+                tombolasActivityViewModel.selectMedia(media);
+                tombolasActivity.switchToCreateBook();
+            });
+
+            paginatedListEntry.setDeleteRunnable(() -> {
+
+                List<Media> mediaList = mediaCurrentTombola.getValue();
+
+                mediaList.remove(media);
+
+                Tombola selectedTombola = tombolasActivityViewModel.getSelectedTombola().getValue();
+
+                selectedTombola.removeMedia(media);
+
+                mediaCurrentTombola.setValue(mediaList);
             });
 
             return paginatedListEntry;
