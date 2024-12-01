@@ -264,7 +264,7 @@ public class PaginatedListComponent<T> extends ConstraintLayout {
         public void onChanged(Integer pageNumber) {
 
             currentPageLabel.setText(NumberUtil.formatNumberFullDigitsLeadingZero(pageNumber));
-            showMediaOnCurrentPage(items.getValue());
+            showMediaOnCurrentPage(itemsSortedAndFiltered.getValue());
         }
     }
 
